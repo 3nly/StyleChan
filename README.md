@@ -3,7 +3,7 @@
 
 StyleChan is a userscript functioning on top of 4chan X allowing you to customize the site with various themes.
 
-Originally developed by [seaweedchan](https://github.com/seaweedchan), this is a fork of [Oneechan](https://nebukazar.github.com) without mascots.
+Originally developed by [seaweedchan](https://github.com/seaweedchan/OneeChan), this is a fork of OneeChan without mascots.
 
 ## [Click here to Install](https://github.com/3nly/StyleChan/raw/main/StyleChan.user.js)
 
@@ -22,7 +22,7 @@ Installing [4chan X](https://github.com/ccd0/4chan-x) is **REQUIRED** for StyleC
 
 - Check if it's not a 4chan X issue first, StyleChan mostly deals with stylesheets not site functionality
 
-- Something doesn't work let me know in the [Issues](https://github.com/nebukazar/StyleChan/issues) page
+- Something doesn't work let me know in the [Issues](https://github.com/3nly/StyleChan/issues) page
 
 
 #### Development & Contribution
