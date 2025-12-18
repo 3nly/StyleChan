@@ -1,3 +1,9 @@
+### v1.0.34
+*2025-12-18*
+
+- Style changes for the new captcha to match StyleChan theming
+- Small border radius fix for QR inputs
+
 ### v1.0.33
 *2025-02-21*
 
