@@ -110,6 +110,13 @@
   min-height: 58px !important;
   margin-bottom: 1px;
 }
+.captcha-root div {
+  border-radius: 0 !important;
+}
+#t-load,
+#t-next {
+  height: 20px !important;
+}
 /* Vertical QR */
 :root.vertical-qr #qr > div > label > div,
 :root.vertical-qr #qr .move #autohide,
