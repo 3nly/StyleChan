@@ -3339,15 +3339,15 @@
 
             if (theme.customCSS) {
                 try {
-                    if (theme.customCSS[0] === "(")
-                        theme.customCSS = "\"+".concat(theme.customCSS);
-                    if (theme.customCSS[theme.customCSS.length - 1] === ")")
-                        theme.customCSS += "+\"";
-
-                    this.customCSS = eval($SS.trimLineBreaks(new String('"' + theme.customCSS.replace(/\"/g, "\\\"").replace(/\'/g, "\\\'") + '"')));
+                    var css = String(theme.customCSS);
+                    if (css.length > 2 && css[0] === "(" && css[css.length - 1] === ")") {
+                        css = css.slice(1, -1);
+                    }
+                    css = css.replace(/^\\?"|\\?"$/g, '');
+                    this.customCSS = $SS.trimLineBreaks(css);
                 } catch (e) {
-                    alert("Error evaluating " + this.name + "'s theme.customCSS!\n" + e.message);
-                    this.customCSS = theme.customCSS;
+                    alert("Error processing " + this.name + "'s theme.customCSS!\n" + e.message);
+                    this.customCSS = String(theme.customCSS || "");
                 }
             } else
                 this.customCSS = "";
