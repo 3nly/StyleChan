@@ -369,7 +369,18 @@
             name: "replyslctColor",
             property: "outline"
         }],
-        $lib, $SS;
+        $lib, $SS,
+        $docBody = null,
+        $docHead = null;
+    
+    // Cache DOM references for performance
+    function getDocBody() {
+        return $docBody || ($docBody = document.body);
+    }
+    function getDocHead() {
+        return $docHead || ($docHead = document.head);
+    }
+    
     if (!Array.isArray)
         Array.isArray = function(arg) {
             return Object.prototype.toString.call(arg) === "[object Array]";
@@ -620,32 +631,53 @@
             },
             addClass: function(classNames) {
                 return this.each(function() {
-                    classNames = classNames.split(" ");
-                    for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
-                        if (!$(this).hasClass(classNames[j]))
-                            this.className += (this.className ? " " : "") + classNames[j];
+                    if (this.classList) {
+                        classNames = classNames.split(" ");
+                        for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
+                            this.classList.add(classNames[j]);
+                    } else {
+                        classNames = classNames.split(" ");
+                        for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
+                            if (!$(this).hasClass(classNames[j]))
+                                this.className += (this.className ? " " : "") + classNames[j];
+                    }
                 });
             },
             hasClass: function(className) {
                 if (!this.hasSingleEl() || this.elems[0].className == undefined)
                     return false;
 
-                var regx = new RegExp("\\b" + className + "\\b");
+                if (this.elems[0].classList) {
+                    return this.elems[0].classList.contains(className);
+                }
 
+                var regx = new RegExp("\\b" + className + "\\b");
                 return regx.test(this.elems[0].className);
             },
             removeClass: function(classNames) {
                 return this.each(function() {
-                    classNames = classNames.split(" ");
-                    for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
-                        if ($(this).hasClass(classNames[j])) {
-                            var cclassNames = this.className.split(" ");
-                            this.className = "";
-
-                            for (var k = 0, kMAX = cclassNames.length; k < kMAX; k++)
-                                if (classNames[j] !== cclassNames[k])
-                                    this.className += (this.className ? " " : "") + cclassNames[k];
+                    if (this.classList) {
+                        classNames = classNames.split(" ");
+                        for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
+                            this.classList.remove(classNames[j]);
+                    } else {
+                        classNames = classNames.split(" ");
+                        var cclassNames = this.className.split(" "),
+                            newClasses = [];
+                        for (var k = 0, kMAX = cclassNames.length; k < kMAX; k++) {
+                            var found = false;
+                            for (var j = 0, jMAX = classNames.length; j < jMAX; j++) {
+                                if (classNames[j] === cclassNames[k]) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found && cclassNames[k]) {
+                                newClasses.push(cclassNames[k]);
+                            }
                         }
+                        this.className = newClasses.join(" ");
+                    }
                 });
             },
             toggleClass: function(classNames) {
@@ -826,18 +858,28 @@
 
                 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
                 var observer = new MutationObserver(function(mutations) {
-                    var i, j, MAX, _MAX, nodes;
+                    var i, j, MAX, _MAX, nodes, node;
 
                     for (i = 0, MAX = mutations.length; i < MAX; ++i) {
                         nodes = mutations[i].addedNodes;
 
-                        for (j = 0, _MAX = nodes.length; i < _MAX; ++i)
-                            if (nodes[j].nodeType !== 3)
-                                $("input[type=checkbox]", nodes[j]).riceCheck();
+                        for (j = 0, _MAX = nodes.length; j < _MAX; ++j) {
+                            node = nodes[j];
+                            if (node.nodeType !== 3 && node.nodeType === 1) {
+                                // Only process element nodes, check if it's a checkbox or contains checkboxes
+                                if (node.tagName === "INPUT" && node.type === "checkbox") {
+                                    $(node).riceCheck();
+                                } else {
+                                    $("input[type=checkbox]", node).riceCheck();
+                                }
+                            }
+                        }
                     }
                 });
 
-                observer.observe(document, {
+                // Observe only the body element instead of entire document for better performance
+                var targetNode = getDocBody() || document.documentElement;
+                observer.observe(targetNode, {
                     childList: true,
                     subtree: true
                 });
@@ -938,7 +980,7 @@
                 $SS.DOMLoaded(true);
             } else {
                 $.asap((function() {
-                    return $("link[rel=stylesheet]", document.head).exists();
+                    return $("link[rel=stylesheet]", getDocHead()).exists();
                 }), $SS.insertCSS);
                 if (/complete|interactive/.test(document.readyState))
                     $SS.DOMLoaded();
@@ -955,7 +997,7 @@
 
             if ($SS.location.dead)
                 return;
-            else if (reload || $("link[rel=stylesheet]", document.head).exists())
+            else if (reload || $("link[rel=stylesheet]", getDocHead()).exists())
                 $(document).unbind("MutationObserver", $SS.insertCSS);
 
             css = "<%= grunt.file.read('tmp/style.min.css').replace(/\\(^\")/g, '') %>";
@@ -963,7 +1005,7 @@
             if (reload)
                 $("#ch4SS").text(css);
             else
-                $(document.head).append($("<style type='text/css' id=ch4SS>").text(css));
+                $(getDocHead()).append($("<style type='text/css' id=ch4SS>").text(css));
         },
         QRDialogCreationHandler: function(e) {
             var qr = e.target;
@@ -1064,16 +1106,18 @@
                         tOptions = $("<div id='oneechan-options' class=dialog>").bind("click", function(e) {
                             return e.stopPropagation();
                         }),
-                        optionsHTML = "<ul id=options-tabs>" +
-                        "<li class='tab-item'><label class='tab-label selected' for=main-select>Main</label></li>" +
-                        "<li class='tab-item'><label class='tab-label' for=themes-select>Themes</label></li>" +
-                        "</ul><div id=options-container><input type=radio class=tab-select name=tab-select id=main-select hidden checked><div id='main-section' class='options-section'>" +
-                        "<p class='buttons-container'>" +
-                        "<a class='options-button' title='Export your settings as JSON.' name=Export>Export</a><a class='options-button' id='import-settings'><input type=file class='import-input' riced=true accept='application/json'>Import</a><a class='options-button' title='Reset StyleChan settings.' name=resetSettings>Reset</a>" +
-                        "<span id=oneechan-version><span>StyleChan</span> v" + VERSION + "<span class=link-delim> | </span>" +
-                        "<a href='https://github.com/3nly/StyleChan/blob/<%= meta.mainBranch %>/CHANGELOG.md' id=changelog-link target='_blank' title='Read the changelog.'>Changelog</a><span class=link-delim> | </span>" +
-                        "<a href='https://github.com/3nly/StyleChan/issues' id=issues-link target='_blank' title='Report an issue.'>Issues</a></p>",
-                        key, val, des;
+                        optionsHTML = [
+                            "<ul id=options-tabs>",
+                            "<li class='tab-item'><label class='tab-label selected' for=main-select>Main</label></li>",
+                            "<li class='tab-item'><label class='tab-label' for=themes-select>Themes</label></li>",
+                            "</ul><div id=options-container><input type=radio class=tab-select name=tab-select id=main-select hidden checked><div id='main-section' class='options-section'>",
+                            "<p class='buttons-container'>",
+                            "<a class='options-button' title='Export your settings as JSON.' name=Export>Export</a><a class='options-button' id='import-settings'><input type=file class='import-input' riced=true accept='application/json'>Import</a><a class='options-button' title='Reset StyleChan settings.' name=resetSettings>Reset</a>",
+                            "<span id=oneechan-version><span>StyleChan</span> v" + VERSION + "<span class=link-delim> | </span>",
+                            "<a href='https://github.com/3nly/StyleChan/blob/<%= meta.mainBranch %>/CHANGELOG.md' id=changelog-link target='_blank' title='Read the changelog.'>Changelog</a><span class=link-delim> | </span>",
+                            "<a href='https://github.com/3nly/StyleChan/issues' id=issues-link target='_blank' title='Report an issue.'>Issues</a></p>"
+                        ];
+                    var key, val, des, id;
 
                     for (key in defaultConfig) {
                         if (/^(Selected|Hidden)+\s(Themes?)+$/.test(key))
@@ -1085,36 +1129,36 @@
                         if ((defaultConfig[key][4] === true) && (key === "Custom Left Margin")) {
                             var pVal = $SS.conf[defaultConfig[key][2]];
                             id = defaultConfig[key][2].replace(/\s/g, "_") + defaultConfig[key][3];
-                            optionsHTML += "<span class='option suboption " + id + "' title=\"" + des + "\"" +
+                            optionsHTML.push("<span class='option suboption " + id + "' title=\"" + des + "\"" +
                                 (pVal != defaultConfig[key][3] ? "hidden" : "") + "><span class='option-title'>" + key +
-                                "</span><input name='Custom Left Margin' type=text value=" + $SS.conf["Custom Left Margin"] + "px></span>";
+                                "</span><input name='Custom Left Margin' type=text value=" + $SS.conf["Custom Left Margin"] + "px></span>");
                         } else if ((defaultConfig[key][4] === true) && (key === "Custom Right Margin")) {
                             var pVal = $SS.conf[defaultConfig[key][2]];
                             id = defaultConfig[key][2].replace(/\s/g, "_") + defaultConfig[key][3];
-                            optionsHTML += "<span class='option suboption " + id + "' title=\"" + des + "\"" +
+                            optionsHTML.push("<span class='option suboption " + id + "' title=\"" + des + "\"" +
                                 (pVal != defaultConfig[key][3] ? "hidden" : "") + "><span class='option-title'>" + key +
-                                "</span><input name='Custom Right Margin' type=text value=" + $SS.conf["Custom Right Margin"] + "px></span>";
+                                "</span><input name='Custom Right Margin' type=text value=" + $SS.conf["Custom Right Margin"] + "px></span>");
                         } else if ((defaultConfig[key][4] === true) && (key === "Custom Decoration Width")) {
                             var pVal = $SS.conf[defaultConfig[key][2]];
                             id = defaultConfig[key][2].replace(/\s/g, "_") + defaultConfig[key][3];
-                            optionsHTML += "<span class='option suboption " + id + "' title=\"" + des + "\"" +
+                            optionsHTML.push("<span class='option suboption " + id + "' title=\"" + des + "\"" +
                                 (pVal != defaultConfig[key][3] ? "hidden" : "") + "><span class='option-title'>" + key +
-                                "</span><input name='Custom Decoration Width' type=text value=" + $SS.conf["Custom Decoration Width"] + "px></span>";
+                                "</span><input name='Custom Decoration Width' type=text value=" + $SS.conf["Custom Decoration Width"] + "px></span>");
                         } else if (val === "header") {
-                            optionsHTML += "<label class='option header'><span class='option-title'>" + key + "</span></label>";
+                            optionsHTML.push("<label class='option header'><span class='option-title'>" + key + "</span></label>");
                         } else if (defaultConfig[key][4] === true) // sub-option
                         {
                             var pVal = $SS.conf[defaultConfig[key][2]];
                             id = defaultConfig[key][2].replace(/\s/g, "_") + defaultConfig[key][3];
-                            optionsHTML += "<label class='option suboption " + id + "' title=\"" + des + "\"" +
+                            optionsHTML.push("<label class='option suboption " + id + "' title=\"" + des + "\"" +
                                 (pVal != defaultConfig[key][3] ? "hidden" : "") + "><span class='option-title'>" + key +
-                                "</span><input" + (val ? " checked" : "") + " name='" + key + "' type=checkbox></label>";
+                                "</span><input" + (val ? " checked" : "") + " name='" + key + "' type=checkbox></label>");
                         } else if (Array.isArray(defaultConfig[key][2])) // select
                         {
                             var opts = key === "Font Family" ? $SS.fontList || defaultConfig[key][2] : defaultConfig[key][2],
-                                cFonts = [];
-                            optionsHTML += "<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
-                                "<select name='" + key + "'" + (defaultConfig[key][3] === true ? " has-suboption" : "") + ">";
+                                cFonts = [],
+                                html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>",
+                                    "<select name='" + key + "'" + (defaultConfig[key][3] === true ? " has-suboption" : "") + ">"];
 
                             for (var i = 0, MAX = opts.length; i < MAX; ++i) {
                                 var name, value;
@@ -1127,29 +1171,30 @@
 
                                 if (key === "Font Family") cFonts.push(value);
 
-                                optionsHTML += "<option" + (key === "Font Family" ? " style=\"font-family:" + $SS.formatFont(value) + "!important\"" : "") +
-                                    " value='" + value + "'" + (value == val ? " selected" : "") + ">" + name + "</option>";
+                                html.push("<option" + (key === "Font Family" ? " style=\"font-family:" + $SS.formatFont(value) + "!important\"" : "") +
+                                    " value='" + value + "'" + (value == val ? " selected" : "") + ">" + name + "</option>");
                             }
 
                             if (key === "Font Family" && cFonts.indexOf($SS.conf["Font Family"]) == -1)
-                                optionsHTML += "<option style=\"font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important\" value='" + $SS.conf["Font Family"] + "' selected>" + $SS.conf["Font Family"] + "</option>";
+                                html.push("<option style=\"font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important\" value='" + $SS.conf["Font Family"] + "' selected>" + $SS.conf["Font Family"] + "</option>");
 
-                            optionsHTML += "</select></label>";
+                            html.push("</select></label>");
+                            optionsHTML.push(html.join(""));
                         } else if (key === "Font Size") {
-                            optionsHTML += "<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
-                                "<input type=text name='Font Size' value=" + $SS.conf["Font Size"] + "px></label>";
+                            optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
+                                "<input type=text name='Font Size' value=" + $SS.conf["Font Size"] + "px></label>");
                         } else if (key === "Backlink Font Size") {
-                            optionsHTML += "<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
-                                "<input type=text name='Backlink Font Size' value=" + $SS.conf["Backlink Font Size"] + "px></label>";
+                            optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
+                                "<input type=text name='Backlink Font Size' value=" + $SS.conf["Backlink Font Size"] + "px></label>");
                         } else if (key === "Themes") {
-                            optionsHTML += "</div><input type=radio class=tab-select name=tab-select class=tab-select  id=themes-select hidden><div id='themes-section' class='options-section'>";
+                            optionsHTML.push("</div><input type=radio class=tab-select name=tab-select class=tab-select  id=themes-select hidden><div id='themes-section' class='options-section'>");
                         } else // checkbox
-                            optionsHTML += "<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span><input" + (val ? " checked" : "") +
-                            " name='" + key + "' " + (defaultConfig[key][3] === true ? " has-suboption" : "") + " type=checkbox></label>";
+                            optionsHTML.push("<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span><input" + (val ? " checked" : "") +
+                            " name='" + key + "' " + (defaultConfig[key][3] === true ? " has-suboption" : "") + " type=checkbox></label>");
                     }
 
-                    optionsHTML += "</div></div><div class='options-close'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></div>";
-                    tOptions.html(optionsHTML);
+                    optionsHTML.push("</div></div><div class='options-close'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></div>");
+                    tOptions.html(optionsHTML.join(""));
                     overlay.append(tOptions);
 
                     $(".import-input", tOptions).bind("change", function() {
@@ -1252,7 +1297,7 @@
                     // themes tab
                     $SS.options.createThemesTab(tOptions);
 
-                    return $(document.body).append(overlay);
+                    return $(getDocBody()).append(overlay);
                 }
             },
             createThemesTab: function(tOptions) {
@@ -2888,7 +2933,7 @@
                     delete $SS.jscolor.picker.owner;
                     window.removeEventListener("resize", removePicker, false);
                     target.blur();
-                    document.getElementsByTagName("body")[0].removeChild($SS.jscolor.picker.boxB);
+                    getDocBody().removeChild($SS.jscolor.picker.boxB);
                 }
 
                 function drawPicker(x, y) {
@@ -3045,7 +3090,7 @@
                     redrawSld();
 
                     $SS.jscolor.picker.owner = THIS;
-                    document.getElementsByTagName("body")[0].appendChild(p.boxB);
+                    getDocBody().appendChild(p.boxB);
                 }
 
                 function getPickerDims(o) {
