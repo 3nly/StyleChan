@@ -1,3 +1,10 @@
+### v1.0.35
+*2025-12-20*
+
+- Some performance improvements with newer, native JS and better caching
+- CSP-friendlier custom CSS processing
+- Add *More Themes* button to Themes tab
+
 ### v1.0.34
 *2025-12-18*
 
