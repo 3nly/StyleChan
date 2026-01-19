@@ -261,7 +261,7 @@
         MIN_FONT_SIZE = 10,
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
-        VERSION = "1.0.35",
+        VERSION = "1.0.36",
         CHANGELOG = "https://github.com/3nly/StyleChan/blob/main/CHANGELOG.md",
         inputImages = "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAgCAYAAAAv8DnQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAP9JREFUOMvV0CFLQ2EYxfHfrtdiURgbmCxOmFPBJgZZ0CQD0Q+goFkwabWIyWIWFgwmy7Qp7DPI3GD7ACZlYLNcy31ljG0aDHrSy3N43nOef6ZULBiifczEQ8wV7OAtGmBO4wgfOI2whsXUnMAJ8rhCJ8IxDpHDHpZwixqM5XPZBBtYxioauEgjRLjBI2bRxTneQ6EYCS4xiTu89DbONJrtP88hwnV64hm28YRqyPsFDkmSGKUYFubnsqignM7rqDWa7dcAqoLdnsXwrgZQ5QG/l8MVIxX1ZPar/lUyUOsv+aMzv+0Qw3OrM4VNrKfzB9yXioVu6LDVx+EA4/+Gwycw/Uz36O07WwAAAABJRU5ErkJggg==",
         themeInputs = [{
@@ -451,6 +451,10 @@
                         if ((el = document.getElementById(selector.substr(1))) != null)
                             this.elems = [el];
                     } else {
+                        if (!root || typeof root.querySelectorAll !== "function") {
+                            this.elems = [];
+                            return this;
+                        }
                         var results = root.querySelectorAll(selector);
                         this.elems = Array.prototype.slice.call(results);
                     }
@@ -655,6 +659,7 @@
                 return regx.test(this.elems[0].className);
             },
             removeClass: function(classNames) {
+                if (!classNames || typeof classNames !== "string") return this;
                 return this.each(function() {
                     if (this.classList) {
                         classNames = classNames.split(" ");
@@ -681,16 +686,19 @@
                 });
             },
             toggleClass: function(classNames) {
+                if (!classNames || typeof classNames !== "string") return this;
+                var classNamesArray = classNames.split(" ");
                 return this.each(function() {
-                    classNames = classNames.split(" ");
-                    for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
-                        if (!$(this).hasClass(classNames[j]))
-                            $(this).addClass(classNames[j]);
+                    for (var j = 0, jMAX = classNamesArray.length; j < jMAX; j++)
+                        if (!$(this).hasClass(classNamesArray[j]))
+                            $(this).addClass(classNamesArray[j]);
                         else
-                            $(this).removeClass(classNames[j]);
+                            $(this).removeClass(classNamesArray[j]);
                 });
             },
             optionClass: function(optionName, optionValue, className) {
+                if (!className || typeof className !== "string") return this;
+                if (!$SS.conf || $SS.conf[optionName] === undefined) return this;
                 return this.each(function() {
                     if ($SS.conf[optionName] === optionValue && !$(this).hasClass(className))
                         $(this).addClass(className);
@@ -1456,15 +1464,23 @@
                 // Save Themes
                 $("#oneechan-options #themes-section>div").each(function(index) {
                     var oldIndex = parseInt(this.id.substr(5));
-                    if (!$SS.conf["Themes"][oldIndex].default)
+                    if ($SS.conf["Themes"][oldIndex] && !$SS.conf["Themes"][oldIndex].default)
                         themes.push($SS.conf["Themes"][oldIndex]);
                 });
 
                 selectedTheme = (selectedTheme = $("#oneechan-options #themes-section>div.selected")).exists() ?
                     parseInt(selectedTheme.attr("id").substr(5)) : 0;
+                // Ensure selectedTheme is valid
+                if (selectedTheme >= $SS.conf["Themes"].length || !$SS.conf["Themes"][selectedTheme]) {
+                    selectedTheme = 0;
+                }
 
                 nsfwTheme = (nsfwTheme = $("#oneechan-options #themes-section>div.nsfw")).exists() ?
                     parseInt(nsfwTheme.attr("id").substr(5)) : 0;
+                // Ensure nsfwTheme is valid
+                if (nsfwTheme >= $SS.conf["Themes"].length || !$SS.conf["Themes"][nsfwTheme]) {
+                    nsfwTheme = 0;
+                }
 
                 $SS.Config.set("Themes", themes);
                 $SS.Config.set("Selected Theme", selectedTheme);
@@ -1477,12 +1493,14 @@
                 return $SS.init(true);
             },
             showTheme: function(tIndex) {
-                var div, overlay;
+                var div, overlay, originalTheme, previewThemeIndex = -1, 
+                    bEdit = typeof tIndex === "number",
+                    tEdit = bEdit ? $SS.conf["Themes"][tIndex] : null,
+                    themeIndex = tIndex,
+                    originalSelectedTheme = $SS.conf["Selected Theme"]; // Store originally selected theme
 
-                if (typeof tIndex === "number") {
-                    var bEdit = true,
-                        tEdit = $SS.conf["Themes"][tIndex],
-                        RPA, themeR, themePY, themePX, themeA;
+                if (bEdit) {
+                    var RPA, themeR, themePY, themePX, themeA;
 
                     if (tEdit.bgImg && tEdit.bgRPA) {
                         RPA = tEdit.bgRPA.split(" ");
@@ -1491,6 +1509,9 @@
                         themePX = RPA[2];
                         themeA = RPA[3];
                     }
+                    
+                    // Store original theme for restoration
+                    originalTheme = JSON.parse(JSON.stringify($SS.theme));
                 }
 
                 div = $("<div id='add-theme' class='dialog'>");
@@ -1537,12 +1558,97 @@
                     "<a class='options-button' name=" + (bEdit ? "edit" : "add") + ">Save</a><a class='options-button' name=cancel>Cancel</a></div>";
 
                 div.html(innerHTML);
-                $(".jsColor", div).jsColor();
+                
+                // Live preview function
+                var updateLivePreview = function() {
+                    var overlay = $("#overlay2"),
+                        previewTheme = {},
+                        makeRPA = function() {
+                            var RPA = [];
+                            RPA.push($("select[name=bgR]", overlay).val() || "repeat");
+                            RPA.push($("select[name=bgPY]", overlay).val() || "top");
+                            RPA.push($("select[name=bgPX]", overlay).val() || "left");
+                            RPA.push($("select[name=bgA]", overlay).val() || "scroll");
+                            return RPA.join(" ");
+                        };
+                    
+                    // Collect all form values, but only include non-empty color values
+                    $("input[type=text],textarea,select", overlay).each(function() {
+                        var val = this.value;
+                        if (this.name) {
+                            // For color inputs, only include if they have a valid non-white value
+                            if (this.classList && this.classList.contains("jsColor")) {
+                                // Only include if value is not empty and not "ffffff" (white)
+                                if (val !== "" && val !== "ffffff" && val.length === 6) {
+                                    previewTheme[this.name] = val;
+                                }
+                            } else if (val !== "") {
+                                // For non-color inputs, include if not empty
+                                if (this.name === "bgImg") {
+                                    var b64 = $("input[name=customIMGB64]", overlay);
+                                    val = b64.exists() ? decodeURIComponent(b64.val()) : val;
+                                }
+                                previewTheme[this.name] = val;
+                            }
+                        }
+                    });
+                    
+                    // Set defaults for missing values
+                    if (bEdit && tEdit) {
+                        // When editing, use the original theme as base
+                        for (var key in tEdit) {
+                            if (previewTheme[key] === undefined && typeof tEdit[key] !== "object" && key !== "default") {
+                                previewTheme[key] = tEdit[key];
+                            }
+                        }
+                    } else {
+                        // For new themes, use the currently selected theme as base (not first theme)
+                        var baseTheme = $SS.conf["Themes"][originalSelectedTheme] || $SS.conf["Themes"][0];
+                        for (var key in baseTheme) {
+                            if (previewTheme[key] === undefined && typeof baseTheme[key] !== "object" && key !== "default") {
+                                previewTheme[key] = baseTheme[key];
+                            }
+                        }
+                    }
+                    
+                    if (previewTheme.bgImg)
+                        previewTheme.bgRPA = makeRPA();
+                    
+                    // Create temporary theme in themes array
+                    // Mark it as preview so we can identify and remove it later
+                    previewTheme._isPreview = true;
+                    if (previewThemeIndex === -1) {
+                        previewThemeIndex = $SS.conf["Themes"].length;
+                        $SS.conf["Themes"].push(previewTheme);
+                    } else {
+                        $SS.conf["Themes"][previewThemeIndex] = previewTheme;
+                    }
+                    
+                    // Temporarily switch to preview theme
+                    var currentThemeIndex = $SS.conf["Selected Theme"];
+                    $SS.conf["Selected Theme"] = previewThemeIndex;
+                    $SS.theme = new $SS.Theme(previewThemeIndex);
+                    $SS.insertCSS();
+                };
+                
+                // Initialize jsColor with live preview callback
+                $(".jsColor", div).each(function() {
+                    var colorInput = this;
+                    this.color = new $SS.jscolor.color(this);
+                    this.color.onImmediateChange = function() {
+                        updateLivePreview();
+                    };
+                });
+                
+                // Hook into other input changes for live preview
+                $("input[type=text]:not(.jsColor),textarea,select", div).bind("input change", function() {
+                    updateLivePreview();
+                });
 
                 overlay = $("<div id=overlay2>").append(div);
 
                 $("a[name=export]", div).bind("click", function() {
-                    var theme = $SS.options.addTheme(tIndex, true);
+                    var theme = $SS.options.addTheme(themeIndex, true);
                     if ($("a[download]", div).exists())
                         return;
                     var exportalert = $("<a class='options-button'download='" + theme.name + ".json' href='data:application/json," + encodeURIComponent(JSON.stringify(theme)) + "'>Save me!");
@@ -1551,16 +1657,26 @@
 
                 if (bEdit) {
                     $("a[name=edit]", div).bind("click", function() {
-                        $SS.options.addTheme(tIndex);
+                        $SS.options.addTheme(themeIndex);
                         $("#overlay").removeClass("previewing");
                     });
                     $("#overlay").addClass("previewing");
                 } else {
-                    $("a[name=add]", div).bind("click", $SS.options.addTheme);
+                    $("a[name=add]", div).bind("click", function() {
+                        $SS.options.addTheme();
+                    });
                     $("#overlay").addClass("previewing");
                 }
 
                 $("a[name=cancel]", div).bind("click", function() {
+                    // Remove preview theme if it exists
+                    if (previewThemeIndex !== -1) {
+                        $SS.conf["Themes"].splice(previewThemeIndex, 1);
+                    }
+                    // Always restore to the originally selected theme (not the theme being edited)
+                    $SS.conf["Selected Theme"] = originalSelectedTheme;
+                    $SS.theme = new $SS.Theme(originalSelectedTheme);
+                    $SS.insertCSS();
                     $("#overlay").removeClass("previewing");
                     $("#overlay2").remove();
                 });
@@ -1574,8 +1690,25 @@
                 return $(document.body).append(overlay);
             },
             addTheme: function(tIndex, exp) {
-                var overlay = $("#overlay2"),
-                    tTheme = {},
+                var overlay = $("#overlay2");
+                
+                // Remove preview theme if it exists (from live preview)
+                var previewIndex = -1;
+                for (var i = $SS.conf["Themes"].length - 1; i >= 0; i--) {
+                    if ($SS.conf["Themes"][i] && $SS.conf["Themes"][i]._isPreview) {
+                        previewIndex = i;
+                        break;
+                    }
+                }
+                if (previewIndex !== -1) {
+                    $SS.conf["Themes"].splice(previewIndex, 1);
+                    // Adjust tIndex if it was after the preview theme
+                    if (typeof tIndex === "number" && tIndex > previewIndex) {
+                        tIndex--;
+                    }
+                }
+                
+                var tTheme = {},
                     makeRPA = function() {
                         var RPA = [];
 
@@ -1631,8 +1764,12 @@
                     $SS.conf["Themes"][tIndex] = tTheme;
                     tTheme = new $SS.Theme(tIndex);
                     div = $("#theme" + tIndex, $("#overlay"));
-
-                    div.replace(tTheme.preview());
+                    if (div.exists()) {
+                        div.replace(tTheme.preview());
+                    } else {
+                        div = tTheme.preview();
+                        $("#overlay #themes-section").append(div);
+                    }
                 } else {
                     tTheme.author = "You";
                     tIndex = $SS.conf["Themes"].push(tTheme);
@@ -1642,7 +1779,9 @@
                     $("#overlay #themes-section").append(div);
                 }
 
-                div.fire("click").scrollIntoView(true);
+                if (div && div.exists()) {
+                    div.fire("click").scrollIntoView(true);
+                }
 
                 $("#overlay").removeClass("previewing");
                 return overlay.remove();
@@ -2931,10 +3070,13 @@
                 }
 
                 function removePicker() {
+                    if (!$SS.jscolor.picker || !$SS.jscolor.picker.boxB) return;
                     delete $SS.jscolor.picker.owner;
                     window.removeEventListener("resize", removePicker, false);
                     target.blur();
-                    getDocBody().removeChild($SS.jscolor.picker.boxB);
+                    if ($SS.jscolor.picker.boxB.parentNode) {
+                        $SS.jscolor.picker.boxB.parentNode.removeChild($SS.jscolor.picker.boxB);
+                    }
                 }
 
                 function drawPicker(x, y) {

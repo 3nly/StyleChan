@@ -1,3 +1,8 @@
+### v1.0.36
+*2026-01-19*
+
+- Add live theming preview for editing and creating new themes
+
 ### v1.0.35
 *2025-12-20*
 
