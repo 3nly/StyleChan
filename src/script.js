@@ -828,6 +828,7 @@
                 return this.elems.length === 1;
             },
             riceCheck: function() {
+                if (!document.documentElement.classList.contains("fourchan-x")) return this;
                 return this.each(function() {
                     var click = function(e) {
                         e.preventDefault();

@@ -148,7 +148,7 @@ input[type=submit],
 .riceCheck {
   cursor: pointer;
 }
-input[type=checkbox],
+.fourchan-x input[type=checkbox],
 .riceCheck {
   display: inline-block;
   height: 10px !important;
@@ -159,7 +159,7 @@ input[type=checkbox],
   -moz-appearance: none;
   margin: 1px;
 }
-input[type=checkbox] {
+.fourchan-x input[type=checkbox] {
   display: none !important;
 }
 .riceCheck {
@@ -351,7 +351,7 @@ table.flashListing {
   margin-bottom: 20px;
 }
 table.flashListing .highlightPost {
-  background: rgb\(" + $SS.theme.mainColor.shiftRGB(-25) + ") !important;
+  background: rgb\(" + $SS.theme.mainColor.shiftRGB(-25) + "\) !important;
 }
 .flashListing td {
   padding-left: 4px !important;
