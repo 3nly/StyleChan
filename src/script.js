@@ -95,6 +95,7 @@
             "Remove Controls": [false, "Removes the QR controls and checkbox."],
             "Animated Transition": [false, "Enables a transition animation for the QR."],
             "Expanding Form Inputs": [true, "Makes certain form elements expand on focus."],
+            "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size limit to JPEG."],
             ":: Replies": ["header", ""],
             "Fit Width": [true, "Replies stretch to the width of the page.", null, true],
             "Fit Post Menu": [false, "Sets the post menu to the right.", "Fit Width", true, true],
@@ -927,6 +928,11 @@
                     $(".navLinks.desktop").append(link);                    
                 };
 
+                // Auto-convert images on drop
+                if ($SS.conf["Auto-Convert Images"]) {
+                    $SS.initImageConvertOnDrop();
+                }
+
                 // things that need to change after 4chan X loads.
                 setTimeout(function() {
                     if (!$SS.QRhandled && (div = $("#qr")).exists())
@@ -1016,6 +1022,73 @@
                 $("#ch4SS").text(css);
             else
                 $(getDocHead()).append($("<style type='text/css' id=ch4SS>").text(css));
+        },
+        initImageConvertOnDrop: function() {
+            var MAX_BYTES = 4 * 1024 * 1024; // 4MB
+
+            function notify(msg) {
+                var detail = { type: 'info', content: NAME + ': ' + msg, lifetime: 4 };
+                if (typeof cloneInto === 'function') detail = cloneInto(detail, document.defaultView);
+                document.dispatchEvent(new CustomEvent('CreateNotification', { bubbles: true, detail: detail }));
+            }
+
+            function convertToJPEG(file, baseName, qrInput) {
+                createImageBitmap(file).then(function(bitmap) {
+                    var canvas = document.createElement("canvas");
+                    canvas.width = bitmap.width;
+                    canvas.height = bitmap.height;
+                    canvas.getContext("2d").drawImage(bitmap, 0, 0);
+                    bitmap.close();
+                    canvas.toBlob(function(blob) {
+                        var outName = baseName + ".jpg";
+                        var converted = new File([blob], outName, { type: "image/jpeg" });
+                        var dt = new DataTransfer();
+                        dt.items.add(converted);
+                        qrInput.files = dt.files;
+                        qrInput.dispatchEvent(new Event("change", { bubbles: true }));
+                        notify("Converted " + file.name + " to " + outName);
+                    }, "image/jpeg", 0.92);
+                }).catch(function() {});
+            }
+
+            function shouldConvert(file) {
+                return file.type === "image/webp" || (/^image\//.test(file.type) && file.size > MAX_BYTES);
+            }
+
+            // File picker: intercept change on the QR input
+            $.asap(function() {
+                return !!(document.querySelector("#qr input[type=file]") ||
+                          document.querySelector("#postForm input[type=file]"));
+            }, function() {
+                var qrInput = document.querySelector("#qr input[type=file]") ||
+                              document.querySelector("#postForm input[type=file]");
+                qrInput.addEventListener("change", function(e) {
+                    var file = qrInput.files && qrInput.files[0];
+                    if (!file || !shouldConvert(file)) return;
+                    e.stopImmediatePropagation();
+                    convertToJPEG(file, file.name.replace(/\.[^.]+$/, ""), qrInput);
+                }, true);
+            });
+
+            // Drag and drop
+            document.addEventListener("drop", function(e) {
+                var files = e.dataTransfer && e.dataTransfer.files;
+                if (!files || !files.length) return;
+
+                var file = files[0];
+                if (!shouldConvert(file)) return;
+
+                // Find the QR file input (4chanX or native)
+                var qrInput = document.querySelector("#qr input[type=file]") ||
+                              document.querySelector("#postForm input[type=file]");
+                if (!qrInput) return;
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                var baseName = file.name.replace(/\.[^.]+$/, "");
+                convertToJPEG(file, baseName, qrInput);
+            }, true);
         },
         QRDialogCreationHandler: function(e) {
             var qr = e.target;
