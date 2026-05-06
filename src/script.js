@@ -1069,19 +1069,15 @@
             }
 
             // File picker: intercept change on the QR input
-            $.asap(function() {
-                return !!(document.querySelector("#qr input[type=file]") ||
-                          document.querySelector("#postForm input[type=file]"));
-            }, function() {
-                var qrInput = document.querySelector("#qr input[type=file]") ||
-                              document.querySelector("#postForm input[type=file]");
-                qrInput.addEventListener("change", function(e) {
-                    var file = qrInput.files && qrInput.files[0];
-                    if (!file || !shouldConvert(file)) return;
-                    e.stopImmediatePropagation();
-                    convertToJPEG(file, file.name.replace(/\.[^.]+$/, ""), qrInput);
-                }, true);
-            });
+            document.addEventListener("change", function(e) {
+                var input = e.target;
+                if (input.type !== "file") return;
+                if (!input.closest("#qr, #postForm")) return;
+                var file = input.files && input.files[0];
+                if (!file || !shouldConvert(file)) return;
+                e.stopImmediatePropagation();
+                convertToJPEG(file, file.name.replace(/\.[^.]+$/, ""), input);
+            }, true);
 
             // Drag and drop
             document.addEventListener("drop", function(e) {
