@@ -1047,7 +1047,7 @@
                         qrInput.files = dt.files;
                         qrInput.dispatchEvent(new Event("change", { bubbles: true }));
                         notify("Converted " + file.name + " to " + outName);
-                    }, "image/jpeg", 0.92);
+                    }, "image/jpeg", 0.94);
                 }).catch(function() {});
             }
 
