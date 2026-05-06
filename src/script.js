@@ -940,7 +940,9 @@
         init: function(reload) {
             if (!reload) {
                 if (/^about:neterror/.test(document.documentURI)) return;
-                localStorage["4chan-settings"] = "{ \"disableAll\" : true, \"dropDownNav\": false }";
+                if (document.documentElement.classList.contains("fourchan-x")) {
+                    localStorage["4chan-settings"] = "{ \"disableAll\" : true, \"dropDownNav\": false }";
+                }
 
                 var m_VERSION;
                 $SS.browser.webkit = /AppleWebKit/.test(navigator.userAgent);
