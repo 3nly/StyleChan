@@ -1025,7 +1025,7 @@
                 $(getDocHead()).append($("<style type='text/css' id=ch4SS>").text(css));
         },
         initImageConvertOnDrop: function() {
-            var MAX_BYTES = 4 * 1024 * 1024; // 4MB
+            var MAX_BYTES = $SS.location.maxFileSize;
 
             function notify(msg) {
                 var detail = { type: 'info', content: NAME + ': ' + msg, lifetime: 4 };
@@ -1040,15 +1040,27 @@
                     canvas.height = bitmap.height;
                     canvas.getContext("2d").drawImage(bitmap, 0, 0);
                     bitmap.close();
-                    canvas.toBlob(function(blob) {
-                        var outName = baseName + ".jpg";
-                        var converted = new File([blob], outName, { type: "image/jpeg" });
-                        var dt = new DataTransfer();
-                        dt.items.add(converted);
-                        qrInput.files = dt.files;
-                        qrInput.dispatchEvent(new Event("change", { bubbles: true }));
-                        notify("Converted " + file.name + " to " + outName);
-                    }, "image/jpeg", 0.94);
+                    
+                    var qualities = [0.99, 0.98, 0.97, 0.96, 0.95, 0.90, 0.85, 0.80, 0.75];
+                    var outName = baseName + ".jpg";
+
+                    function tryQuality(index) {
+                        var q = qualities[index];
+                        canvas.toBlob(function(blob) {
+                            if (blob.size <= MAX_BYTES || index === qualities.length - 1) {
+                                var converted = new File([blob], outName, { type: "image/jpeg" });
+                                var dt = new DataTransfer();
+                                dt.items.add(converted);
+                                qrInput.files = dt.files;
+                                qrInput.dispatchEvent(new Event("change", { bubbles: true }));
+                                notify("Converted " + file.name + " to " + outName + " (q" + Math.round(q * 100) + "%)");
+                            } else {
+                                tryQuality(index + 1);
+                            }
+                        }, "image/jpeg", q);
+                    }
+
+                    tryQuality(0);
                 }).catch(function() {});
             }
 
@@ -1181,6 +1193,21 @@
                     $(".fourchan-xt").exists() ? $(".shortcut.brackets-wrap:last-of-type").before(c) : $("#boardNavDesktop").append(b);
                 });
 
+                if (!document.documentElement.classList.contains("fourchan-x")) {
+                    $.asap(function() {
+                        return !!(document.querySelector("#boardNavDesktop .pageJump, #boardNavMobile .pageJump"));
+                    }, function() {
+                        function addStyleChanLink(pageJump) {
+                            var link = document.createElement("a");
+                            link.title = "StyleChan Settings";
+                            link.href = "javascript:;";
+                            link.textContent = " StyleChan ";
+                            link.addEventListener("click", $SS.options.show);
+                            pageJump.insertBefore(link, pageJump.lastElementChild);
+                        }
+                        document.querySelectorAll("#boardNavDesktop .pageJump, #boardNavMobile .pageJump").forEach(addStyleChanLink);
+                    });
+                }
             },
             show: function() {
                 if ($("#overlay").exists())
@@ -3681,6 +3708,17 @@
         validImageURL: function(img) {
             return /^https?:\/\/.+$/i.test(img);
         },
+        /* Board max_filesize from https://a.4cdn.org/boards.json */
+        boardFileSizes: {
+            /* 2MB */ b: 2097152, bant: 2097152, s4s: 2097152,
+            /* 5MB */ out: 5242880, p: 5242880, soc: 5242880,
+            /* 6MB */ w: 6291456, wg: 6291456, wsg: 6291456,
+            /* 8MB */ gd: 8388608, hc: 8388608, hm: 8388608, hr: 8388608,
+                      po: 8388608, qst: 8388608, r: 8388608, s: 8388608,
+                      tg: 8388608, trv: 8388608, wsr: 8388608
+            /* all others: 4MB (4194304) */
+        },
+
         getLocation: function(url) {
             var obj;
 
@@ -3699,6 +3737,7 @@
                 report: location.hostname === "sys.4chan.org",
                 dead: document.title === "4chan - 404 Not Found",
                 nsfw: /^(aco|b|bant|d|e|f|gif|h|hr|r|s|t|u|wg|i|ic|r9k|hm|y|hc|pol|soc|s4s|trash)$/.test(pathname[0]),
+                maxFileSize: $SS.boardFileSizes[pathname[0]] || 4194304,
                 reply: pathname[1] === "thread",
                 catalog: pathname[1] === "catalog",
                 archive: pathname[1] === "archive"
