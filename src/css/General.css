@@ -390,6 +390,22 @@ body.is_thread div.navLinks:not(.navLinksBot) {
 #hoverUI {
   z-index: 12 !important;
 }
+:root:not(.fourchan-x) div#boardNavMobile {
+  padding: 2px 4px;
+  overflow: hidden;
+  border-bottom: 2px solid;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 12px;
+  z-index: 9001;
+}
+:root:not(.fourchan-x) div.pageJump {
+  float: right;
+  padding-right: 5px;
+  padding-top: 3px;
+}
 #search-box,
 #index-search {
   width: 9%;

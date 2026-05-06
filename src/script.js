@@ -1195,17 +1195,34 @@
 
                 if (!document.documentElement.classList.contains("fourchan-x")) {
                     $.asap(function() {
-                        return !!(document.querySelector("#boardNavDesktop .pageJump, #boardNavMobile .pageJump"));
+                        return !!(document.querySelector("#boardNavDesktop, #boardNavMobile"));
                     }, function() {
-                        function addStyleChanLink(pageJump) {
-                            var link = document.createElement("a");
-                            link.title = "StyleChan Settings";
-                            link.href = "javascript:;";
-                            link.textContent = " StyleChan ";
-                            link.addEventListener("click", $SS.options.show);
-                            pageJump.insertBefore(link, pageJump.lastElementChild);
+                        function addToNav(nav) {
+                            var pageJump = nav.querySelector(".pageJump");
+                            if (pageJump) {
+                                var link = document.createElement("a");
+                                link.title = "StyleChan Settings";
+                                link.href = "javascript:;";
+                                link.textContent = " StyleChan ";
+                                link.addEventListener("click", $SS.options.show);
+                                pageJump.insertBefore(link, pageJump.lastElementChild);
+                            } else {
+                                var navtopright = nav.querySelector("#navtopright");
+                                if (navtopright) {
+                                    var span = document.createElement("span");
+                                    span.appendChild(document.createTextNode(" ["));
+                                    var link = document.createElement("a");
+                                    link.title = "StyleChan Settings";
+                                    link.href = "javascript:;";
+                                    link.textContent = "StyleChan";
+                                    link.addEventListener("click", $SS.options.show);
+                                    span.appendChild(link);
+                                    span.appendChild(document.createTextNode("]"));
+                                    navtopright.appendChild(span);
+                                }
+                            }
                         }
-                        document.querySelectorAll("#boardNavDesktop .pageJump, #boardNavMobile .pageJump").forEach(addStyleChanLink);
+                        document.querySelectorAll("#boardNavDesktop, #boardNavMobile").forEach(addToNav);
                     });
                 }
             },

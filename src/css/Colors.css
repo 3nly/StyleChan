@@ -371,6 +371,10 @@ select:focus,
 #header-bar {
   border: none !important;
 }
+:root:not(.fourchan-x) div#boardNavMobile {
+  background-color: " + $SS.theme.headerBGColor.hex + ";
+  border-bottom-color: " + $SS.theme.brderColor.hex + ";
+}
 .flashListing td:not(:last-of-type):not(.postblock) {
   border-width: 1px;
   border-style: solid;
