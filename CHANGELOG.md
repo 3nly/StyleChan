@@ -1,3 +1,9 @@
+### v1.0.37
+*2026-05-06*
+
+- Preliminary support for inline 4chan extension to work without 4chanX present
+- Add a new option: Auto-Convert Images, this option will auto-convert any drag&dropped or selected images that are WebP or above the filesize limit to JPEG (variable quality)
+
 ### v1.0.36
 *2026-01-19*
 
