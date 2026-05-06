@@ -262,7 +262,7 @@
         MIN_FONT_SIZE = 10,
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
-        VERSION = "1.0.37",
+        VERSION = "1.0.38",
         CHANGELOG = "https://github.com/3nly/StyleChan/blob/main/CHANGELOG.md",
         inputImages = "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAgCAYAAAAv8DnQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAP9JREFUOMvV0CFLQ2EYxfHfrtdiURgbmCxOmFPBJgZZ0CQD0Q+goFkwabWIyWIWFgwmy7Qp7DPI3GD7ACZlYLNcy31ljG0aDHrSy3N43nOef6ZULBiifczEQ8wV7OAtGmBO4wgfOI2whsXUnMAJ8rhCJ8IxDpHDHpZwixqM5XPZBBtYxioauEgjRLjBI2bRxTneQ6EYCS4xiTu89DbONJrtP88hwnV64hm28YRqyPsFDkmSGKUYFubnsqignM7rqDWa7dcAqoLdnsXwrgZQ5QG/l8MVIxX1ZPar/lUyUOsv+aMzv+0Qw3OrM4VNrKfzB9yXioVu6LDVx+EA4/+Gwycw/Uz36O07WwAAAABJRU5ErkJggg==",
         themeInputs = [{
@@ -1069,19 +1069,15 @@
             }
 
             // File picker: intercept change on the QR input
-            $.asap(function() {
-                return !!(document.querySelector("#qr input[type=file]") ||
-                          document.querySelector("#postForm input[type=file]"));
-            }, function() {
-                var qrInput = document.querySelector("#qr input[type=file]") ||
-                              document.querySelector("#postForm input[type=file]");
-                qrInput.addEventListener("change", function(e) {
-                    var file = qrInput.files && qrInput.files[0];
-                    if (!file || !shouldConvert(file)) return;
-                    e.stopImmediatePropagation();
-                    convertToJPEG(file, file.name.replace(/\.[^.]+$/, ""), qrInput);
-                }, true);
-            });
+            document.addEventListener("change", function(e) {
+                var input = e.target;
+                if (input.type !== "file") return;
+                if (!input.closest("#qr, #postForm")) return;
+                var file = input.files && input.files[0];
+                if (!file || !shouldConvert(file)) return;
+                e.stopImmediatePropagation();
+                convertToJPEG(file, file.name.replace(/\.[^.]+$/, ""), input);
+            }, true);
 
             // Drag and drop
             document.addEventListener("drop", function(e) {

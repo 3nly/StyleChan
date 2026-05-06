@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         StyleChan
-// @version      1.0.37
+// @version      1.0.38
 // @namespace    StyleChan
 // @description  Customizable themes for 4chan X.
 // @minGMVer     1.14

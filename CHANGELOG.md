@@ -1,3 +1,8 @@
+### v1.0.38
+*2026-05-06*
+
+- Improve the hooking when selecting files through the file picker so StyleChan picks them up before 4chanX
+
 ### v1.0.37
 *2026-05-06*
 
