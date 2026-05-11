@@ -10,6 +10,9 @@ body {
   margin-top: auto !important;
 }
 /* Replies */
+:not(.fourchan-x) div.op {
+  display: block;
+}
 .postInfo {
   padding: 5px 13px;
   display: block !important;
