@@ -992,6 +992,13 @@
             $SS.Config.init();
             $SS.Themes.init();
 
+            /* Set native 4chan theme to mitigate unloaded CSS flashbang #6 */
+            (function() {
+                var nativeTheme = $SS.theme.bgColor.isLight ? "Yotsuba B New" : "Tomorrow",
+                    cookieName = $SS.location.nsfw ? "nws_style" : "ws_style";
+                document.cookie = cookieName + "=" + nativeTheme + ";domain=.4chan.org;samesite=strict;path=/";
+            })();
+
             if (reload) {
                 $SS.insertCSS();
                 $SS.DOMLoaded(true);
@@ -2858,11 +2865,6 @@
 
         classes: {
             init: function() {
-                /* Set native 4chan theme to mitigate unloaded CSS flashbang #6 */
-                const nativeTheme = $SS.theme.bgColor.isLight ? "Yotsuba B New" : "Tomorrow";
-                document.cookie = "nws_style=" + nativeTheme + ";domain=.4chan.org;samesite=strict;path=/";
-                document.cookie = "ws_style=" + nativeTheme + ";domain=.4chan.org;samesite=strict;path=/";
-
                 /* Function arguments: ("Option Name", value, "class-name") */
                 $("html").addClass("oneechan");
                 $SS.theme.textColor.isLight ? $("html").addClass("isLight") : "";
