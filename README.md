@@ -10,7 +10,8 @@ Originally developed by [seaweedchan](https://github.com/seaweedchan/OneeChan), 
 
 #### Install instructions
 
-Installing [4chan X](https://github.com/ccd0/4chan-x) or [4chan XT](https://github.com/TuxedoTako/4chan-xt)  is **REQUIRED** for StyleChan to work.
+Installing [4chan X](https://github.com/ccd0/4chan-x) or [4chan XT](https://github.com/TuxedoTako/4chan-xt)  is **RECOMMENDED** for StyleChan to work.\
+*While StyleChan will function with the native 4chan extension, not all available options may work without 4chan X.*
 
 - In 4chan X **enable**: Quick Reply > Persistent QR > Auto Hide QR.
 
