@@ -894,11 +894,12 @@
                     subtree: true
                 });
 
-                if ((!(html = $("*[xmlns]")).exists()) && (!(ctxmenu = $("#ctxmenu-main").exists())))
-                    if ((link = $("link[title][rel='stylesheet']")).exists())
-                        link.each(function() {
-                            $(this).attr("href", "");
-                        });
+                if (document.documentElement.classList.contains("fourchan-x"))
+                    if ((!(html = $("*[xmlns]")).exists()) && (!(ctxmenu = $("#ctxmenu-main").exists())))
+                        if ((link = $("link[title][rel='stylesheet']")).exists())
+                            link.each(function() {
+                                $(this).attr("href", "");
+                            });
 
                 if ((div = $("#globalMessage *[style]")).exists())
                     div.each(function() {
