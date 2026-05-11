@@ -1,5 +1,6 @@
 /* Quick Reply */
-#qr {
+#qr,
+#quickReply {
   box-shadow: none !important;
   border-radius: 0 !important;
 }
@@ -26,7 +27,9 @@
   margin: 0 0 1px;
 }
 #qr-file-button,
-#qr input[type='submit'] {
+#qr input[type='submit'],
+#qrFile,
+#quickReply input[type='submit'] {
   height: 25px !important;
   margin: 0 !important;
 }
@@ -62,14 +65,18 @@
 :root.expand-inputs .persona .field:focus {
   flex: 3;
 }
-#qr textarea {
+#qr textarea,
+#quickReply textarea {
   min-height: 190px !important;
 }
-:root.ua-blink #qr textarea {
+:root.ua-blink #qr textarea,
+:root.ua-blink #quickReply textarea {
   min-height: 185px !important;
 }
 :root.ua-blink #qr textarea.field,
-:root.ua-gecko #qr textarea.field {
+:root.ua-gecko #qr textarea.field,
+:root.ua-blink #quickReply textarea,
+:root.ua-gecko #quickReply textarea {
   min-height: 9em !important;
   min-width: 302px !important;
 }
@@ -82,14 +89,18 @@
   max-height: 64vh;
 }
 :root.right-sidebar #qr textarea.field,
-:root.left-sidebar #qr textarea.field {
+:root.left-sidebar #qr textarea.field,
+:root.right-sidebar #quickReply textarea,
+:root.left-sidebar #quickReply textarea {
   max-width: 302px !important;
 }
-:root.qr-background #qr {
+:root.qr-background #qr,
+:root.qr-background #quickReply {
   background: transparent !important;
   border: none;
 }
-:root.qr-opacity #qr {
+:root.qr-opacity #qr,
+:root.qr-opacity #quickReply {
   opacity: 0.9;
 }
 :root.ua-gecko #t-help,
@@ -177,14 +188,17 @@
   transform: rotate(-90deg);
   right: 86%;
 }
-#qr > form {
+#qr > form,
+#quickReply > form {
   overflow-y: hidden !important;
 }
 /* Fade QR */
-:root.fade-qr #qr form {
+:root.fade-qr #qr form,
+:root.fade-qr #quickReply form {
   display: block !important;
 }
-:root.fade-qr #qr.autohide:not(.focus):not(:hover) {
+:root.fade-qr #qr.autohide:not(.focus):not(:hover),
+:root.fade-qr #quickReply:not(.focus):not(:hover) {
   opacity: 0.2 !important;
   transition: opacity .2s ease-in-out 1s !important;
 }

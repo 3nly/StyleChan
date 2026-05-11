@@ -59,7 +59,8 @@ body.is_catalog .button,
 #header-bar #notifications a {
   color: #ffffff !important;
 }
-a:hover,
+:root a:hover,
+:root div.post div.postInfo span.postNum a:hover,
 body.is_catalog .button:hover,
 :root.catalog-mode .button:hover,
 .lit,
@@ -113,14 +114,14 @@ s:hover .quote,
   text-shadow: none !important;
 }
 /* Backlinks */
-.backlink, 
-.backlink.deadlink {
+:root .backlink, 
+:root .backlink.deadlink {
   color: " + $SS.theme.blinkColor.hex + " !important;
 }
 :root.backlink-shadow .backlink {
   text-shadow: 1px 1px 5px;
 }
-.quotelink {
+:root .quotelink {
   color: " + $SS.theme.qlColor.hex + " !important;
 }
 /* Code Tags */
@@ -154,7 +155,10 @@ body.is_catalog .panel,
 :root.op-background .op:not(.inline .op),
 .flashListing tr:nth-of-type(2n+1):not(.highlightPost),
 .dd-menu ul,
-:root.catalog-hover-expand .catalog-container:hover > .post {
+:root.catalog-hover-expand .catalog-container:hover > .post,
+#threadWatcher,
+#qrHeader,
+#qrCaptchaContainer {
   background: rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ")!important;
 }
 .tab-label,
@@ -163,7 +167,8 @@ body.is_catalog .panel,
   background: rgb\(" + $SS.theme.mainColor.rgb + ") !important;
 }
 :root.recolor-even .thread>.replyContainer:nth-of-type(even):not(.hidden) .post:not(.reply:target, .inline>.postContainer>.post),
-.flashListing tr:nth-of-type(2n):not(.highlightPost) {
+.flashListing tr:nth-of-type(2n):not(.highlightPost),
+:not(.fourchan-x) .reply.highlight {
   background: rgb\(" + $SS.theme.mainColor.shiftRGB(-10) + "," + $SS.theme.replyOp + ") !important;
 }
 :root:not(.header-gradient) #header-bar {
@@ -183,7 +188,8 @@ body.is_catalog .panel,
 .pages.cataloglink,
 .pages strong>a,
 input[value='Next'],
-input[value='Previous'] {
+input[value='Previous'],
+#quickReply input[type="submit"] {
   background: linear-gradient(rgb\(" + $SS.theme.mainColor.shiftRGB(15) + "),rgb(" + $SS.theme.mainColor.rgb + ")) !important;
 }
 .options-button:hover,
@@ -191,7 +197,8 @@ input[value='Previous'] {
 .pages strong>a:hover,
 .dd-menu li:hover,
 input[value='Next']:hover,
-input[value='Previous']:hover {
+input[value='Previous']:hover,
+#quickReply input[type="submit"]:hover {
   background: rgb\(" + $SS.theme.mainColor.shiftRGB(15) + ");
 }
 .focused.entry {
@@ -410,7 +417,8 @@ select:focus,
   box-shadow: 0 0 5px rgba(0,0,0,.25);
 }
 #qr,
-#thread-watcher {
+#thread-watcher,
+#threadWatcher {
   box-shadow: 1px 1px 3px rgba(0,0,0,.1) !important;
 }
 /* Closed Threads */

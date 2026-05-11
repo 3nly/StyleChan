@@ -37,7 +37,8 @@
   bottom: 5px;
   left: 2px;
 }
-:root.backlink-icon .backlink.inlined {
+:root.backlink-icon .backlink.inlined,
+:root.backlink-icon .backlink:has(.quotelink.linkfade) {
   background-image: url(\"data:image/svg+xml," + $SS.theme.icons.downArrow + "\") !important;
   font-size: 0 !important;
   padding: 6px !important;
@@ -47,11 +48,17 @@
   bottom: 5px;
   left: 3px;
 }
+:root.backlink-icon .backlink .quotelink {
+  position: absolute;
+  inset: 0;
+  font-size: 0 !important;
+}
 :root.backlink-icon .reply .backlink {
   bottom: " + (($SS.conf["Font Size"] < 12) ? 4 : 6) + "px !important;
 }
 :root.backlink-icon .backlink:hover,
-:root.backlink-icon .backlink.inlined:hover {
+:root.backlink-icon .backlink.inlined:hover,
+:root.backlink-icon .backlink:has(.quotelink.linkfade):hover {
   opacity: 1 !important;
 }
 /* From 4chanSS */

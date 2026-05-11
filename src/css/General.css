@@ -225,7 +225,8 @@ input[type=checkbox]:checked+.riceCheck::before {
   vertical-align: baseline !important;
 }
 /* Thread Watcher */
-:root.fixed-watcher #thread-watcher {
+:root.fixed-watcher #thread-watcher,
+:root.fixed-watcher #threadWatcher {
   position: fixed !important;
 }
 /* QR link */
