@@ -46,13 +46,14 @@ select,
 }
 /* Links */
 a:not(s>a),
+a:visited,
 s:hover>a:not(:hover),
-.typ,
-.atn,
+:root .typ,
+:root .atn,
 body.is_catalog .button,
 :root.catalog-mode .button,
-.options-button,
-.tegaki-tb-btn {
+:root .options-button,
+:root .tegaki-tb-btn {
   color: " + $SS.theme.linkColor.hex + " !important;
 }
 #header-bar #notifications a {
