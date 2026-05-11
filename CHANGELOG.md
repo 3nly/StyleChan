@@ -1,3 +1,15 @@
+### v1.0.39
+*2026-05-11*
+
+- Removed rule that was misplacing the reply navigation arrows (top/bottom arrows)
+
+Further improved the script to work without 4chanX:
+- Native theme style sheets can now load and apply their rules
+- Fix link colors
+- Fix backlink icons
+- Fix OP post
+- Adjusted Quick Reply (note: only the fade option will work, vertical QR is not supported)
+
 ### v1.0.38
 *2026-05-06*
 
