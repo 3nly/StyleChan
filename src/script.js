@@ -95,6 +95,7 @@
             "Remove Controls": [false, "Removes the QR controls and checkbox."],
             "Animated Transition": [false, "Enables a transition animation for the QR."],
             "Expanding Form Inputs": [true, "Makes certain form elements expand on focus."],
+            "Remember comment draft": [false, "Will save and restore unsubmitted QR comments (5 second delay). Drafts expire after 24h."],
             "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size limit to JPEG."],
             "Single view captcha": [false, "Shows the captcha challenges in a single view."],
             ":: Replies": ["header", ""],
@@ -933,6 +934,8 @@
                 if ($SS.conf["Auto-Convert Images"]) {
                     $SS.initImageConvertOnDrop();
                 }
+                // Remember QR comments
+                $SS.initRememberComment();
                 // Single view captcha grid
                 $SS.initSingleViewCaptcha();
 
@@ -1107,6 +1110,136 @@
                 var baseName = file.name.replace(/\.[^.]+$/, "");
                 convertToJPEG(file, baseName, qrInput);
             }, true);
+        },
+        initRememberComment: function() {
+            if (!$SS.conf["Remember comment draft"]) return;
+
+            $.asap(function() {
+                return document.querySelector("#qr, #quickReply");
+            }, function() {
+                $SS.bindRememberComment(document.querySelector("#qr, #quickReply"));
+            });
+        },
+        getRememberCommentPrefix: function() {
+            return NAMESPACE + "RememberComment:";
+        },
+        getRememberCommentKey: function() {
+            return $SS.getRememberCommentPrefix() + location.pathname;
+        },
+        getRememberCommentExpiry: function() {
+            return 24 * 60 * 60 * 1000;
+        },
+        loadRememberedComment: function(storageKey) {
+            var rawValue = localStorage.getItem(storageKey);
+            var parsedValue;
+
+            if (!rawValue) return null;
+
+            try {
+                parsedValue = JSON.parse(rawValue);
+            } catch (error) {
+                localStorage.removeItem(storageKey);
+                return null;
+            }
+
+            if (!parsedValue || typeof parsedValue.text !== "string" || typeof parsedValue.savedAt !== "number") {
+                localStorage.removeItem(storageKey);
+                return null;
+            }
+
+            if (Date.now() - parsedValue.savedAt > $SS.getRememberCommentExpiry()) {
+                localStorage.removeItem(storageKey);
+                return null;
+            }
+
+            return parsedValue;
+        },
+        cleanupRememberedComments: function() {
+            var prefix = $SS.getRememberCommentPrefix();
+            var now = Date.now();
+            var keptEntries = [];
+            var i, key, entry;
+
+            for (i = 0; i < localStorage.length; ++i) {
+                key = localStorage.key(i);
+                if (!key || key.indexOf(prefix) !== 0) continue;
+
+                entry = $SS.loadRememberedComment(key);
+                if (!entry) continue;
+
+                keptEntries.push({
+                    key: key,
+                    savedAt: entry.savedAt,
+                    age: now - entry.savedAt
+                });
+            }
+
+            keptEntries.sort(function(a, b) {
+                return b.savedAt - a.savedAt;
+            });
+
+            keptEntries.slice(10).forEach(function(entry) {
+                localStorage.removeItem(entry.key);
+            });
+        },
+        saveRememberedComment: function(storageKey, text) {
+            localStorage.setItem(storageKey, JSON.stringify({
+                text: text,
+                savedAt: Date.now()
+            }));
+            $SS.cleanupRememberedComments();
+        },
+        clearRememberedComment: function() {
+            localStorage.removeItem($SS.getRememberCommentKey());
+        },
+        bindRememberComment: function(qrNode) {
+            if (!qrNode || qrNode.dataset.rememberCommentBound || !$SS.conf["Remember comment draft"]) return;
+
+            var commentField = qrNode.querySelector("textarea");
+            var formNode = qrNode.querySelector("form") || qrNode.closest("form");
+            var storageKey = $SS.getRememberCommentKey();
+            var saveTimer = null;
+            var savedDraft;
+            var suppressRemember = false;
+
+            if (!commentField) return;
+
+            savedDraft = $SS.loadRememberedComment(storageKey);
+            if (savedDraft && !commentField.value) {
+                commentField.value = savedDraft.text;
+                commentField.dispatchEvent(new Event("input", { bubbles: true }));
+            }
+
+            function queueSave() {
+                if (suppressRemember) {
+                    suppressRemember = false;
+                }
+
+                clearTimeout(saveTimer);
+                saveTimer = setTimeout(function() {
+                    if (commentField.value.trim())
+                        $SS.saveRememberedComment(storageKey, commentField.value);
+                    else
+                        $SS.clearRememberedComment();
+                }, 5000);
+            }
+
+            function clearSavedComment() {
+                suppressRemember = true;
+                clearTimeout(saveTimer);
+                $SS.clearRememberedComment();
+            }
+
+            commentField.addEventListener("input", queueSave);
+            if (formNode)
+                formNode.addEventListener("submit", clearSavedComment, true);
+            qrNode.addEventListener("click", function(e) {
+                var submitNode = e.target.closest("input[type=submit], button[type=submit]");
+                if (submitNode)
+                    clearSavedComment();
+            });
+
+            qrNode.dataset.rememberCommentBound = "true";
         },
         initSingleViewCaptcha: function() {
             if (!$SS.conf["Single view captcha"]) return;
@@ -1302,6 +1435,7 @@
             var qr = e.target;
 
             $("input[type=checkbox]", qr).riceCheck();
+            $SS.bindRememberComment(qr);
 
             $SS.QRhandled = true;
         },
