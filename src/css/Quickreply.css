@@ -219,8 +219,7 @@ input[type="number"] {
   margin-top: 1px;
 }
 /* Single view captcha */
-:root.single-captcha #t-slider,
-:root.single-captcha #t-next {
+:root.single-captcha #t-slider {
   display: none !important;
 }
 :root.single-captcha #captcha-root {
