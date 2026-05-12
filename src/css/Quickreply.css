@@ -204,7 +204,7 @@
 }
 /* Oekaki */
 input[type="number"] {
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
 ::-webkit-inner-spin-button,
 ::-webkit-outer-spin-button {
@@ -217,4 +217,130 @@ input[type="number"] {
 /* 4chan XT */
 #file-n-submit .row.space {
   margin-top: 1px;
+}
+/* Single view captcha */
+:root.single-captcha #t-slider,
+:root.single-captcha #t-next {
+  display: none !important;
+}
+:root.single-captcha #captcha-root {
+  min-height: 145px;
+}
+
+:root.single-captcha #t-next.tcaptcha-stepper.is-ready {
+  display: inline-flex;
+}
+:root.single-captcha #t-task {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  justify-content: flex-start;
+  margin: 0 auto;
+  overflow-y: auto;
+  max-height: 38vh;
+  padding: 2px 0 !important;
+  height: auto !important;
+  white-space: normal !important;
+  align-items: center !important;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  position: relative;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+:root.single-captcha #t-task::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+:root.single-captcha #t-task.tcaptcha-compact {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start !important;
+  min-height: 145px;
+}
+:root.single-captcha #t-desc {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  white-space: pre-line;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.15;
+  user-select: none;
+  width: 100%;
+  padding: 2px 0 3px;
+  margin-bottom: 1px;
+  background: inherit;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 0 2px rgba(255, 255, 255, 0.18);
+}
+:root.single-captcha #t-task.tcaptcha-compact #t-desc {
+  position: static;
+  flex: 0 0 100%;
+}
+:root.single-captcha #t-desc img {
+  margin: 2px !important;
+  max-width: 40px;
+  max-height: 40px;
+  width: auto;
+  height: auto;
+}
+:root.single-captcha .tcaptcha-image {
+  padding: 0;
+  margin: 1px;
+  border: none;
+  background: none;
+  cursor: pointer !important;
+  width: calc(100% - 4px);
+  max-width: 172px;
+  height: auto;
+  flex: none;
+  display: block;
+}
+:root.single-captcha #t-task.tcaptcha-compact .tcaptcha-image {
+  width: auto;
+  max-width: none;
+}
+:root.single-captcha .tcaptcha-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+:root.single-captcha #t-task.tcaptcha-compact .tcaptcha-image img {
+  width: auto;
+  max-width: 80px;
+  max-height: 80px;
+}
+:root.single-captcha .tcaptcha-image.active {
+  outline: 2px solid " + $SS.theme.linkColor.hex + ";
+  outline-offset: 1px;
+}
+:root.single-captcha #t-load {
+  cursor: pointer !important;
+}
+:root.single-captcha #t-next {
+  margin-left: auto;
+  font-weight: bold;
+  align-items: center;
+  gap: 4px;
+}
+:root.single-captcha .tcaptcha-progress {
+  min-width: 34px;
+  text-align: center;
+}
+:root.single-captcha .tcaptcha-nav {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer !important;
+}
+:root.single-captcha .tcaptcha-nav:disabled {
+  opacity: 0.35;
+  cursor: default !important;
 }

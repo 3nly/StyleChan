@@ -96,6 +96,7 @@
             "Animated Transition": [false, "Enables a transition animation for the QR."],
             "Expanding Form Inputs": [true, "Makes certain form elements expand on focus."],
             "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size limit to JPEG."],
+            "Single view captcha": [false, "Shows the captcha challenges in a single view."],
             ":: Replies": ["header", ""],
             "Fit Width": [true, "Replies stretch to the width of the page.", null, true],
             "Fit Post Menu": [false, "Sets the post menu to the right.", "Fit Width", true, true],
@@ -934,6 +935,8 @@
                 if ($SS.conf["Auto-Convert Images"]) {
                     $SS.initImageConvertOnDrop();
                 }
+                // Single view captcha grid
+                $SS.initSingleViewCaptcha();
 
                 // things that need to change after 4chan X loads.
                 setTimeout(function() {
@@ -1106,6 +1109,196 @@
                 var baseName = file.name.replace(/\.[^.]+$/, "");
                 convertToJPEG(file, baseName, qrInput);
             }, true);
+        },
+        initSingleViewCaptcha: function() {
+            if (!$SS.conf["Single view captcha"]) return;
+
+            $.asap(function() {
+                return typeof TCaptcha !== "undefined" && typeof TCaptcha.buildSliderNode === "function";
+            }, function() {
+                var picksByTask = [];
+
+                function tidyPrompt(promptText) {
+                    return promptText
+                        .replace(/Use the scroll bar below to\s*|,\s*then click next\.?/gi, '')
+                        .replace(/(?:^|>)\s*([a-z])/i, function(match) {
+                            return match.toUpperCase();
+                        }) + '.';
+                }
+
+                function syncCaptchaResponse() {
+                    if (!TCaptcha.respNode) return;
+                    TCaptcha.respNode.value = picksByTask.map(function(choice) {
+                        return choice === undefined ? "" : choice;
+                    }).join("");
+                }
+
+                function paintNavigator() {
+                    var stepperNode = TCaptcha.nextNode;
+                    if (!stepperNode || !TCaptcha.tasks || !TCaptcha.tasks.length) return;
+
+                    stepperNode.classList.remove("is-ready");
+                    stepperNode.innerHTML = "";
+
+                    var backButton = document.createElement("button");
+                    backButton.type = "button";
+                    backButton.className = "tcaptcha-nav tcaptcha-nav-back";
+                    backButton.textContent = "‹";
+                    backButton.disabled = TCaptcha.taskId <= 0;
+                    backButton.addEventListener("click", function() {
+                        if (TCaptcha.taskId > 0) {
+                            TCaptcha.setTaskId(TCaptcha.taskId - 1);
+                            renderCaptchaGrid();
+                        }
+                    });
+
+                    var progressText = document.createElement("span");
+                    progressText.className = "tcaptcha-progress";
+                    progressText.textContent = (TCaptcha.taskId + 1) + "/" + TCaptcha.tasks.length;
+
+                    var forwardButton = document.createElement("button");
+                    forwardButton.type = "button";
+                    forwardButton.className = "tcaptcha-nav tcaptcha-nav-forward";
+                    forwardButton.textContent = "›";
+                    forwardButton.disabled = TCaptcha.taskId >= TCaptcha.tasks.length - 1;
+                    forwardButton.addEventListener("click", function() {
+                        if (TCaptcha.taskId < TCaptcha.tasks.length - 1) {
+                            TCaptcha.setTaskId(TCaptcha.taskId + 1);
+                            renderCaptchaGrid();
+                        }
+                    });
+
+                    stepperNode.appendChild(backButton);
+                    stepperNode.appendChild(progressText);
+                    stepperNode.appendChild(forwardButton);
+                    stepperNode.classList.add("is-ready");
+                }
+
+                function rememberChoice(choiceIndex) {
+                    var activeTask = TCaptcha.taskId;
+                    picksByTask[activeTask] = choiceIndex;
+                    syncCaptchaResponse();
+
+                    if (activeTask < TCaptcha.tasks.length - 1) {
+                        TCaptcha.setTaskId(activeTask + 1);
+                    }
+
+                    renderCaptchaGrid();
+                }
+
+                function attachGridHandler(gridNode) {
+                    if (!gridNode || gridNode.dataset.singleCaptchaBound) return;
+
+                    gridNode.addEventListener("click", function(evt) {
+                        var tileNode = evt.target.closest(".tcaptcha-image");
+                        var choiceIndex;
+
+                        if (!tileNode) return;
+
+                        choiceIndex = parseInt(tileNode.getAttribute("data-choice"), 10);
+                        if (!isNaN(choiceIndex)) {
+                            rememberChoice(choiceIndex);
+                        }
+                    });
+
+                    gridNode.dataset.singleCaptchaBound = "true";
+                }
+
+                function applyCaptchaLayout(gridNode) {
+                    var previewNodes = Array.from(gridNode.querySelectorAll(".tcaptcha-image img"));
+                    var isCompactMode = previewNodes.length > 0 && previewNodes.every(function(imageNode) {
+                        if (!imageNode.naturalWidth || !imageNode.naturalHeight) return false;
+
+                        return Math.abs(imageNode.naturalWidth - imageNode.naturalHeight) <= 4 &&
+                            imageNode.naturalWidth <= 96 && imageNode.naturalHeight <= 96;
+                    });
+
+                    gridNode.classList.toggle("tcaptcha-compact", isCompactMode);
+                }
+
+                function refreshCaptchaLayout(gridNode) {
+                    var previewNodes = Array.from(gridNode.querySelectorAll(".tcaptcha-image img"));
+
+                    if (!previewNodes.length) {
+                        gridNode.classList.remove("tcaptcha-compact");
+                        return;
+                    }
+
+                    previewNodes.forEach(function(imageNode) {
+                        if (imageNode.complete && imageNode.naturalWidth) return;
+
+                        imageNode.addEventListener("load", function() {
+                            applyCaptchaLayout(gridNode);
+                        }, { once: true });
+                        imageNode.addEventListener("error", function() {
+                            applyCaptchaLayout(gridNode);
+                        }, { once: true });
+                    });
+
+                    applyCaptchaLayout(gridNode);
+                }
+
+                function renderCaptchaGrid() {
+                    var gridNode = document.querySelector("#t-task");
+                    var activeChallenge = TCaptcha.getCurrentTask();
+                    var promptHTML;
+                    var tileHTML;
+                    var currentPick = picksByTask[TCaptcha.taskId];
+
+                    if (!TCaptcha.node || !gridNode || !activeChallenge) return;
+
+                    TCaptcha.node.style.height = "auto";
+                    TCaptcha.node.style.overflow = "visible";
+
+                    if (activeChallenge.img) {
+                        promptHTML = '<div id="t-desc"><img src="data:image/png;base64,' + activeChallenge.img + '"/></div>';
+                    } else if (activeChallenge.str) {
+                        promptHTML = '<div id="t-desc">' + tidyPrompt(activeChallenge.str) + '</div>';
+                    } else {
+                        promptHTML = '<div id="t-desc"></div>';
+                    }
+
+                    tileHTML = activeChallenge.items.map(function(bitmap, tileIndex) {
+                        var activeClass = currentPick === tileIndex ? " active" : "";
+                        return '<button type="button" class="tcaptcha-image' + activeClass + '" data-choice="' + tileIndex + '"><img src="data:image/png;base64,' + bitmap + '"/></button>';
+                    }).join("");
+
+                    gridNode.innerHTML = promptHTML + tileHTML;
+                    gridNode.scrollTop = 0;
+                    TCaptcha.taskNode = gridNode;
+                    attachGridHandler(gridNode);
+                    refreshCaptchaLayout(gridNode);
+                    paintNavigator();
+                }
+
+                TCaptcha.setChallenge = function(challengeData) {
+                    this.challengeIdNode.value = challengeData.challenge;
+                    this.respNode.value = "";
+                    picksByTask = [];
+                    if (!challengeData.tasks) return this.setNoop();
+                    this.tasks = challengeData.tasks;
+                    this.setTaskId(0);
+                    syncCaptchaResponse();
+                    renderCaptchaGrid();
+                };
+
+                TCaptcha.setTaskId = function(taskIndex) {
+                    this.taskId = Math.max(0, Math.min(taskIndex, this.tasks.length - 1));
+                    paintNavigator();
+                };
+
+                TCaptcha.setTaskNodeContent = function(text) {
+                    this.taskNode.innerHTML = '<div id="t-desc">' + text + '</div>';
+                };
+
+                TCaptcha.buildSliderNode = function() {
+                    return Object.assign(document.createElement('span'), { id: 't-slider', hidden: true });
+                };
+
+                TCaptcha.buildNextNode = function() {
+                    return Object.assign(document.createElement('span'), { id: 't-next', className: 'tcaptcha-stepper' });
+                };
+            });
         },
         QRDialogCreationHandler: function(e) {
             var qr = e.target;
@@ -2908,6 +3101,7 @@
                 $("html").optionClass("Allow Wrapping Around OP", false, "force-wrapping");
                 $("html").optionClass("OP Background", true, "op-background");
                 $("html").optionClass("Expanding Form Inputs", true, "expand-inputs");
+                $("html").optionClass("Single view captcha", true, "single-captcha");
                 $("html").optionClass("Animated Transition", true, "qr-transition");
                 $("html").optionClass("Show Header Background Gradient", true, "header-gradient");
                 $("html").optionClass("Show Header Shadow", false, "header-shadow");
