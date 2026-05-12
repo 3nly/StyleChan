@@ -251,7 +251,7 @@
                     value:"Garamond"
                 }]
             ],
-            "Font Size": [13, "Set the font size of text (in pixels). Min: 10px, Max: 18px"],
+            "Font Size": [13, "Set the font size of text (in pixels)."],
             "Backlink Font Size": [10, "Set the font size of backlinks."],
             "Bitmap Font": [false, "Check this if you are using a bitmap font."],
             "Themes": [],
@@ -259,8 +259,6 @@
             "Selected Theme": 1,
             "NSFW Theme": 0
         },
-        MAX_FONT_SIZE = 18,
-        MIN_FONT_SIZE = 10,
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
         VERSION = "<%= version %>",
@@ -1613,9 +1611,9 @@
                         var val = parseInt($(this).val()),
                             bitmap = $(this).parent().nextSibling().children("input[name='Bitmap Font']").val();
 
-                        if (e.keyCode === 38 && (val < MAX_FONT_SIZE || bitmap))
+                        if (e.keyCode === 38 && !isNaN(val))
                             $(this).val(++val + "px");
-                        else if (e.keyCode === 40 && (val > MIN_FONT_SIZE || bitmap))
+                        else if (e.keyCode === 40 && !isNaN(val))
                             $(this).val(--val + "px");
                     });
 
@@ -1762,9 +1760,6 @@
 
                     if (name === "Font Size") {
                         val = parseInt(val);
-
-                        if (!$("input[name='Bitmap Font']", div).val())
-                            val = Math.max(Math.min(val, MAX_FONT_SIZE), MIN_FONT_SIZE);
                     } else if (name === "Custom Right Margin") {
                         val = parseInt(val);
                     } else if (name === "Custom Left Margin") {
