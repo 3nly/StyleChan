@@ -69,6 +69,7 @@ body.is_catalog .button:hover,
 #import-link>.options-button:hover {
   color: " + $SS.theme.linkHColor.hex + " !important;
 }
+/* Notifications */
 #stylechan-notifications .stylechan-notification {
   color: " + $SS.theme.textColor.hex + " !important;
   background: rgb\(" + $SS.theme.mainColor.rgb + ") !important;
@@ -76,16 +77,16 @@ body.is_catalog .button:hover,
   border-left-color: " + $SS.theme.linkColor.hex + " !important;
 }
 #stylechan-notifications .stylechan-notification-info {
-  border-left-color: " + $SS.theme.linkColor.hex + " !important;
+  border-left-color: #6f8fb3 !important;
 }
 #stylechan-notifications .stylechan-notification-warning {
-  border-left-color: " + $SS.theme.titleColor.hex + " !important;
+  border-left-color: #c7a85a !important;
 }
 #stylechan-notifications .stylechan-notification-error {
-  border-left-color: " + $SS.theme.blinkColor.hex + " !important;
+  border-left-color: #c06b6b !important;
 }
 #stylechan-notifications .stylechan-notification-success {
-  border-left-color: " + $SS.theme.nameColor.hex + " !important;
+  border-left-color: " + $SS.theme.quoteColor.hex + " !important;
 }
 /* Header */
 #header-bar,

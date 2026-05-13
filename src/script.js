@@ -1044,8 +1044,8 @@
 
             function notify(msg) {
                 $SS.notify({
-                    type: 'info',
-                    content: NAME + ': ' + msg,
+                    type: 'success',
+                    content: msg,
                     lifetime: 5
                 });
             }
