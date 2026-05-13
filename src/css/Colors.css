@@ -139,7 +139,8 @@ s:hover .quote,
 :root.backlink-shadow .backlink {
   text-shadow: 1px 1px 5px;
 }
-:root .quotelink {
+:root .quotelink,
+:root .deadlink {
   color: " + $SS.theme.qlColor.hex + " !important;
 }
 /* Code Tags */
