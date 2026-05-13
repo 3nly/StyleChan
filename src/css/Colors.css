@@ -208,6 +208,8 @@ body.is_catalog .panel,
 .pages strong>a,
 input[value='Next'],
 input[value='Previous'],
+#t-load,
+#t-next,
 #quickReply input[type="submit"] {
   background: linear-gradient(rgb\(" + $SS.theme.mainColor.shiftRGB(15) + "),rgb(" + $SS.theme.mainColor.rgb + ")) !important;
 }
@@ -217,6 +219,8 @@ input[value='Previous'],
 .dd-menu li:hover,
 input[value='Next']:hover,
 input[value='Previous']:hover,
+#t-load:hover,
+#t-next:hover,
 #quickReply input[type="submit"]:hover {
   background: rgb\(" + $SS.theme.mainColor.shiftRGB(15) + ");
 }
@@ -369,7 +373,9 @@ select,
 .pages.cataloglink,
 .pages strong>a,
 input[value='Next'],
-input[value='Previous'] {
+input[value='Previous'],
+#t-load,
+#t-next {
   border-style: solid;
   border-width: 1px;
   border-color: rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-30) + ") !important;

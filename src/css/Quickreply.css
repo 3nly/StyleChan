@@ -222,19 +222,19 @@ input[type="number"] {
 :root.single-captcha #t-slider {
   display: none !important;
 }
-:root.single-captcha #captcha-root {
-  min-height: 145px;
+:root.single-captcha #quickReply #qrCaptchaContainer,
+:root.single-captcha #qr > form > div.captcha-root > div  {
+  min-height: 145px !important;
 }
 
 :root.single-captcha #t-next.tcaptcha-stepper.is-ready {
   display: inline-flex;
+  align-items: center;
 }
 :root.single-captcha #t-task {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  width: 100%;
-  justify-content: flex-start;
   margin: 0 auto;
   overflow-y: auto;
   max-height: 38vh;
@@ -320,9 +320,8 @@ input[type="number"] {
 }
 :root.single-captcha #t-next {
   margin-left: auto;
-  font-weight: bold;
-  align-items: center;
-  gap: 4px;
+  padding: 2px;
+  font-size: 11px;
 }
 :root.single-captcha .tcaptcha-progress {
   min-width: 34px;
@@ -331,15 +330,12 @@ input[type="number"] {
 :root.single-captcha .tcaptcha-nav {
   width: 16px;
   height: 16px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: inherit;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1;
   cursor: pointer !important;
 }
-:root.single-captcha .tcaptcha-nav:disabled {
+:root.single-captcha .tcaptcha-nav.is-disabled,
+:root.single-captcha .tcaptcha-nav[aria-disabled="true"] {
   opacity: 0.35;
   cursor: default !important;
 }

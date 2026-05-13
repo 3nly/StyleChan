@@ -1069,6 +1069,7 @@
                                 var dt = new DataTransfer();
                                 dt.items.add(converted);
                                 qrInput.files = dt.files;
+                                qrInput.dispatchEvent(new Event("input", { bubbles: true }));
                                 qrInput.dispatchEvent(new Event("change", { bubbles: true }));
                                 notify("Converted " + file.name + " to " + outName + " (q" + Math.round(q * 100) + "%)");
                             } else {
@@ -1085,14 +1086,29 @@
                 return file.type === "image/webp" || (/^image\//.test(file.type) && file.size > MAX_BYTES);
             }
 
+            function findQRFileInput() {
+                return document.querySelector("#qr input[type=file]") ||
+                       document.querySelector("#quickReply #qrFile") ||
+                       document.querySelector("#quickReply input[type=file]") ||
+                       document.querySelector("form[name='qrPost'] input[type=file]") ||
+                       document.querySelector("#postForm input[type=file]");
+            }
+
+            function clearSelectedFile(input) {
+                try {
+                    input.files = new DataTransfer().files;
+                } catch (error) {}
+            }
+
             // File picker: intercept change on the QR input
             document.addEventListener("change", function(e) {
                 var input = e.target;
                 if (input.type !== "file") return;
-                if (!input.closest("#qr, #postForm")) return;
+                if (!input.closest("#qr, #quickReply, #postForm, form[name='qrPost']")) return;
                 var file = input.files && input.files[0];
                 if (!file || !shouldConvert(file)) return;
                 e.stopImmediatePropagation();
+                clearSelectedFile(input);
                 convertToJPEG(file, file.name.replace(/\.[^.]+$/, ""), input);
             }, true);
 
@@ -1361,12 +1377,12 @@
                     stepperNode.classList.remove("is-ready");
                     stepperNode.innerHTML = "";
 
-                    var backButton = document.createElement("button");
-                    backButton.type = "button";
-                    backButton.className = "tcaptcha-nav tcaptcha-nav-back";
+                    var backButton = document.createElement("span");
+                    backButton.className = "tcaptcha-nav tcaptcha-nav-back" + (TCaptcha.taskId <= 0 ? " is-disabled" : "");
                     backButton.textContent = "‹";
-                    backButton.disabled = TCaptcha.taskId <= 0;
-                    backButton.addEventListener("click", function() {
+                    backButton.setAttribute("aria-disabled", TCaptcha.taskId <= 0 ? "true" : "false");
+                    backButton.addEventListener("click", function(evt) {
+                        evt.preventDefault();
                         if (TCaptcha.taskId > 0) {
                             TCaptcha.setTaskId(TCaptcha.taskId - 1);
                             renderCaptchaGrid();
@@ -1377,12 +1393,12 @@
                     progressText.className = "tcaptcha-progress";
                     progressText.textContent = (TCaptcha.taskId + 1) + "/" + TCaptcha.tasks.length;
 
-                    var forwardButton = document.createElement("button");
-                    forwardButton.type = "button";
-                    forwardButton.className = "tcaptcha-nav tcaptcha-nav-forward";
+                    var forwardButton = document.createElement("span");
+                    forwardButton.className = "tcaptcha-nav tcaptcha-nav-forward" + (TCaptcha.taskId >= TCaptcha.tasks.length - 1 ? " is-disabled" : "");
                     forwardButton.textContent = "›";
-                    forwardButton.disabled = TCaptcha.taskId >= TCaptcha.tasks.length - 1;
-                    forwardButton.addEventListener("click", function() {
+                    forwardButton.setAttribute("aria-disabled", TCaptcha.taskId >= TCaptcha.tasks.length - 1 ? "true" : "false");
+                    forwardButton.addEventListener("click", function(evt) {
+                        evt.preventDefault();
                         if (TCaptcha.taskId < TCaptcha.tasks.length - 1) {
                             TCaptcha.setTaskId(TCaptcha.taskId + 1);
                             renderCaptchaGrid();
@@ -1517,7 +1533,7 @@
                 };
 
                 TCaptcha.buildNextNode = function() {
-                    return Object.assign(document.createElement('span'), { id: 't-next', className: 'tcaptcha-stepper' });
+                    return Object.assign(document.createElement('button'), { id: 't-next', className: 'tcaptcha-stepper', type: 'button', textContent: 'Next' });
                 };
             });
         },
