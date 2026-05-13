@@ -963,21 +963,23 @@
                 $SS.location = $SS.getLocation();
 
                 if ((m_VERSION = $SS.Config.get("VERSION")) !== VERSION) {
-                    // Signal that StyleChan has updated
-                    var detail = {
-                        type: 'info',
-                        content: NAME + ' has been updated to version ' + VERSION + '.',
-                        lifetime: 15
-                    };
-                    if (typeof cloneInto === 'function') {
-                        detail = cloneInto(detail, document.defaultView);
-                    }
-                    var event = new CustomEvent('CreateNotification', {
-                        bubbles: true,
-                        detail: detail
-                    });
                     setTimeout(function() {
-                        document.dispatchEvent(event);
+                        var content = document.createElement('span');
+                        var changelogLink = document.createElement('a');
+
+                        content.appendChild(document.createTextNode(NAME + ' has been updated to version ' + VERSION + '.'));
+                        content.appendChild(document.createElement('br'));
+                        changelogLink.href = 'https://github.com/3nly/StyleChan/blob/main/CHANGELOG.md';
+                        changelogLink.target = '_blank';
+                        changelogLink.rel = 'noopener noreferrer';
+                        changelogLink.textContent = 'Read the changelog.';
+                        content.appendChild(changelogLink);
+
+                        $SS.notify({
+                            type: 'info',
+                            content: content,
+                            lifetime: 15
+                        });
                     }, 25);
                     // Correct selected theme after updating
                     // and the number defaults has changed.
@@ -1041,9 +1043,11 @@
             var MAX_BYTES = $SS.location.maxFileSize;
 
             function notify(msg) {
-                var detail = { type: 'info', content: NAME + ': ' + msg, lifetime: 4 };
-                if (typeof cloneInto === 'function') detail = cloneInto(detail, document.defaultView);
-                document.dispatchEvent(new CustomEvent('CreateNotification', { bubbles: true, detail: detail }));
+                $SS.notify({
+                    type: 'info',
+                    content: NAME + ': ' + msg,
+                    lifetime: 5
+                });
             }
 
             function convertToJPEG(file, baseName, qrInput) {
@@ -1101,16 +1105,101 @@
                 if (!shouldConvert(file)) return;
 
                 // Find the QR file input (4chanX or native)
-                var qrInput = document.querySelector("#qr input[type=file]") ||
-                              document.querySelector("#postForm input[type=file]");
+                var qrInput = findQRFileInput();
                 if (!qrInput) return;
 
                 e.preventDefault();
                 e.stopPropagation();
 
                 var baseName = file.name.replace(/\.[^.]+$/, "");
+                clearSelectedFile(qrInput);
                 convertToJPEG(file, baseName, qrInput);
             }, true);
+        },
+        getNotificationRoot: function() {
+            var root = document.getElementById('stylechan-notifications');
+
+            if (root) return root;
+            if (!getDocBody()) return null;
+
+            root = document.createElement('div');
+            root.id = 'stylechan-notifications';
+            root.setAttribute('aria-live', 'polite');
+            root.setAttribute('aria-atomic', 'true');
+
+            getDocBody().appendChild(root);
+            return root;
+        },
+        dismissNotification: function(node) {
+            if (!node || node.dataset.closing === 'true') return;
+
+            node.dataset.closing = 'true';
+            node.classList.add('closing');
+
+            setTimeout(function() {
+                if (node.parentNode)
+                    node.parentNode.removeChild(node);
+            }, 180);
+        },
+        notify: function(detail) {
+            var root, note, text, lifetime;
+
+            if (typeof detail === 'string')
+                detail = { content: detail };
+
+            if (!detail || !detail.content)
+                return;
+
+            root = $SS.getNotificationRoot();
+            if (!root) {
+                return setTimeout(function() {
+                    $SS.notify(detail);
+                }, 25);
+            }
+
+            note = document.createElement('div');
+            text = document.createElement('div');
+            lifetime = detail.lifetime === undefined ? 4 : detail.lifetime;
+
+            note.className = 'stylechan-notification stylechan-notification-' + (detail.type || 'info');
+            note.setAttribute('role', 'status');
+            note.setAttribute('tabindex', '0');
+            note.title = 'Dismiss';
+
+            text.className = 'stylechan-notification-text';
+            if (typeof detail.content === 'string')
+                text.textContent = detail.content;
+            else
+                text.appendChild(detail.content);
+            note.appendChild(text);
+
+            note.addEventListener('click', function(e) {
+                if (e.target.closest('a'))
+                    return;
+                $SS.dismissNotification(note);
+            });
+            note.addEventListener('keydown', function(e) {
+                if (e.target.closest && e.target.closest('a'))
+                    return;
+                if (e.keyCode === 13 || e.keyCode === 27 || e.keyCode === 32) {
+                    e.preventDefault();
+                    $SS.dismissNotification(note);
+                }
+            });
+
+            root.appendChild(note);
+            if (root.childElementCount > 4)
+                $SS.dismissNotification(root.firstElementChild);
+
+            setTimeout(function() {
+                note.classList.add('visible');
+            }, 0);
+
+            if (lifetime > 0) {
+                setTimeout(function() {
+                    $SS.dismissNotification(note);
+                }, lifetime * 1000);
+            }
         },
         initRememberComment: function() {
             if (!$SS.conf["Remember comment draft"]) return;
