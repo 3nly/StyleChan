@@ -1,3 +1,25 @@
+## v1.1.0
+*2026-05-13*
+
+**StyleChan has new options and features!**
+
+**New option:** Remember comment draft
+- This option will save any text left in the comment text area of the QR into the localStorage of the browser after 5 seconds of not typing. The text is restored on every page load until it is submitted or erased. Up to 10 drafts are saved. Cleaning of the drafts happens every time a new draft is saved, drafts older than 24 hours are then removed.
+
+**New option:** Single view captcha
+- This option is an adaption of the captcha formatter script, it will show captcha challenges in a single view. Selecting a challenge moves to the next challenge. No keyboard shortcuts.
+
+**New feature:** Notifications
+- StyleChan now has its own toast notification system and no longer relies on 4chanX. The notifications have four colors: info, warning, error and success.
+
+Changes and fixes:
+- Removed the limits on the font size option
+- The StyleChan settings menu now has a background overlay when not using 4chanX and can be correctly dismissed
+- Checkboxes will now be correctly riced when not using 4chanX
+- Small CSS fixes
+
+Added three new themes to the Wiki: Catppuccin Late, Catppuccin Mocha, W10
+
 ### v1.0.39
 *2026-05-11*
 
