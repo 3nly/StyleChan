@@ -319,6 +319,8 @@ input[type="number"] {
   cursor: pointer !important;
 }
 :root.single-captcha #t-next {
+  align-items: center;
+  gap: 2px;
   margin-left: auto;
   padding: 2px;
   font-size: 11px;
