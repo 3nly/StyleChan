@@ -828,7 +828,6 @@
                 return this.elems.length === 1;
             },
             riceCheck: function() {
-                if (!document.documentElement.classList.contains("fourchan-x")) return this;
                 return this.each(function() {
                     var click = function(e) {
                         e.preventDefault();
@@ -893,6 +892,8 @@
                     childList: true,
                     subtree: true
                 });
+
+                $("input[type=checkbox]").riceCheck();
 
                 if (document.documentElement.classList.contains("fourchan-x"))
                     if ((!(html = $("*[xmlns]")).exists()) && (!(ctxmenu = $("#ctxmenu-main").exists())))
