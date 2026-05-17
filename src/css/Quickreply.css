@@ -124,6 +124,10 @@
 .captcha-root div {
   border-radius: 0 !important;
 }
+.captcha-root div,
+#t-root {
+  box-shadow: none !important;
+}
 #t-load,
 #t-next {
   height: 20px !important;

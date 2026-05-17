@@ -150,15 +150,18 @@ s:hover .quote,
   background: none repeat scroll 0 0 rgba(" + $SS.theme.codeBackground + ") !important;
   border: 1px solid rgba(" + $SS.theme.codeBorder + ") !important;
 }
-.pun {
+.pun,
+#qr-no-file,
+#t-load:disabled,
+:root.single-captcha #t-next:not(.is-ready),
+:root:not(.single-captcha) #t-next:disabled {
   color: rgba(" + $SS.theme.textColor.rgb + ",.4) !important;
 }
 ::-webkit-input-placeholder {
   color: rgba(" + $SS.theme.textColor.rgb + ",.4) !important;
 }
 #qr .field::-moz-placeholder,
-::-moz-placeholder,
-#qr-no-file {
+::-moz-placeholder {
   color: rgba(" + $SS.theme.textColor.rgb + ",.4) !important;
 }
 /* Backgrounds */
@@ -209,8 +212,6 @@ body.is_catalog .panel,
 .pages strong>a,
 input[value='Next'],
 input[value='Previous'],
-#t-load,
-#t-next,
 #quickReply input[type="submit"] {
   background: linear-gradient(rgb\(" + $SS.theme.mainColor.shiftRGB(15) + "),rgb(" + $SS.theme.mainColor.rgb + ")) !important;
 }
@@ -220,8 +221,6 @@ input[value='Previous'],
 .dd-menu li:hover,
 input[value='Next']:hover,
 input[value='Previous']:hover,
-#t-load:hover,
-#t-next:hover,
 #quickReply input[type="submit"]:hover {
   background: rgb\(" + $SS.theme.mainColor.shiftRGB(15) + ");
 }
@@ -239,7 +238,6 @@ textarea,
 .riceCheck,
 #qr-filename-container,
 select,
-.captcha-root,
 .captcha-root > div,
 #t-root,
 #t-load,
@@ -258,8 +256,6 @@ input.field:hover,
 #qr-filename-container:hover,
 textarea:hover,
 select:hover,
-.captcha-root:hover,
-#t-root:hover,
 #t-load:hover,
 #t-next:hover {
   background: rgb(" + $SS.theme.inputColor.hover + ") !important;
@@ -374,9 +370,7 @@ select,
 .pages.cataloglink,
 .pages strong>a,
 input[value='Next'],
-input[value='Previous'],
-#t-load,
-#t-next {
+input[value='Previous'] {
   border-style: solid;
   border-width: 1px;
   border-color: rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-30) + ") !important;
@@ -391,8 +385,6 @@ textarea:focus,
 #qr-filename-container:focus,
 #qr-filename-container.focus,
 select:focus,
-.captcha-root:focus,
-#t-root:focus,
 #t-load:focus,
 #t-next:focus {
   border: 1px solid " + $SS.theme.linkColor.hex + " !important;
