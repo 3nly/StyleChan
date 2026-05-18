@@ -362,18 +362,18 @@ input[value='Previous']:hover {
   border: none !important;
   position: relative;
 }
-.next a,
-.prev a {
+:root.fourchan-x .next a,
+:root.fourchan-x .prev a {
   position: relative;
   right: 5px;
 }
-.prev a::after {
+:root.fourchan-x .prev a::after {
   content: '<';
   position: inherit;
   top: 4px;
   left: 1px;
 }
-.next a::after {
+:root.fourchan-x .next a::after {
   content: '>';
   position: inherit;
   top: 4px;
