@@ -31,7 +31,9 @@ select,
 .post-author {
   color: " + $SS.theme.nameColor.hex + " !important;
 }
-.nameBlock.capcodeMod {
+.nameBlock.capcodeMod,
+:not(.fourchan-x) span.capcodeMod span.name,
+:not(.fourchan-x) span.capcodeMod strong.capcode {
   color: #800080 !important;
 }
 .id_admin,
