@@ -203,9 +203,6 @@ input[value='Previous'] {
 :root.reply-fit-width .inline {
   display: flow-root !important;
 }
-#qrFile {
-  width: 215px;
-}
 /* Accommodate StyleChan icon in header */
 :root.centered-links #shortcuts {
   width: 30vw !important;

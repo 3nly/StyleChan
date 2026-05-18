@@ -261,7 +261,6 @@ input[type="number"] {
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start !important;
-  min-height: 145px;
 }
 :root.single-captcha #t-desc {
   position: sticky;

@@ -899,7 +899,9 @@
                     if ((!(html = $("*[xmlns]")).exists()) && (!(ctxmenu = $("#ctxmenu-main").exists())))
                         if ((link = $("link[title][rel='stylesheet']")).exists())
                             link.each(function() {
-                                $(this).attr("href", "");
+                                var href = this.getAttribute("href") || "";
+                                if (/4cdn\.org|4chan\.org/.test(href))
+                                    $(this).attr("href", "");
                             });
 
                 if ((div = $("#globalMessage *[style]")).exists())

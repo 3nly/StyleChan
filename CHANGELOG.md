@@ -1,3 +1,15 @@
+### v1.1.1
+*2026-05-18*
+
+- Fix for single view catcha jumping up when requesting a captcha
+- Fix for 4chanX menu moving from its usual placement
+- **4chan:**
+  - Fix for reply button color
+  - Fix for Mod capcode color
+  - Fix for index navigation buttons
+  - Remove the excess width from the File input
+  - Fix an issue where certain 4chan stylesheets were being blocked due to a broad rule
+
 ## v1.1.0
 *2026-05-13*
 
