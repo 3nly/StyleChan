@@ -81,3 +81,10 @@
   color: rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1.0);
   font-weight: bold;
 }
+/* Scroll Markers (XT) */
+.post-scroll-marker {
+  color: rgba\(" + $SS.theme.ownPostHLColor.rgb + ",.8);
+}
+:root.ss-sidebar.right-sidebar .post-scroll-marker.you-scroll-marker {
+  opacity: 60%;
+}

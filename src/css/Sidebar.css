@@ -46,6 +46,7 @@
   position:fixed;
   top:0;
   right: 0;
+  pointer-events:none;
 }
 :root.fixed.ss-sidebar #header-bar {
   box-shadow: -5px 1px 10px rgba(0,0,0,.2), inset " + $SS.theme.brderColor.hex + " -1px 0 0;
