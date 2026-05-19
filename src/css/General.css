@@ -39,11 +39,14 @@ body {
 :root.op-background .thread>.opContainer:not(.thread>.postContainer:last-of-type) {
   margin-bottom: " + $SS.conf["Margin Between Replies"] + "px !important;
 }
-.inline {
-  margin-left: 13px !important;
+.container~.inline {
+  margin: 2px 0 2px 13px !important;
 }
-.postMessage > .inline {
-  margin-left: 0 !important;
+:root.bottom-backlinks .container~.inline {
+  margin: 0 13px 2px !important;
+}
+:root.bottom-backlinks .container~.inline:last-of-type:not(.inline .hasInline .inline) {
+  margin-bottom: 3px !important;
 }
 #qp .op>.postInfo {
   min-width: 600px;
