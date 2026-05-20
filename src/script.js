@@ -62,6 +62,7 @@
             "Show Navigation Links": [true, "Toggle visibility of the navigation links at the top and bottom of the threads.", null, true],
             "Show Top Links": [true, "Toggle visibility of the top navigation links.", "Show Navigation Links", true, true],
             "Show Bottom Links": [true, "Toggle visibility of the bottom navigation links.", "Show Navigation Links", true, true],
+            "Toast Notifications": [true, "Show toast notification popups for events."],
             ":: Sidebar": ["header", ""],
             "Sidebar Position": [
                 1, "Change the position of the sidebar or disable it altogether.", [{
@@ -1161,6 +1162,9 @@
         },
         notify: function(detail) {
             var root, note, text, lifetime;
+
+            if ($SS.conf && !$SS.conf["Toast Notifications"])
+                return;
 
             if (typeof detail === 'string')
                 detail = { content: detail };
