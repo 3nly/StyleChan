@@ -103,10 +103,7 @@ a.qr-link {
 }
 #qr-file-button,
 #qr input[type="submit"],
-#qr label,
-.captcha-counter,
-#t-load,
-#t-next {
+#qr label {
   text-transform: uppercase;
 }
 #qr label:not(.riceCheck) {
