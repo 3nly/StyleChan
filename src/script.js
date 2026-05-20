@@ -1086,6 +1086,7 @@
             }
 
             function shouldConvert(file) {
+                if (file.type === "image/gif") return false;
                 return file.type === "image/webp" || (/^image\//.test(file.type) && file.size > MAX_BYTES);
             }
 
