@@ -144,11 +144,12 @@ body {
 /* Code Tags */
 .prettyprint {
   padding: 5px !important;
-  display: inline-block;
+  display: block;
   max-height: 400px;
   overflow-x: auto;
   max-width: 100%;
-  vertical-align:middle;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 /* Checkboxes */
 input[type=checkbox],
