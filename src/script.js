@@ -1,4 +1,4 @@
-(function() {
+﻿(function() {
     var defaultConfig = {
             ":: Main Rice": ["header", ""],
             "Left Margin": [
@@ -96,9 +96,9 @@
             "Remove Controls": [false, "Removes the QR controls and checkbox."],
             "Animated Transition": [false, "Enables a transition animation for the QR."],
             "Expanding Form Inputs": [true, "Makes certain form elements expand on focus."],
-            "Remember comment draft": [false, "Will save and restore unsubmitted QR comments (5 second delay). Drafts expire after 24h."],
+            "Remember Comment Draft": [false, "Will save and restore unsubmitted QR comments (5 second delay). Drafts expire after 24h."],
             "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size limit to JPEG."],
-            "Single view captcha": [false, "Shows the captcha challenges in a single view."],
+            "Single View Captcha": [false, "Shows the captcha challenges in a single view."],
             ":: Replies": ["header", ""],
             "Fit Width": [true, "Replies stretch to the width of the page.", null, true],
             "Fit Post Menu": [false, "Sets the post menu to the right.", "Fit Width", true, true],
@@ -1225,7 +1225,7 @@
             }
         },
         initRememberComment: function() {
-            if (!$SS.conf["Remember comment draft"]) return;
+            if (!$SS.conf["Remember Comment Draft"]) return;
 
             $.asap(function() {
                 return document.querySelector("#qr, #quickReply");
@@ -1306,7 +1306,7 @@
             localStorage.removeItem($SS.getRememberCommentKey());
         },
         bindRememberComment: function(qrNode) {
-            if (!qrNode || qrNode.dataset.rememberCommentBound || !$SS.conf["Remember comment draft"]) return;
+            if (!qrNode || qrNode.dataset.rememberCommentBound || !$SS.conf["Remember Comment Draft"]) return;
 
             var commentField = qrNode.querySelector("textarea");
             var formNode = qrNode.querySelector("form") || qrNode.closest("form");
@@ -1355,7 +1355,7 @@
             qrNode.dataset.rememberCommentBound = "true";
         },
         initSingleViewCaptcha: function() {
-            if (!$SS.conf["Single view captcha"]) return;
+            if (!$SS.conf["Single View Captcha"]) return;
 
             $.asap(function() {
                 return typeof TCaptcha !== "undefined" && typeof TCaptcha.buildSliderNode === "function";
@@ -3343,7 +3343,7 @@
                 $("html").optionClass("Allow Wrapping Around OP", false, "force-wrapping");
                 $("html").optionClass("OP Background", true, "op-background");
                 $("html").optionClass("Expanding Form Inputs", true, "expand-inputs");
-                $("html").optionClass("Single view captcha", true, "single-captcha");
+                $("html").optionClass("Single View Captcha", true, "single-captcha");
                 $("html").optionClass("Animated Transition", true, "qr-transition");
                 $("html").optionClass("Show Header Background Gradient", true, "header-gradient");
                 $("html").optionClass("Show Header Shadow", false, "header-shadow");
