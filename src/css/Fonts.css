@@ -59,6 +59,9 @@ body,
 #qr-file-button,
 #qr input[type=submit],
 #qr select[data-name="thread"],
+#t-load,
+#t-next,
+#t-task,
 #menu .entry,
 #boardList,
 #shortcuts,
@@ -93,13 +96,17 @@ a.qr-link {
 #qr-file-button,
 #qr input[type=submit],
 #qr label,
-.captcha-counter {
+.captcha-counter,
+#t-load,
+#t-next {
   font-size: " + (($SS.conf["Font Size"] < 11) ? 8 : 10) + "px !important;
 }
 #qr-file-button,
 #qr input[type="submit"],
 #qr label,
-.captcha-counter {
+.captcha-counter,
+#t-load,
+#t-next {
   text-transform: uppercase;
 }
 #qr label:not(.riceCheck) {
