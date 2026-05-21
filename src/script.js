@@ -160,10 +160,6 @@
             "Justified Text": [false, "Justifies the teaser text of every thread to be more uniform."],
             "Show Background": [true, "Threads receive a matching background."],
             "Unified Thumbnail Size": [false, "Makes all thumbnails the same size regardless of aspect ratio."],
-            ":: 4chan X Header": ["header", ""],
-            "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
-            "Show Header Shadow": [true, "Gives the header a drop shadow."],
-            "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
             ":: Post Decoration": ["header", ""],
             "Decoration Style": [
                 0, "Changes the decoration of all posts.", [{
@@ -258,7 +254,13 @@
             "Backlink Font Size": [10, "Set the font size of backlinks."],
             "Bitmap Font": [false, "Check this if you are using a bitmap font."],
             "Misc": [],
-            "Toast Notifications": [true, "Show toast notification popups for events."],
+            ":: Notifications": ["header", ""],
+            "Toast Notifications": [true, "Show toast notification popups for events.", null, true],
+            "Style 4chanX Notifications": [true, "Show 4chanX notifications in the same style as StyleChan's toasts.", "Toast Notifications", true, true],
+            ":: 4chan X": ["header", ""],
+            "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
+            "Show Header Shadow": [true, "Gives the header a drop shadow."],
+            "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
             "Themes": [],
             "Hidden Themes": [],
             "Selected Theme": 1,
@@ -3373,6 +3375,7 @@
                 $("html").optionClass("Expanding Form Inputs", true, "expand-inputs");
                 $("html").optionClass("Single View Captcha", true, "single-captcha");
                 $("html").optionClass("Animated Transition", true, "qr-transition");
+                $("html").optionClass("Style 4chanX Notifications", true, "chX-notifs");
                 $("html").optionClass("Show Header Background Gradient", true, "header-gradient");
                 $("html").optionClass("Show Header Shadow", false, "header-shadow");
                 $("html").optionClass("Highlight Current Board", false, "header-highlight");
