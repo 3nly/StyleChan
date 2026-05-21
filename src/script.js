@@ -943,6 +943,16 @@
                 // Single view captcha grid
                 $SS.initSingleViewCaptcha();
 
+                // Auto-open native QR on thread pages (non-4chanX only)
+                if ($SS.location.reply && !document.documentElement.classList.contains("fourchan-x")) {
+                    $.asap(function() {
+                        return document.querySelector("a[data-cmd='open-qr']");
+                    }, function() {
+                        var link = document.querySelector("a[data-cmd='open-qr']");
+                        if (link) link.click();
+                    });
+                }
+
                 // things that need to change after 4chan X loads.
                 setTimeout(function() {
                     if (!$SS.QRhandled && (div = $("#qr")).exists())
