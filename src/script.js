@@ -1648,35 +1648,40 @@
                 });
 
                 if (!document.documentElement.classList.contains("fourchan-x")) {
+                    function makeNavLink() {
+                        var link = document.createElement("a");
+                        link.title = "StyleChan Settings";
+                        link.href = "javascript:;";
+                        link.addEventListener("click", $SS.options.show);
+                        return link;
+                    }
                     $.asap(function() {
-                        return !!(document.querySelector("#boardNavDesktop, #boardNavMobile"));
+                        return !!(document.querySelector("#boardNavDesktop #navtopright"));
                     }, function() {
-                        function addToNav(nav) {
-                            var pageJump = nav.querySelector(".pageJump");
-                            if (pageJump) {
-                                var link = document.createElement("a");
-                                link.title = "StyleChan Settings";
-                                link.href = "javascript:;";
-                                link.textContent = " StyleChan ";
-                                link.addEventListener("click", $SS.options.show);
-                                pageJump.insertBefore(link, pageJump.lastElementChild);
-                            } else {
-                                var navtopright = nav.querySelector("#navtopright");
-                                if (navtopright) {
-                                    var span = document.createElement("span");
-                                    span.appendChild(document.createTextNode(" ["));
-                                    var link = document.createElement("a");
-                                    link.title = "StyleChan Settings";
-                                    link.href = "javascript:;";
-                                    link.textContent = "StyleChan";
-                                    link.addEventListener("click", $SS.options.show);
-                                    span.appendChild(link);
-                                    span.appendChild(document.createTextNode("]"));
-                                    navtopright.appendChild(span);
-                                }
-                            }
-                        }
-                        document.querySelectorAll("#boardNavDesktop, #boardNavMobile").forEach(addToNav);
+                        var navtopright = document.querySelector("#boardNavDesktop #navtopright");
+                        var span = document.createElement("span");
+                        span.appendChild(document.createTextNode(" ["));
+                        var link = makeNavLink();
+                        link.textContent = "StyleChan";
+                        span.appendChild(link);
+                        span.appendChild(document.createTextNode("]"));
+                        navtopright.appendChild(span);
+                    });
+                    $.asap(function() {
+                        return !!(document.querySelector("#boardNavDesktop .pageJump"));
+                    }, function() {
+                        var pageJump = document.querySelector("#boardNavDesktop .pageJump");
+                        var link = makeNavLink();
+                        link.textContent = " StyleChan ";
+                        pageJump.insertBefore(link, pageJump.lastElementChild);
+                    });
+                    $.asap(function() {
+                        return !!(document.querySelector("#boardNavMobile .pageJump"));
+                    }, function() {
+                        var pageJump = document.querySelector("#boardNavMobile .pageJump");
+                        var link = makeNavLink();
+                        link.textContent = " StyleChan ";
+                        pageJump.insertBefore(link, pageJump.lastElementChild);
                     });
                 }
             },
