@@ -53,6 +53,7 @@ a:visited,
 s:hover>a:not(:hover),
 :root .typ,
 :root .atn,
+a.postMenuBtn,
 body.is_catalog .button,
 :root.catalog-mode .button,
 :root .options-button,
@@ -324,6 +325,7 @@ hr {
 }
 :root.post-info.rounded-corners .reply>.postInfo,
 :root.rounded-corners #qr,
+:root.rounded-corners #quickReply,
 :root.rounded-corners:root.vertical-qr #qr > .move {
   border-radius: 3px 3px 0 0 !important;
 }
@@ -344,7 +346,8 @@ fieldset,
 .flashListing td:not(:last-of-type):not(.postblock),
 :root.vertical-qr #qr .move,
 #qr select,
-select {
+select,
+#quickReply {
   border-color: " + $SS.theme.brderColor.hex + " !important;
 }
 .dd-menu li {
@@ -361,6 +364,7 @@ select,
 .postblock,
 #post-preview,
 .captcha-root,
+#quickReply,
 #t-root,
 #t-load,
 #t-next,
