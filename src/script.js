@@ -982,7 +982,7 @@
 
                         content.appendChild(document.createTextNode(NAME + ' has been updated to version ' + VERSION + '.'));
                         content.appendChild(document.createElement('br'));
-                        changelogLink.href = 'https://github.com/3nly/StyleChan/blob/main/CHANGELOG.md';
+                        changelogLink.href = CHANGELOG;
                         changelogLink.target = '_blank';
                         changelogLink.rel = 'noopener noreferrer';
                         changelogLink.textContent = 'Read the changelog.';
