@@ -62,7 +62,6 @@
             "Show Navigation Links": [true, "Toggle visibility of the navigation links at the top and bottom of the threads.", null, true],
             "Show Top Links": [true, "Toggle visibility of the top navigation links.", "Show Navigation Links", true, true],
             "Show Bottom Links": [true, "Toggle visibility of the bottom navigation links.", "Show Navigation Links", true, true],
-            "Toast Notifications": [true, "Show toast notification popups for events."],
             ":: Sidebar": ["header", ""],
             "Sidebar Position": [
                 1, "Change the position of the sidebar or disable it altogether.", [{
@@ -257,6 +256,8 @@
             "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels)."],
             "Backlink Font Size": [10, "Set the font size of backlinks."],
             "Bitmap Font": [false, "Check this if you are using a bitmap font."],
+            "Misc": [],
+            "Toast Notifications": [true, "Show toast notification popups for events."],
             "Themes": [],
             "Hidden Themes": [],
             "Selected Theme": 1,
@@ -1690,6 +1691,7 @@
                         optionsHTML = [
                             "<ul id=options-tabs>",
                             "<li class='tab-item'><label class='tab-label selected' for=main-select>Main</label></li>",
+                            "<li class='tab-item'><label class='tab-label' for=misc-select>Misc</label></li>",
                             "<li class='tab-item'><label class='tab-label' for=themes-select>Themes</label></li>",
                             "</ul><div id=options-container><input type=radio class=tab-select name=tab-select id=main-select hidden checked><div id='main-section' class='options-section'>",
                             "<p class='buttons-container'>",
@@ -1770,6 +1772,8 @@
                         } else if (key === "Backlink Font Size") {
                             optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
                                 "<input type=text name='Backlink Font Size' value=" + $SS.conf["Backlink Font Size"] + "px></label>");
+                        } else if (key === "Misc") {
+                            optionsHTML.push("</div><input type=radio class=tab-select name=tab-select id=misc-select hidden><div id='misc-section' class='options-section'>");
                         } else if (key === "Themes") {
                             optionsHTML.push("</div><input type=radio class=tab-select name=tab-select class=tab-select  id=themes-select hidden><div id='themes-section' class='options-section'>");
                         } else // checkbox

@@ -47,17 +47,20 @@
   overflow-y:auto;
   overflow-x:hidden;
 }
-#main-section .option {
+#main-section .option,
+#misc-section .option {
   display:block;
   border-top:1px solid rgba(0,0,0,.1);
   height:22px;
   padding:0 6px;
   vertical-align:middle;
 }
-#main-section .option[hidden] {
+#main-section .option[hidden],
+#misc-section .option[hidden] {
   display:none !important;
 }
-#main-section>.option:nth-of-type(even) {
+#main-section>.option:nth-of-type(even),
+#misc-section>.option:nth-of-type(even) {
   background: rgb\(" + $SS.theme.mainColor.shiftRGB(-5) + ") !important;
 }
 #main-section .buttons-container+.option {
@@ -66,17 +69,22 @@
 .option-title {
   line-height:22px;
 }
-#main-section .option:first-child {
+#main-section .option:first-child,
+#misc-section .option:first-child {
   border-top:0!important;
 }
-#main-section .option:last-child {
+#main-section .option:last-child,
+#misc-section .option:last-child {
   border-bottom:0!important;
 }
-#main-section input, #main-section select {
+#main-section input, #main-section select,
+#misc-section input, #misc-section select {
   float: right !important;
 }
 #main-section input[type=checkbox], 
-#main-section .riceCheck {
+#main-section .riceCheck,
+#misc-section input[type=checkbox],
+#misc-section .riceCheck {
   float: left !important;
   margin-right: 5px !important;
 }
