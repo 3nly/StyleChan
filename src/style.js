@@ -12,3 +12,4 @@
 <%= grunt.file.read('src/css/Catalog.css') %>
 <%= grunt.file.read('src/css/Notifications.css') %>
 //" + ($SS.conf[""] ? "<%= grunt.file.read('src/css/Native.css') %>" : "") + "
+<%= grunt.file.read('src/css/Native.css') %>

@@ -28,7 +28,6 @@
 }
 #qr-file-button,
 #qr input[type='submit'],
-#qrFile,
 #quickReply input[type='submit'] {
   height: 25px !important;
   margin: 0 !important;
@@ -89,9 +88,7 @@
   max-height: 64vh;
 }
 :root.right-sidebar #qr textarea.field,
-:root.left-sidebar #qr textarea.field,
-:root.right-sidebar #quickReply textarea,
-:root.left-sidebar #quickReply textarea {
+:root.left-sidebar #qr textarea.field {
   max-width: 302px !important;
 }
 :root.qr-background #qr,
@@ -190,8 +187,7 @@
   transform: rotate(-90deg);
   right: 86%;
 }
-#qr > form,
-#quickReply > form {
+#qr > form {
   overflow-y: hidden !important;
 }
 /* Fade QR */

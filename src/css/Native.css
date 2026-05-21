@@ -1,0 +1,64 @@
+/* TODO: Move all 4chan-specific rules here.
+*  This allows us to short-circuit in style.js and not read this file when 4chanX is present.
+*/
+/* Quick Reply */
+#qrFile {
+  height: 23px;
+}
+:root.right-sidebar #quickReply,
+:root.left-sidebar #quickReply {
+  max-width: 300px !important;
+}
+:root.right-sidebar #quickReply input[type="text"], 
+:root.right-sidebar #quickReply textarea, 
+:root.right-sidebar #quickReply #recaptcha_response_field,
+:root.left-sidebar #quickReply input[type="text"], 
+:root.left-sidebar #quickReply textarea, 
+:root.left-sidebar #quickReply #recaptcha_response_field {
+  max-width: 294px !important;
+  min-width: 294px !important;
+}
+div#qrError {
+    width: 290px;
+}
+#quickReply #qrFile {
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+  padding: 0 !important;
+}
+#qrForm > div:last-child {
+  display: flex;
+  gap: 4px;
+}
+#quickReply #qrSpoiler,
+#quickReply input[type='submit'] {
+  flex-shrink: 0;
+}
+#quickReply #qrFile::file-selector-button,
+#quickReply #qrFile::-webkit-file-upload-button {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1px;
+  height: 23px;
+  padding: 0 6px;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+/* QR file button */
+#quickReply #qrFile::file-selector-button,
+#quickReply #qrFile::-webkit-file-upload-button {
+  background: rgb(" + $SS.theme.mainColor.rgb + ") !important;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-30) + ") !important;
+  color: " + $SS.theme.textColor.hex + " !important;
+  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ";
+  font-size: " + $SS.conf["UI Font Size"] + "px !important;
+}
+#quickReply #qrFile:hover::file-selector-button,
+#quickReply #qrFile:hover::-webkit-file-upload-button {
+  background: rgb\(" + $SS.theme.mainColor.shiftRGB(10) + ") !important;
+}
