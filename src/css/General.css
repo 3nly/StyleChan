@@ -223,50 +223,6 @@ input[type=checkbox]:checked+.riceCheck::before {
 :root.fixed:not(.autohide):not(.bottom) #globalMessage {
   margin: 10px 0 20px !important;
 }
-#stylechan-notifications {
-  position: fixed;
-  top: 38px;
-  right: 10px;
-  z-index: 10005;
-  width: min(320px, calc(100vw - 20px));
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  pointer-events: none;
-}
-:root.bottom-header #stylechan-notifications {
-  top: auto;
-  bottom: 10px;
-}
-.stylechan-notification {
-  pointer-events: auto;
-  cursor: pointer;
-  padding: 7px 10px;
-  border: 1px solid;
-  border-left-width: 3px;
-  border-radius: 3px;
-  box-shadow: rgba(0,0,0,.25) 0 2px 8px;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity .15s ease, transform .15s ease;
-  overflow-wrap: anywhere;
-  font-size: 12px;
-  line-height: 1.35;
-}
-.stylechan-notification.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.stylechan-notification.closing {
-  opacity: 0;
-  transform: translateY(-4px);
-}
-.stylechan-notification-text {
-  pointer-events: none;
-}
-.stylechan-notification-text a {
-  pointer-events: auto;
-}
 .globalMessage, h2, h3 {
   margin: auto;
 }
