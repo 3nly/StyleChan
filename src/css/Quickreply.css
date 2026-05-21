@@ -130,7 +130,7 @@
 }
 #t-load,
 #t-next {
-  height: 20px !important;
+  height: inherit !important;
 }
 /* Vertical QR */
 :root.vertical-qr #qr > div > label > div,
@@ -330,8 +330,9 @@ input[type="number"] {
   font-size: 11px;
 }
 :root.single-captcha .tcaptcha-progress {
-  min-width: 34px;
+  min-width: 38px;
   text-align: center;
+  display: inline-block;
 }
 :root.single-captcha .tcaptcha-nav {
   width: 16px;
