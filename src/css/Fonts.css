@@ -59,19 +59,18 @@ body,
 #qr-file-button,
 #qr input[type=submit],
 #qr select[data-name="thread"],
-#t-load,
-#t-next,
-#t-task,
+:root #t-desc,
+textarea[name="com"],
+#qr .field::placeholder, 
+::placeholder,
 #menu .entry,
 #boardList,
 #shortcuts,
 #index-search,
 #tegaki,
-select,
-input,
 div.next,
 form.pageSwitcherForm > input[type="submit"] {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ";
+  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + " !important;
   font-size: " + $SS.conf["Font Size"] + "px !important;
 }
 #full-board-list a,
@@ -96,10 +95,15 @@ a.qr-link {
 #qr-file-button,
 #qr input[type=submit],
 #qr label,
-.captcha-counter,
-#t-load,
-#t-next {
-  font-size: " + (($SS.conf["Font Size"] < 11) ? 8 : 10) + "px !important;
+#qr .move,
+#qr-no-file,
+select,
+input,
+:root #t-load,
+:root #t-next,
+:root #t-task {
+  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ";
+  font-size: " + $SS.conf["UI Font Size"] + "px !important;
 }
 #qr-file-button,
 #qr input[type="submit"],

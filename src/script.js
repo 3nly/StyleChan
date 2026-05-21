@@ -254,6 +254,7 @@
                 }]
             ],
             "Font Size": [13, "Set the font size of text (in pixels)."],
+            "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels)."],
             "Backlink Font Size": [10, "Set the font size of backlinks."],
             "Bitmap Font": [false, "Check this if you are using a bitmap font."],
             "Themes": [],
@@ -1763,6 +1764,9 @@
                         } else if (key === "Font Size") {
                             optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
                                 "<input type=text name='Font Size' value=" + $SS.conf["Font Size"] + "px></label>");
+                        } else if (key === "UI Font Size") {
+                            optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
+                                "<input type=text name='UI Font Size' value=" + $SS.conf["UI Font Size"] + "px></label>");
                         } else if (key === "Backlink Font Size") {
                             optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
                                 "<input type=text name='Backlink Font Size' value=" + $SS.conf["Backlink Font Size"] + "px></label>");
@@ -2022,6 +2026,8 @@
                     } else if (name === "Custom Left Margin") {
                         val = parseInt(val);
                     } else if (name === "Custom Decoration Width") {
+                        val = parseInt(val);
+                    } else if (name === "UI Font Size") {
                         val = parseInt(val);
                     } else if (name === "Backlink Font Size") {
                         val = parseInt(val);
