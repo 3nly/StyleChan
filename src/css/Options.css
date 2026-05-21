@@ -54,6 +54,9 @@
   padding:0 6px;
   vertical-align:middle;
 }
+#main-section .option[hidden] {
+  display:none !important;
+}
 #main-section>.option:nth-of-type(even) {
   background: rgb\(" + $SS.theme.mainColor.shiftRGB(-5) + ") !important;
 }
