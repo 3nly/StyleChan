@@ -51,7 +51,8 @@
             "Show Banner": [false, "Toggle visibility of the banner.", null, true],
             "Reduce Banner Opacity": [false, "Reduce opacity of the banner for easier viewing.", "Show Banner", true, true],
             "Show Board Name": [true, "Toggle visibility of the board name."],
-            "Show Reply to Thread Button": [false, "Toggle visibility of the Start a Thread / Reply to Thread button."],
+            "Show Reply to Thread Button": [false, "Toggle visibility of the Start a Thread / Reply to Thread button.", null, true],
+            "Show Only in Catalog": [false, "Show the button only when browsing the catalog.", "Show Reply to Thread Button", true, true],
             "Show Blotter": [false, "Toggle visibility of the 4chan news blotter."],
             "Show 4chan Ads": [false, "Opts into 4chan\'s banner ads.", null, true],
             "Show Board Banners": [false, "Toggle visibility of board banners.", "Show 4chan Ads", true, true],
@@ -3339,6 +3340,8 @@
                 $("html").optionClass("Show Banner", false, "hide-banner");
                 $("html").optionClass("Reduce Banner Opacity", true, "banner-opacity");
                 $("html").optionClass("Show Reply to Thread Button", false, "hide-button");
+                if ($SS.conf["Show Reply to Thread Button"] && $SS.conf["Show Only in Catalog"] && !$SS.location.catalog)
+                    $("html").addClass("hide-button");
                 $("html").optionClass("Show Reply Header", true, "post-info");
                 $("html").optionClass("Show File Info", false, "show-file-info");
                 $("html").optionClass("Borders", 2, "borders-all");
