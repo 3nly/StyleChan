@@ -15,11 +15,6 @@
   font-size: 14px !important;
 }
 /* Options */
-.tab-label,
-.options-button,
-.theme-preview,
-#oneechan-options input,
-#oneechan-options textarea,
 .hide-reply-button,
 .hide-thread-button {
   font-family: sans-serif !important;
@@ -56,8 +51,6 @@ body,
 #qr input.field,
 #qr:not(.sjis-preview) textarea.field,
 #qr span.field,
-#qr-file-button,
-#qr input[type=submit],
 #qr select[data-name="thread"],
 :root #t-desc,
 textarea[name="com"],
@@ -91,6 +84,25 @@ a.qr-link {
 }
 .backlink {
   font-size: " + $SS.conf["Backlink Font Size"] + "px !important;
+}
+/* Limit font-size to not break layout and buttons */
+:root input.jsColor,
+.tab-label,
+.options-button,
+.theme-preview,
+#oneechan-options input,
+#oneechan-options textarea,
+#oneechan-options select,
+#oneechan-options .option-title,
+#oneechan-options .option,
+#add-theme .option-title,
+#add-theme input,
+#add-theme select,
+#fourchanx-settings,
+#fourchanx-settings input,
+#fourchanx-settings select {
+  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ";
+  font-size: " + (($SS.conf["Font Size"] >= 15) ? 15 : 13) + "px !important;
 }
 #qr-file-button,
 #qr input[type=submit],
