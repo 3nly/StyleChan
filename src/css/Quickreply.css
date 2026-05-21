@@ -131,6 +131,7 @@
 #t-load,
 #t-next {
   height: inherit !important;
+  min-height: 17px;
 }
 /* Vertical QR */
 :root.vertical-qr #qr > div > label > div,
