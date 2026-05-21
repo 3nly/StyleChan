@@ -253,7 +253,7 @@
                     value:"Garamond"
                 }]
             ],
-            "Font Size": [13, "Set the font size of text (in pixels)."],
+            "Font Size": [13, "Set the font size of text (in pixels). Certain menu elements have a 15px limit to avoid breaking their layouts."],
             "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels)."],
             "Backlink Font Size": [10, "Set the font size of backlinks."],
             "Bitmap Font": [false, "Check this if you are using a bitmap font."],
