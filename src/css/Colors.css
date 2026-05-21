@@ -203,7 +203,10 @@ body.is_catalog .panel,
 :root.header-gradient #header-bar {
   background: linear-gradient(rgb\(" + $SS.theme.headerBGColor.shiftRGB(15) + "),rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ")) !important;
 }
-:root.header-shadow #header-bar {
+:root.header-shadow #header-bar,
+.captcha-root div,
+#t-root,
+#qrCaptchaContainer {
   box-shadow: none !important;
 }
 :root:not(.fixed) #header-bar {
