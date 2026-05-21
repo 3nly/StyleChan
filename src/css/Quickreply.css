@@ -151,7 +151,8 @@
 :root.vertical-qr #qr .move {
   display: block;
   position: absolute;
-  width: 105px;
+  width: max-content;
+  min-width: 105px;
   cursor: default;
   padding: 2px 0 2px 2px;
   text-align: center;
