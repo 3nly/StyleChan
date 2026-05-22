@@ -399,7 +399,7 @@ body.is_thread div.navLinks:not(.navLinksBot) {
   margin-bottom: 5px;
 }
 #hoverUI {
-  z-index: 12 !important;
+  z-index: 75 !important;
 }
 :root:not(.fourchan-x) div#boardNavMobile {
   padding: 2px 4px;
