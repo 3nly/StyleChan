@@ -560,6 +560,7 @@
                         bHidden = !($this.attr("disabled") === "true");
 
                     $this.attr("hidden", bHidden || "");
+                    this.style.display = bHidden ? "none" : "";
                 });
             },
             hide: function() {
