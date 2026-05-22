@@ -1197,9 +1197,9 @@
             if (!$SS.conf["Remember Comment Draft"]) return;
 
             $.asap(function() {
-                return document.querySelector("#qr, #quickReply");
-            }, function() {
-                $SS.bindRememberComment(document.querySelector("#qr, #quickReply"));
+                return document.querySelector("#qr, #quickReply, form[name='post']");
+            }, function(node) {
+                $SS.bindRememberComment(node);
             });
         },
         getRememberCommentPrefix: function() {
