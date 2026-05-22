@@ -552,14 +552,6 @@
                     this.setAttribute(name, val);
                 });
             },
-            disabled: function(bDisabled) {
-                if (bDisabled == undefined)
-                    return this.elems[0].disabled;
-
-                return this.each(function() {
-                    this.disabled = bDisabled;
-                });
-            },
             toggle: function(bHidden) {
                 return this.each(function() {
                     var $this = $(this);
@@ -604,11 +596,6 @@
                             this.value = val;
                             break;
                     }
-                });
-            },
-            checked: function(state) {
-                return this.each(function() {
-                    this.checked = state;
                 });
             },
             addClass: function(classNames) {
