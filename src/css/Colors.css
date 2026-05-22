@@ -22,7 +22,8 @@ select,
 .tegaki-label,
 .dd-menu ul,
 .boxbar,
-.postblock {
+.postblock,
+.globalMessage {
   color: " + $SS.theme.textColor.hex + " !important;
 }
 /* Names */
