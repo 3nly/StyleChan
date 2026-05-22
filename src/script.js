@@ -268,7 +268,7 @@
             "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
             ":: 4chan": ["header", ""],
             "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
-            "Catalog links": [false, "Converts board navigation links to catalog links."],
+            "Catalog Links": [false, "Converts board navigation links to catalog links."],
             "Themes": [],
             "Hidden Themes": [],
             "Selected Theme": 1,
