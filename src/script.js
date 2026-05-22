@@ -268,6 +268,7 @@
             "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
             ":: 4chan": ["header", ""],
             "Pin Quick Reply": [false, "Pin quick reply box open when replying to threads."],
+            "Catalog links": [false, "Convert board navigation links to catalog links by appending '/catalog' to the URL."],
             "Themes": [],
             "Hidden Themes": [],
             "Selected Theme": 1,
@@ -963,6 +964,19 @@
                         link.click();
                     });
                 }
+
+                if ($SS.conf["Catalog links"]) {
+                    $("#boardNavDesktop a").each(function() {
+                        var href = $(this).attr('href');
+                        if (/^\/[a-z0-9]+\/?$/i.test(href)) {
+                            $(this).attr('href', href.replace(/\/?$/, '/catalog'));
+                        }
+                    });
+                    $("#boardNavMobile a").each(function() {
+                        var href = $(this).attr('href');
+                        if (/^\/\/boards\.4chan\.org\/[a-z0-9]+\/?$/i.test(href)) {
+                            $(this).attr('href', href.replace(/\/?$/, '/catalog'));
+                        }
                     });
                 }
 
