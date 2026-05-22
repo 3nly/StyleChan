@@ -1000,8 +1000,6 @@
 
             if ($SS.location.dead)
                 return;
-            else if (reload || $("link[rel=stylesheet]", getDocHead()).exists())
-                $(document).unbind("MutationObserver", $SS.insertCSS);
 
             css = "<%= grunt.file.read('tmp/style.min.css').replace(/\\(^\")/g, '') %>";
 
@@ -1526,7 +1524,6 @@
         },
         /* CONFIG */
         Config: {
-            hasGM: typeof GM_deleteValue !== "undefined",
             init: function() {
                 var parseVal = function(key, val) {
                     if (/^(Selected|Hidden)+\s(Themes?)+$/.test(key)) {
@@ -1607,9 +1604,8 @@
                         return link;
                     }
                     $.asap(function() {
-                        return !!(document.querySelector("#boardNavDesktop #navtopright"));
-                    }, function() {
-                        var navtopright = document.querySelector("#boardNavDesktop #navtopright");
+                        return document.querySelector("#boardNavDesktop #navtopright");
+                    }, function(navtopright) {
                         var span = document.createElement("span");
                         span.appendChild(document.createTextNode(" ["));
                         var link = makeNavLink();
@@ -1619,17 +1615,15 @@
                         navtopright.appendChild(span);
                     });
                     $.asap(function() {
-                        return !!(document.querySelector("#boardNavDesktop .pageJump"));
-                    }, function() {
-                        var pageJump = document.querySelector("#boardNavDesktop .pageJump");
+                        return document.querySelector("#boardNavDesktop .pageJump");
+                    }, function(pageJump) {
                         var link = makeNavLink();
                         link.textContent = " StyleChan ";
                         pageJump.insertBefore(link, pageJump.lastElementChild);
                     });
                     $.asap(function() {
-                        return !!(document.querySelector("#boardNavMobile .pageJump"));
-                    }, function() {
-                        var pageJump = document.querySelector("#boardNavMobile .pageJump");
+                        return document.querySelector("#boardNavMobile .pageJump");
+                    }, function(pageJump) {
                         var link = makeNavLink();
                         link.textContent = " StyleChan ";
                         pageJump.insertBefore(link, pageJump.lastElementChild);
@@ -3322,70 +3316,68 @@
 
         classes: {
             init: function() {
-                /* Function arguments: ("Option Name", value, "class-name") */
-                $("html").addClass("oneechan");
-                $SS.theme.textColor.isLight ? $("html").addClass("isLight") : "";
-                $SS.theme.bgColor.isLight ? "" : $("html").addClass("dark-captcha");
-                $("html").optionClass("Underline QuoteLinks", true, "underline-quotes");
-                $("html").optionClass("Underline All Links", false, "underline-disabled");
-                $("html").optionClass("Rounded Corners", true, "rounded-corners");
-                $("html").optionClass("Show Board Name", false, "hide-board-name");
-                $("html").optionClass("Fit Width", true, "reply-fit-width");
-                $("html").optionClass("Fit Post Menu", true, "fit-postmenu");
-                $("html").optionClass("Show Banner", false, "hide-banner");
-                $("html").optionClass("Reduce Banner Opacity", true, "banner-opacity");
-                $("html").optionClass("Show Reply to Thread Button", false, "hide-button");
-                if ($SS.conf["Show Reply to Thread Button"] && $SS.conf["Show Only in Catalog"] && !$SS.location.catalog)
-                    $("html").addClass("hide-button");
-                $("html").optionClass("Show Reply Header", true, "post-info");
-                $("html").optionClass("Show File Info", false, "show-file-info");
-                $("html").optionClass("Borders", 2, "borders-all");
-                $("html").optionClass("Borders", 3, "borders-none");
-                $("html").optionClass("Decoration Style", 1, "hl-border");
-                $("html").optionClass("Decoration Style", 2, "hl-outline");
-                $("html").optionClass("Decoration Style", 3, "hl-border-down");
+                var cl = document.documentElement.classList;
+                cl.add("oneechan");
+                $SS.theme.textColor.isLight && cl.add("isLight");
+                !$SS.theme.bgColor.isLight && cl.add("dark-captcha");
+                cl.toggle("underline-quotes", $SS.conf["Underline QuoteLinks"] === true);
+                cl.toggle("underline-disabled", $SS.conf["Underline All Links"] === false);
+                cl.toggle("rounded-corners", $SS.conf["Rounded Corners"] === true);
+                cl.toggle("hide-board-name", $SS.conf["Show Board Name"] === false);
+                cl.toggle("reply-fit-width", $SS.conf["Fit Width"] === true);
+                cl.toggle("fit-postmenu", $SS.conf["Fit Post Menu"] === true);
+                cl.toggle("hide-banner", $SS.conf["Show Banner"] === false);
+                cl.toggle("banner-opacity", $SS.conf["Reduce Banner Opacity"] === true);
+                cl.toggle("hide-button", $SS.conf["Show Reply to Thread Button"] === false || ($SS.conf["Show Reply to Thread Button"] && $SS.conf["Show Only in Catalog"] && !$SS.location.catalog));
+                cl.toggle("post-info", $SS.conf["Show Reply Header"] === true);
+                cl.toggle("show-file-info", $SS.conf["Show File Info"] === false);
+                cl.toggle("borders-all", $SS.conf["Borders"] === 2);
+                cl.toggle("borders-none", $SS.conf["Borders"] === 3);
+                cl.toggle("hl-border", $SS.conf["Decoration Style"] === 1);
+                cl.toggle("hl-outline", $SS.conf["Decoration Style"] === 2);
+                cl.toggle("hl-border-down", $SS.conf["Decoration Style"] === 3);
                 if (!$SS.location.report) {
-                    $("html").optionClass("Sidebar Position", 1, "right-sidebar");
-                    $("html").optionClass("Sidebar Position", 2, "left-sidebar");
-                    $("html").optionClass("SS-like Sidebar", true, "ss-sidebar");
-                    $("html").optionClass("Minimal Sidebar", true, "mini-sidebar");
-                };
-                $("html").optionClass("Recolor Even Replies", true, "recolor-even");
-                $("html").optionClass("Invert Spoiler", true, "alt-spoiler");
-                $("html").optionClass("Backlink Icons", true, "backlink-icon");
-                $("html").optionClass("Backlink Shadow", true, "backlink-shadow");
-                $("html").optionClass("Show 4chan Pass Users", true, "no-pu");
-                $("html").optionClass("Show 4chan Pass Login", true, "pass-login");
-                $("html").optionClass("Fit Expanded Images", true, "fit-eximg");
-                $("html").optionClass("Autohide Style", 2, "vertical-qr");
-                $("html").optionClass("Autohide Style", 3, "fade-qr");
-                $("html").optionClass("Transparent QR", true, "qr-opacity");
-                $("html").optionClass("Remove Background", true, "qr-background");
-                $("html").optionClass("Remove Controls", true, "qr-controls");
-                $("html").optionClass("Indent OP", false, "force-indent");
-                $("html").optionClass("Allow Wrapping Around OP", false, "force-wrapping");
-                $("html").optionClass("OP Background", true, "op-background");
-                $("html").optionClass("Expanding Form Inputs", true, "expand-inputs");
-                $("html").optionClass("Single View Captcha", true, "single-captcha");
-                $("html").optionClass("Animated Transition", true, "qr-transition");
-                $("html").optionClass("Style 4chanX Notifications", true, "chX-notifs");
-                $("html").optionClass("Show Header Background Gradient", true, "header-gradient");
-                $("html").optionClass("Show Header Shadow", false, "header-shadow");
-                $("html").optionClass("Highlight Current Board", false, "header-highlight");
-                $("html").optionClass("Show Blotter", false, "hide-blotter");
-                $("html").optionClass("Show 4chan Ads", true, "show-ads");
-                $("html").optionClass("Show Board Banners", false, "hide-board-banners");
-                $("html").optionClass("Show Top Ad", false, "hide-top-ad");
-                $("html").optionClass("Show Bottom Ad", false, "hide-bottom-ad");
-                $("html").optionClass("Show Buy Ad Banner", false, "hide-adl");
-                $("html").optionClass("Reduce Ad Opacity", true, "ad-opacity");
-                $("html").optionClass("Show Navigation Links", false, "hide-navlinks");
-                $("html").optionClass("Show Top Links", false, "hide-navlinktop");
-                $("html").optionClass("Show Bottom Links", false, "hide-navlinkbot");
-                $("html").optionClass("Reduce Thumbnail Opacity", true, "thumb-opacity");
-                $("html").optionClass("Justified Text", true, "catalog-justify");
-                $("html").optionClass("Show Background", true, "catalog-background");
-                $("html").optionClass("Unified Thumbnail Size", true, "catalog-thumbsize");
+                    cl.toggle("right-sidebar", $SS.conf["Sidebar Position"] === 1);
+                    cl.toggle("left-sidebar", $SS.conf["Sidebar Position"] === 2);
+                    cl.toggle("ss-sidebar", $SS.conf["SS-like Sidebar"] === true);
+                    cl.toggle("mini-sidebar", $SS.conf["Minimal Sidebar"] === true);
+                }
+                cl.toggle("recolor-even", $SS.conf["Recolor Even Replies"] === true);
+                cl.toggle("alt-spoiler", $SS.conf["Invert Spoiler"] === true);
+                cl.toggle("backlink-icon", $SS.conf["Backlink Icons"] === true);
+                cl.toggle("backlink-shadow", $SS.conf["Backlink Shadow"] === true);
+                cl.toggle("no-pu", $SS.conf["Show 4chan Pass Users"] === true);
+                cl.toggle("pass-login", $SS.conf["Show 4chan Pass Login"] === true);
+                cl.toggle("fit-eximg", $SS.conf["Fit Expanded Images"] === true);
+                cl.toggle("vertical-qr", $SS.conf["Autohide Style"] === 2);
+                cl.toggle("fade-qr", $SS.conf["Autohide Style"] === 3);
+                cl.toggle("qr-opacity", $SS.conf["Transparent QR"] === true);
+                cl.toggle("qr-background", $SS.conf["Remove Background"] === true);
+                cl.toggle("qr-controls", $SS.conf["Remove Controls"] === true);
+                cl.toggle("force-indent", $SS.conf["Indent OP"] === false);
+                cl.toggle("force-wrapping", $SS.conf["Allow Wrapping Around OP"] === false);
+                cl.toggle("op-background", $SS.conf["OP Background"] === true);
+                cl.toggle("expand-inputs", $SS.conf["Expanding Form Inputs"] === true);
+                cl.toggle("single-captcha", $SS.conf["Single View Captcha"] === true);
+                cl.toggle("qr-transition", $SS.conf["Animated Transition"] === true);
+                cl.toggle("chX-notifs", $SS.conf["Style 4chanX Notifications"] === true);
+                cl.toggle("header-gradient", $SS.conf["Show Header Background Gradient"] === true);
+                cl.toggle("header-shadow", $SS.conf["Show Header Shadow"] === false);
+                cl.toggle("header-highlight", $SS.conf["Highlight Current Board"] === false);
+                cl.toggle("hide-blotter", $SS.conf["Show Blotter"] === false);
+                cl.toggle("show-ads", $SS.conf["Show 4chan Ads"] === true);
+                cl.toggle("hide-board-banners", $SS.conf["Show Board Banners"] === false);
+                cl.toggle("hide-top-ad", $SS.conf["Show Top Ad"] === false);
+                cl.toggle("hide-bottom-ad", $SS.conf["Show Bottom Ad"] === false);
+                cl.toggle("hide-adl", $SS.conf["Show Buy Ad Banner"] === false);
+                cl.toggle("ad-opacity", $SS.conf["Reduce Ad Opacity"] === true);
+                cl.toggle("hide-navlinks", $SS.conf["Show Navigation Links"] === false);
+                cl.toggle("hide-navlinktop", $SS.conf["Show Top Links"] === false);
+                cl.toggle("hide-navlinkbot", $SS.conf["Show Bottom Links"] === false);
+                cl.toggle("thumb-opacity", $SS.conf["Reduce Thumbnail Opacity"] === true);
+                cl.toggle("catalog-justify", $SS.conf["Justified Text"] === true);
+                cl.toggle("catalog-background", $SS.conf["Show Background"] === true);
+                cl.toggle("catalog-thumbsize", $SS.conf["Unified Thumbnail Size"] === true);
             }
         },
 
@@ -3802,7 +3794,29 @@
                     p.padM.style.backgroundRepeat = "no-repeat";
                     p.sldM.style.backgroundImage = "url('data:image/gif;base64,R0lGODlhBwALAKECAAAAAP///6g8eKg8eCH5BAEKAAIALAAAAAAHAAsAAAITTIQYcLnsgGxvijrxqdQq6DRJAQA7')";
                     p.sldM.style.backgroundRepeat = "no-repeat";
-                    p.pad.style.backgroundImage = "url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAyAAD/7gAhQWRvYmUAZMAAAAABAwAQAwMGCQAABTgAAAVfAAAHAv/bAIQACAYGBgYGCAYGCAwIBwgMDgoICAoOEA0NDg0NEBEMDg0NDgwRDxITFBMSDxgYGhoYGCMiIiIjJycnJycnJycnJwEJCAgJCgkLCQkLDgsNCw4RDg4ODhETDQ0ODQ0TGBEPDw8PERgWFxQUFBcWGhoYGBoaISEgISEnJycnJycnJycn/8IAEQgAZQC1AwEiAAIRAQMRAf/EAJgAAAIDAQEAAAAAAAAAAAAAAAQFAAEDAgYBAAIDAQEBAAAAAAAAAAAAAAUGAQMEAgAHEAADAAMBAQADAQEAAAAAAAAAAQIhEgMRBBAwIiAxEQEAAAAAAAAAAAAAAAAAAACAEgEBAQEAAAAAAAAAAAAAAAAwgVBgEwACAgICAgIDAAAAAAAAAAAAARExECEgkTBh8MFBgaH/2gAMAwEAAhEDEQAAAEXp0vo0r6m99Mg9EtKGaxutrS0y5wvKJGRE3bRE4K4d6fJ+Z9h5xpY/FhPgz7f0zzZZHfay7CuCwdrglbVcPi3c69Asej1xt6BM8ArGa9oBWpqQWoRFSy261ZRlcFcNtXmvP+qRMR3yQjsU0z0xo/M3dWXYpnW4NMVPWth0A2uHIbbGvsHK1sHA5hMBOVxaGyG2reOvWp3BzwTyyVoEvpFBsv5gdyOUYMzejKGOrLscwLsmWS5oXQ6CLGrTBjQDJZhsBonMU0fkKAOfhpC4aadlsfHJFGuUyt8uKEfP4N8t5ccrYio1nZd4i6/NjwGuXQ6De2ZsK5D9m4k48HGBWUDxMTM7h2HW3W6jKiKI8qwm4u3Wlza56d4uxOvBDCGXn3gcMOR1i+HTJ0x3276FcbzuqnjPfmKB+Cue8+F7XdxjRFXwFiw4utV8sqsvB0M6i8SGSu8KjqokGHSqS7k7x3ckRKk9zKk9EuSfSSdeqpJ9VSe6uSem5JEySR6pJE//2gAIAQIAAQUB7I7SRJEnzI+c40TX83R3ePpPDqjrJMkScEcDlQqxVHV47nh0R0kmSZOKORzoVYqjo8djwtFyKSZOaOZFCrDotnQ8KRUikUkIkmjYdFMs8GhyamokIVGxsNjPP2//2gAIAQMAAQUB70d2fSfRI5FGeEnznzM51hUbnajszudpHIozxk4HBkVhUbnWjqzsdZHJpnlJyOLIrCo3LotnQ6SamhEnM5smjY3KopllSamhMkkMVGxuOhsY5NTQUiEzY2N/2//aAAgBAQABBQHhJwk4I4/8stFoaykJCR1WO8neTvBEEQRJEjkcjk1zxk4ycUcSy0WhrKQkJHVY7SdpO0EQRBEkSORyOTU4ycZOKORZaLQ1lISEjosdpO0naCIIgiSJHI5HJqcpOUnJHIstFoaykJCR0WOsnWTrBEEQRJMjkcjk1OUnKTkjmUUikNZSEhItY6ydZOsEwTBMkyORyOTU5yc5OaOZRSKQ0JCQkWsdJOknSCYJgmSZHI5HJqRJEkIgopFIaPDw8LRclyXBMEwTIpNTU1NSJIkhEjGho8PDw8KRclyXAoFApFJqampqTJMkokY0NHh4eHhSKkqSoFAoFIpNTU1NSZJklCGNDR4eHh4NFSVJUCgUCkUmpqamopFIkL8eHh4eHh4NDkcjg0NDU1NTU1NTU1PPz4eHh4eHh4ampoaGhqampqampgx/rBgx+MGDB/J/JgwYMGDBg//aAAgBAgIGPwE6lS6P/9oACAEDAgY/AeU//9oACAEBAQY/ARX/AP/aAAgBAgMBPxC0tw7kQQNCRRlMrG0lvn8Fpbj2IigaEijP5xvJb5/BbldyIIHhIoy2cbTxF6CKBo4C50byfbiqQDxgWuGVGx9sqihANGBajMpth0dHR1hHZ2dnef/aAAgBAwMBPxCeSaRJkkbx6JFAkNEEGnj+hLJNIsyTPDokECQ0RQa+VLJJIkyTPCtBBAsQQQaWVPJNIsySMZWyIoEiCKDShYpyYSSYZWxELBAaxYpSQSSTNAJBALO7z0dHR1ns7Oz/2gAIAQEDAT8QrKioX+BbLi/j/v5y4vLioqKzXx/qyoqE1+hbLi/lv3cXlxXoqKzTw/uUlBQLr9CeAcrrC0sPTkdPBW5WVFQmhPAOVVxeXHpPRh18FblJQUC6F8FpTWFpYes9XL1blZUVCaEyO3ipri8u8AKrcrKisXQmR2iKKOkuLy49PAdllm+UoF0Lm3uIoo6/AJ3sss34dILm3uIoo6eF3pPVlWWWb8EFEyL3EUUNfAT0noyrLL46SDQwy/BzIggiuP0UEUhoYfH7LDLC9RBFc/2jRo0a4DXlJ/8A/9k=')";
+                    if (!$SS.jscolor._padDataURL) {
+                        var c = document.createElement("canvas");
+                        c.width = $SS.jscolor.images.pad[0];
+                        c.height = $SS.jscolor.images.pad[1];
+                        var x = c.getContext("2d");
+                        var hueGrad = x.createLinearGradient(0, 0, c.width, 0);
+                        hueGrad.addColorStop(0, "#f00");
+                        hueGrad.addColorStop(1 / 6, "#ff0");
+                        hueGrad.addColorStop(2 / 6, "#0f0");
+                        hueGrad.addColorStop(3 / 6, "#0ff");
+                        hueGrad.addColorStop(4 / 6, "#00f");
+                        hueGrad.addColorStop(5 / 6, "#f0f");
+                        hueGrad.addColorStop(1, "#f00");
+                        x.fillStyle = hueGrad;
+                        x.fillRect(0, 0, c.width, c.height);
+                        var whiteGrad = x.createLinearGradient(0, 0, 0, c.height);
+                        whiteGrad.addColorStop(0, "rgba(255,255,255,0)");
+                        whiteGrad.addColorStop(1, "rgba(255,255,255,1)");
+                        x.fillStyle = whiteGrad;
+                        x.fillRect(0, 0, c.width, c.height);
+                        $SS.jscolor._padDataURL = c.toDataURL();
+                    }
+                    p.pad.style.backgroundImage = "url('" + $SS.jscolor._padDataURL + "')";
                     p.pad.style.backgroundRepeat = "no-repeat";
                     p.pad.style.backgroundPosition = "0 0";
                     /** UNTIL HERE **/
