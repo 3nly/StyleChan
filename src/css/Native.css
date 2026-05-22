@@ -73,3 +73,8 @@ div#qrError {
 #quickReply #qrFile:hover::-webkit-file-upload-button {
   background: rgb\(" + $SS.theme.mainColor.shiftRGB(10) + ") !important;
 }
+/* Catalog */
+:not(.right-sidebar,.left-sidebar) div.boardBanner > div.boardTitle {
+  margin-top: -15px;
+  margin-bottom: 10px;
+}
