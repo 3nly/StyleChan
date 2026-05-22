@@ -177,9 +177,9 @@ select[name='Font Family']>option {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 445px;
+  height: 65vh;
   text-align:left!important;
-  width:800px!important;
+  width: 55vw!important;
 }
 :root.ua-blink #add-theme {
   height: 450px !important;
