@@ -28,6 +28,8 @@
   overflow-wrap: anywhere;
   font-size: 12px;
   line-height: 1.35;
+  min-height: 10px;
+  font-weight: bolder;
 }
 .stylechan-notification.visible {
   opacity: 1;
@@ -87,8 +89,12 @@
 #header-bar #notifications a {
   color: #ffffff !important;
 }
-#header-bar #notifications a:hover {
+#header-bar #notifications a:hover,
+.chX-notifs #header-bar #notifications a:hover {
   color: " + $SS.theme.linkHColor.hex + " !important;
+}
+.chX-notifs #header-bar #notifications a {
+  color: " + $SS.theme.linkColor.hex + " !important;
 }
 #stylechan-notifications .stylechan-notification,
 .chX-notifs #notifications .notification {

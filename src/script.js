@@ -205,6 +205,9 @@
                     name: "Double",
                     value: "double"
                 }, {
+                    name: "Inset",
+                    value: "inset"
+                }, {
                     name: "Solid",
                     value: "solid"
                 }]
@@ -257,6 +260,8 @@
             ":: Notifications": ["header", ""],
             "Toast Notifications": [true, "Show toast notification popups for events.", null, true],
             "Style 4chanX Notifications": [true, "Show 4chanX notifications in the same style as StyleChan's toasts.", "Toast Notifications", true, true],
+            "Center Notifications": [false, "Center notifications at the top below the header bar.", "Toast Notifications", true, true],
+            "Full Border": [false, "Use a full border to make notifications more visible. Border style follows the Highlight Style and Width options.", "Toast Notifications", true, true],
             ":: 4chan X": ["header", ""],
             "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
             "Show Header Shadow": [true, "Gives the header a drop shadow."],
