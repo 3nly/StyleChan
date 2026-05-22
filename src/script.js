@@ -406,16 +406,19 @@
         return this instanceof $lib ?
             this.init(selector, root) : new $lib(selector, root);
     };
-    /* From 4chan X, unchainable */
-    /* https://github.com/seaweedchan/4chan-x/blob/master/LICENSE */
-    $.asap = function(test, cb, _int) {
-        _int = _int || 25;
+    $.waitFor = function(selector, cb) {
+        var el = document.querySelector(selector);
+        if (el) { cb(el); return; }
+        var obs = new MutationObserver(function() {
+            var el = document.querySelector(selector);
+            if (el) { cb(el); obs.disconnect(); }
+        });
+        obs.observe(document.documentElement, { childList: true, subtree: true });
+    };
+    $.waitForFn = function(test, cb) {
         var result = test();
-        if (result) {
-            return cb(result);
-        } else {
-            return setTimeout($.asap, Math.min(_int * 2, 500), test, cb, Math.min(_int * 2, 500));
-        }
+        if (result) { cb(result); return; }
+        setTimeout(function() { $.waitForFn(test, cb); }, 50);
     };
 
     $lib.prototype = {
@@ -892,11 +895,7 @@
 
                 // Auto-open native QR on thread pages (non-4chanX only)
                 if ($SS.location.reply && $SS.conf["Pin Quick Reply"] && !document.documentElement.classList.contains("fourchan-x")) {
-                    $.asap(function() {
-                        return document.querySelector("a[data-cmd='open-qr']");
-                    }, function(link) {
-                        link.click();
-                    });
+                    $.waitFor("a[data-cmd='open-qr']", function(link) { link.click(); });
                 }
 
                 if ($SS.conf["Catalog links"]) {
@@ -985,9 +984,7 @@
                 $SS.insertCSS();
                 $SS.DOMLoaded(true);
             } else {
-                $.asap((function() {
-                    return $("link[rel=stylesheet]", getDocHead()).exists();
-                }), $SS.insertCSS);
+                $.waitFor("link[rel=stylesheet]", function() { $SS.insertCSS(); });
                 if (/complete|interactive/.test(document.readyState))
                     $SS.DOMLoaded();
                 else
@@ -1198,9 +1195,7 @@
         initRememberComment: function() {
             if (!$SS.conf["Remember Comment Draft"]) return;
 
-            $.asap(function() {
-                return document.querySelector("#qr, #quickReply, form[name='post']");
-            }, function(node) {
+            $.waitFor("#qr, #quickReply, form[name='post']", function(node) {
                 $SS.bindRememberComment(node);
             });
         },
@@ -1328,7 +1323,7 @@
         initSingleViewCaptcha: function() {
             if (!$SS.conf["Single View Captcha"]) return;
 
-            $.asap(function() {
+            $.waitForFn(function() {
                 return typeof TCaptcha !== "undefined" && typeof TCaptcha.buildSliderNode === "function";
             }, function() {
                 var picksByTask = [];
@@ -1620,9 +1615,7 @@
                         link.addEventListener("click", $SS.options.show);
                         return link;
                     }
-                    $.asap(function() {
-                        return document.querySelector("#boardNavDesktop #navtopright");
-                    }, function(navtopright) {
+                    $.waitFor("#boardNavDesktop #navtopright", function(navtopright) {
                         var span = document.createElement("span");
                         span.appendChild(document.createTextNode(" ["));
                         var link = makeNavLink();
@@ -1631,16 +1624,12 @@
                         span.appendChild(document.createTextNode("]"));
                         navtopright.appendChild(span);
                     });
-                    $.asap(function() {
-                        return document.querySelector("#boardNavDesktop .pageJump");
-                    }, function(pageJump) {
+                    $.waitFor("#boardNavDesktop .pageJump", function(pageJump) {
                         var link = makeNavLink();
                         link.textContent = " StyleChan ";
                         pageJump.insertBefore(link, pageJump.lastElementChild);
                     });
-                    $.asap(function() {
-                        return document.querySelector("#boardNavMobile .pageJump");
-                    }, function(pageJump) {
+                    $.waitFor("#boardNavMobile .pageJump", function(pageJump) {
                         var link = makeNavLink();
                         link.textContent = " StyleChan ";
                         pageJump.insertBefore(link, pageJump.lastElementChild);
