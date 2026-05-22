@@ -408,11 +408,13 @@
     };
     /* From 4chan X, unchainable */
     /* https://github.com/seaweedchan/4chan-x/blob/master/LICENSE */
-    $.asap = function(test, cb) {
-        if (test()) {
-            return cb();
+    $.asap = function(test, cb, _int) {
+        _int = _int || 25;
+        var result = test();
+        if (result) {
+            return cb(result);
         } else {
-            return setTimeout($.asap, 25, test, cb);
+            return setTimeout($.asap, Math.min(_int * 2, 500), test, cb, Math.min(_int * 2, 500));
         }
     };
 
