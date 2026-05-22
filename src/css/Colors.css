@@ -250,8 +250,13 @@ select:hover,
 hr {
   background-image: linear-gradient(to left, rgba(" + $SS.theme.brderColor.rgb + ",0), rgb(" + $SS.theme.brderColor.rgb + "), rgba(" + $SS.theme.brderColor.rgb + ",0));
 }
+/* Unread line */
 #unread-line {
   background-image: linear-gradient(to left, rgba(" + $SS.theme.unreadColor.rgb + ",0), rgb(" + $SS.theme.unreadColor.rgb + "), rgba(" + $SS.theme.unreadColor.rgb + ",0));
+}
+
+.newPostsMarker {
+  box-shadow: 0 3px " + $SS.theme.unreadColor.rgb + " !important;
 }
 .inline {
   background: rgba\(" + $SS.theme.mainColor.shiftRGB(-16) + ",.8)!important;
