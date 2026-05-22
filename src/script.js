@@ -1061,7 +1061,9 @@
                        document.querySelector("#quickReply #qrFile") ||
                        document.querySelector("#quickReply input[type=file]") ||
                        document.querySelector("form[name='qrPost'] input[type=file]") ||
-                       document.querySelector("#postForm input[type=file]");
+                       document.querySelector("form[name='post'] input[type=file]") ||
+                       document.querySelector("#postForm input[type=file]") ||
+                       document.querySelector("#postFile");
             }
 
             function clearSelectedFile(input) {
@@ -1074,7 +1076,7 @@
             document.addEventListener("change", function(e) {
                 var input = e.target;
                 if (input.type !== "file") return;
-                if (!input.closest("#qr, #quickReply, #postForm, form[name='qrPost']")) return;
+                if (!input.closest("#qr, #quickReply, #postForm, form[name='qrPost'], form[name='post']")) return;
                 var file = input.files && input.files[0];
                 if (!file || !shouldConvert(file)) return;
                 e.stopImmediatePropagation();
