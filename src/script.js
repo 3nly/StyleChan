@@ -1321,7 +1321,7 @@
             localStorage.removeItem($SS.getRememberCommentKey());
         },
         bindRememberComment: function(qrNode) {
-            if (!qrNode || qrNode.dataset.rememberCommentBound || !$SS.conf["Remember Comment Draft"]) return;
+            if (!qrNode || !qrNode.dataset || qrNode.dataset.rememberCommentBound || !$SS.conf["Remember Comment Draft"]) return;
 
             var commentField = qrNode.querySelector("textarea");
             var formNode = qrNode.querySelector("form") || qrNode.closest("form");
@@ -1609,9 +1609,7 @@
                 $SS.conf["Width Decoration"] = $SS.conf["Decoration Width"] !== 999 ? $SS.conf["Decoration Width"] : $SS.conf["Custom Decoration Width"];
             },
             get: function(name) {
-                var val = this.hasGM ?
-                    GM_getValue(NAMESPACE + name) :
-                    localStorage.getItem(NAMESPACE + name);
+                var val = GM_getValue(NAMESPACE + name);
 
                 if (val != undefined)
                     return JSON.parse(val);
@@ -1624,10 +1622,7 @@
                 if (typeof val !== "number")
                     val = JSON.stringify(val);
 
-                return this.hasGM ?
-                    GM_setValue(name, val) :
-                    localStorage.removeItem(name, val),
-                    localStorage.setItem(name, val);
+                return GM_setValue(name, val);
             }
         },
 
