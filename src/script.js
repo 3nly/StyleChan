@@ -654,23 +654,23 @@
                 if (!classNames || typeof classNames !== "string") return this;
                 var classNamesArray = classNames.split(" ");
                 return this.each(function() {
+                    var $this = $(this);
                     for (var j = 0, jMAX = classNamesArray.length; j < jMAX; j++)
-                        if (!$(this).hasClass(classNamesArray[j]))
-                            $(this).addClass(classNamesArray[j]);
+                        if (!$this.hasClass(classNamesArray[j]))
+                            $this.addClass(classNamesArray[j]);
                         else
-                            $(this).removeClass(classNamesArray[j]);
+                            $this.removeClass(classNamesArray[j]);
                 });
             },
             optionClass: function(optionName, optionValue, className) {
                 if (!className || typeof className !== "string") return this;
                 if (!$SS.conf || $SS.conf[optionName] === undefined) return this;
                 return this.each(function() {
-                    if ($SS.conf[optionName] === optionValue && !$(this).hasClass(className))
-                        $(this).addClass(className);
-                    else if ($SS.conf[optionName] !== optionValue && $(this).hasClass(className))
-                        $(this).removeClass(className);
-                    else
-                        return
+                    var $this = $(this);
+                    if ($SS.conf[optionName] === optionValue && !$this.hasClass(className))
+                        $this.addClass(className);
+                    else if ($SS.conf[optionName] !== optionValue && $this.hasClass(className))
+                        $this.removeClass(className);
                 });
             },
             remove: function() {
@@ -845,14 +845,13 @@
                     if ((!(html = $("*[xmlns]")).exists()) && (!(ctxmenu = $("#ctxmenu-main").exists())))
                         if ((link = $("link[title][rel='stylesheet']")).exists())
                             link.each(function() {
-                                var href = this.getAttribute("href") || "";
-                                if (/4cdn\.org|4chan\.org/.test(href))
+                                if (/4cdn\.org|4chan\.org/.test(this.getAttribute("href") || ""))
                                     $(this).attr("href", "");
                             });
 
                 if ((div = $("#globalMessage *[style]")).exists())
                     div.each(function() {
-                        $(this).attr("style", "");
+                        this.removeAttribute("style");
                     });
 
                 if ((div = $(".closeIcon")).exists()) {
@@ -1803,10 +1802,11 @@
                     });
                     // options window
                     $(".tab-label", tOptions).bind("click", function(e) {
-                        if ($(this).hasClass("selected")) return;
+                        var $this = $(this);
+                        if ($this.hasClass("selected")) return;
 
                         $(".tab-label.selected").removeClass("selected");
-                        $(this).addClass("selected");
+                        $this.addClass("selected");
                     });
                     $("[has-suboption]", tOptions).bind("change", function() {
                         var id = this.name.replace(/\s/g, "_") + $(this).val(),
@@ -1814,11 +1814,11 @@
 
                         if (sub.exists())
                             sub.each(function() {
-                                $(this).show();
+                                this.removeAttribute("hidden");
                             });
                         else
                             $("[class*='" + this.name.replace(/\s/g, "_") + "']").each(function() {
-                                $(this).hide();
+                                this.setAttribute("hidden", "");
                             });
                     });
                     $("a[name=save]", tOptions).bind("click", function() {
@@ -2020,8 +2020,9 @@
 
                 // Save main
                 $("#oneechan-options input[name]:not(.tab-select), #oneechan-options select").each(function() {
-                    var name = $(this).attr("name"),
-                        val = $(this).val();
+                    var $this = $(this),
+                        name = $this.attr("name"),
+                        val = $this.val();
 
                     if (name === "Font Size") {
                         val = parseInt(val);
@@ -2037,7 +2038,7 @@
                         val = parseInt(val);
                     }
 
-                    $SS.Config.set($(this).attr("name"), val);
+                    $SS.Config.set(name, val);
                 });
 
                 // Save Themes
