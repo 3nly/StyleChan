@@ -908,20 +908,20 @@
                     }
                     fixBoardLinks(document.querySelector("#boardNavDesktop"));
                     fixBoardLinks(document.querySelector("#boardNavMobile"));
-                    (function() {
-                        var nav = document.querySelector("#navtopright");
-                        if (!nav) return;
-                        nav.querySelectorAll("a[href='/search'], a[href='//p.4chan.org/']").forEach(function(a) {
-                            var prev = a.previousSibling;
-                            if (prev && prev.nodeType === 3 && /^\s*\[/.test(prev.textContent))
-                                prev.remove();
-                            var next = a.nextSibling;
-                            a.remove();
-                            if (next && next.nodeType === 3 && /^\]/.test(next.textContent))
-                                next.remove();
-                        });
-                    })();
                 }
+                (function() {
+                    var nav = document.querySelector("#navtopright");
+                    if (!nav) return;
+                    nav.querySelectorAll("a[href='/search'], a[href='//p.4chan.org/']").forEach(function(a) {
+                        var prev = a.previousSibling;
+                        if (prev && prev.nodeType === 3 && /^\s*\[/.test(prev.textContent))
+                            prev.remove();
+                        var next = a.nextSibling;
+                        a.remove();
+                        if (next && next.nodeType === 3 && /^\]/.test(next.textContent))
+                            next.remove();
+                    });
+                })();
 
                 // things that need to change after 4chan X loads.
                 setTimeout(function() {
