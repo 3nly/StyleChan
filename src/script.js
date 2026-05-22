@@ -1219,7 +1219,7 @@
             note.addEventListener('keydown', function(e) {
                 if (e.target.closest && e.target.closest('a'))
                     return;
-                if (e.keyCode === 13 || e.keyCode === 27 || e.keyCode === 32) {
+                if (e.key === "Enter" || e.key === "Escape") {
                     e.preventDefault();
                     $SS.dismissNotification(note);
                 }
@@ -1879,9 +1879,9 @@
                         var val = parseInt($(this).val()),
                             bitmap = $(this).parent().nextSibling().children("input[name='Bitmap Font']").val();
 
-                        if (e.keyCode === 38 && !isNaN(val))
+                        if (e.key === "ArrowUp" && !isNaN(val))
                             $(this).val(++val + "px");
-                        else if (e.keyCode === 40 && !isNaN(val))
+                        else if (e.key === "ArrowDown" && !isNaN(val))
                             $(this).val(--val + "px");
                     });
 
@@ -2009,7 +2009,7 @@
                 return $("#overlay").remove();
             },
             keydown: function(e) {
-                if (e.ctrlKey && e.keyCode === 112) {
+                if (e.ctrlKey && e.key === "F1") {
                     e.preventDefault();
                     e.stopPropagation();
                     $SS.options.show();
