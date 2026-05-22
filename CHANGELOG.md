@@ -1,3 +1,15 @@
+### v1.2.1
+*2026-05-22*
+
+- Catalog selects will no longer be targeted by UI Font Size
+
+**4chan:**
+- Normal Autohide style for the native QR is now working
+- Fix Catalog Links not applying correctly
+- Remove the useless [Mobile] and [Search] links from the header
+- Fixes for board banner and board name interactions with the sidebars and catalog
+- Hide checkbox in quote previews
+
 ## v1.2.0
 *2026-05-22*
 
