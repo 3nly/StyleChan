@@ -400,15 +400,6 @@
         Array.isArray = function(arg) {
             return Object.prototype.toString.call(arg) === "[object Array]";
         };
-    Number.prototype.toHexStr = function() {
-        var s = "",
-            v;
-        for (var i = 7; i >= 0; i--) {
-            v = (this >>> (i * 4)) & 0xf;
-            s += v.toString(16);
-        }
-        return s;
-    };
     /* STYLE SCRIPT LIBRARY */
     /* More or less based off jQuery */
     $lib = window.$ = function(selector, root) {
@@ -482,23 +473,6 @@
             },
 
             /* DOM NODE RETRIEVAL */
-            clone: function() {
-                var ret = [];
-
-                this.each(function() {
-                    ret.push(this.cloneNode(true));
-                });
-
-                return new $lib(ret);
-            },
-            elements: function() {
-                if (!this.hasSingleEl())
-                    return this;
-
-                this.elems = Array.prototype.slice.call(this.elems[0].elements);
-
-                return this;
-            },
             get: function(index) {
                 if (index == undefined && this.elems.length === 1)
                     return this.elems[0];
@@ -509,14 +483,6 @@
             },
 
             /* DOM MANIPULATION */
-            prepend: function(el) {
-                if (el.constructor === $lib)
-                    el = el.get();
-
-                return this.each(function() {
-                    this.insertBefore(el, this.firstChild);
-                });
-            },
             append: function(el) {
                 if (el.constructor === $lib)
                     el = el.get();
@@ -566,11 +532,6 @@
 
                 return this.each(function() {
                     this.textContent = text;
-                });
-            },
-            appendText: function(text) {
-                return this.each(function() {
-                    this.textContent += text;
                 });
             },
             attr: function(name, val) {
@@ -802,30 +763,12 @@
                     this.dispatchEvent(ev);
                 });
             },
-            blur: function() {
-                return this.each(function() {
-                    this.blur();
-                });
-            },
-            click: function() {
-                return this.each(function() {
-                    this.click();
-                });
-            },
             scrollIntoView: function(alignWithTop) {
                 return this.each(function() {
                     this.scrollIntoView(alignWithTop);
                 });
             },
             /* HELPER METHODS */
-            delay: function(func, time) {
-                return this.each(function() {
-                    var $this = this;
-                    setTimeout(function() {
-                        func.call($this);
-                    }, time);
-                });
-            },
             each: function(func, args) {
                 if (args != null && !Array.isArray(args))
                     args = [args];
@@ -1763,7 +1706,7 @@
                                 "</span><input" + (val ? " checked" : "") + " name='" + key + "' type=checkbox></label>");
                         } else if (Array.isArray(defaultConfig[key][2])) // select
                         {
-                            var opts = key === "Font Family" ? $SS.fontList || defaultConfig[key][2] : defaultConfig[key][2],
+                            var opts = defaultConfig[key][2],
                                 cFonts = [],
                                 html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>",
                                     "<select name='" + key + "'" + (defaultConfig[key][3] === true ? " has-suboption" : "") + ">"];
@@ -3758,7 +3701,7 @@
                     var p = $SS.jscolor.picker;
 
                     // controls interaction
-                    window.addEventListener("resize", removePicker, false);
+                    window.addEventListener("resize", removePicker, { once: true });
                     p.box.onmouseup = p.box.onmouseout = function() {
                         target.focus();
                     };
