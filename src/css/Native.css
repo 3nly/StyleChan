@@ -48,6 +48,16 @@ div#qrError {
   text-transform: uppercase;
   margin-right: 4px;
 }
+/* Normal autohide (collapse to header) */
+:root.normal-qr #quickReply:not(:hover):not(.focus) {
+  width: 303px !important;
+}
+:root.normal-qr #quickReply:not(:hover):not(.focus) > :not(#qrHeader) {
+  display: none !important;
+}
+:root.normal-qr .qr-transition #quickReply > :not(#qrHeader) {
+  transition: opacity .2s ease-in-out .1s;
+}
 /* QR file button */
 #quickReply #qrFile::file-selector-button,
 #quickReply #qrFile::-webkit-file-upload-button {

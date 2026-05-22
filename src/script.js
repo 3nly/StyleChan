@@ -887,6 +887,8 @@
                 $SS.initRememberComment();
                 // Single view captcha grid
                 $SS.initSingleViewCaptcha();
+                // Native QR autohide (focus/hover behavior for Normal & Vertical Tabbed)
+                $SS.initNativeQRAutohide();
 
                 // Auto-open native QR on thread pages (non-4chanX only)
                 if ($SS.location.reply && $SS.conf["Pin Quick Reply"] && !document.documentElement.classList.contains("fourchan-x")) {
@@ -1511,6 +1513,18 @@
                 TCaptcha.buildNextNode = function() {
                     return Object.assign(document.createElement('button'), { id: 't-next', className: 'tcaptcha-stepper', type: 'button', textContent: 'Next' });
                 };
+            });
+        },
+        initNativeQRAutohide: function() {
+            if (document.documentElement.classList.contains("fourchan-x")) return;
+            $.waitFor("#quickReply", function(qr) {
+                qr.addEventListener("focusin", function() {
+                    qr.classList.add("focus");
+                });
+                qr.addEventListener("focusout", function(e) {
+                    if (!qr.contains(e.relatedTarget))
+                        qr.classList.remove("focus");
+                });
             });
         },
         QRDialogCreationHandler: function(e) {
@@ -3352,6 +3366,7 @@
                 cl.toggle("no-pu", $SS.conf["Show 4chan Pass Users"] === true);
                 cl.toggle("pass-login", $SS.conf["Show 4chan Pass Login"] === true);
                 cl.toggle("fit-eximg", $SS.conf["Fit Expanded Images"] === true);
+                cl.toggle("normal-qr", $SS.conf["Autohide Style"] === 1);
                 cl.toggle("vertical-qr", $SS.conf["Autohide Style"] === 2);
                 cl.toggle("fade-qr", $SS.conf["Autohide Style"] === 3);
                 cl.toggle("qr-opacity", $SS.conf["Transparent QR"] === true);
