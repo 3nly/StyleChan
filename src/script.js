@@ -252,9 +252,9 @@
                     value:"Garamond"
                 }]
             ],
-            "Font Size": [13, "Set the font size of text (in pixels). Certain menu elements have a 15px limit to avoid breaking their layouts."],
-            "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels)."],
-            "Backlink Font Size": [10, "Set the font size of backlinks."],
+            "Font Size": [13, "Set the font size of text (in pixels). Certain menu elements have a 15px limit to avoid breaking their layouts. Default: 13px."],
+            "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels). Default: 11px."],
+            "Backlink Font Size": [10, "Set the font size of backlinks (in pixels). Default: 10px."],
             "Bitmap Font": [false, "Check this if you are using a bitmap font."],
             "Misc": [],
             ":: Notifications": ["header", ""],
@@ -266,6 +266,7 @@
             "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
             "Show Header Shadow": [true, "Gives the header a drop shadow."],
             "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
+            ":: 4chan": ["header", ""],
             "Themes": [],
             "Hidden Themes": [],
             "Selected Theme": 1,
@@ -1892,6 +1893,49 @@
 
                     // themes tab
                     $SS.options.createThemesTab(tOptions);
+
+                    // misc tab - 4chan settings buttons
+                    (function() {
+                        var misc = $("#misc-section", tOptions),
+                            p = $("<p>");
+                        var chanKeys = ["4chan-settings", "4chan-watch", "4chan-watch-bl", "catalog-settings", "catalog-theme"];
+                        p.append($("<a class='options-button' name=save4chanSettings>Save 4chan settings", tOptions)
+                            .bind("click", function() {
+                                var count = 0;
+                                chanKeys.forEach(function(key) {
+                                    var val = localStorage[key];
+                                    if (val) {
+                                        $SS.Config.set("Saved4chanSettings." + key, val);
+                                        count++;
+                                    }
+                                });
+                                if (count > 0) {
+                                    $SS.notify({ content: '4chan settings saved.', type: 'success', lifetime: 3 });
+                                } else {
+                                    $SS.notify({ content: 'No 4chan settings found.', type: 'info', lifetime: 3 });
+                                }
+                            })
+                        );
+                        p.append($("<span class=link-delim>").text(" | "));
+                        p.append($("<a class='options-button' name=restore4chanSettings>Restore 4chan settings", tOptions)
+                            .bind("click", function() {
+                                var count = 0;
+                                chanKeys.forEach(function(key) {
+                                    var saved = $SS.Config.get("Saved4chanSettings." + key);
+                                    if (saved) {
+                                        localStorage[key] = saved;
+                                        count++;
+                                    }
+                                });
+                                if (count > 0) {
+                                    $SS.notify({ content: '4chan settings restored.', type: 'success', lifetime: 3 });
+                                } else {
+                                    $SS.notify({ content: 'No saved 4chan settings to restore.', type: 'info', lifetime: 3 });
+                                }
+                            })
+                        );
+                        misc.append(p);
+                    })();
 
                     return $(getDocBody()).append(overlay);
                 }
