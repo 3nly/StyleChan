@@ -109,7 +109,7 @@ a.qr-link {
 #qr label,
 #qr .move,
 #qr-no-file,
-select:not([id$=-ctrl]),
+select:not([id^=index-]):not([id$=-ctrl]),
 input,
 :root #t-load,
 :root #t-next,
