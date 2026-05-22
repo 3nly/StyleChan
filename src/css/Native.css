@@ -32,7 +32,8 @@ div#qrError {
   gap: 4px;
 }
 #quickReply #qrSpoiler,
-#quickReply input[type='submit'] {
+#quickReply input[type='submit'],
+#postForm input[type='submit'] {
   flex-shrink: 0;
 }
 #quickReply #qrFile::file-selector-button,

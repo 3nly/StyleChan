@@ -28,9 +28,14 @@
 }
 #qr-file-button,
 #qr input[type='submit'],
-#quickReply input[type='submit'] {
+#quickReply input[type='submit'],
+#postForm input[type='submit'] {
   height: 25px !important;
   margin: 0 !important;
+}
+#postForm input[type='submit'] {
+  height: 18px !important;
+  width: 46px;
 }
 #qr-file-button,
 :root:not(.fourchan-xt) #qr-filename-container {
