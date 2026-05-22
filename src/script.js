@@ -267,6 +267,7 @@
             "Show Header Shadow": [true, "Gives the header a drop shadow."],
             "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
             ":: 4chan": ["header", ""],
+            "Pin Quick Reply": [false, "Pin quick reply box open when replying to threads."],
             "Themes": [],
             "Hidden Themes": [],
             "Selected Theme": 1,
@@ -955,12 +956,13 @@
                 $SS.initSingleViewCaptcha();
 
                 // Auto-open native QR on thread pages (non-4chanX only)
-                if ($SS.location.reply && !document.documentElement.classList.contains("fourchan-x")) {
+                if ($SS.location.reply && $SS.conf["Pin Quick Reply"] && !document.documentElement.classList.contains("fourchan-x")) {
                     $.asap(function() {
                         return document.querySelector("a[data-cmd='open-qr']");
-                    }, function() {
-                        var link = document.querySelector("a[data-cmd='open-qr']");
-                        if (link) link.click();
+                    }, function(link) {
+                        link.click();
+                    });
+                }
                     });
                 }
 
