@@ -29,7 +29,6 @@
   font-size: 12px;
   line-height: 1.35;
   min-height: 10px;
-  font-weight: bolder;
 }
 .stylechan-notification.visible {
   opacity: 1;
@@ -77,6 +76,7 @@
   text-align: left !important;
   margin: 0 !important;
   width: auto !important;
+  font-weight: lighter;
 }
 .chX-notifs #notifications .notification a.close {
   float: right;
