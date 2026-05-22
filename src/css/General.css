@@ -169,7 +169,8 @@ input[type=submit],
   -moz-appearance: none;
   margin: 1px;
 }
-.fourchan-x input[type=checkbox] {
+.fourchan-x input[type=checkbox],
+:root:not(.fourchan-x) #quote-preview .riceCheck {
   display: none !important;
 }
 .riceCheck {
