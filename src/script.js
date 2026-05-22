@@ -898,19 +898,29 @@
                     $.waitFor("a[data-cmd='open-qr']", function(link) { link.click(); });
                 }
 
-                if ($SS.conf["Catalog links"]) {
-                    $("#boardNavDesktop a").each(function() {
-                        var href = $(this).attr('href');
-                        if (/^\/[a-z0-9]+\/?$/i.test(href)) {
-                            $(this).attr('href', href.replace(/\/?$/, '/catalog'));
-                        }
-                    });
-                    $("#boardNavMobile a").each(function() {
-                        var href = $(this).attr('href');
-                        if (/^\/\/boards\.4chan\.org\/[a-z0-9]+\/?$/i.test(href)) {
-                            $(this).attr('href', href.replace(/\/?$/, '/catalog'));
-                        }
-                    });
+                if ($SS.conf["Catalog Links"]) {
+                    function fixBoardLinks(nav) {
+                        nav.querySelectorAll("a[href]").forEach(function(a) {
+                            var href = a.getAttribute("href");
+                            if (/^(\/\/|https?:\/\/)?(?:boards\.4chan\.org)?\/(?!search$)[a-z0-9]+\/*$/i.test(href))
+                                a.setAttribute("href", href.replace(/\/?$/, "/catalog"));
+                        });
+                    }
+                    fixBoardLinks(document.querySelector("#boardNavDesktop"));
+                    fixBoardLinks(document.querySelector("#boardNavMobile"));
+                    (function() {
+                        var nav = document.querySelector("#navtopright");
+                        if (!nav) return;
+                        nav.querySelectorAll("a[href='/search'], a[href='//p.4chan.org/']").forEach(function(a) {
+                            var prev = a.previousSibling;
+                            if (prev && prev.nodeType === 3 && /^\s*\[/.test(prev.textContent))
+                                prev.remove();
+                            var next = a.nextSibling;
+                            a.remove();
+                            if (next && next.nodeType === 3 && /^\]/.test(next.textContent))
+                                next.remove();
+                        });
+                    })();
                 }
 
                 // things that need to change after 4chan X loads.
@@ -1600,9 +1610,7 @@
                 /* When 4chan XT */
                 const c = $("<span id='shortcut-settings' class='shortcut brackets-wrap' data-index='840'><a class='settings-link' id='StyleChanLink' title='StyleChan Settings' href='javascript:;'><span class='icon--alt-text'>StyleChan</span>" + $SS.theme.icons.menuIcon + "</a></span>").bind("click", $SS.options.show);
 
-                $.asap(function() {
-                    return $(".fourchan-x #shortcuts").exists();
-                }, function() {
+                $.waitFor(".fourchan-x #shortcuts", function() {
                     $(".fourchan-x:not(.fourchan-xt)").exists() ? $(".shortcut.brackets-wrap:last-of-type").before(a) : $("#boardNavDesktop").append(b);
                     $(".fourchan-xt").exists() ? $(".shortcut.brackets-wrap:last-of-type").before(c) : $("#boardNavDesktop").append(b);
                 });
