@@ -50,7 +50,7 @@
   right: 10px !important;
   left: auto !important;
   z-index: 10005 !important;
-  width: min(500px, calc(100vw - 20px)) !important;
+  width: min(320px, calc(100vw - 20px)) !important;
   height: auto !important;
   display: flex !important;
   flex-direction: column !important;
