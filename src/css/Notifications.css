@@ -2,7 +2,7 @@
   position: fixed;
   top: 38px;
   right: 10px;
-  z-index: 999;
+  z-index: 98;
   width: min(320px, calc(100vw - 20px));
   display: flex;
   flex-direction: column;
@@ -47,7 +47,7 @@
 }
 /* 4chanX specific */
 .chX-notifs #header-bar {
-  z-index: 999 !important;
+  z-index: 98 !important;
 }
 .chX-notifs #notifications {
   position: fixed !important;
