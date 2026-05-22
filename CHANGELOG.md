@@ -1,3 +1,55 @@
+## v1.2.0
+*2026-05-22*
+
+**StyleChan has a new Misc tab with various new options!**
+
+*Never obsolete*
+
+We continue to improve StyleChan for the changing environment, as 4chan X/XT maintenance gets shaky StyleChan will rely more on the native site script as a backup. Thank you to @SystemPatch for their contributions. 
+
+
+### New Options:
+Main:
+- UI Font Size
+  - This option will allow users to set a different font size for certain UI elements like dropdown menus, buttons, QR buttons.
+  - Adjusted various elements of the QR and menus to allow for higher font sizes without breaking
+  - Certain elements (13cdad228fee4abec8eecf112bd0b49d3971d5b2) are limited to 15px and will not go higher, or lower than 13px
+- Show Reply to Thread Button > Show Only in Catalog
+  - This option is geared towards the 4chan catalog so that it allows creating new threads in the catalog with the posting form
+- 4chanX Header options -> moved to Misc tab
+
+Misc:
+- Toast Notifications:
+  - Style 4chanX Notifications
+  - Center Notifications
+  - Full Border
+    - This option gives the toasts a full border; the border width and style follow the same rules as Decoration Width and Highlight Style options in Post Decoration
+- 4chan: Pin Quick Reply
+- 4chan: Catalog Links
+- 4chan: Save & Restore 4chan settings
+  - These two buttons will save or restore various localStorage keys for the native 4chan script
+
+### Changes and Fixes:
+- StyleChan will no longer save its options to localStorage but make use of GM storage
+- The StyleChan menu button will now appear in the 4chan mobile version of catalog
+- Styled the 4chan posting form a bit more
+- Posting form now correctly allows for single view captcha, image auto-conversion and comment draft saving
+- GIF files will no longer be converted
+- The native QR will now better adjust to the sidebar as well as the spoiler option 
+- Add an Inset option to Highlight Style
+- Fix for sub options in the StyleChan menu not being collapsed without 4chanX
+- Fix [code] content rendering outside the viewport in long hover posts
+- Refactored some old code and how classes are added to the DOM
+- Removed a good amount of unused code
+- Various CSS changes and fixes
+
+**PR by @SystemPatch:**
+  - Finish styling new Captcha
+  - Adjust spacing for inline posts when using bottom backlinks
+  - Add support for XT's Scroll Markers
+  - Fix issue with overlap in single view captcha
+
+
 ### v1.1.1
 *2026-05-18*
 

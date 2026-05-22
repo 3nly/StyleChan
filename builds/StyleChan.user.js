@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         StyleChan
-// @version      1.1.1
+// @version      1.2.0
 // @namespace    StyleChan
 // @description  Customizable themes for 4chan X.
 // @minGMVer     1.14
@@ -90,7 +90,8 @@
             "Show Banner": [false, "Toggle visibility of the banner.", null, true],
             "Reduce Banner Opacity": [false, "Reduce opacity of the banner for easier viewing.", "Show Banner", true, true],
             "Show Board Name": [true, "Toggle visibility of the board name."],
-            "Show Reply to Thread Button": [false, "Toggle visibility of the Start a Thread / Reply to Thread button."],
+            "Show Reply to Thread Button": [false, "Toggle visibility of the Start a Thread / Reply to Thread button.", null, true],
+            "Show Only in Catalog": [false, "Show the button only when browsing the catalog.", "Show Reply to Thread Button", true, true],
             "Show Blotter": [false, "Toggle visibility of the 4chan news blotter."],
             "Show 4chan Ads": [false, "Opts into 4chan\'s banner ads.", null, true],
             "Show Board Banners": [false, "Toggle visibility of board banners.", "Show 4chan Ads", true, true],
@@ -134,9 +135,9 @@
             "Remove Controls": [false, "Removes the QR controls and checkbox."],
             "Animated Transition": [false, "Enables a transition animation for the QR."],
             "Expanding Form Inputs": [true, "Makes certain form elements expand on focus."],
-            "Remember comment draft": [false, "Will save and restore unsubmitted QR comments (5 second delay). Drafts expire after 24h."],
+            "Remember Comment Draft": [false, "Will save and restore unsubmitted QR comments (5 second delay). Drafts expire after 24h."],
             "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size limit to JPEG."],
-            "Single view captcha": [false, "Shows the captcha challenges in a single view."],
+            "Single View Captcha": [false, "Shows the captcha challenges in a single view."],
             ":: Replies": ["header", ""],
             "Fit Width": [true, "Replies stretch to the width of the page.", null, true],
             "Fit Post Menu": [false, "Sets the post menu to the right.", "Fit Width", true, true],
@@ -198,10 +199,6 @@
             "Justified Text": [false, "Justifies the teaser text of every thread to be more uniform."],
             "Show Background": [true, "Threads receive a matching background."],
             "Unified Thumbnail Size": [false, "Makes all thumbnails the same size regardless of aspect ratio."],
-            ":: 4chan X Header": ["header", ""],
-            "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
-            "Show Header Shadow": [true, "Gives the header a drop shadow."],
-            "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
             ":: Post Decoration": ["header", ""],
             "Decoration Style": [
                 0, "Changes the decoration of all posts.", [{
@@ -247,6 +244,9 @@
                     name: "Double",
                     value: "double"
                 }, {
+                    name: "Inset",
+                    value: "inset"
+                }, {
                     name: "Solid",
                     value: "solid"
                 }]
@@ -291,9 +291,23 @@
                     value:"Garamond"
                 }]
             ],
-            "Font Size": [13, "Set the font size of text (in pixels)."],
-            "Backlink Font Size": [10, "Set the font size of backlinks."],
+            "Font Size": [13, "Set the font size of text (in pixels). Certain menu elements have a 15px limit to avoid breaking their layouts. Default: 13px."],
+            "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels). Default: 11px."],
+            "Backlink Font Size": [10, "Set the font size of backlinks (in pixels). Default: 10px."],
             "Bitmap Font": [false, "Check this if you are using a bitmap font."],
+            "Misc": [],
+            ":: Notifications": ["header", ""],
+            "Toast Notifications": [true, "Show toast notification popups for events.", null, true],
+            "Style 4chanX Notifications": [true, "Show 4chanX notifications in the same style as StyleChan's toasts.", "Toast Notifications", true, true],
+            "Center Notifications": [false, "Center notifications at the top below the header bar.", "Toast Notifications", true, true],
+            "Full Border": [false, "Use a full border to make notifications more visible. Border style follows the Highlight Style and Width options.", "Toast Notifications", true, true],
+            ":: 4chan X": ["header", ""],
+            "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
+            "Show Header Shadow": [true, "Gives the header a drop shadow."],
+            "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
+            ":: 4chan": ["header", ""],
+            "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
+            "Catalog Links": [false, "Converts board navigation links to catalog links."],
             "Themes": [],
             "Hidden Themes": [],
             "Selected Theme": 1,
@@ -301,7 +315,7 @@
         },
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
-        VERSION = "1.1.1",
+        VERSION = "1.2.0",
         CHANGELOG = "https://github.com/3nly/StyleChan/blob/main/CHANGELOG.md",
         inputImages = "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAgCAYAAAAv8DnQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAP9JREFUOMvV0CFLQ2EYxfHfrtdiURgbmCxOmFPBJgZZ0CQD0Q+goFkwabWIyWIWFgwmy7Qp7DPI3GD7ACZlYLNcy31ljG0aDHrSy3N43nOef6ZULBiifczEQ8wV7OAtGmBO4wgfOI2whsXUnMAJ8rhCJ8IxDpHDHpZwixqM5XPZBBtYxioauEgjRLjBI2bRxTneQ6EYCS4xiTu89DbONJrtP88hwnV64hm28YRqyPsFDkmSGKUYFubnsqignM7rqDWa7dcAqoLdnsXwrgZQ5QG/l8MVIxX1ZPar/lUyUOsv+aMzv+0Qw3OrM4VNrKfzB9yXioVu6LDVx+EA4/+Gwycw/Uz36O07WwAAAABJRU5ErkJggg==",
         themeInputs = [{
@@ -425,15 +439,6 @@
         Array.isArray = function(arg) {
             return Object.prototype.toString.call(arg) === "[object Array]";
         };
-    Number.prototype.toHexStr = function() {
-        var s = "",
-            v;
-        for (var i = 7; i >= 0; i--) {
-            v = (this >>> (i * 4)) & 0xf;
-            s += v.toString(16);
-        }
-        return s;
-    };
     /* STYLE SCRIPT LIBRARY */
     /* More or less based off jQuery */
     $lib = window.$ = function(selector, root) {
@@ -442,11 +447,13 @@
     };
     /* From 4chan X, unchainable */
     /* https://github.com/seaweedchan/4chan-x/blob/master/LICENSE */
-    $.asap = function(test, cb) {
-        if (test()) {
-            return cb();
+    $.asap = function(test, cb, _int) {
+        _int = _int || 25;
+        var result = test();
+        if (result) {
+            return cb(result);
         } else {
-            return setTimeout($.asap, 25, test, cb);
+            return setTimeout($.asap, Math.min(_int * 2, 500), test, cb, Math.min(_int * 2, 500));
         }
     };
 
@@ -507,23 +514,6 @@
             },
 
             /* DOM NODE RETRIEVAL */
-            clone: function() {
-                var ret = [];
-
-                this.each(function() {
-                    ret.push(this.cloneNode(true));
-                });
-
-                return new $lib(ret);
-            },
-            elements: function() {
-                if (!this.hasSingleEl())
-                    return this;
-
-                this.elems = Array.prototype.slice.call(this.elems[0].elements);
-
-                return this;
-            },
             get: function(index) {
                 if (index == undefined && this.elems.length === 1)
                     return this.elems[0];
@@ -534,14 +524,6 @@
             },
 
             /* DOM MANIPULATION */
-            prepend: function(el) {
-                if (el.constructor === $lib)
-                    el = el.get();
-
-                return this.each(function() {
-                    this.insertBefore(el, this.firstChild);
-                });
-            },
             append: function(el) {
                 if (el.constructor === $lib)
                     el = el.get();
@@ -593,11 +575,6 @@
                     this.textContent = text;
                 });
             },
-            appendText: function(text) {
-                return this.each(function() {
-                    this.textContent += text;
-                });
-            },
             attr: function(name, val) {
                 if (val == undefined)
                     if (!this.hasSingleEl())
@@ -614,14 +591,6 @@
                     this.setAttribute(name, val);
                 });
             },
-            disabled: function(bDisabled) {
-                if (bDisabled == undefined)
-                    return this.elems[0].disabled;
-
-                return this.each(function() {
-                    this.disabled = bDisabled;
-                });
-            },
             toggle: function(bHidden) {
                 return this.each(function() {
                     var $this = $(this);
@@ -630,6 +599,7 @@
                         bHidden = !($this.attr("disabled") === "true");
 
                     $this.attr("hidden", bHidden || "");
+                    this.style.display = bHidden ? "none" : "";
                 });
             },
             hide: function() {
@@ -666,11 +636,6 @@
                             this.value = val;
                             break;
                     }
-                });
-            },
-            checked: function(state) {
-                return this.each(function() {
-                    this.checked = state;
                 });
             },
             addClass: function(classNames) {
@@ -729,23 +694,23 @@
                 if (!classNames || typeof classNames !== "string") return this;
                 var classNamesArray = classNames.split(" ");
                 return this.each(function() {
+                    var $this = $(this);
                     for (var j = 0, jMAX = classNamesArray.length; j < jMAX; j++)
-                        if (!$(this).hasClass(classNamesArray[j]))
-                            $(this).addClass(classNamesArray[j]);
+                        if (!$this.hasClass(classNamesArray[j]))
+                            $this.addClass(classNamesArray[j]);
                         else
-                            $(this).removeClass(classNamesArray[j]);
+                            $this.removeClass(classNamesArray[j]);
                 });
             },
             optionClass: function(optionName, optionValue, className) {
                 if (!className || typeof className !== "string") return this;
                 if (!$SS.conf || $SS.conf[optionName] === undefined) return this;
                 return this.each(function() {
-                    if ($SS.conf[optionName] === optionValue && !$(this).hasClass(className))
-                        $(this).addClass(className);
-                    else if ($SS.conf[optionName] !== optionValue && $(this).hasClass(className))
-                        $(this).removeClass(className);
-                    else
-                        return
+                    var $this = $(this);
+                    if ($SS.conf[optionName] === optionValue && !$this.hasClass(className))
+                        $this.addClass(className);
+                    else if ($SS.conf[optionName] !== optionValue && $this.hasClass(className))
+                        $this.removeClass(className);
                 });
             },
             remove: function() {
@@ -827,30 +792,12 @@
                     this.dispatchEvent(ev);
                 });
             },
-            blur: function() {
-                return this.each(function() {
-                    this.blur();
-                });
-            },
-            click: function() {
-                return this.each(function() {
-                    this.click();
-                });
-            },
             scrollIntoView: function(alignWithTop) {
                 return this.each(function() {
                     this.scrollIntoView(alignWithTop);
                 });
             },
             /* HELPER METHODS */
-            delay: function(func, time) {
-                return this.each(function() {
-                    var $this = this;
-                    setTimeout(function() {
-                        func.call($this);
-                    }, time);
-                });
-            },
             each: function(func, args) {
                 if (args != null && !Array.isArray(args))
                     args = [args];
@@ -938,14 +885,13 @@
                     if ((!(html = $("*[xmlns]")).exists()) && (!(ctxmenu = $("#ctxmenu-main").exists())))
                         if ((link = $("link[title][rel='stylesheet']")).exists())
                             link.each(function() {
-                                var href = this.getAttribute("href") || "";
-                                if (/4cdn\.org|4chan\.org/.test(href))
+                                if (/4cdn\.org|4chan\.org/.test(this.getAttribute("href") || ""))
                                     $(this).attr("href", "");
                             });
 
                 if ((div = $("#globalMessage *[style]")).exists())
                     div.each(function() {
-                        $(this).attr("style", "");
+                        this.removeAttribute("style");
                     });
 
                 if ((div = $(".closeIcon")).exists()) {
@@ -981,6 +927,30 @@
                 // Single view captcha grid
                 $SS.initSingleViewCaptcha();
 
+                // Auto-open native QR on thread pages (non-4chanX only)
+                if ($SS.location.reply && $SS.conf["Pin Quick Reply"] && !document.documentElement.classList.contains("fourchan-x")) {
+                    $.asap(function() {
+                        return document.querySelector("a[data-cmd='open-qr']");
+                    }, function(link) {
+                        link.click();
+                    });
+                }
+
+                if ($SS.conf["Catalog links"]) {
+                    $("#boardNavDesktop a").each(function() {
+                        var href = $(this).attr('href');
+                        if (/^\/[a-z0-9]+\/?$/i.test(href)) {
+                            $(this).attr('href', href.replace(/\/?$/, '/catalog'));
+                        }
+                    });
+                    $("#boardNavMobile a").each(function() {
+                        var href = $(this).attr('href');
+                        if (/^\/\/boards\.4chan\.org\/[a-z0-9]+\/?$/i.test(href)) {
+                            $(this).attr('href', href.replace(/\/?$/, '/catalog'));
+                        }
+                    });
+                }
+
                 // things that need to change after 4chan X loads.
                 setTimeout(function() {
                     if (!$SS.QRhandled && (div = $("#qr")).exists())
@@ -1010,7 +980,7 @@
 
                         content.appendChild(document.createTextNode(NAME + ' has been updated to version ' + VERSION + '.'));
                         content.appendChild(document.createElement('br'));
-                        changelogLink.href = 'https://github.com/3nly/StyleChan/blob/main/CHANGELOG.md';
+                        changelogLink.href = CHANGELOG;
                         changelogLink.target = '_blank';
                         changelogLink.rel = 'noopener noreferrer';
                         changelogLink.textContent = 'Read the changelog.';
@@ -1070,10 +1040,8 @@
 
             if ($SS.location.dead)
                 return;
-            else if (reload || $("link[rel=stylesheet]", getDocHead()).exists())
-                $(document).unbind("MutationObserver", $SS.insertCSS);
 
-            css = "#absbot,#boardNavDesktopFoot,#delPassword,#delform .mobile.center,#delform .post .riceCheck,#delform .post input[type=checkbox],#postForm,#qp .post input[type=checkbox],#qp .riceCheck,#styleSwitcher,.ad-plea,.deleteform,.exif:not([style]),.mobile,.stylechanger,.tab-select:not(:checked)+div,:root.hide-banner #bannerCnt,:root.hide-banner .boardBanner>img,:root.hide-blotter #blotter,:root.hide-board-name .boardSubtitle,:root.hide-board-name .boardTitle,:root.hide-button #togglePostFormLink,:root.hide-button .qr-link-container,:root.hide-button .qr-link-container-bottom,:root.hide-navlinkbot .navLinks.navLinksBot.desktop,:root.hide-navlinkbot .navLinks.navLinksBottom.mobilebtn,:root.hide-navlinks .navLinks,:root.hide-navlinks .navLinks.navLinksBot.desktop,:root.hide-navlinks body>.desktop:not(.pagelist):not(.navLinksBottom),:root.hide-navlinktop #info,:root.hide-navlinktop .navLinks:not(.navLinksBottom):not(.navLinksBot),:root.qr-controls #qr .close,:root.qr-controls #qr select[data-name=thread],:root.qr-controls #quickReply #qrHeader,:root.qr-controls.fade-qr #qr .move label,:root.qr-controls.vertical-qr #qr .move label input,:root.reply-fit-width .sideArrows,:root.show-ads.hide-adl .adl,:root.show-ads.hide-board-banners .middlead.center,:root.show-ads.hide-bottom-ad #danbo-s-b+.adl,:root.show-ads.hide-bottom-ad #danbo-s-b.danbo-slot,:root.show-ads.hide-bottom-ad .bottomad.center,:root.show-ads.hide-top-ad #danbo-s-t+.adl,:root.show-ads.hide-top-ad #danbo-s-t.danbo-slot,:root.show-ads.hide-top-ad .topad.center,:root.show-file-info .file-info,:root:not(.show-ads) .adl,:root:not(.show-ads) .center:not(#settingsMenu .center):not(#customMenu .center):not(#theme-btns .center),:root:not(.show-ads) .danbo-slot,[hidden],hr+.adl,hr:not(#unread-line),iframe[src='about:blank']{display:none}a,input:focus,select,textarea:focus{outline:0!important}.boardBanner{border-image-source:none!important;border-style:none!important}.party-hat{left:0;margin-left:-11px;padding-left:" + $SS.conf["Margin Left"] + "px;margin-top:-75px;position:absolute;pointer-events:none;z-index:1}:root.force-indent .party-hat{margin-left:-23px}.sjis{font-size:16px;line-height:17px;white-space:pre;font-family:IPAMonaPGothic,Mona,'MS PGothic',monospace;overflow:auto;display:block;clear:left}.mu-s{font-weight:700}.mu-i{font-style:italic}.mu-r{color:#c41e3a}.mu-g{color:#00a550}.mu-b{color:#1d8dc4}div.post div.file .fileThumb{float:left;margin-left:13px;margin-right:20px;margin-bottom:10px}div.op.post div.file .fileThumb{margin-bottom:0}.fileText{margin-left:13px!important;margin-bottom:2px!important}.fixed.bottom-header body.is_thread{padding-bottom:0;padding-top:.5em}.fixed.bottom-header body.is_index{padding-bottom:4.5em;padding-top:.5em}.fixed.bottom-header body.is_catalog,.fixed.bottom-header.catalog-mode body{padding-bottom:3em;padding-top:.5em}.fixed.bottom-header body{padding-top:.5em}:root.bottom-header:not(.autohide) body.is_index{padding-bottom:5em!important}.fixed.top-header body.is_index{padding-bottom:2.5em;padding-top:" + (($SS.conf["Font Size"] <= 11) ? 3.2 : 2.4) + "em!important}.fixed.top-header body.is_thread{padding-bottom:0;padding-top:" + (($SS.conf["Font Size"] <= 11) ? 3.2 : 2.4) + "em!important}.fixed.top-header body.is_catalog,.fixed.top-header.catalog-mode body{padding-bottom:.5em;padding-top:" + (($SS.conf["Font Size"] <= 11) ? 3.2 : 2.4) + "em!important}.fixed.top-header.autohide body{padding-top:2em!important}.fixed.top-header body{padding-top:2.4em!important}div.post{margin:4px 0;overflow:hidden}:root:not(.reply-fit-width) #delform div.reply:not([hidden]){display:table!important}:root:not(.reply-fit-width) #delform .stub~div.reply:not([hidden]){display:none!important}div.thread{margin:0;clear:both;padding-bottom:10px}table.flashListing{border-spacing:1px;margin-left:auto;margin-right:auto}table.flashListing .postblock{padding:5px}div.pagelist div.pages{padding:4px}div.pagelist,div.pagelist>div{float:left}div.pagelist>div span{padding:4px;display:inline-block}.page-num{margin-right:auto!important}s{text-decoration:none!important}s,s:not(:hover)>.linkify,s:not(:hover)>a,span.spoiler{color:#000;background:none repeat scroll 0 0 #000}s:focus,s:hover,span.spoiler:focus,span.spoiler:hover{color:#fff}#globalMessage,.boardBanner{text-align:center}div.sideArrows{float:left;margin-right:2px;margin-top:0;margin-left:2px;opacity:.3}hr{clear:both}table{border-spacing:1px;margin-left:auto;margin-right:auto}.adl,.center,.danbo-slot{text-align:center!important}.adl{font-size:.76em}#qf-box{width:120px}span.hide-announcement{margin-left:3px;vertical-align:sub}.bottomCtrl.desktop{float:right}.fixed.bottom-header body.is_index .bottomCtrl.desktop,.fixed.bottom-header body.is_thread .bottomCtrl.desktop{margin-bottom:35px}.fixed.top-header body.is_index .bottomCtrl.desktop,.fixed.top-header body.is_thread .bottomCtrl.desktop{margin-bottom:8px}input[value=Next],input[value=Previous]{padding:4px 13px}.identityIcon{margin-bottom:-3px}:root.isLight img[src*='//boards.4chan.org/js/jsMath/fonts/']{filter:invert(100%);-webkit-filter:invert(100%)}:root.reply-fit-width .inline{display:flow-root!important}:root.centered-links #shortcuts{width:30vw!important}:root.centered-links #custom-board-list{left:12vw!important}#blotter{margin:auto;font-size:11px}.brackets-wrap.pass-link-container.pass-login{float:right}body{margin-left:" + $SS.conf["Margin Left"] + "px;margin-right:" + $SS.conf["Margin Right"] + "px;margin-top:0;margin-bottom:0}:root.show-ads .ad-cnt{margin-top:auto!important}:not(.fourchan-x) div.op{display:block}.postInfo{padding:5px 13px;display:block!important}.summary{margin-left:2px}.expanded-image{position:relative}:root.op-background .op{padding:4px 0}:root.force-indent .op{margin-left:-12px}:root.force-wrapping .op::after{clear:both;content:'';display:block}.thread>.replyContainer:not(.thread>.postContainer:last-of-type),.threadContainer>.replyContainer,:root.op-background .thread>.opContainer:not(.thread>.postContainer:last-of-type){margin-bottom:" + $SS.conf["Margin Between Replies"] + "px!important}.inline{margin-left:13px!important}.postMessage>.inline{margin-left:0!important}#qp .op>.postInfo{min-width:600px}.postMessage{margin:" + $SS.conf["Margin Post Message"] + "!important}:root.bottom-backlinks .container{padding:0 0 4px 8px}:root.fit-eximg.fit-height .full-image{max-height:calc(100vh - 8rem)!important}:root.reply-fit-width .reply.post{display:block!important}:root.reply-fit-width .stub~.reply.post{display:none!important}.hasInline .inline>.replyContainer:not(.expanded-image):not(.hasInline) .reply.post,:root.reply-fit-width .post.reply{overflow:hidden!important}:root.reply-fit-width .expanded-image>.post::after,:root.reply-fit-width .hasInline>.reply.post::after{clear:both!important;content:''!important;display:block!important}.threadContainer .hide-reply-button{margin-left:-12px!important}.stub{padding:2px}.stub>a.show-thread-button{margin-right:4px}:root.reply-hide .thread>.expanded-image>.reply,:root.reply-hide .thread>.hasInline>.reply{margin-left:12px!important}.threadContainer{margin-left:0!important;padding-left:20px!important}:root.reply-hide .thread>.threadContainer{margin-left:13px!important}:root.post-info .reply>.postInfo{box-shadow:inset rgba(0,0,0,.05) 0 -1px 2px;padding-top:2px!important}:root.post-info #hoverUI .reply,:root.post-info .inline .reply{padding:0 0 1px!important}.reply .menu-button i{position:relative;bottom:1px}:root.reply-fit-width .reply .container{padding-right:5px}:root.reply-fit-width.fit-postmenu .postInfo>.menu-button{float:right!important}.container,.menu-button+.container:not(:empty){margin-left:4px!important}:root.reply-fit-width .post .menu-button{margin-left:0;position:relative;left:5px}:root.reply-fit-width .post .menu-button{opacity:0}:root.reply-fit-width .post:not(:hover) .menu-button{transition:opacity .3s ease-out 0s!important}:root.reply-fit-width .post:hover .menu-button{opacity:1;transition:opacity .3s ease-in .1s!important}.prettyprint{padding:5px!important;display:inline-block;max-height:400px;overflow-x:auto;max-width:100%;vertical-align:middle}.riceCheck,input[type=button],input[type=checkbox],input[type=submit]{cursor:pointer}.fourchan-x input[type=checkbox],.riceCheck{display:inline-block;height:10px!important;position:relative;width:10px!important;border-radius:2px!important;-webkit-appearance:none;-moz-appearance:none;margin:1px}.fourchan-x input[type=checkbox]{display:none!important}.riceCheck{margin:0 2px -1px 0}input[type=checkbox]:checked+.riceCheck::before,input[type=checkbox]:checked::before{content:'';display:block;height:8px;margin:1px;width:8px}input[type=checkbox]:checked+.riceCheck::before,input[type=checkbox]:checked::before{background:" + $SS.theme.checkMark.get() + "!important}#header-bar{padding:4px 4px 5px!important}:root:not(.fixed) #header-bar{top:0;right:0;left:0;box-shadow:0 1px 2px rgba(0,0,0,.15);border-bottom:1px solid}:root.autohide body{padding-top:0!important;padding-bottom:0!important}:root:not(.fixed).right-sidebar #header-bar{right:300px}:root:not(.fixed).left-sidebar #header-bar{left:300px}:root:not(.fixed) .boardBanner{top:0}.center,.danbo-slot{margin:5px!important}#full-board-list>a,.navSmall>a{margin-left:2px}:root.fixed:not(.autohide):not(.bottom) #globalMessage{margin:10px 0 20px!important}#stylechan-notifications{position:fixed;top:38px;right:10px;z-index:10005;width:min(320px,calc(100vw - 20px));display:flex;flex-direction:column;gap:6px;pointer-events:none}:root.bottom-header #stylechan-notifications{top:auto;bottom:10px}.stylechan-notification{pointer-events:auto;cursor:pointer;padding:7px 10px;border:1px solid;border-left-width:3px;border-radius:3px;box-shadow:rgba(0,0,0,.25) 0 2px 8px;opacity:0;transform:translateY(-4px);transition:opacity .15s ease,transform .15s ease;overflow-wrap:anywhere;font-size:12px;line-height:1.35}.stylechan-notification.visible{opacity:1;transform:translateY(0)}.stylechan-notification.closing{opacity:0;transform:translateY(-4px)}.stylechan-notification-text{pointer-events:none}.stylechan-notification-text a{pointer-events:auto}.globalMessage,h2,h3{margin:auto}#custom-board-list,#full-board-list,.shortcut{vertical-align:baseline!important}:root.fixed-watcher #thread-watcher,:root.fixed-watcher #threadWatcher{position:fixed!important}.qr-link{border-radius:3px;vertical-align:middle;padding:7px 12px 6px}hr{height:2px;width:600px;border:none!important}:root.reply-fit-width #unread-line{margin:auto;width:100%}#unread-line{margin-top:" + (($SS.conf["Margin Between Replies"] < -2) ? ($SS.conf["Margin Between Replies"] - 1) : -3) + "px!important;margin-bottom:" + (($SS.conf["Margin Between Replies"] < -2) ? -5 : -3) + "px!important;position:relative}:root:not(.autohide) #scroll-marker{pointer-events:none!important}.boardBanner .boardTitle{cursor:default;letter-spacing:-2px;padding-top:.1em}#bannerCnt{border:0!important;margin:0 auto;width:300px;max-height:100px!important;max-width:100%}.boardBanner{width:302px;margin:auto}.boardBanner>img{border:none!important}:root.banner-opacity #bannerCnt{opacity:.5;transition:opacity .3s ease-out 0s}:root.banner-opacity #bannerCnt:hover{opacity:1}.pages.cataloglink{margin-left:12px}.pages.cataloglink a,input[value=Next],input[value=Previous]{font-weight:700;transition:opacity .3s ease-in 0s}.pages strong>a:hover,.pages.cataloglink a:hover,input[value=Next]:hover,input[value=Previous]:hover{opacity:.7}.pagelist{margin-left:18px;margin-bottom:15px}:root.reply-fit-width .pagelist{margin-left:0}.pages a{padding:5px 10px;margin-left:-1px}.pages strong>a{padding-top:3px;transition:opacity .3s ease-in 0s}.next,.prev{border:none!important;position:relative}:root.fourchan-x .next a,:root.fourchan-x .prev a{position:relative;right:5px}:root.fourchan-x .prev a::after{content:'<';position:inherit;top:4px;left:1px}:root.fourchan-x .next a::after{content:'>';position:inherit;top:4px;right:2px}.pagelist button,.pagelist button:hover{background:0 0!important;border:none!important;box-shadow:none!important;height:20px;width:20px}.pagelist span{opacity:.2}#swf-embed{z-index:21}table.flashListing{margin-top:20px;margin-bottom:20px}table.flashListing .highlightPost{background:rgb\(" + $SS.theme.mainColor.shiftRGB(-25) + ")!important}.flashListing td{padding-left:4px!important;padding-right:4px!important;text-align:center!important}body.board_f #delform .file-info{padding-left:5px}body.board_f #delform .fileText{margin-left:0!important}:root.ad-opacity .center img,:root.ad-opacity .danbo-slot{opacity:.5;transition:opacity .3s ease-out 0s}:root.ad-opacity .center img:hover,:root.ad-opacity .danbo-slot:hover{opacity:1}#ctrl-top,body.is_index div.navLinks{padding-top:5px;margin-bottom:5px}body.is_thread div.navLinks:not(.navLinksBot){padding-top:.4%;margin-bottom:.4%}.navLinks.navLinksBot.desktop{margin-bottom:5px}#hoverUI{z-index:12!important}:root:not(.fourchan-x) div#boardNavMobile{padding:2px 4px;overflow:hidden;border-bottom:2px solid;position:fixed;top:0;left:0;right:0;font-size:12px;z-index:9001}:root:not(.fourchan-x) div.pageJump{float:right;padding-right:5px;padding-top:3px}#index-search,#search-box{width:9%;transition:color .25s,border-color .25s,width .25s}#index-search:focus,#search-box:focus{width:12%;transition:color .25s,border-color .25s,width .25s}:root.thumb-opacity .fileThumb img:not(.full-image){opacity:.5;transition:opacity .3s ease-out 0s}:root.thumb-opacity .fileThumb img:not(.full-image):hover{opacity:1}select{-moz-appearance:none;-webkit-appearance:none}#delform{overflow-wrap:break-word;word-break:break-word;margin-bottom:15px}#reportTypes{margin-top:5px}#menu,#post-preview,#qr-filename-container,#t-load,#t-next,#t-root,#t-task,.boxbar,.captcha-root,.dd-menu ul,.pages strong>a,.pages.cataloglink a,.pln,.post-last,.postblock,.tegaki-label,a.summary,body,div.boardBanner,html,input:not(.jsColor),select,textarea{color:" + $SS.theme.textColor.hex + "!important}.com,.nameBlock:not(.capcodeMod)>.name,.post-author{color:" + $SS.theme.nameColor.hex + "!important}.nameBlock.capcodeMod,:not(.fourchan-x) span.capcodeMod span.name,:not(.fourchan-x) span.capcodeMod strong.capcode{color:purple!important}.id_admin,.nameBlock.capcodeAdmin span.name{color:red!important}.nameBlock>.postertrip,.post-tripcode,.tag{color:" + $SS.theme.tripColor.hex + "!important}:root .atn,:root .options-button,:root .tegaki-tb-btn,:root .typ,:root.catalog-mode .button,a.replylink:not(:hover),a:not(s>a),a:visited,body.is_catalog .button,s:hover>a:not(:hover){color:" + $SS.theme.linkColor.hex + "!important}#header-bar #notifications a{color:#fff!important}#header-bar #notifications a:hover,#import-link>.options-button:hover,.lit,.tegaki-tb-btn:hover,:root a:hover,:root div.post div.postInfo span.postNum a:hover,:root.catalog-mode .button:hover,body.is_catalog .button:hover{color:" + $SS.theme.linkHColor.hex + "!important}#stylechan-notifications .stylechan-notification{color:" + $SS.theme.textColor.hex + "!important;background:rgb\(" + $SS.theme.mainColor.rgb + ")!important;border-color:rgb\(" + $SS.theme.brderColor.rgb + ")!important;border-left-color:" + $SS.theme.linkColor.hex + "!important}#stylechan-notifications .stylechan-notification-info{border-left-color:#6f8fb3!important}#stylechan-notifications .stylechan-notification-warning{border-left-color:#c7a85a!important}#stylechan-notifications .stylechan-notification-error{border-left-color:#c06b6b!important}#stylechan-notifications .stylechan-notification-success{border-left-color:" + $SS.theme.quoteColor.hex + "!important}#header-bar,a.current{color:" + $SS.theme.headerColor.hex + "!important}#header-bar a:not(.current){color:" + $SS.theme.headerLColor.hex + "!important}#header-bar a:hover{color:" + $SS.theme.headerLHColor.hex + "!important}#custom-board-list .current{border-bottom:1px solid rgba(" + $SS.theme.linkColor.rgb + ",1)!important}#custom-board-list .current:hover{border-bottom:1px solid rgba(" + $SS.theme.linkHColor.rgb + ",1)!important}.atv,.catalog-thread>.comment>.quote,.new,.postMessage>.quote,.str,s:hover .quote{color:" + $SS.theme.quoteColor.hex + "!important}.kwd,.option.header .option-title,.post-subject,.replytitle,.subject,.tab-label,.teaser b{color:" + $SS.theme.titleColor.hex + "!important}.option.header{font-size:140%}.boardTitle{color:" + $SS.theme.boardColor.hex + "!important;text-shadow:none!important}:root .backlink,:root .backlink.deadlink{color:" + $SS.theme.blinkColor.hex + "!important}:root.backlink-shadow .backlink{text-shadow:1px 1px 5px}:root .deadlink,:root .quotelink{color:" + $SS.theme.qlColor.hex + "!important}.catalog-code,.prettyprint{background:none repeat scroll 0 0 rgba(" + $SS.theme.codeBackground + ")!important;border:1px solid rgba(" + $SS.theme.codeBorder + ")!important}.pun{color:rgba(" + $SS.theme.textColor.rgb + ",.4)!important}::-webkit-input-placeholder{color:rgba(" + $SS.theme.textColor.rgb + ",.4)!important}#qr .field::-moz-placeholder,#qr-no-file,::-moz-placeholder{color:rgba(" + $SS.theme.textColor.rgb + ",.4)!important}body{background:" + $SS.theme.bgImg.get() + $SS.theme.bgColor.hex + "!important}#post-preview,#qrCaptchaContainer,#qrHeader,#tegaki,#threadWatcher,.boxbar,.dd-menu ul,.dialog,.flashListing tr:nth-of-type(odd):not(.highlightPost),.reply,:root.catalog-hover-expand .catalog-container:hover>.post,:root.catalog-mode .panel,:root.op-background .op:not(.inline .op),body.is_catalog .panel{background:rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ")!important}#fourchanx-settings,#oneechan-options,.tab-label{background:rgb\(" + $SS.theme.mainColor.rgb + ")!important}.flashListing tr:nth-of-type(2n):not(.highlightPost),:not(.fourchan-x) .reply.highlight,:root.recolor-even .thread>.replyContainer:nth-of-type(2n):not(.hidden) .post:not(.reply:target,.inline>.postContainer>.post){background:rgb\(" + $SS.theme.mainColor.shiftRGB(-10) + "," + $SS.theme.replyOp + ")!important}:root:not(.header-gradient) #header-bar{background:rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ")!important}:root.header-gradient #header-bar{background:linear-gradient(rgb\(" + $SS.theme.headerBGColor.shiftRGB(15) + "),rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ") )!important}:root.header-shadow #header-bar{box-shadow:none!important}:root:not(.fixed) #header-bar{background:0 0!important}#quickReply input[type=submit],#t-load,#t-next,.options-button,.pages strong>a,.pages.cataloglink,.qr-link,input[value=Next],input[value=Previous]{background:linear-gradient(rgb\(" + $SS.theme.mainColor.shiftRGB(15) + "),rgb(" + $SS.theme.mainColor.rgb + ") )!important}#quickReply input[type=submit]:hover,#t-load:hover,#t-next:hover,.dd-menu li:hover,.import-input:hover+.options-button,.options-button:hover,.pages strong>a:hover,input[value=Next]:hover,input[value=Previous]:hover{background:rgb\(" + $SS.theme.mainColor.shiftRGB(15) + ")}.focused.entry{background:rgb\(" + $SS.theme.mainColor.shiftRGB(10) + ")!important}.qr-link:hover,:root.vertical-qr #qr .move{background:rgb\(" + $SS.theme.mainColor.rgb + ")}#qr input,#qr-filename-container,#t-load,#t-next,#t-root,.captcha-root,.captcha-root>div,.riceCheck,input.field,input[type=text]:not(.jsColor),select,textarea{background:" + $SS.theme.inputColor.hex + "!important;transition:background .2s,color .2s,border-color .2s,width .2s!important}.riceCheck,input[type=checkbox]{background:rgb\(" + $SS.theme.inputColor.shiftRGB(25) + ")!important}#qr input:hover,#qr-filename-container:hover,#t-load:hover,#t-next:hover,#t-root:hover,.captcha-root:hover,.riceCheck:hover,input.field:hover,input[type=text]:not(.jsColor):hover,select:hover,textarea:hover{background:rgb(" + $SS.theme.inputColor.hover + ")!important}hr{background-image:linear-gradient(to left, rgba(" + $SS.theme.brderColor.rgb + ",0), rgb(" + $SS.theme.brderColor.rgb + "), rgba(" + $SS.theme.brderColor.rgb + ",0))}#unread-line{background-image:linear-gradient(to left, rgba(" + $SS.theme.unreadColor.rgb + ",0), rgb(" + $SS.theme.unreadColor.rgb + "), rgba(" + $SS.theme.unreadColor.rgb + ",0))}.inline{background:rgba\(" + $SS.theme.mainColor.shiftRGB(-16) + ",.8)!important}:root.post-info .reply>.postInfo{background:rgba\(" + $SS.theme.mainColor.shiftRGB(-16) + ",.2);border-bottom:1px solid rgb\(" + $SS.theme.mainColor.shiftRGB(4) + ")}.dd-menu ul,.reply,:root.op-background .op:not(#qp .op,.inline .op){border-width:0 1px 1px 0;border-style:solid}:root.borders-all .reply,:root.borders-all.op-background .op{border-width:1px!important}:root.borders-none .reply,:root.borders-none.op-background .op{border:0!important}#menu,.catalog-thumb{border-radius:0!important}:root.rounded-corners #bannerCnt img,:root.rounded-corners #menu,:root.rounded-corners #t-load,:root.rounded-corners #t-next,:root.rounded-corners #thread-stats :root.rounded-corners #updater,:root.rounded-corners .catalog-thumb,:root.rounded-corners .dd-menu ul,:root.rounded-corners .dialog:not(#header-bar),:root.rounded-corners .fileThumb img:not(.full-image),:root.rounded-corners .inline,:root.rounded-corners .pages strong>a,:root.rounded-corners .pages.cataloglink,:root.rounded-corners .reply,:root.rounded-corners .thumb,:root.rounded-corners input[value=Next],:root.rounded-corners input[value=Previous],:root.rounded-corners.catalog-hover-expand .catalog-container:hover .catalog-reply,:root.rounded-corners.catalog-hover-expand .catalog-container:hover>.post,:root.rounded-corners.op-background .op,:root.rounded-corners.werkTyme .catalog-thread:not(:hover),:root.rounded-corners.werkTyme:not(.catalog-hover-expand) .catalog-thread{border-radius:3px!important}:root.post-info.rounded-corners .reply>.postInfo,:root.rounded-corners #qr,:root.rounded-corners:root.vertical-qr #qr>.move{border-radius:3px 3px 0 0!important}:root:not(.rounded-corners) #post-preview{border-radius:0!important}#file-n-submit>input,#qr-file-button{border-radius:0!important}#post-preview,#qr select,.dialog,.entry,.flashListing td:not(:last-of-type):not(.postblock),.inline,.reply,:root.op-background .op,:root.vertical-qr #qr .move,fieldset,select{border-color:" + $SS.theme.brderColor.hex + "!important}.dd-menu li{border-bottom:" + $SS.theme.brderColor.hex + "!important}#post-preview,#qr select,#qr-filename-container,#t-load,#t-next,#t-root,.captcha-img,.captcha-root,.dd-menu ul,.postblock,.riceCheck,:root.catalog-hover-expand .catalog-container:hover .catalog-reply,:root.catalog-hover-expand .catalog-container:hover>.post,:root.vertical-qr #qr .move,:root.werkTyme .catalog-thread:not(:hover),:root.werkTyme:not(.catalog-hover-expand) .catalog-thread,input,select,textarea{border:1px solid " + $SS.theme.inputbColor.hex + "!important}#t-load,#t-next,.options-button,.pages strong>a,.pages.cataloglink,.qr-link,input[value=Next],input[value=Previous]{border-style:solid;border-width:1px;border-color:rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-30) + ")!important}a.backlink.forwardlink,a.quotelink.forwardlink{border-bottom:1px dashed}#qr input:focus,#qr-filename-container.focus,#qr-filename-container:focus,#t-load:focus,#t-next:focus,#t-root:focus,.captcha-root:focus,input.field:focus,input[type=text]:focus,select:focus,textarea:focus{border:1px solid " + $SS.theme.linkColor.hex + "!important}#index-search:hover,#search-box:hover,.captcha-img:hover{border-color:" + $SS.theme.linkColor.hex + "!important}#header-bar{border:none!important}:root:not(.fourchan-x) div#boardNavMobile{background-color:" + $SS.theme.headerBGColor.hex + ";border-bottom-color:" + $SS.theme.brderColor.hex + "}.flashListing td:not(:last-of-type):not(.postblock){border-width:1px;border-style:solid}:root.header-highlight #custom-board-list .current,:root.header-highlight #custom-board-list .current:hover{border-bottom:none!important}.suboption-list>div:last-of-type{background:rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ")!important}.suboption-list::before,.suboption-list>div::before{border-color:" + $SS.theme.brderColor.hex + "!important;left:.5em!important}#navlinks a{text-shadow:" + $SS.theme.mainColor.hex + " -1px -1px," + $SS.theme.mainColor.hex + " 1px -1px," + $SS.theme.mainColor.hex + " -1px 1px," + $SS.theme.mainColor.hex + " 1px 1px," + $SS.theme.mainColor.hex + " -1px 0," + $SS.theme.mainColor.hex + " 1px 0," + $SS.theme.mainColor.hex + " 0 -1px," + $SS.theme.mainColor.hex + " 0 1px,rgba(0,0,0,.6) 0 2px 4px,rgba(0,0,0,.6) 0 0 2px}.thumb{box-shadow:0 0 5px rgba(0,0,0,.25)}#qr,#thread-watcher,#threadWatcher{box-shadow:1px 1px 3px rgba(0,0,0,.1)!important}.closed{margin-top:10px;color:red}#swf-embed-header.postblock{border:1px solid " + $SS.theme.brderColor.hex + "!important;background-color:rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ")!important;color:" + $SS.theme.linkColor.hex + "!important}#swf-embed-close{right:1px!important}.fxt-card{color:" + $SS.theme.textColor.hex + "!important;background-color:rgba(" + $SS.theme.bgColor.rgb + "," + $SS.theme.replyOp + ")!important;border:1px solid " + $SS.theme.brderColor.hex + "!important}:root.alt-spoiler .span.spoiler,:root.alt-spoiler s,:root.alt-spoiler s:not(:hover)>.linkify,:root.alt-spoiler s:not(:hover)>a{color:#fff;background:none repeat scroll 0 0 #fff}:root.alt-spoiler s:focus,:root.alt-spoiler s:hover,:root.alt-spoiler span.spoiler:focus,:root.alt-spoiler span.spoiler:hover{color:#000}#full-board-list,.deleteform,.pagelist button,.pages{font-size:0!important}.fileText,.summary{font-size:" + (($SS.conf["Font Size"] < 13) ? 10 : ($SS.conf["Font Size"] - 2)) + "px!important}.qr-link{font-size:14px!important}#oneechan-options input,#oneechan-options textarea,.hide-reply-button,.hide-thread-button,.options-button,.tab-label,.theme-preview{font-family:sans-serif!important;font-size:12px!important}.boardBanner .boardTitle{font-weight:400!important;font-size:" + (($SS.conf["Font Size"] < 13) ? 22 : 26) + "px!important}.prettyprint span{font-family:monospace!important;font-size:medium!important}#full-board-list,#full-board-list .fourchanx-link,body>#header-bar{font-size:" + (($SS.conf["Font Size"] < 1) ? 12 : ($SS.conf["Font Size"] - 1)) + "px!important}@media (min-width:1280px) and (max-width:1920px){#board-list{word-spacing:" + (($SS.conf["Font Size"] < 14) ? -1 : -2) + "px}}#boardList,#index-search,#menu .entry,#qr input.field,#qr input[type=submit],#qr select[data-name=thread],#qr span.field,#qr-file-button,#qr:not(.sjis-preview) textarea.field,#shortcuts,#tegaki,.next form::after,.next span::after,.pages a,.prev form::after,.prev span::after,body,div.next,form.pageSwitcherForm>input[type=submit],input,select{font-family:" + $SS.formatFont($SS.conf["Font Family"]) + ";font-size:" + $SS.conf["Font Size"] + "px!important}#custom-board-list,#full-board-list a,a.qr-link{font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important;font-size:" + $SS.conf["Font Size"] + "px!important}#qr .field::-moz-placeholder,::-moz-placeholder{font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important;font-size:" + $SS.conf["Font Size"] + "px!important}#qr .field::webkit-input-placeholder,::webkit-input-placeholder{font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important;font-size:" + $SS.conf["Font Size"] + "px!important}.backlink{font-size:" + $SS.conf["Backlink Font Size"] + "px!important}#qr input[type=submit],#qr label,#qr-file-button,.captcha-counter{font-size:" + (($SS.conf["Font Size"] < 11) ? 8 : 10) + "px!important}#qr input[type=submit],#qr label,#qr-file-button,.captcha-counter{text-transform:uppercase}#qr label:not(.riceCheck){overflow:hidden;padding-bottom:2px}:root.underline-disabled a{text-decoration:none!important}.navLinks.navLinksBot.desktop a{text-decoration:underline}:root.underline-disabled .filtered{text-decoration:line-through!important}.deadlink.quotelink{text-decoration:none!important}:root.underline-quotes .backlink,:root.underline-quotes .deadlink.backlink,:root.underline-quotes .deadlink.quotelink,:root.underline-quotes .quotelink{text-decoration:underline!important}#oneechan-version a,a.options-button{text-decoration:none!important}.closed{text-align:center}.name,.option.header .option-title,.subject,.tab-label.selected,a.current{font-weight:" + ($SS.conf["Bitmap Font"] ? 4 : 7) + "00!important}.qr-link,.tab-label:not(.selected):not(:hover){font-weight:400}.postblock{font-weight:700}.summary{font-style:" + ($SS.conf["Bitmap Font"] ? 'none' : 'italic') + "}"+$SS.theme.customCSS+" "+($SS.conf["Sidebar Position"] !== 3 ? " :root:not(.fixed) #header-bar{z-index:10}:root.left-sidebar body{padding-left:306px}:root.right-sidebar body{padding-right:306px}:root.left-sidebar:not(.mini-sidebar) .boardBanner,:root.right-sidebar:not(.mini-sidebar) .boardBanner{position:fixed}:root.left-sidebar:not(.mini-sidebar) .boardBanner{left:2px}:root.right-sidebar:not(.mini-sidebar) .boardBanner{right:2px}:root.fixed:not(.autohide):not(.bottom) .boardBanner{margin-top:-6px}:root.left-sidebar #qr{left:0!important;right:auto!important}:root.right-sidebar #qr{right:0!important;left:auto!important}.captcha-img,.captcha-img img{min-width:100%!important;height:56px!important}:root.ss-sidebar body::before{background:rgba\(" + $SS.theme.mainColor.shiftRGB(-18) + ",." + ($SS.theme.mainColor.isDark ? 9 : 2) + ");border-left:2px solid rgba(" + $SS.theme.mainColor.rgb + ",.9);box-shadow:inset " + $SS.theme.brderColor.hex + " 1px 0 0,inset " + $SS.theme.brderColor.hex + " -1px 0 0;content:'';height:100%;width:306px;position:fixed;top:0;right:0}:root.fixed.ss-sidebar #header-bar{box-shadow:-5px 1px 10px rgba(0,0,0,.2),inset " + $SS.theme.brderColor.hex + " -1px 0 0}:root.fixed.header-shadow.ss-sidebar #header-bar{box-shadow:inset " + $SS.theme.brderColor.hex + " -1px 0 0!important}:root.ss-sidebar.left-sidebar body::before{border-right:2px solid rgba(" + $SS.theme.mainColor.rgb + ",.9);border-left:none!important;left:0;right:auto!important}:root.fixed.ss-sidebar.left-sidebar #header-bar{box-shadow:-5px 1px 10px rgba(0,0,0,.2),inset " + $SS.theme.brderColor.hex + " 1px 0 0}:root.fixed.header-shadow.ss-sidebar.left-sidebar #header-bar{box-shadow:inset " + $SS.theme.brderColor.hex + " 1px 0 0!important}:root.vertical-qr:root.left-sidebar #qr{transform:translateX(-100%);left:0!important;right:auto!important}:root.vertical-qr:root.left-sidebar #qr .move{transform:rotate(90deg);transform-origin:bottom right;left:63.5%;bottom:46px}:root.mini-sidebar:root.left-sidebar body{padding-left:32px!important}:root.mini-sidebar:root.right-sidebar body{padding-right:32px!important}:root.mini-sidebar .boardSubtitle{display:none}:root.mini-sidebar:root.ss-sidebar body::before{width:31px!important}:root.mini-sidebar .boardTitle{top:72px!important;letter-spacing:-1.4px;position:fixed;padding-top:.05em}:root.mini-sidebar:root.right-sidebar .boardTitle{right:32px;-webkit-transform-origin:top right;transform-origin:top right;-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg)}:root.mini-sidebar:root.left-sidebar .boardTitle{left:32px;-webkit-transform-origin:top left;transform-origin:top left;-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg)}" : "")+" #qr,#quickReply{box-shadow:none!important;border-radius:0!important}:root:not(.vertical-qr) #qr .move{min-width:302px}#qr .close{padding:2px 3px 2px 4px!important}#qr .riceCheck,#qr input[type=checkbox]{margin:0 4px 1px;vertical-align:baseline;position:relative;top:3px}:root.fourchan-xt #qr .move .riceCheck,:root.fourchan-xt #qr .move input[type=checkbox]{margin:0 4px 2px;top:2px}#qr-filename-container .riceCheck,#qr-filename-container input[type=checkbox]{margin:0 0 1px}#qr input[type=submit],#qr-file-button,#qrFile,#quickReply input[type=submit]{height:25px!important;margin:0!important}#qr-file-button,:root:not(.fourchan-xt) #qr-filename-container{margin-right:1px!important}#qr-spoiler-label+input[type=submit]{margin-top:1px!important}#qr>form>select{margin:1px 0!important}#qr select[data-name=thread]{margin:1px 0 1px 0;max-width:133px;min-width:80px}#qr>form>div.persona>input:nth-child(4),#qr>form>div.persona>input:nth-child(5),#qr>form>div.persona>input:nth-child(6){margin-left:1px}:root.expand-inputs .persona{display:flex}:root.expand-inputs .persona .field{flex:1;width:0}:root.expand-inputs .persona .field:focus,:root.expand-inputs .persona .field:hover{flex:3}#qr textarea,#quickReply textarea{min-height:190px!important}:root.ua-blink #qr textarea,:root.ua-blink #quickReply textarea{min-height:185px!important}:root.ua-blink #qr textarea.field,:root.ua-blink #quickReply textarea,:root.ua-gecko #qr textarea.field,:root.ua-gecko #quickReply textarea{min-height:9em!important;min-width:302px!important}:root.fourchan-x:not(.fourchan-xt).ua-blink #qr textarea.field,:root.fourchan-x:not(.fourchan-xt).ua-gecko #qr textarea.field{max-height:65vh}:root.fourchan-xt.ua-blink #qr textarea.field,:root.fourchan-xt.ua-gecko #qr textarea.field{max-height:64vh}:root.left-sidebar #qr textarea.field,:root.left-sidebar #quickReply textarea,:root.right-sidebar #qr textarea.field,:root.right-sidebar #quickReply textarea{max-width:302px!important}:root.qr-background #qr,:root.qr-background #quickReply{background:0 0!important;border:none}:root.qr-opacity #qr,:root.qr-opacity #quickReply{opacity:.9}:root.ua-blink #t-help,:root.ua-gecko #t-help{margin:0 0 0 2px!important}.textarea{margin-top:1px;-webkit-margin-after:1px;min-height:9em;max-height:64vh}:root.ua-gecko .textarea{margin-bottom:1px;margin-top:1px}.captcha-img{min-height:58px!important;margin-bottom:1px}.captcha-root div{border-radius:0!important}#t-load,#t-next{height:20px!important}:root.vertical-qr #qr .move #autohide,:root.vertical-qr #qr>div>label>div,:root.vertical-qr #qr>div>select{display:none}:root.vertical-qr #qr textarea{resize:vertical!important}:root.vertical-qr #qr{top:auto!important;position:fixed;right:0!important;left:auto!important;transform:translateX(100%)}:root.vertical-qr #qr .move{display:block;position:absolute;width:105px;cursor:default;padding:2px 0 2px 2px;text-align:center;bottom:88px}:root.vertical-qr #qr .move label{display:inline}:root.vertical-qr #qr:hover .move{transition:opacity .42s linear}:root.vertical-qr #qr.focus .move,:root.vertical-qr #qr:hover .move{opacity:0!important}:root.vertical-qr.bottom-header #qr{bottom:28px!important}:root.vertical-qr.top-header #qr{bottom:0!important}:root.vertical-qr .captcha-img,:root.vertical-qr .captcha-img img{max-width:247px}:root.vertical-qr #qr form{display:block!important}:root.vertical-qr #qr.focus,:root.vertical-qr #qr:hover{transform:translateX(0)!important}:root.qr-transition.vertical-qr #qr{transition:transform .3s ease-in-out .1s!important}:root.vertical-qr #qr .move{transform:rotate(-90deg);right:86%}#qr>form,#quickReply>form{overflow-y:hidden!important}:root.fade-qr #qr form,:root.fade-qr #quickReply form{display:block!important}:root.fade-qr #qr.autohide:not(.focus):not(:hover),:root.fade-qr #quickReply:not(.focus):not(:hover){opacity:.2!important;transition:opacity .2s ease-in-out 1s!important}input[type=number]{appearance:textfield}::-webkit-inner-spin-button,::-webkit-outer-spin-button{-webkit-appearance:none}#t-resp{width:178px!important}#file-n-submit .row.space{margin-top:1px}:root.single-captcha #t-slider{display:none!important}:root.single-captcha #qr>form>div.captcha-root>div,:root.single-captcha #quickReply #qrCaptchaContainer{min-height:145px!important}:root.single-captcha #t-next.tcaptcha-stepper.is-ready{display:inline-flex;align-items:center}:root.single-captcha #t-task{display:flex;flex-direction:column;gap:2px;margin:0 auto;overflow-y:auto;max-height:38vh;padding:2px 0!important;height:auto!important;white-space:normal!important;align-items:center!important;overflow-x:hidden;box-sizing:border-box;position:relative;-ms-overflow-style:none;scrollbar-width:none}:root.single-captcha #t-task::-webkit-scrollbar{width:0;height:0}:root.single-captcha #t-task.tcaptcha-compact{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:flex-start!important}:root.single-captcha #t-desc{position:sticky;top:0;z-index:1;white-space:pre-line;text-align:center;font-size:11px;line-height:1.15;user-select:none;width:100%;padding:2px 0 3px;margin-bottom:1px;background:inherit;text-shadow:0 1px 1px rgba(0,0,0,.12),0 0 2px rgba(255,255,255,.18)}:root.single-captcha #t-task.tcaptcha-compact #t-desc{position:static;flex:0 0 100%}:root.single-captcha #t-desc img{margin:2px!important;max-width:40px;max-height:40px;width:auto;height:auto}:root.single-captcha .tcaptcha-image{padding:0;margin:1px;border:none;background:0 0;cursor:pointer!important;width:calc(100% - 4px);max-width:172px;height:auto;flex:none;display:block}:root.single-captcha #t-task.tcaptcha-compact .tcaptcha-image{width:auto;max-width:none}:root.single-captcha .tcaptcha-image img{display:block;width:100%;height:auto}:root.single-captcha #t-task.tcaptcha-compact .tcaptcha-image img{width:auto;max-width:80px;max-height:80px}:root.single-captcha .tcaptcha-image.active{outline:2px solid " + $SS.theme.linkColor.hex + ";outline-offset:1px}:root.single-captcha #t-load{cursor:pointer!important}:root.single-captcha #t-next{align-items:center;gap:2px;margin-left:auto;padding:2px;font-size:11px}:root.single-captcha .tcaptcha-progress{min-width:34px;text-align:center}:root.single-captcha .tcaptcha-nav{width:16px;height:16px;font-size:14px;line-height:1;cursor:pointer!important}:root.single-captcha .tcaptcha-nav.is-disabled,:root.single-captcha .tcaptcha-nav[aria-disabled=true]{opacity:.35;cursor:default!important}.closeIcon{background-image:none!important}.closeIcon::after{content:'x'}:root.no-pu .n-pu{vertical-align:middle;display:inline-block;width:16px;height:16px;margin-top:-2px;background:url(//s.4cdn.org/image/minileaf.gif)}.watch-thread-link{margin-bottom:-7px;margin-right:2px;top:auto!important;bottom:4px!important;background-image:url(\"data:image/svg+xml," + $SS.theme.icons.star + "\")!important}:root.ua-gecko.fourchan-xt .watch-thread-link{display:inline-block;position:relative}:root.backlink-icon .backlink{background-image:url(\"data:image/svg+xml," + $SS.theme.icons.backlink + "\")!important;font-size:0!important;padding:" + (($SS.conf["Font Size"] < 12) ? 5 : 6) + "px!important;margin-right:0!important;opacity:.6!important;position:relative;bottom:5px;left:2px}:root.backlink-icon .backlink.inlined,:root.backlink-icon .backlink:has(.quotelink.linkfade){background-image:url(\"data:image/svg+xml," + $SS.theme.icons.downArrow + "\")!important;font-size:0!important;padding:6px!important;margin-right:0!important;opacity:.6!important;position:relative;bottom:5px;left:3px}:root.backlink-icon .backlink .quotelink{position:absolute;inset:0;font-size:0!important}:root.backlink-icon .reply .backlink{bottom:" + (($SS.conf["Font Size"] < 12) ? 4 : 6) + "px!important}:root.backlink-icon .backlink.inlined:hover,:root.backlink-icon .backlink:has(.quotelink.linkfade):hover,:root.backlink-icon .backlink:hover{opacity:1!important}img[title=Archived],img[title=Closed],img[title=Sticky]{color:transparent!important;font-size:0!important;background-color:transparent!important;background-position:center!important;background-repeat:no-repeat;display:inline-block;height:0!important;padding-top:16px!important;text-indent:-9999px!important;vertical-align:bottom;width:16px!important}.closedIcon{background-image:url(\"data:image/svg+xml," + $SS.theme.icons.threadClosed + "\")!important}.stickyIcon{background-image:url(\"data:image/svg+xml," + $SS.theme.icons.threadPinned + "\")!important}.archivedIcon{background-image:url(\"data:image/svg+xml," + $SS.theme.icons.threadArchived + "\")!important}:root.hl-border .post.reply,:root.op-background.hl-border .postContainer.opContainer{border-left:" + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(" + $SS.theme.postHLColor.rgb + ",1)!important}:root.hl-border-down .post.reply,:root.op-background.hl-border-down .postContainer.opContainer{border-bottom:" + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(" + $SS.theme.postHLColor.rgb + ",1)!important}:root.hl-outline .post.reply,:root.op-background.hl-outline .postContainer.opContainer{outline:" + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(" + $SS.theme.postHLColor.rgb + ",1)}.filter-highlight .catalog-thumb{box-shadow:0 0 3px 3px rgba(" + $SS.theme.postHLColor.rgb + ",.5)!important}.filter-highlight.opContainer,.filter-highlight>.reply{box-shadow:5px 0 rgba(" + $SS.theme.postHLColor.rgb + ",.5) inset!important}.filter-highlight>div.sideArrows{color:rgba(" + $SS.theme.postHLColor.rgb + ",.5)!important}.qphl{outline:2px solid rgba(" + $SS.theme.linkColor.rgb + ",.5)!important}:root.highlight-you .quotesYou.opContainer,:root.highlight-you .quotesYou>.reply{border-left:" + $SS.conf["Width Decoration"] + "px solid rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1)!important}:root.highlight-you .quotesYou>.sideArrows{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1)!important}:root.highlight-own .yourPost.opContainer,:root.highlight-own .yourPost>.reply{border-left:" + $SS.conf["Width Decoration"] + "px dashed rgba(" + $SS.theme.ownPostHLColor.rgb + ",1)!important}:root.highlight-own .yourPost>.sideArrows{color:rgba(" + $SS.theme.ownPostHLColor.rgb + ",1)!important}.reply:target{background:rgba(" + $SS.theme.replybgHLColor.rgb + ",.8)!important}.highlight{outline:2px solid rgba(" + $SS.theme.replyslctColor.rgb + ",1)!important}.catalog-thread.watched .catalog-thumb,.catalog-thread.watched .werkTyme-filename{border:2px solid rgba(" + $SS.theme.postHLColor.rgb + ",1)!important}.replies-quoting-you>.watcher-link{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1)!important}.replies-quoting-you>.watcher-link:hover{color:" + $SS.theme.linkHColor.hex + "!important}#watched-threads>.replies-quoting-you>a{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1)!important}#shortcuts>.shortcut>#watcher-link.disabled.replies-quoting-you{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",.45)!important}#shortcuts>.shortcut>#watcher-link.disabled.replies-quoting-you:hover,#watched-threads>.replies-quoting-you>a:hover{color:" + $SS.theme.linkHColor.hex + "!important}:root.highlight-opQuotes .qmark-op{color:rgba(" + $SS.theme.postHLColor.rgb + ",1);font-weight:700}:root.highlight-youQuotes .qmark-you{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1);font-weight:700}#add-theme,#oneechan-options{border:0!important;border-radius:3px!important;position:fixed;margin:auto}#oneechan-options{width:610px;max-width:85%;text-align:left!important;height:65vh;max-height:1310px;top:0;bottom:0;left:0;right:0;box-shadow:rgba(0,0,0,.6) 0 0 10px!important;padding:5px 5px 35px 5px}#options-container:not(.yui-skin-sam){padding:3px}#options-container:not(.yui-skin-sam){box-shadow:inset rgba(0,0,0,.3) 0 0 5px}.options-close{text-align:right!important;margin-left:auto;width:150px;right:0;padding:2px 4px;position:absolute;z-index:120}#options-container:not(.yui-skin-sam){border-radius:5px}#options-container:not(.yui-skin-sam),.options-section{height:100%}.options-section{overflow-y:auto;overflow-x:hidden}#main-section .option{display:block;border-top:1px solid rgba(0,0,0,.1);height:22px;padding:0 6px;vertical-align:middle}#main-section>.option:nth-of-type(2n){background:rgb\(" + $SS.theme.mainColor.shiftRGB(-5) + ")!important}#main-section .buttons-container+.option{border-top:none!important}.option-title{line-height:22px}#main-section .option:first-child{border-top:0!important}#main-section .option:last-child{border-bottom:0!important}#main-section input,#main-section select{float:right!important}#main-section .riceCheck,#main-section input[type=checkbox]{float:left!important;margin-right:5px!important}select[name='Font Family']>option{max-width:150px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.suboption::before{border-bottom:1px solid rgba(0,0,0,.1);border-left:1px solid rgba(0,0,0,.1);content:'';display:inline-block;float:left;margin-right:2px;height:50%;width:6px}.suboption{padding-left:16px!important}.option.header{cursor:auto!important}.theme-preview{cursor:default}.theme-preview blockquote{margin:12px 40px!important}#themes-section .reply{padding:2px!important;position:relative;text-align:left;width:99.4%;border-radius:0!important}.theme-buttons-container{bottom:4px;right:2px;margin:0;opacity:0;position:absolute;z-index:3}.theme-preview:hover .theme-buttons-container{opacity:1}.theme-buttons-container>a{display:inline-block;margin:0 2px;padding:2px 5px;text-align:center;width:50px;border-radius:3px}.theme-preview .sfw-label{bottom:-5px;font-size:32px!important;margin:0!important;opacity:0;position:absolute;right:300px}.theme-preview.nsfw.selected .both,.theme-preview.nsfw:not(.selected) .sfw-label,.theme-preview.selected:not(.nsfw) .sfw-label{transition:opacity .3s,right .3s}.theme-preview.nsfw .notsafe,.theme-preview.selected .safe,.theme-preview.selected.nsfw .both{opacity:1;right:3px;z-index:1}.theme-preview.selected.nsfw .sfw-label:not(.both){opacity:0!important;right:300px!important;z-index:0!important}#add-theme{padding:20px 20px 20px 20px!important;top:0;left:0;right:0;bottom:0;height:445px;text-align:left!important;width:800px!important}:root.ua-blink #add-theme{height:450px!important;max-height:100%}#add-theme .option-title{float:left;padding-left:5px}#add-theme>label{line-height:22px;display:inline-block;text-align:right;width:33.3%}#add-theme>label#customCSS{width:100%}#add-theme>label#customCSS>textarea{font-family:monospace;height:10.2em;resize:none;width:99%;max-height:25em;overflow-y:scroll}#add-theme>label>input[type=text],#add-theme>label>select{width:100px}#add-theme>div{margin-top:.6em;text-align:right}#options-tabs{list-style:none;margin:0;padding:0;position:absolute;top:-24px;left:-1px}.tab-item{float:left;margin:0;padding:0}.tab-label{display:block;height:16px;margin:0 1px;padding:5px;text-align:center;width:75px;border-radius:3px 3px 0 0;transition:all .1s ease-in-out}.tab-label:not(.selected):not(:hover){opacity:.85}#overlay{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:99!important;background-color:rgba(0,0,0,.3)!important}#overlay2{background:rgba(0,0,0,.1)!important;position:fixed;top:0;left:0;height:100%;width:100%;text-align:center;z-index:125!important}#overlay2::before{content:'';display:inline-block;height:100%;vertical-align:middle}#overlay.previewing{display:none}#overlay.previewing~#overlay2{background-color:rgba(0,0,0,.1)!important}.buttons-container{bottom:3px;left:5px;position:absolute;z-index:100}.buttons-container{margin:0}.options-button{display:inline-block;line-height:18px;margin:0 2px;min-width:40px;padding:2px 10px;text-align:center;cursor:pointer;border-radius:3px}.options-button-small{padding:2px 5px;min-width:30px}#import-link{line-height:22px;overflow:hidden;position:relative;float:left;height:24px!important;margin-top:-2px;padding-top:2px}#import-settings{position:relative;overflow:hidden;vertical-align:bottom}#import-settings>.import-input{left:0}.import-input{position:absolute;opacity:0;cursor:pointer}label.option>.riceCheck,label.option>input[type=checkbox]{margin:4px 2px 0!important;vertical-align:bottom!important}.option>input[type=text],span.option>select{width:125px}#oneechan-options input[type=text],#oneechan-options select{max-height:20px;margin-top:1px!important;padding:0 3px!important}#oneechan-options textarea{background:0 0!important;border:0!important;height:100%!important;width:100%!important;resize:none}#oneechan-version{opacity:.5;padding-right:5px;padding-left:40px;font-size:x-small}.link-delim{opacity:.4}.extended-large .teaser,.extended-small .teaser{margin-left:5px;margin-right:5px}#threads .thread{margin:2px 1px 0 0}#ctrl{padding-top:4px}#threads{padding:10px 0!important}:root.catalog-justify .catalog-post>.postMessage,:root.catalog-justify .teaser{text-align:justify!important}:root.catalog-background #threads div.thread,:root.catalog-background .catalog-thread{background:rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ")!important}:root.rounded-corners.catalog-background #threads div.thread,:root.rounded-corners.catalog-background .catalog-thread{border-radius:3px!important}:root.catalog-background .catalog-post>.postMessage,:root.catalog-background .teaser{margin:0 5px 5px 5px}:root.catalog-background .thumb,:root.catalog-background img.catalog-thumb{margin-top:8px}:root.catalog-background .extended-large .thread{min-height:410px}:root.catalog-background .extended-small .thread{min-height:320px}:root.catalog-thumbsize .thumb,:root.catalog-thumbsize img.catalog-thumb{width:150px!important;height:150px!important}:root.catalog-thumbsize #delform>.catalog-large img.catalog-thumb,:root.catalog-thumbsize #threads.extended-large .thumb,:root.catalog-thumbsize #threads.large .thumb{width:250px!important;height:250px!important}";
+            css = "#absbot,#boardNavDesktopFoot,#delPassword,#delform .mobile.center,#delform .post .riceCheck,#delform .post input[type=checkbox],#qp .post input[type=checkbox],#qp .riceCheck,#styleSwitcher,.ad-plea,.deleteform,.exif:not([style]),.mobile,.stylechanger,.tab-select:not(:checked)+div,:root.hide-banner #bannerCnt,:root.hide-banner .boardBanner>img,:root.hide-blotter #blotter,:root.hide-board-name .boardSubtitle,:root.hide-board-name .boardTitle,:root.hide-button #togglePostFormLink,:root.hide-button .qr-link-container,:root.hide-button .qr-link-container-bottom,:root.hide-button a[data-cmd=new-thread],:root.hide-navlinkbot .navLinks.navLinksBot.desktop,:root.hide-navlinkbot .navLinks.navLinksBottom.mobilebtn,:root.hide-navlinks .navLinks,:root.hide-navlinks .navLinks.navLinksBot.desktop,:root.hide-navlinks body>.desktop:not(.pagelist):not(.navLinksBottom),:root.hide-navlinktop #info,:root.hide-navlinktop .navLinks:not(.navLinksBottom):not(.navLinksBot),:root.is-catalog.hide-button #postForm,:root.qr-controls #qr .close,:root.qr-controls #qr select[data-name=thread],:root.qr-controls #quickReply #qrHeader,:root.qr-controls.fade-qr #qr .move label,:root.qr-controls.vertical-qr #qr .move label input,:root.reply-fit-width .sideArrows,:root.show-ads.hide-adl .adl,:root.show-ads.hide-board-banners .middlead.center,:root.show-ads.hide-bottom-ad #danbo-s-b+.adl,:root.show-ads.hide-bottom-ad #danbo-s-b.danbo-slot,:root.show-ads.hide-bottom-ad .bottomad.center,:root.show-ads.hide-top-ad #danbo-s-t+.adl,:root.show-ads.hide-top-ad #danbo-s-t.danbo-slot,:root.show-ads.hide-top-ad .topad.center,:root.show-file-info .file-info,:root:not(.is-catalog) #postForm,:root:not(.show-ads) .adl,:root:not(.show-ads) .center:not(#settingsMenu .center):not(#customMenu .center):not(#theme-btns .center),:root:not(.show-ads) .danbo-slot,[hidden],hr+.adl,hr:not(#unread-line),iframe[src='about:blank']{display:none}a,input:focus,select,textarea:focus{outline:0!important}.boardBanner{border-image-source:none!important;border-style:none!important}.party-hat{left:0;margin-left:-11px;padding-left:" + $SS.conf["Margin Left"] + "px;margin-top:-75px;position:absolute;pointer-events:none;z-index:1}:root.force-indent .party-hat{margin-left:-23px}.sjis{font-size:16px;line-height:17px;white-space:pre;font-family:IPAMonaPGothic,Mona,'MS PGothic',monospace;overflow:auto;display:block;clear:left}.mu-s{font-weight:700}.mu-i{font-style:italic}.mu-r{color:#c41e3a}.mu-g{color:#00a550}.mu-b{color:#1d8dc4}div.post div.file .fileThumb{float:left;margin-left:13px;margin-right:20px;margin-bottom:10px}div.op.post div.file .fileThumb{margin-bottom:0}.fileText{margin-left:13px!important;margin-bottom:2px!important}.fixed.bottom-header body.is_thread{padding-bottom:0;padding-top:.5em}.fixed.bottom-header body.is_index{padding-bottom:4.5em;padding-top:.5em}.fixed.bottom-header body.is_catalog,.fixed.bottom-header.catalog-mode body{padding-bottom:3em;padding-top:.5em}.fixed.bottom-header body{padding-top:.5em}:root.bottom-header:not(.autohide) body.is_index{padding-bottom:5em!important}.fixed.top-header body.is_index{padding-bottom:2.5em;padding-top:" + (($SS.conf["Font Size"] <= 11) ? 3.2 : 2.4) + "em!important}.fixed.top-header body.is_thread{padding-bottom:0;padding-top:" + (($SS.conf["Font Size"] <= 11) ? 3.2 : 2.4) + "em!important}.fixed.top-header body.is_catalog,.fixed.top-header.catalog-mode body{padding-bottom:.5em;padding-top:" + (($SS.conf["Font Size"] <= 11) ? 3.2 : 2.4) + "em!important}.fixed.top-header.autohide body{padding-top:2em!important}.fixed.top-header body{padding-top:2.4em!important}div.post{margin:4px 0;overflow:hidden}:root:not(.reply-fit-width) #delform div.reply:not([hidden]){display:table!important}:root:not(.reply-fit-width) #delform .stub~div.reply:not([hidden]){display:none!important}div.thread{margin:0;clear:both;padding-bottom:10px}table.flashListing{border-spacing:1px;margin-left:auto;margin-right:auto}table.flashListing .postblock{padding:5px}div.pagelist div.pages{padding:4px}div.pagelist,div.pagelist>div{float:left}div.pagelist>div span{padding:4px;display:inline-block}.page-num{margin-right:auto!important}s{text-decoration:none!important}s,s:not(:hover)>.linkify,s:not(:hover)>a,span.spoiler{color:#000;background:none repeat scroll 0 0 #000}s:focus,s:hover,span.spoiler:focus,span.spoiler:hover{color:#fff}#globalMessage,.boardBanner{text-align:center}div.sideArrows{float:left;margin-right:2px;margin-top:0;margin-left:2px;opacity:.3}hr{clear:both}table{border-spacing:1px;margin-left:auto;margin-right:auto}.adl,.center,.danbo-slot{text-align:center!important}.adl{font-size:.76em}#qf-box{width:120px}span.hide-announcement{margin-left:3px;vertical-align:sub}.bottomCtrl.desktop{float:right}.fixed.bottom-header body.is_index .bottomCtrl.desktop,.fixed.bottom-header body.is_thread .bottomCtrl.desktop{margin-bottom:35px}.fixed.top-header body.is_index .bottomCtrl.desktop,.fixed.top-header body.is_thread .bottomCtrl.desktop{margin-bottom:8px}input[value=Next],input[value=Previous]{padding:4px 13px}.identityIcon{margin-bottom:-3px}:root.isLight img[src*='//boards.4chan.org/js/jsMath/fonts/']{filter:invert(100%);-webkit-filter:invert(100%)}:root.reply-fit-width .inline{display:flow-root!important}:root.centered-links #shortcuts{width:30vw!important}:root.centered-links #custom-board-list{left:12vw!important}#blotter{margin:auto;font-size:11px}.brackets-wrap.pass-link-container.pass-login{float:right}body{margin-left:" + $SS.conf["Margin Left"] + "px;margin-right:" + $SS.conf["Margin Right"] + "px;margin-top:0;margin-bottom:0}:root.show-ads .ad-cnt{margin-top:auto!important}:not(.fourchan-x) div.op{display:block}.postInfo{padding:5px 13px;display:block!important}.summary{margin-left:2px}.expanded-image{position:relative}:root.op-background .op{padding:4px 0}:root.force-indent .op{margin-left:-12px}:root.force-wrapping .op::after{clear:both;content:'';display:block}.thread>.replyContainer:not(.thread>.postContainer:last-of-type),.threadContainer>.replyContainer,:root.op-background .thread>.opContainer:not(.thread>.postContainer:last-of-type){margin-bottom:" + $SS.conf["Margin Between Replies"] + "px!important}.container~.inline{margin:2px 0 2px 13px!important}:root.bottom-backlinks .container~.inline{margin:0 13px 2px!important}:root.bottom-backlinks .container~.inline:last-of-type:not(.inline .hasInline .inline){margin-bottom:3px!important}#qp .op>.postInfo{min-width:600px}.postMessage{margin:" + $SS.conf["Margin Post Message"] + "!important}:root.bottom-backlinks .container{padding-left:8px}:root.bottom-backlinks .post:not(:root.op-background .op) .container:not(:empty){padding-bottom:4px}:root.fit-eximg.fit-height .full-image{max-height:calc(100vh - 8rem)!important}:root.reply-fit-width .reply.post{display:block!important}:root.reply-fit-width .stub~.reply.post{display:none!important}.hasInline .inline>.replyContainer:not(.expanded-image):not(.hasInline) .reply.post,:root.reply-fit-width .post.reply{overflow:hidden!important}:root.reply-fit-width .expanded-image>.post::after,:root.reply-fit-width .hasInline>.reply.post::after{clear:both!important;content:''!important;display:block!important}.threadContainer .hide-reply-button{margin-left:-12px!important}.stub{padding:2px}.stub>a.show-thread-button{margin-right:4px}:root.reply-hide .thread>.expanded-image>.reply,:root.reply-hide .thread>.hasInline>.reply{margin-left:12px!important}.threadContainer{margin-left:0!important;padding-left:20px!important}:root.reply-hide .thread>.threadContainer{margin-left:13px!important}:root.post-info .reply>.postInfo{box-shadow:inset rgba(0,0,0,.05) 0 -1px 2px;padding-top:2px!important}:root.post-info #hoverUI .reply,:root.post-info .inline .reply{padding:0 0 1px!important}.reply .menu-button i{position:relative;bottom:1px}:root.reply-fit-width .reply .container{padding-right:5px}:root.reply-fit-width.fit-postmenu .postInfo>.menu-button{float:right!important}.container,.menu-button+.container:not(:empty){margin-left:4px!important}:root.reply-fit-width .post .menu-button{margin-left:0;position:relative;left:5px}:root.reply-fit-width .post .menu-button{opacity:0}:root.reply-fit-width .post:not(:hover) .menu-button{transition:opacity .3s ease-out 0s!important}:root.reply-fit-width .post:hover .menu-button{opacity:1;transition:opacity .3s ease-in .1s!important}.prettyprint{padding:5px!important;display:block;max-height:400px;overflow-x:auto;max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere}.riceCheck,input[type=button],input[type=checkbox],input[type=submit]{cursor:pointer}.fourchan-x input[type=checkbox],.riceCheck{display:inline-block;height:10px!important;position:relative;width:10px!important;border-radius:2px!important;-webkit-appearance:none;-moz-appearance:none;margin:1px}.fourchan-x input[type=checkbox]{display:none!important}.riceCheck{margin:0 2px -1px 0}input[type=checkbox]:checked+.riceCheck::before,input[type=checkbox]:checked::before{content:'';display:block;height:8px;margin:1px;width:8px}input[type=checkbox]:checked+.riceCheck::before,input[type=checkbox]:checked::before{background:" + $SS.theme.checkMark.get() + "!important}#header-bar{padding:4px 4px 5px!important}:root:not(.fixed) #header-bar{top:0;right:0;left:0;box-shadow:0 1px 2px rgba(0,0,0,.15);border-bottom:1px solid}:root.autohide body{padding-top:0!important;padding-bottom:0!important}:root:not(.fixed).right-sidebar #header-bar{right:300px}:root:not(.fixed).left-sidebar #header-bar{left:300px}:root:not(.fixed) .boardBanner{top:0}.center,.danbo-slot{margin:5px!important}#full-board-list>a,.navSmall>a{margin-left:2px}:root.fixed:not(.autohide):not(.bottom) #globalMessage{margin:10px 0 20px!important}.globalMessage,h2,h3{margin:auto}#custom-board-list,#full-board-list,.shortcut{vertical-align:baseline!important}:root.fixed-watcher #thread-watcher,:root.fixed-watcher #threadWatcher{position:fixed!important}.qr-link{border-radius:3px;vertical-align:middle;padding:7px 12px 6px}hr{height:2px;width:600px;border:none!important}:root.reply-fit-width #unread-line{margin:auto;width:100%}#unread-line{margin-top:" + (($SS.conf["Margin Between Replies"] < -2) ? ($SS.conf["Margin Between Replies"] - 1) : -3) + "px!important;margin-bottom:" + (($SS.conf["Margin Between Replies"] < -2) ? -5 : -3) + "px!important;position:relative}:root:not(.autohide) #scroll-marker{pointer-events:none!important}.boardBanner .boardTitle{cursor:default;letter-spacing:-2px;padding-top:.1em}#bannerCnt{border:0!important;margin:0 auto;width:300px;max-height:100px!important;max-width:100%}.boardBanner{width:302px;margin:auto}.boardBanner>img{border:none!important}:root.banner-opacity #bannerCnt{opacity:.5;transition:opacity .3s ease-out 0s}:root.banner-opacity #bannerCnt:hover{opacity:1}.pages.cataloglink{margin-left:12px}.pages.cataloglink a,input[value=Next],input[value=Previous]{font-weight:700;transition:opacity .3s ease-in 0s}.pages strong>a:hover,.pages.cataloglink a:hover,input[value=Next]:hover,input[value=Previous]:hover{opacity:.7}.pagelist{margin-left:18px;margin-bottom:15px}:root.reply-fit-width .pagelist{margin-left:0}.pages a{padding:5px 10px;margin-left:-1px}.pages strong>a{padding-top:3px;transition:opacity .3s ease-in 0s}.next,.prev{border:none!important;position:relative}:root.fourchan-x .next a,:root.fourchan-x .prev a{position:relative;right:5px}:root.fourchan-x .prev a::after{content:'<';position:inherit;top:4px;left:1px}:root.fourchan-x .next a::after{content:'>';position:inherit;top:4px;right:2px}.pagelist button,.pagelist button:hover{background:0 0!important;border:none!important;box-shadow:none!important;height:20px;width:20px}.pagelist span{opacity:.2}#swf-embed{z-index:21}table.flashListing{margin-top:20px;margin-bottom:20px}table.flashListing .highlightPost{background:rgb\(" + $SS.theme.mainColor.shiftRGB(-25) + ")!important}.flashListing td{padding-left:4px!important;padding-right:4px!important;text-align:center!important}body.board_f #delform .file-info{padding-left:5px}body.board_f #delform .fileText{margin-left:0!important}:root.ad-opacity .center img,:root.ad-opacity .danbo-slot{opacity:.5;transition:opacity .3s ease-out 0s}:root.ad-opacity .center img:hover,:root.ad-opacity .danbo-slot:hover{opacity:1}#ctrl-top,body.is_index div.navLinks{padding-top:5px;margin-bottom:5px}body.is_thread div.navLinks:not(.navLinksBot){padding-top:.4%;margin-bottom:.4%}.navLinks.navLinksBot.desktop{margin-bottom:5px}#hoverUI{z-index:75!important}:root:not(.fourchan-x) div#boardNavMobile{padding:2px 4px;overflow:hidden;border-bottom:2px solid;position:fixed;top:0;left:0;right:0;font-size:12px;z-index:9001}:root:not(.fourchan-x) div.pageJump{float:right;padding-right:5px;padding-top:3px}#index-search,#search-box{width:9%;transition:color .25s,border-color .25s,width .25s}#index-search:focus,#search-box:focus{width:12%;transition:color .25s,border-color .25s,width .25s}:root.thumb-opacity .fileThumb img:not(.full-image){opacity:.5;transition:opacity .3s ease-out 0s}:root.thumb-opacity .fileThumb img:not(.full-image):hover{opacity:1}select{-moz-appearance:none;-webkit-appearance:none}#delform{overflow-wrap:break-word;word-break:break-word;margin-bottom:15px}#reportTypes{margin-top:5px}#menu,#post-preview,#qr-filename-container,#t-load,#t-next,#t-root,#t-task,.boxbar,.captcha-root,.dd-menu ul,.globalMessage,.pages strong>a,.pages.cataloglink a,.pln,.post-last,.postblock,.tegaki-label,a.summary,body,div.boardBanner,html,input:not(.jsColor),select,textarea{color:" + $SS.theme.textColor.hex + "!important}.com,.nameBlock:not(.capcodeMod)>.name,.post-author{color:" + $SS.theme.nameColor.hex + "!important}.nameBlock.capcodeMod,:not(.fourchan-x) span.capcodeMod span.name,:not(.fourchan-x) span.capcodeMod strong.capcode{color:purple!important}.id_admin,.nameBlock.capcodeAdmin span.name{color:red!important}.nameBlock>.postertrip,.post-tripcode,.tag{color:" + $SS.theme.tripColor.hex + "!important}:root .atn,:root .options-button,:root .tegaki-tb-btn,:root .typ,:root.catalog-mode .button,a.postMenuBtn,a.replylink:not(:hover),a:not(s>a),a:visited,body.is_catalog .button,s:hover>a:not(:hover){color:" + $SS.theme.linkColor.hex + "!important}#import-link>.options-button:hover,.lit,.tegaki-tb-btn:hover,:root a:hover,:root div.post div.postInfo span.postNum a:hover,:root.catalog-mode .button:hover,body.is_catalog .button:hover{color:" + $SS.theme.linkHColor.hex + "!important}#header-bar,a.current{color:" + $SS.theme.headerColor.hex + "!important}#header-bar a:not(.current){color:" + $SS.theme.headerLColor.hex + "!important}#header-bar a:hover{color:" + $SS.theme.headerLHColor.hex + "!important}#custom-board-list .current{border-bottom:1px solid rgba(" + $SS.theme.linkColor.rgb + ",1)!important}#custom-board-list .current:hover{border-bottom:1px solid rgba(" + $SS.theme.linkHColor.rgb + ",1)!important}.atv,.catalog-thread>.comment>.quote,.new,.postMessage>.quote,.str,s:hover .quote{color:" + $SS.theme.quoteColor.hex + "!important}.kwd,.option.header .option-title,.post-subject,.replytitle,.subject,.tab-label,.teaser b{color:" + $SS.theme.titleColor.hex + "!important}.option.header{font-size:140%}.boardTitle{color:" + $SS.theme.boardColor.hex + "!important;text-shadow:none!important}:root .backlink,:root .backlink.deadlink{color:" + $SS.theme.blinkColor.hex + "!important}:root.backlink-shadow .backlink{text-shadow:1px 1px 5px}:root .deadlink,:root .quotelink{color:" + $SS.theme.qlColor.hex + "!important}.catalog-code,.prettyprint{background:none repeat scroll 0 0 rgba(" + $SS.theme.codeBackground + ")!important;border:1px solid rgba(" + $SS.theme.codeBorder + ")!important}#qr-no-file,#t-load:disabled,.pun,:root.single-captcha #t-next:not(.is-ready),:root:not(.single-captcha) #t-next:disabled{color:rgba(" + $SS.theme.textColor.rgb + ",.4)!important}::-webkit-input-placeholder{color:rgba(" + $SS.theme.textColor.rgb + ",.4)!important}#qr .field::-moz-placeholder,::-moz-placeholder{color:rgba(" + $SS.theme.textColor.rgb + ",.4)!important}body{background:" + $SS.theme.bgImg.get() + $SS.theme.bgColor.hex + "!important}#post-preview,#qrCaptchaContainer,#qrHeader,#tegaki,#threadWatcher,.boxbar,.dd-menu ul,.dialog,.flashListing tr:nth-of-type(odd):not(.highlightPost),.reply,:root.catalog-hover-expand .catalog-container:hover>.post,:root.catalog-mode .panel,:root.op-background .op:not(.inline .op),body.is_catalog .panel{background:rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ")!important}#fourchanx-settings,#oneechan-options,.tab-label{background:rgb\(" + $SS.theme.mainColor.rgb + ")!important}.flashListing tr:nth-of-type(2n):not(.highlightPost),:not(.fourchan-x) .reply.highlight,:root.recolor-even .thread>.replyContainer:nth-of-type(2n):not(.hidden) .post:not(.reply:target,.inline>.postContainer>.post){background:rgb\(" + $SS.theme.mainColor.shiftRGB(-10) + "," + $SS.theme.replyOp + ")!important}:root:not(.header-gradient) #header-bar{background:rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ")!important}:root.header-gradient #header-bar{background:linear-gradient(rgb\(" + $SS.theme.headerBGColor.shiftRGB(15) + "),rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ") )!important}#qrCaptchaContainer,#t-root,.captcha-root div,:root.header-shadow #header-bar{box-shadow:none!important}:root:not(.fixed) #header-bar{background:0 0!important}#postForm input[type=submit],#quickReply input[type=submit],.options-button,.pages strong>a,.pages.cataloglink,.qr-link,input[value=Next],input[value=Previous]{background:linear-gradient(rgb\(" + $SS.theme.mainColor.shiftRGB(15) + "),rgb(" + $SS.theme.mainColor.rgb + ") )!important}#postForm input[type=submit]:hover,#quickReply input[type=submit]:hover,.dd-menu li:hover,.import-input:hover+.options-button,.options-button:hover,.pages strong>a:hover,input[value=Next]:hover,input[value=Previous]:hover{background:rgb\(" + $SS.theme.mainColor.shiftRGB(15) + ")}.focused.entry{background:rgb\(" + $SS.theme.mainColor.shiftRGB(10) + ")!important}.qr-link:hover,:root.vertical-qr #qr .move{background:rgb\(" + $SS.theme.mainColor.rgb + ")}#qr input,#qr-filename-container,#t-load,#t-next,#t-root,.captcha-root>div,.riceCheck,input.field,input[type=text]:not(.jsColor),select,textarea{background:" + $SS.theme.inputColor.hex + "!important;transition:background .2s,color .2s,border-color .2s,width .2s!important}.riceCheck,input[type=checkbox]{background:rgb\(" + $SS.theme.inputColor.shiftRGB(25) + ")!important}#qr input:hover,#qr-filename-container:hover,#t-load:hover,#t-next:hover,.riceCheck:hover,input.field:hover,input[type=text]:not(.jsColor):hover,select:hover,textarea:hover{background:rgb(" + $SS.theme.inputColor.hover + ")!important}hr{background-image:linear-gradient(to left, rgba(" + $SS.theme.brderColor.rgb + ",0), rgb(" + $SS.theme.brderColor.rgb + "), rgba(" + $SS.theme.brderColor.rgb + ",0))}#unread-line{background-image:linear-gradient(to left, rgba(" + $SS.theme.unreadColor.rgb + ",0), rgb(" + $SS.theme.unreadColor.rgb + "), rgba(" + $SS.theme.unreadColor.rgb + ",0))}.inline{background:rgba\(" + $SS.theme.mainColor.shiftRGB(-16) + ",.8)!important}:root.post-info .reply>.postInfo{background:rgba\(" + $SS.theme.mainColor.shiftRGB(-16) + ",.2);border-bottom:1px solid rgb\(" + $SS.theme.mainColor.shiftRGB(4) + ")}.dd-menu ul,.reply,:root.op-background .op:not(#qp .op,.inline .op){border-width:0 1px 1px 0;border-style:solid}:root.borders-all .reply,:root.borders-all.op-background .op{border-width:1px!important}:root.borders-none .reply,:root.borders-none.op-background .op{border:0!important}#menu,.catalog-thumb{border-radius:0!important}:root.rounded-corners #bannerCnt img,:root.rounded-corners #menu,:root.rounded-corners #t-load,:root.rounded-corners #t-next,:root.rounded-corners #thread-stats :root.rounded-corners #updater,:root.rounded-corners .catalog-thumb,:root.rounded-corners .dd-menu ul,:root.rounded-corners .dialog:not(#header-bar),:root.rounded-corners .fileThumb img:not(.full-image),:root.rounded-corners .inline,:root.rounded-corners .pages strong>a,:root.rounded-corners .pages.cataloglink,:root.rounded-corners .reply,:root.rounded-corners .thumb,:root.rounded-corners input[value=Next],:root.rounded-corners input[value=Previous],:root.rounded-corners.catalog-hover-expand .catalog-container:hover .catalog-reply,:root.rounded-corners.catalog-hover-expand .catalog-container:hover>.post,:root.rounded-corners.op-background .op,:root.rounded-corners.werkTyme .catalog-thread:not(:hover),:root.rounded-corners.werkTyme:not(.catalog-hover-expand) .catalog-thread{border-radius:3px!important}:root.post-info.rounded-corners .reply>.postInfo,:root.rounded-corners #qr,:root.rounded-corners #quickReply,:root.rounded-corners:root.vertical-qr #qr>.move{border-radius:3px 3px 0 0!important}:root:not(.rounded-corners) #post-preview{border-radius:0!important}#file-n-submit>input,#qr-file-button{border-radius:0!important}#post-preview,#qr select,#quickReply,.dialog,.entry,.flashListing td:not(:last-of-type):not(.postblock),.inline,.reply,:root.op-background .op,:root.vertical-qr #qr .move,fieldset,select{border-color:" + $SS.theme.brderColor.hex + "!important}.dd-menu li{border-bottom:" + $SS.theme.brderColor.hex + "!important}#post-preview,#qr select,#qr-filename-container,#quickReply,#t-load,#t-next,#t-root,.captcha-img,.captcha-root,.dd-menu ul,.postblock,.riceCheck,:root.catalog-hover-expand .catalog-container:hover .catalog-reply,:root.catalog-hover-expand .catalog-container:hover>.post,:root.vertical-qr #qr .move,:root.werkTyme .catalog-thread:not(:hover),:root.werkTyme:not(.catalog-hover-expand) .catalog-thread,input,select,textarea{border:1px solid " + $SS.theme.inputbColor.hex + "!important}.options-button,.pages strong>a,.pages.cataloglink,.qr-link,input[value=Next],input[value=Previous]{border-style:solid;border-width:1px;border-color:rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-30) + ")!important}a.backlink.forwardlink,a.quotelink.forwardlink{border-bottom:1px dashed}#qr input:focus,#qr-filename-container.focus,#qr-filename-container:focus,#t-load:focus,#t-next:focus,input.field:focus,input[type=text]:focus,select:focus,textarea:focus{border:1px solid " + $SS.theme.linkColor.hex + "!important}#index-search:hover,#search-box:hover,.captcha-img:hover{border-color:" + $SS.theme.linkColor.hex + "!important}#header-bar{border:none!important}:root:not(.fourchan-x) div#boardNavMobile{background-color:" + $SS.theme.headerBGColor.hex + ";border-bottom-color:" + $SS.theme.brderColor.hex + "}.flashListing td:not(:last-of-type):not(.postblock){border-width:1px;border-style:solid}:root.header-highlight #custom-board-list .current,:root.header-highlight #custom-board-list .current:hover{border-bottom:none!important}.suboption-list>div:last-of-type{background:rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ")!important}.suboption-list::before,.suboption-list>div::before{border-color:" + $SS.theme.brderColor.hex + "!important;left:.5em!important}#navlinks a{text-shadow:" + $SS.theme.mainColor.hex + " -1px -1px," + $SS.theme.mainColor.hex + " 1px -1px," + $SS.theme.mainColor.hex + " -1px 1px," + $SS.theme.mainColor.hex + " 1px 1px," + $SS.theme.mainColor.hex + " -1px 0," + $SS.theme.mainColor.hex + " 1px 0," + $SS.theme.mainColor.hex + " 0 -1px," + $SS.theme.mainColor.hex + " 0 1px,rgba(0,0,0,.6) 0 2px 4px,rgba(0,0,0,.6) 0 0 2px}.thumb{box-shadow:0 0 5px rgba(0,0,0,.25)}#qr,#thread-watcher,#threadWatcher{box-shadow:1px 1px 3px rgba(0,0,0,.1)!important}.closed{margin-top:10px;color:red}#swf-embed-header.postblock{border:1px solid " + $SS.theme.brderColor.hex + "!important;background-color:rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ")!important;color:" + $SS.theme.linkColor.hex + "!important}#swf-embed-close{right:1px!important}.fxt-card{color:" + $SS.theme.textColor.hex + "!important;background-color:rgba(" + $SS.theme.bgColor.rgb + "," + $SS.theme.replyOp + ")!important;border:1px solid " + $SS.theme.brderColor.hex + "!important}:root.alt-spoiler .span.spoiler,:root.alt-spoiler s,:root.alt-spoiler s:not(:hover)>.linkify,:root.alt-spoiler s:not(:hover)>a{color:#fff;background:none repeat scroll 0 0 #fff}:root.alt-spoiler s:focus,:root.alt-spoiler s:hover,:root.alt-spoiler span.spoiler:focus,:root.alt-spoiler span.spoiler:hover{color:#000}#full-board-list,.deleteform,.pagelist button,.pages{font-size:0!important}.fileText,.summary{font-size:" + (($SS.conf["Font Size"] < 13) ? 10 : ($SS.conf["Font Size"] - 2)) + "px!important}.qr-link{font-size:14px!important}.hide-reply-button,.hide-thread-button{font-family:sans-serif!important;font-size:12px!important}.boardBanner .boardTitle{font-weight:400!important;font-size:" + (($SS.conf["Font Size"] < 13) ? 22 : 26) + "px!important}.prettyprint span{font-family:monospace!important;font-size:medium!important}#full-board-list,#full-board-list .fourchanx-link,body>#header-bar{font-size:" + (($SS.conf["Font Size"] < 1) ? 12 : ($SS.conf["Font Size"] - 1)) + "px!important}@media (min-width:1280px) and (max-width:1920px){#board-list{word-spacing:" + (($SS.conf["Font Size"] < 14) ? -1 : -2) + "px}}#boardList,#index-search,#menu .entry,#qr .field::placeholder,#qr input.field,#qr select[data-name=thread],#qr span.field,#qr:not(.sjis-preview) textarea.field,#shortcuts,#tegaki,.next form::after,.next span::after,.pages a,.prev form::after,.prev span::after,::placeholder,:root #t-desc,body,div.next,form.pageSwitcherForm>input[type=submit],textarea[name=com]{font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important;font-size:" + $SS.conf["Font Size"] + "px!important}#custom-board-list,#full-board-list a,a.qr-link{font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important;font-size:" + $SS.conf["Font Size"] + "px!important}#qr .field::-moz-placeholder,::-moz-placeholder{font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important;font-size:" + $SS.conf["Font Size"] + "px!important}#qr .field::webkit-input-placeholder,::webkit-input-placeholder{font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important;font-size:" + $SS.conf["Font Size"] + "px!important}.backlink{font-size:" + $SS.conf["Backlink Font Size"] + "px!important}#add-theme .option-title,#add-theme input,#add-theme select,#fourchanx-settings,#fourchanx-settings input,#fourchanx-settings select,#oneechan-options .option,#oneechan-options .option-title,#oneechan-options input,#oneechan-options select,#oneechan-options textarea,.options-button,.tab-label,.theme-preview,:root input.jsColor{font-family:" + $SS.formatFont($SS.conf["Font Family"]) + ";font-size:" + (($SS.conf["Font Size"] >= 15) ? 15 : 13) + "px!important}#qr .move,#qr input[type=submit],#qr label,#qr-file-button,#qr-no-file,:root #t-load,:root #t-next,:root #t-task,input,select:not([id$=-ctrl]){font-family:" + $SS.formatFont($SS.conf["Font Family"]) + ";font-size:" + $SS.conf["UI Font Size"] + "px!important}#qr input[type=submit],#qr label,#qr-file-button{text-transform:uppercase}#qr label:not(.riceCheck){overflow:hidden;padding-bottom:2px}:root.underline-disabled a{text-decoration:none!important}.navLinks.navLinksBot.desktop a{text-decoration:underline}:root.underline-disabled .filtered{text-decoration:line-through!important}.deadlink.quotelink{text-decoration:none!important}:root.underline-quotes .backlink,:root.underline-quotes .deadlink.backlink,:root.underline-quotes .deadlink.quotelink,:root.underline-quotes .quotelink{text-decoration:underline!important}#oneechan-version a,a.options-button{text-decoration:none!important}.closed{text-align:center}.name,.option.header .option-title,.subject,.tab-label.selected,a.current{font-weight:" + ($SS.conf["Bitmap Font"] ? 4 : 7) + "00!important}.qr-link,.tab-label:not(.selected):not(:hover){font-weight:400}.postblock{font-weight:700}.summary{font-style:" + ($SS.conf["Bitmap Font"] ? 'none' : 'italic') + "}"+$SS.theme.customCSS+" "+($SS.conf["Sidebar Position"] !== 3 ? " :root:not(.fixed) #header-bar{z-index:10}:root.left-sidebar body{padding-left:306px}:root.right-sidebar body{padding-right:306px}:root.left-sidebar:not(.mini-sidebar) .boardBanner,:root.right-sidebar:not(.mini-sidebar) .boardBanner{position:fixed}:root.left-sidebar:not(.mini-sidebar) .boardBanner{left:2px}:root.right-sidebar:not(.mini-sidebar) .boardBanner{right:2px}:root.fixed:not(.autohide):not(.bottom) .boardBanner{margin-top:-6px}:root.left-sidebar #qr,:root.left-sidebar #quickReply{left:0!important;right:auto!important}:root.right-sidebar #qr,:root.right-sidebar #quickReply{right:0!important;left:auto!important}.captcha-img,.captcha-img img{min-width:100%!important;height:56px!important}:root.ss-sidebar body::before{background:rgba\(" + $SS.theme.mainColor.shiftRGB(-18) + ",." + ($SS.theme.mainColor.isDark ? 9 : 2) + ");border-left:2px solid rgba(" + $SS.theme.mainColor.rgb + ",.9);box-shadow:inset " + $SS.theme.brderColor.hex + " 1px 0 0,inset " + $SS.theme.brderColor.hex + " -1px 0 0;content:'';height:100%;width:306px;position:fixed;top:0;right:0;pointer-events:none}:root.fixed.ss-sidebar #header-bar{box-shadow:-5px 1px 10px rgba(0,0,0,.2),inset " + $SS.theme.brderColor.hex + " -1px 0 0}:root.fixed.header-shadow.ss-sidebar #header-bar{box-shadow:inset " + $SS.theme.brderColor.hex + " -1px 0 0!important}:root.ss-sidebar.left-sidebar body::before{border-right:2px solid rgba(" + $SS.theme.mainColor.rgb + ",.9);border-left:none!important;left:0;right:auto!important}:root.fixed.ss-sidebar.left-sidebar #header-bar{box-shadow:-5px 1px 10px rgba(0,0,0,.2),inset " + $SS.theme.brderColor.hex + " 1px 0 0}:root.fixed.header-shadow.ss-sidebar.left-sidebar #header-bar{box-shadow:inset " + $SS.theme.brderColor.hex + " 1px 0 0!important}:root.vertical-qr:root.left-sidebar #qr{transform:translateX(-100%);left:0!important;right:auto!important}:root.vertical-qr:root.left-sidebar #qr .move{transform:rotate(90deg);transform-origin:bottom right;left:63.5%;bottom:46px}:root.mini-sidebar:root.left-sidebar body{padding-left:32px!important}:root.mini-sidebar:root.right-sidebar body{padding-right:32px!important}:root.mini-sidebar .boardSubtitle{display:none}:root.mini-sidebar:root.ss-sidebar body::before{width:31px!important}:root.mini-sidebar .boardTitle{top:72px!important;letter-spacing:-1.4px;position:fixed;padding-top:.05em}:root.mini-sidebar:root.right-sidebar .boardTitle{right:32px;-webkit-transform-origin:top right;transform-origin:top right;-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg)}:root.mini-sidebar:root.left-sidebar .boardTitle{left:32px;-webkit-transform-origin:top left;transform-origin:top left;-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg)}" : "")+" #qr,#quickReply{box-shadow:none!important;border-radius:0!important}:root:not(.vertical-qr) #qr .move{min-width:302px}#qr .close{padding:2px 3px 2px 4px!important}#qr .riceCheck,#qr input[type=checkbox]{margin:0 4px 1px;vertical-align:baseline;position:relative;top:3px}:root.fourchan-xt #qr .move .riceCheck,:root.fourchan-xt #qr .move input[type=checkbox]{margin:0 4px 2px;top:2px}#qr-filename-container .riceCheck,#qr-filename-container input[type=checkbox]{margin:0 0 1px}#postForm input[type=submit],#qr input[type=submit],#qr-file-button,#quickReply input[type=submit]{height:25px!important;margin:0!important}#postForm input[type=submit]{height:18px!important;width:46px}#qr-file-button,:root:not(.fourchan-xt) #qr-filename-container{margin-right:1px!important}#qr-spoiler-label+input[type=submit]{margin-top:1px!important}#qr>form>select{margin:1px 0!important}#qr select[data-name=thread]{margin:1px 0 1px 0;max-width:133px;min-width:80px}#qr>form>div.persona>input:nth-child(4),#qr>form>div.persona>input:nth-child(5),#qr>form>div.persona>input:nth-child(6){margin-left:1px}:root.expand-inputs .persona{display:flex}:root.expand-inputs .persona .field{flex:1;width:0}:root.expand-inputs .persona .field:focus,:root.expand-inputs .persona .field:hover{flex:3}#qr textarea,#quickReply textarea{min-height:190px!important}:root.ua-blink #qr textarea,:root.ua-blink #quickReply textarea{min-height:185px!important}:root.ua-blink #qr textarea.field,:root.ua-blink #quickReply textarea,:root.ua-gecko #qr textarea.field,:root.ua-gecko #quickReply textarea{min-height:9em!important;min-width:302px!important}:root.fourchan-x:not(.fourchan-xt).ua-blink #qr textarea.field,:root.fourchan-x:not(.fourchan-xt).ua-gecko #qr textarea.field{max-height:65vh}:root.fourchan-xt.ua-blink #qr textarea.field,:root.fourchan-xt.ua-gecko #qr textarea.field{max-height:64vh}:root.left-sidebar #qr textarea.field,:root.right-sidebar #qr textarea.field{max-width:302px!important}:root.qr-background #qr,:root.qr-background #quickReply{background:0 0!important;border:none}:root.qr-opacity #qr,:root.qr-opacity #quickReply{opacity:.9}:root.ua-blink #t-help,:root.ua-gecko #t-help{margin:0 0 0 2px!important}.textarea{margin-top:1px;-webkit-margin-after:1px;min-height:9em;max-height:64vh}:root.ua-gecko .textarea{margin-bottom:1px;margin-top:1px}.captcha-img{min-height:58px!important;margin-bottom:1px}.captcha-root div{border-radius:0!important}#t-load,#t-next{height:inherit!important;min-height:17px}:root.vertical-qr #qr .move #autohide,:root.vertical-qr #qr>div>label>div,:root.vertical-qr #qr>div>select{display:none}:root.vertical-qr #qr textarea{resize:vertical!important}:root.vertical-qr #qr{top:auto!important;position:fixed;right:0!important;left:auto!important;transform:translateX(100%)}:root.vertical-qr #qr .move{display:block;position:absolute;width:max-content;min-width:105px;cursor:default;padding:2px 0 2px 2px;text-align:center;bottom:88px}:root.vertical-qr #qr .move label{display:inline}:root.vertical-qr #qr:hover .move{transition:opacity .42s linear}:root.vertical-qr #qr.focus .move,:root.vertical-qr #qr:hover .move{opacity:0!important}:root.vertical-qr.bottom-header #qr{bottom:28px!important}:root.vertical-qr.top-header #qr{bottom:0!important}:root.vertical-qr .captcha-img,:root.vertical-qr .captcha-img img{max-width:247px}:root.vertical-qr #qr form{display:block!important}:root.vertical-qr #qr.focus,:root.vertical-qr #qr:hover{transform:translateX(0)!important}:root.qr-transition.vertical-qr #qr{transition:transform .3s ease-in-out .1s!important}:root.vertical-qr #qr .move{transform:rotate(-90deg);right:86%}#qr>form{overflow-y:hidden!important}:root.fade-qr #qr form,:root.fade-qr #quickReply form{display:block!important}:root.fade-qr #qr.autohide:not(.focus):not(:hover),:root.fade-qr #quickReply:not(.focus):not(:hover){opacity:.2!important;transition:opacity .2s ease-in-out 1s!important}input[type=number]{appearance:textfield}::-webkit-inner-spin-button,::-webkit-outer-spin-button{-webkit-appearance:none}#t-resp{width:178px!important}#file-n-submit .row.space{margin-top:1px}:root.single-captcha #t-slider{display:none!important}:root.single-captcha #qr>form>div.captcha-root>div,:root.single-captcha #quickReply #qrCaptchaContainer{min-height:145px!important}:root.single-captcha #t-next.tcaptcha-stepper.is-ready{display:inline-flex;align-items:center}:root.single-captcha #t-task{display:flex;flex-direction:column;gap:2px;margin:0 auto;overflow-y:auto;max-height:38vh;padding:2px 0!important;height:auto!important;white-space:normal!important;align-items:center!important;overflow-x:hidden;box-sizing:border-box;position:relative;-ms-overflow-style:none;scrollbar-width:none}:root.single-captcha #t-task::-webkit-scrollbar{width:0;height:0}:root.single-captcha #t-task.tcaptcha-compact{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:flex-start!important}:root.single-captcha #t-desc{position:sticky;top:0;z-index:1;white-space:pre-line;text-align:center;font-size:11px;line-height:1.15;user-select:none;width:100%;padding:2px 0 3px;margin-bottom:1px;background:inherit;pointer-events:none;text-shadow:0 1px 1px rgba(0,0,0,.12),0 0 2px rgba(255,255,255,.18)}:root.single-captcha #t-task.tcaptcha-compact #t-desc{position:static;flex:0 0 100%}:root.single-captcha #t-desc img{margin:2px!important;max-width:40px;max-height:40px;width:auto;height:auto}:root.single-captcha .tcaptcha-image{padding:0;margin:1px;border:none;background:0 0;cursor:pointer!important;width:calc(100% - 4px);max-width:172px;height:auto;flex:none;display:block}:root.single-captcha #t-task.tcaptcha-compact .tcaptcha-image{width:auto;max-width:none}:root.single-captcha .tcaptcha-image img{display:block;width:100%;height:auto}:root.single-captcha #t-task.tcaptcha-compact .tcaptcha-image img{width:auto;max-width:80px;max-height:80px}:root.single-captcha .tcaptcha-image.active{outline:2px solid " + $SS.theme.linkColor.hex + ";outline-offset:1px}:root.single-captcha #t-load{cursor:pointer!important}:root.single-captcha #t-next{align-items:center;gap:2px;margin-left:auto;padding:2px;font-size:11px}:root.single-captcha .tcaptcha-progress{min-width:38px;text-align:center;display:inline-block}:root.single-captcha .tcaptcha-nav{width:16px;height:16px;font-size:14px;line-height:1;cursor:pointer!important}:root.single-captcha .tcaptcha-nav.is-disabled,:root.single-captcha .tcaptcha-nav[aria-disabled=true]{opacity:.35;cursor:default!important}.closeIcon{background-image:none!important}.closeIcon::after{content:'x'}:root.no-pu .n-pu{vertical-align:middle;display:inline-block;width:16px;height:16px;margin-top:-2px;background:url(//s.4cdn.org/image/minileaf.gif)}.watch-thread-link{margin-bottom:-7px;margin-right:2px;top:auto!important;bottom:4px!important;background-image:url(\"data:image/svg+xml," + $SS.theme.icons.star + "\")!important}:root.ua-gecko.fourchan-xt .watch-thread-link{display:inline-block;position:relative}:root.backlink-icon .backlink{background-image:url(\"data:image/svg+xml," + $SS.theme.icons.backlink + "\")!important;font-size:0!important;padding:" + (($SS.conf["Font Size"] < 12) ? 5 : 6) + "px!important;margin-right:0!important;opacity:.6!important;position:relative;bottom:5px;left:2px}:root.backlink-icon .backlink.inlined,:root.backlink-icon .backlink:has(.quotelink.linkfade){background-image:url(\"data:image/svg+xml," + $SS.theme.icons.downArrow + "\")!important;font-size:0!important;padding:6px!important;margin-right:0!important;opacity:.6!important;position:relative;bottom:5px;left:3px}:root.backlink-icon .backlink .quotelink{position:absolute;inset:0;font-size:0!important}:root.backlink-icon .reply .backlink{bottom:" + (($SS.conf["Font Size"] < 12) ? 4 : 6) + "px!important}:root.backlink-icon .backlink.inlined:hover,:root.backlink-icon .backlink:has(.quotelink.linkfade):hover,:root.backlink-icon .backlink:hover{opacity:1!important}img[title=Archived],img[title=Closed],img[title=Sticky]{color:transparent!important;font-size:0!important;background-color:transparent!important;background-position:center!important;background-repeat:no-repeat;display:inline-block;height:0!important;padding-top:16px!important;text-indent:-9999px!important;vertical-align:bottom;width:16px!important}.closedIcon{background-image:url(\"data:image/svg+xml," + $SS.theme.icons.threadClosed + "\")!important}.stickyIcon{background-image:url(\"data:image/svg+xml," + $SS.theme.icons.threadPinned + "\")!important}.archivedIcon{background-image:url(\"data:image/svg+xml," + $SS.theme.icons.threadArchived + "\")!important}:root.hl-border .post.reply,:root.op-background.hl-border .postContainer.opContainer{border-left:" + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(" + $SS.theme.postHLColor.rgb + ",1)!important}:root.hl-border-down .post.reply,:root.op-background.hl-border-down .postContainer.opContainer{border-bottom:" + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(" + $SS.theme.postHLColor.rgb + ",1)!important}:root.hl-outline .post.reply,:root.op-background.hl-outline .postContainer.opContainer{outline:" + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(" + $SS.theme.postHLColor.rgb + ",1)}.filter-highlight .catalog-thumb{box-shadow:0 0 3px 3px rgba(" + $SS.theme.postHLColor.rgb + ",.5)!important}.filter-highlight.opContainer,.filter-highlight>.reply{box-shadow:5px 0 rgba(" + $SS.theme.postHLColor.rgb + ",.5) inset!important}.filter-highlight>div.sideArrows{color:rgba(" + $SS.theme.postHLColor.rgb + ",.5)!important}.qphl{outline:2px solid rgba(" + $SS.theme.linkColor.rgb + ",.5)!important}:root.highlight-you .quotesYou.opContainer,:root.highlight-you .quotesYou>.reply{border-left:" + $SS.conf["Width Decoration"] + "px solid rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1)!important}:root.highlight-you .quotesYou>.sideArrows{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1)!important}:root.highlight-own .yourPost.opContainer,:root.highlight-own .yourPost>.reply{border-left:" + $SS.conf["Width Decoration"] + "px dashed rgba(" + $SS.theme.ownPostHLColor.rgb + ",1)!important}:root.highlight-own .yourPost>.sideArrows{color:rgba(" + $SS.theme.ownPostHLColor.rgb + ",1)!important}.reply:target{background:rgba(" + $SS.theme.replybgHLColor.rgb + ",.8)!important}.highlight{outline:2px solid rgba(" + $SS.theme.replyslctColor.rgb + ",1)!important}.catalog-thread.watched .catalog-thumb,.catalog-thread.watched .werkTyme-filename{border:2px solid rgba(" + $SS.theme.postHLColor.rgb + ",1)!important}.replies-quoting-you>.watcher-link{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1)!important}.replies-quoting-you>.watcher-link:hover{color:" + $SS.theme.linkHColor.hex + "!important}#watched-threads>.replies-quoting-you>a{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1)!important}#shortcuts>.shortcut>#watcher-link.disabled.replies-quoting-you{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",.45)!important}#shortcuts>.shortcut>#watcher-link.disabled.replies-quoting-you:hover,#watched-threads>.replies-quoting-you>a:hover{color:" + $SS.theme.linkHColor.hex + "!important}:root.highlight-opQuotes .qmark-op{color:rgba(" + $SS.theme.postHLColor.rgb + ",1);font-weight:700}:root.highlight-youQuotes .qmark-you{color:rgba(" + $SS.theme.quotesYouHLColor.rgb + ",1);font-weight:700}.post-scroll-marker{color:rgba\(" + $SS.theme.ownPostHLColor.rgb + ",.8)}:root.ss-sidebar.right-sidebar .post-scroll-marker.you-scroll-marker{opacity:60%}#add-theme,#oneechan-options{border:0!important;border-radius:3px!important;position:fixed;margin:auto}#oneechan-options{width:610px;max-width:85%;text-align:left!important;height:65vh;max-height:1310px;top:0;bottom:0;left:0;right:0;box-shadow:rgba(0,0,0,.6) 0 0 10px!important;padding:5px 5px 35px 5px}#options-container:not(.yui-skin-sam){padding:3px}#options-container:not(.yui-skin-sam){box-shadow:inset rgba(0,0,0,.3) 0 0 5px}.options-close{text-align:right!important;margin-left:auto;width:150px;right:0;padding:2px 4px;position:absolute;z-index:120}#options-container:not(.yui-skin-sam){border-radius:5px}#options-container:not(.yui-skin-sam),.options-section{height:100%}.options-section{overflow-y:auto;overflow-x:hidden}#main-section .option,#misc-section .option{display:block;border-top:1px solid rgba(0,0,0,.1);height:22px;padding:0 6px;vertical-align:middle}#main-section .option[hidden],#misc-section .option[hidden]{display:none!important}#main-section>.option:nth-of-type(2n),#misc-section>.option:nth-of-type(2n){background:rgb\(" + $SS.theme.mainColor.shiftRGB(-5) + ")!important}#main-section .buttons-container+.option{border-top:none!important}.option-title{line-height:22px}#main-section .option:first-child,#misc-section .option:first-child{border-top:0!important}#main-section .option:last-child,#misc-section .option:last-child{border-bottom:0!important}#main-section input,#main-section select,#misc-section input,#misc-section select{float:right!important}#main-section .riceCheck,#main-section input[type=checkbox],#misc-section .riceCheck,#misc-section input[type=checkbox]{float:left!important;margin-right:5px!important}select[name='Font Family']>option{max-width:150px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.suboption::before{border-bottom:1px solid rgba(0,0,0,.1);border-left:1px solid rgba(0,0,0,.1);content:'';display:inline-block;float:left;margin-right:2px;height:50%;width:6px}.suboption{padding-left:16px!important}.option.header{cursor:auto!important}.theme-preview{cursor:default}.theme-preview blockquote{margin:12px 40px!important}#themes-section .reply{padding:2px!important;position:relative;text-align:left;width:99.4%;border-radius:0!important}.theme-buttons-container{bottom:4px;right:2px;margin:0;opacity:0;position:absolute;z-index:3}.theme-preview:hover .theme-buttons-container{opacity:1}.theme-buttons-container>a{display:inline-block;margin:0 2px;padding:2px 5px;text-align:center;width:50px;border-radius:3px}.theme-preview .sfw-label{bottom:-5px;font-size:32px!important;margin:0!important;opacity:0;position:absolute;right:300px}.theme-preview.nsfw.selected .both,.theme-preview.nsfw:not(.selected) .sfw-label,.theme-preview.selected:not(.nsfw) .sfw-label{transition:opacity .3s,right .3s}.theme-preview.nsfw .notsafe,.theme-preview.selected .safe,.theme-preview.selected.nsfw .both{opacity:1;right:3px;z-index:1}.theme-preview.selected.nsfw .sfw-label:not(.both){opacity:0!important;right:300px!important;z-index:0!important}#add-theme{padding:20px 20px 20px 20px!important;top:0;left:0;right:0;bottom:0;height:65vh;text-align:left!important;width:55vw!important}:root.ua-blink #add-theme{height:450px!important;max-height:100%}#add-theme .option-title{float:left;padding-left:5px}#add-theme>label{line-height:22px;display:inline-block;text-align:right;width:33.3%}#add-theme>label#customCSS{width:100%}#add-theme>label#customCSS>textarea{font-family:monospace;height:10.2em;resize:none;width:99%;max-height:25em;overflow-y:scroll}#add-theme>label>input[type=text],#add-theme>label>select{width:100px}#add-theme>div{margin-top:.6em;text-align:right}#options-tabs{list-style:none;margin:0;padding:0;position:absolute;top:-24px;left:-1px}.tab-item{float:left;margin:0;padding:0}.tab-label{display:block;height:16px;margin:0 1px;padding:5px;text-align:center;width:75px;border-radius:3px 3px 0 0;transition:all .1s ease-in-out}.tab-label:not(.selected):not(:hover){opacity:.85}#overlay{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:99!important;background-color:rgba(0,0,0,.3)!important}#overlay2{background:rgba(0,0,0,.1)!important;position:fixed;top:0;left:0;height:100%;width:100%;text-align:center;z-index:125!important}#overlay2::before{content:'';display:inline-block;height:100%;vertical-align:middle}#overlay.previewing{display:none}#overlay.previewing~#overlay2{background-color:rgba(0,0,0,.1)!important}.buttons-container{bottom:3px;left:5px;position:absolute;z-index:100}.buttons-container{margin:0}.options-button{display:inline-block;line-height:18px;margin:0 2px;min-width:40px;padding:2px 10px;text-align:center;cursor:pointer;border-radius:3px}.options-button-small{padding:2px 5px;min-width:30px}#import-link{line-height:22px;overflow:hidden;position:relative;float:left;height:24px!important;margin-top:-2px;padding-top:2px}#import-settings{position:relative;overflow:hidden;vertical-align:bottom}#import-settings>.import-input{left:0}.import-input{position:absolute;opacity:0;cursor:pointer}label.option>.riceCheck,label.option>input[type=checkbox]{margin:4px 2px 0!important;vertical-align:bottom!important}.option>input[type=text],span.option>select{width:125px}#oneechan-options input[type=text],#oneechan-options select{max-height:20px;margin-top:1px!important;padding:0 3px!important}#oneechan-options textarea{background:0 0!important;border:0!important;height:100%!important;width:100%!important;resize:none}#oneechan-version{opacity:.5;padding-right:5px;padding-left:40px;font-size:x-small}.link-delim{opacity:.4}.extended-large .teaser,.extended-small .teaser{margin-left:5px;margin-right:5px}#threads .thread{margin:2px 1px 0 0}#ctrl{padding-top:4px}#threads{padding:10px 0!important}:root.catalog-justify .catalog-post>.postMessage,:root.catalog-justify .teaser{text-align:justify!important}:root.catalog-background #threads div.thread,:root.catalog-background .catalog-thread{background:rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ")!important}:root.rounded-corners.catalog-background #threads div.thread,:root.rounded-corners.catalog-background .catalog-thread{border-radius:3px!important}:root.catalog-background .catalog-post>.postMessage,:root.catalog-background .teaser{margin:0 5px 5px 5px}:root.catalog-background .thumb,:root.catalog-background img.catalog-thumb{margin-top:8px}:root.catalog-background .extended-large .thread{min-height:410px}:root.catalog-background .extended-small .thread{min-height:320px}:root.catalog-thumbsize .thumb,:root.catalog-thumbsize img.catalog-thumb{width:150px!important;height:150px!important}:root.catalog-thumbsize #delform>.catalog-large img.catalog-thumb,:root.catalog-thumbsize #threads.extended-large .thumb,:root.catalog-thumbsize #threads.large .thumb{width:250px!important;height:250px!important}#stylechan-notifications{position:fixed;top:38px;right:10px;z-index:65;width:min(320px,calc(100vw - 20px));display:flex;flex-direction:column;gap:6px;pointer-events:none}:root.bottom-header #notifications,:root.bottom-header #stylechan-notifications{top:auto;bottom:10px}.stylechan-notification{pointer-events:auto;cursor:pointer;padding:7px 10px;border:1px solid;border-left-width:3px;border-radius:3px;box-shadow:rgba(0,0,0,.25) 0 2px 8px;opacity:0;transform:translateY(-4px);transition:opacity .15s ease,transform .15s ease;overflow-wrap:anywhere;font-size:12px;line-height:1.35;min-height:10px}.stylechan-notification.visible{opacity:1;transform:translateY(0)}.stylechan-notification.closing{opacity:0;transform:translateY(-4px)}.stylechan-notification-text{pointer-events:none}.stylechan-notification-text a{pointer-events:auto}.chX-notifs #header-bar{z-index:60!important}.chX-notifs #notifications{position:fixed!important;top:38px!important;right:10px!important;left:auto!important;z-index:10005!important;width:min(320px,calc(100vw - 20px))!important;height:auto!important;display:flex!important;flex-direction:column!important;gap:6px!important;pointer-events:none!important;text-align:left!important}.chX-notifs #notifications .notification{pointer-events:auto!important;padding:7px 10px!important;border:1px solid!important;border-left-width:3px!important;border-radius:3px!important;box-shadow:rgba(0,0,0,.25) 0 2px 8px!important;overflow-wrap:anywhere!important;font-size:12px!important;line-height:1.35!important;display:block!important;text-align:left!important;margin:0!important;width:auto!important;font-weight:lighter}.chX-notifs #notifications .notification a.close{float:right;margin-left:8px;text-decoration:none!important;font-size:14px;line-height:1}#header-bar #notifications a{color:#fff!important}#header-bar #notifications a:hover,.chX-notifs #header-bar #notifications a:hover{color:" + $SS.theme.linkHColor.hex + "!important}.chX-notifs #header-bar #notifications a{color:" + $SS.theme.linkColor.hex + "!important}#stylechan-notifications .stylechan-notification,.chX-notifs #notifications .notification{color:" + $SS.theme.textColor.hex + "!important;background:rgb\(" + $SS.theme.mainColor.rgb + ")!important;border-color:rgb\(" + $SS.theme.brderColor.rgb + ")!important;border-left-color:" + $SS.theme.linkColor.hex + "!important}#stylechan-notifications .stylechan-notification-info,.chX-notifs #notifications .notification.info{border-left-color:#6f8fb3!important}#stylechan-notifications .stylechan-notification-warning,.chX-notifs #notifications .notification.warning{border-left-color:#c7a85a!important}#stylechan-notifications .stylechan-notification-error,.chX-notifs #notifications .notification.error{border-left-color:#c06b6b!important}#stylechan-notifications .stylechan-notification-success,.chX-notifs #notifications .notification.success{border-left-color:" + $SS.theme.quoteColor.hex + "!important}.chX-notifs #notifications .notification a{color:" + $SS.theme.linkColor.hex + "!important}.chX-notifs #notifications .notification a:hover{color:" + $SS.theme.linkHColor.hex + "!important}"+($SS.conf["Center Notifications"] ? "#stylechan-notifications{right:auto;left:50%;transform:translateX(-50%);width:min(500px,calc(100vw - 20px))}.chX-notifs #notifications{right:auto!important;top:30px!important;left:50%!important;transform:translateX(-50%)!important;width:min(480px,calc(100vw - 20px))!important}" : "")+" "+($SS.conf["Full Border"] ? "#stylechan-notifications .stylechan-notification,.chX-notifs #notifications .notification{border:" + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + "!important}#stylechan-notifications .stylechan-notification-info,.chX-notifs #notifications .notification.info{border-color:#6f8fb3!important}#stylechan-notifications .stylechan-notification-warning,.chX-notifs #notifications .notification.warning{border-color:#c7a85a!important}#stylechan-notifications .stylechan-notification-error,.chX-notifs #notifications .notification.error{border-color:#c06b6b!important}#stylechan-notifications .stylechan-notification-success,.chX-notifs #notifications .notification.success{border-color:" + $SS.theme.quoteColor.hex + "!important}" : "")+" //"+($SS.conf[""] ? " #qrFile{height:23px}:root.left-sidebar #quickReply,:root.right-sidebar #quickReply{max-width:300px!important}:root.left-sidebar #quickReply #recaptcha_response_field,:root.left-sidebar #quickReply input[type=text],:root.left-sidebar #quickReply textarea,:root.right-sidebar #quickReply #recaptcha_response_field,:root.right-sidebar #quickReply input[type=text],:root.right-sidebar #quickReply textarea{max-width:294px!important;min-width:294px!important}div#qrError{width:290px}#quickReply #qrFile{cursor:pointer;flex:1;min-width:0;padding:0!important}#qrForm>div:last-child{display:flex;gap:4px}#postForm input[type=submit],#quickReply #qrSpoiler,#quickReply input[type=submit]{flex-shrink:0}#quickReply #qrFile::-webkit-file-upload-button,#quickReply #qrFile::file-selector-button{-webkit-appearance:none;appearance:none;cursor:pointer;border-style:solid;border-width:1px;height:23px;padding:0 6px;text-transform:uppercase;margin-right:4px}#quickReply #qrFile::-webkit-file-upload-button,#quickReply #qrFile::file-selector-button{background:rgb(" + $SS.theme.mainColor.rgb + ")!important;border-style:solid;border-width:1px;border-color:rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-30) + ")!important;color:" + $SS.theme.textColor.hex + "!important;font-family:" + $SS.formatFont($SS.conf["Font Family"]) + ";font-size:" + $SS.conf["UI Font Size"] + "px!important}#quickReply #qrFile:hover::-webkit-file-upload-button,#quickReply #qrFile:hover::file-selector-button{background:rgb\(" + $SS.theme.mainColor.shiftRGB(10) + ")!important}" : "")+" #qrFile{height:23px}:root.left-sidebar #quickReply,:root.right-sidebar #quickReply{max-width:300px!important}:root.left-sidebar #quickReply #recaptcha_response_field,:root.left-sidebar #quickReply input[type=text],:root.left-sidebar #quickReply textarea,:root.right-sidebar #quickReply #recaptcha_response_field,:root.right-sidebar #quickReply input[type=text],:root.right-sidebar #quickReply textarea{max-width:294px!important;min-width:294px!important}div#qrError{width:290px}#quickReply #qrFile{cursor:pointer;flex:1;min-width:0;padding:0!important}#qrForm>div:last-child{display:flex;gap:4px}#postForm input[type=submit],#quickReply #qrSpoiler,#quickReply input[type=submit]{flex-shrink:0}#quickReply #qrFile::-webkit-file-upload-button,#quickReply #qrFile::file-selector-button{-webkit-appearance:none;appearance:none;cursor:pointer;border-style:solid;border-width:1px;height:23px;padding:0 6px;text-transform:uppercase;margin-right:4px}#quickReply #qrFile::-webkit-file-upload-button,#quickReply #qrFile::file-selector-button{background:rgb(" + $SS.theme.mainColor.rgb + ")!important;border-style:solid;border-width:1px;border-color:rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-30) + ")!important;color:" + $SS.theme.textColor.hex + "!important;font-family:" + $SS.formatFont($SS.conf["Font Family"]) + ";font-size:" + $SS.conf["UI Font Size"] + "px!important}#quickReply #qrFile:hover::-webkit-file-upload-button,#quickReply #qrFile:hover::file-selector-button{background:rgb\(" + $SS.theme.mainColor.shiftRGB(10) + ")!important}";
 
             if (reload)
                 $("#ch4SS").text(css);
@@ -1124,6 +1092,7 @@
             }
 
             function shouldConvert(file) {
+                if (file.type === "image/gif") return false;
                 return file.type === "image/webp" || (/^image\//.test(file.type) && file.size > MAX_BYTES);
             }
 
@@ -1132,7 +1101,9 @@
                        document.querySelector("#quickReply #qrFile") ||
                        document.querySelector("#quickReply input[type=file]") ||
                        document.querySelector("form[name='qrPost'] input[type=file]") ||
-                       document.querySelector("#postForm input[type=file]");
+                       document.querySelector("form[name='post'] input[type=file]") ||
+                       document.querySelector("#postForm input[type=file]") ||
+                       document.querySelector("#postFile");
             }
 
             function clearSelectedFile(input) {
@@ -1145,7 +1116,7 @@
             document.addEventListener("change", function(e) {
                 var input = e.target;
                 if (input.type !== "file") return;
-                if (!input.closest("#qr, #quickReply, #postForm, form[name='qrPost']")) return;
+                if (!input.closest("#qr, #quickReply, #postForm, form[name='qrPost'], form[name='post']")) return;
                 var file = input.files && input.files[0];
                 if (!file || !shouldConvert(file)) return;
                 e.stopImmediatePropagation();
@@ -1201,6 +1172,9 @@
         notify: function(detail) {
             var root, note, text, lifetime;
 
+            if ($SS.conf && !$SS.conf["Toast Notifications"])
+                return;
+
             if (typeof detail === 'string')
                 detail = { content: detail };
 
@@ -1238,7 +1212,7 @@
             note.addEventListener('keydown', function(e) {
                 if (e.target.closest && e.target.closest('a'))
                     return;
-                if (e.keyCode === 13 || e.keyCode === 27 || e.keyCode === 32) {
+                if (e.key === "Enter" || e.key === "Escape") {
                     e.preventDefault();
                     $SS.dismissNotification(note);
                 }
@@ -1259,12 +1233,12 @@
             }
         },
         initRememberComment: function() {
-            if (!$SS.conf["Remember comment draft"]) return;
+            if (!$SS.conf["Remember Comment Draft"]) return;
 
             $.asap(function() {
-                return document.querySelector("#qr, #quickReply");
-            }, function() {
-                $SS.bindRememberComment(document.querySelector("#qr, #quickReply"));
+                return document.querySelector("#qr, #quickReply, form[name='post']");
+            }, function(node) {
+                $SS.bindRememberComment(node);
             });
         },
         getRememberCommentPrefix: function() {
@@ -1340,7 +1314,7 @@
             localStorage.removeItem($SS.getRememberCommentKey());
         },
         bindRememberComment: function(qrNode) {
-            if (!qrNode || qrNode.dataset.rememberCommentBound || !$SS.conf["Remember comment draft"]) return;
+            if (!qrNode || !qrNode.dataset || qrNode.dataset.rememberCommentBound || !$SS.conf["Remember Comment Draft"]) return;
 
             var commentField = qrNode.querySelector("textarea");
             var formNode = qrNode.querySelector("form") || qrNode.closest("form");
@@ -1389,7 +1363,7 @@
             qrNode.dataset.rememberCommentBound = "true";
         },
         initSingleViewCaptcha: function() {
-            if (!$SS.conf["Single view captcha"]) return;
+            if (!$SS.conf["Single View Captcha"]) return;
 
             $.asap(function() {
                 return typeof TCaptcha !== "undefined" && typeof TCaptcha.buildSliderNode === "function";
@@ -1592,7 +1566,6 @@
         },
         /* CONFIG */
         Config: {
-            hasGM: typeof GM_deleteValue !== "undefined",
             init: function() {
                 var parseVal = function(key, val) {
                     if (/^(Selected|Hidden)+\s(Themes?)+$/.test(key)) {
@@ -1628,9 +1601,7 @@
                 $SS.conf["Width Decoration"] = $SS.conf["Decoration Width"] !== 999 ? $SS.conf["Decoration Width"] : $SS.conf["Custom Decoration Width"];
             },
             get: function(name) {
-                var val = this.hasGM ?
-                    GM_getValue(NAMESPACE + name) :
-                    localStorage.getItem(NAMESPACE + name);
+                var val = GM_getValue(NAMESPACE + name);
 
                 if (val != undefined)
                     return JSON.parse(val);
@@ -1643,10 +1614,7 @@
                 if (typeof val !== "number")
                     val = JSON.stringify(val);
 
-                return this.hasGM ?
-                    GM_setValue(name, val) :
-                    localStorage.removeItem(name, val),
-                    localStorage.setItem(name, val);
+                return GM_setValue(name, val);
             }
         },
 
@@ -1670,35 +1638,37 @@
                 });
 
                 if (!document.documentElement.classList.contains("fourchan-x")) {
+                    function makeNavLink() {
+                        var link = document.createElement("a");
+                        link.title = "StyleChan Settings";
+                        link.href = "javascript:;";
+                        link.addEventListener("click", $SS.options.show);
+                        return link;
+                    }
                     $.asap(function() {
-                        return !!(document.querySelector("#boardNavDesktop, #boardNavMobile"));
-                    }, function() {
-                        function addToNav(nav) {
-                            var pageJump = nav.querySelector(".pageJump");
-                            if (pageJump) {
-                                var link = document.createElement("a");
-                                link.title = "StyleChan Settings";
-                                link.href = "javascript:;";
-                                link.textContent = " StyleChan ";
-                                link.addEventListener("click", $SS.options.show);
-                                pageJump.insertBefore(link, pageJump.lastElementChild);
-                            } else {
-                                var navtopright = nav.querySelector("#navtopright");
-                                if (navtopright) {
-                                    var span = document.createElement("span");
-                                    span.appendChild(document.createTextNode(" ["));
-                                    var link = document.createElement("a");
-                                    link.title = "StyleChan Settings";
-                                    link.href = "javascript:;";
-                                    link.textContent = "StyleChan";
-                                    link.addEventListener("click", $SS.options.show);
-                                    span.appendChild(link);
-                                    span.appendChild(document.createTextNode("]"));
-                                    navtopright.appendChild(span);
-                                }
-                            }
-                        }
-                        document.querySelectorAll("#boardNavDesktop, #boardNavMobile").forEach(addToNav);
+                        return document.querySelector("#boardNavDesktop #navtopright");
+                    }, function(navtopright) {
+                        var span = document.createElement("span");
+                        span.appendChild(document.createTextNode(" ["));
+                        var link = makeNavLink();
+                        link.textContent = "StyleChan";
+                        span.appendChild(link);
+                        span.appendChild(document.createTextNode("]"));
+                        navtopright.appendChild(span);
+                    });
+                    $.asap(function() {
+                        return document.querySelector("#boardNavDesktop .pageJump");
+                    }, function(pageJump) {
+                        var link = makeNavLink();
+                        link.textContent = " StyleChan ";
+                        pageJump.insertBefore(link, pageJump.lastElementChild);
+                    });
+                    $.asap(function() {
+                        return document.querySelector("#boardNavMobile .pageJump");
+                    }, function(pageJump) {
+                        var link = makeNavLink();
+                        link.textContent = " StyleChan ";
+                        pageJump.insertBefore(link, pageJump.lastElementChild);
                     });
                 }
             },
@@ -1713,6 +1683,7 @@
                         optionsHTML = [
                             "<ul id=options-tabs>",
                             "<li class='tab-item'><label class='tab-label selected' for=main-select>Main</label></li>",
+                            "<li class='tab-item'><label class='tab-label' for=misc-select>Misc</label></li>",
                             "<li class='tab-item'><label class='tab-label' for=themes-select>Themes</label></li>",
                             "</ul><div id=options-container><input type=radio class=tab-select name=tab-select id=main-select hidden checked><div id='main-section' class='options-section'>",
                             "<p class='buttons-container'>",
@@ -1759,7 +1730,7 @@
                                 "</span><input" + (val ? " checked" : "") + " name='" + key + "' type=checkbox></label>");
                         } else if (Array.isArray(defaultConfig[key][2])) // select
                         {
-                            var opts = key === "Font Family" ? $SS.fontList || defaultConfig[key][2] : defaultConfig[key][2],
+                            var opts = defaultConfig[key][2],
                                 cFonts = [],
                                 html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>",
                                     "<select name='" + key + "'" + (defaultConfig[key][3] === true ? " has-suboption" : "") + ">"];
@@ -1787,9 +1758,14 @@
                         } else if (key === "Font Size") {
                             optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
                                 "<input type=text name='Font Size' value=" + $SS.conf["Font Size"] + "px></label>");
+                        } else if (key === "UI Font Size") {
+                            optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
+                                "<input type=text name='UI Font Size' value=" + $SS.conf["UI Font Size"] + "px></label>");
                         } else if (key === "Backlink Font Size") {
                             optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
                                 "<input type=text name='Backlink Font Size' value=" + $SS.conf["Backlink Font Size"] + "px></label>");
+                        } else if (key === "Misc") {
+                            optionsHTML.push("</div><input type=radio class=tab-select name=tab-select id=misc-select hidden><div id='misc-section' class='options-section'>");
                         } else if (key === "Themes") {
                             optionsHTML.push("</div><input type=radio class=tab-select name=tab-select class=tab-select  id=themes-select hidden><div id='themes-section' class='options-section'>");
                         } else // checkbox
@@ -1862,10 +1838,11 @@
                     });
                     // options window
                     $(".tab-label", tOptions).bind("click", function(e) {
-                        if ($(this).hasClass("selected")) return;
+                        var $this = $(this);
+                        if ($this.hasClass("selected")) return;
 
                         $(".tab-label.selected").removeClass("selected");
-                        $(this).addClass("selected");
+                        $this.addClass("selected");
                     });
                     $("[has-suboption]", tOptions).bind("change", function() {
                         var id = this.name.replace(/\s/g, "_") + $(this).val(),
@@ -1873,11 +1850,11 @@
 
                         if (sub.exists())
                             sub.each(function() {
-                                $(this).show();
+                                this.removeAttribute("hidden");
                             });
                         else
                             $("[class*='" + this.name.replace(/\s/g, "_") + "']").each(function() {
-                                $(this).hide();
+                                this.setAttribute("hidden", "");
                             });
                     });
                     $("a[name=save]", tOptions).bind("click", function() {
@@ -1892,14 +1869,57 @@
                         var val = parseInt($(this).val()),
                             bitmap = $(this).parent().nextSibling().children("input[name='Bitmap Font']").val();
 
-                        if (e.keyCode === 38 && !isNaN(val))
+                        if (e.key === "ArrowUp" && !isNaN(val))
                             $(this).val(++val + "px");
-                        else if (e.keyCode === 40 && !isNaN(val))
+                        else if (e.key === "ArrowDown" && !isNaN(val))
                             $(this).val(--val + "px");
                     });
 
                     // themes tab
                     $SS.options.createThemesTab(tOptions);
+
+                    // misc tab - 4chan settings buttons
+                    (function() {
+                        var misc = $("#misc-section", tOptions),
+                            p = $("<p>");
+                        var chanKeys = ["4chan-settings", "4chan-watch", "4chan-watch-bl", "catalog-settings", "catalog-theme"];
+                        p.append($("<a class='options-button' name=save4chanSettings>Save 4chan settings", tOptions)
+                            .bind("click", function() {
+                                var count = 0;
+                                chanKeys.forEach(function(key) {
+                                    var val = localStorage[key];
+                                    if (val) {
+                                        $SS.Config.set("Saved4chanSettings." + key, val);
+                                        count++;
+                                    }
+                                });
+                                if (count > 0) {
+                                    $SS.notify({ content: '4chan settings saved.', type: 'success', lifetime: 3 });
+                                } else {
+                                    $SS.notify({ content: 'No 4chan settings found.', type: 'info', lifetime: 3 });
+                                }
+                            })
+                        );
+                        p.append($("<span class=link-delim>").text(" | "));
+                        p.append($("<a class='options-button' name=restore4chanSettings>Restore 4chan settings", tOptions)
+                            .bind("click", function() {
+                                var count = 0;
+                                chanKeys.forEach(function(key) {
+                                    var saved = $SS.Config.get("Saved4chanSettings." + key);
+                                    if (saved) {
+                                        localStorage[key] = saved;
+                                        count++;
+                                    }
+                                });
+                                if (count > 0) {
+                                    $SS.notify({ content: '4chan settings restored.', type: 'success', lifetime: 3 });
+                                } else {
+                                    $SS.notify({ content: 'No saved 4chan settings to restore.', type: 'info', lifetime: 3 });
+                                }
+                            })
+                        );
+                        misc.append(p);
+                    })();
 
                     return $(getDocBody()).append(overlay);
                 }
@@ -2022,7 +2042,7 @@
                 return $("#overlay").remove();
             },
             keydown: function(e) {
-                if (e.ctrlKey && e.keyCode === 112) {
+                if (e.ctrlKey && e.key === "F1") {
                     e.preventDefault();
                     e.stopPropagation();
                     $SS.options.show();
@@ -2036,8 +2056,9 @@
 
                 // Save main
                 $("#oneechan-options input[name]:not(.tab-select), #oneechan-options select").each(function() {
-                    var name = $(this).attr("name"),
-                        val = $(this).val();
+                    var $this = $(this),
+                        name = $this.attr("name"),
+                        val = $this.val();
 
                     if (name === "Font Size") {
                         val = parseInt(val);
@@ -2047,11 +2068,13 @@
                         val = parseInt(val);
                     } else if (name === "Custom Decoration Width") {
                         val = parseInt(val);
+                    } else if (name === "UI Font Size") {
+                        val = parseInt(val);
                     } else if (name === "Backlink Font Size") {
                         val = parseInt(val);
                     }
 
-                    $SS.Config.set($(this).attr("name"), val);
+                    $SS.Config.set(name, val);
                 });
 
                 // Save Themes
@@ -3335,67 +3358,68 @@
 
         classes: {
             init: function() {
-                /* Function arguments: ("Option Name", value, "class-name") */
-                $("html").addClass("oneechan");
-                $SS.theme.textColor.isLight ? $("html").addClass("isLight") : "";
-                $SS.theme.bgColor.isLight ? "" : $("html").addClass("dark-captcha");
-                $("html").optionClass("Underline QuoteLinks", true, "underline-quotes");
-                $("html").optionClass("Underline All Links", false, "underline-disabled");
-                $("html").optionClass("Rounded Corners", true, "rounded-corners");
-                $("html").optionClass("Show Board Name", false, "hide-board-name");
-                $("html").optionClass("Fit Width", true, "reply-fit-width");
-                $("html").optionClass("Fit Post Menu", true, "fit-postmenu");
-                $("html").optionClass("Show Banner", false, "hide-banner");
-                $("html").optionClass("Reduce Banner Opacity", true, "banner-opacity");
-                $("html").optionClass("Show Reply to Thread Button", false, "hide-button");
-                $("html").optionClass("Show Reply Header", true, "post-info");
-                $("html").optionClass("Show File Info", false, "show-file-info");
-                $("html").optionClass("Borders", 2, "borders-all");
-                $("html").optionClass("Borders", 3, "borders-none");
-                $("html").optionClass("Decoration Style", 1, "hl-border");
-                $("html").optionClass("Decoration Style", 2, "hl-outline");
-                $("html").optionClass("Decoration Style", 3, "hl-border-down");
+                var cl = document.documentElement.classList;
+                cl.add("oneechan");
+                $SS.theme.textColor.isLight && cl.add("isLight");
+                !$SS.theme.bgColor.isLight && cl.add("dark-captcha");
+                cl.toggle("underline-quotes", $SS.conf["Underline QuoteLinks"] === true);
+                cl.toggle("underline-disabled", $SS.conf["Underline All Links"] === false);
+                cl.toggle("rounded-corners", $SS.conf["Rounded Corners"] === true);
+                cl.toggle("hide-board-name", $SS.conf["Show Board Name"] === false);
+                cl.toggle("reply-fit-width", $SS.conf["Fit Width"] === true);
+                cl.toggle("fit-postmenu", $SS.conf["Fit Post Menu"] === true);
+                cl.toggle("hide-banner", $SS.conf["Show Banner"] === false);
+                cl.toggle("banner-opacity", $SS.conf["Reduce Banner Opacity"] === true);
+                cl.toggle("hide-button", $SS.conf["Show Reply to Thread Button"] === false || ($SS.conf["Show Reply to Thread Button"] && $SS.conf["Show Only in Catalog"] && !$SS.location.catalog));
+                cl.toggle("post-info", $SS.conf["Show Reply Header"] === true);
+                cl.toggle("show-file-info", $SS.conf["Show File Info"] === false);
+                cl.toggle("borders-all", $SS.conf["Borders"] === 2);
+                cl.toggle("borders-none", $SS.conf["Borders"] === 3);
+                cl.toggle("hl-border", $SS.conf["Decoration Style"] === 1);
+                cl.toggle("hl-outline", $SS.conf["Decoration Style"] === 2);
+                cl.toggle("hl-border-down", $SS.conf["Decoration Style"] === 3);
                 if (!$SS.location.report) {
-                    $("html").optionClass("Sidebar Position", 1, "right-sidebar");
-                    $("html").optionClass("Sidebar Position", 2, "left-sidebar");
-                    $("html").optionClass("SS-like Sidebar", true, "ss-sidebar");
-                    $("html").optionClass("Minimal Sidebar", true, "mini-sidebar");
-                };
-                $("html").optionClass("Recolor Even Replies", true, "recolor-even");
-                $("html").optionClass("Invert Spoiler", true, "alt-spoiler");
-                $("html").optionClass("Backlink Icons", true, "backlink-icon");
-                $("html").optionClass("Backlink Shadow", true, "backlink-shadow");
-                $("html").optionClass("Show 4chan Pass Users", true, "no-pu");
-                $("html").optionClass("Show 4chan Pass Login", true, "pass-login");
-                $("html").optionClass("Fit Expanded Images", true, "fit-eximg");
-                $("html").optionClass("Autohide Style", 2, "vertical-qr");
-                $("html").optionClass("Autohide Style", 3, "fade-qr");
-                $("html").optionClass("Transparent QR", true, "qr-opacity");
-                $("html").optionClass("Remove Background", true, "qr-background");
-                $("html").optionClass("Remove Controls", true, "qr-controls");
-                $("html").optionClass("Indent OP", false, "force-indent");
-                $("html").optionClass("Allow Wrapping Around OP", false, "force-wrapping");
-                $("html").optionClass("OP Background", true, "op-background");
-                $("html").optionClass("Expanding Form Inputs", true, "expand-inputs");
-                $("html").optionClass("Single view captcha", true, "single-captcha");
-                $("html").optionClass("Animated Transition", true, "qr-transition");
-                $("html").optionClass("Show Header Background Gradient", true, "header-gradient");
-                $("html").optionClass("Show Header Shadow", false, "header-shadow");
-                $("html").optionClass("Highlight Current Board", false, "header-highlight");
-                $("html").optionClass("Show Blotter", false, "hide-blotter");
-                $("html").optionClass("Show 4chan Ads", true, "show-ads");
-                $("html").optionClass("Show Board Banners", false, "hide-board-banners");
-                $("html").optionClass("Show Top Ad", false, "hide-top-ad");
-                $("html").optionClass("Show Bottom Ad", false, "hide-bottom-ad");
-                $("html").optionClass("Show Buy Ad Banner", false, "hide-adl");
-                $("html").optionClass("Reduce Ad Opacity", true, "ad-opacity");
-                $("html").optionClass("Show Navigation Links", false, "hide-navlinks");
-                $("html").optionClass("Show Top Links", false, "hide-navlinktop");
-                $("html").optionClass("Show Bottom Links", false, "hide-navlinkbot");
-                $("html").optionClass("Reduce Thumbnail Opacity", true, "thumb-opacity");
-                $("html").optionClass("Justified Text", true, "catalog-justify");
-                $("html").optionClass("Show Background", true, "catalog-background");
-                $("html").optionClass("Unified Thumbnail Size", true, "catalog-thumbsize");
+                    cl.toggle("right-sidebar", $SS.conf["Sidebar Position"] === 1);
+                    cl.toggle("left-sidebar", $SS.conf["Sidebar Position"] === 2);
+                    cl.toggle("ss-sidebar", $SS.conf["SS-like Sidebar"] === true);
+                    cl.toggle("mini-sidebar", $SS.conf["Minimal Sidebar"] === true);
+                }
+                cl.toggle("recolor-even", $SS.conf["Recolor Even Replies"] === true);
+                cl.toggle("alt-spoiler", $SS.conf["Invert Spoiler"] === true);
+                cl.toggle("backlink-icon", $SS.conf["Backlink Icons"] === true);
+                cl.toggle("backlink-shadow", $SS.conf["Backlink Shadow"] === true);
+                cl.toggle("no-pu", $SS.conf["Show 4chan Pass Users"] === true);
+                cl.toggle("pass-login", $SS.conf["Show 4chan Pass Login"] === true);
+                cl.toggle("fit-eximg", $SS.conf["Fit Expanded Images"] === true);
+                cl.toggle("vertical-qr", $SS.conf["Autohide Style"] === 2);
+                cl.toggle("fade-qr", $SS.conf["Autohide Style"] === 3);
+                cl.toggle("qr-opacity", $SS.conf["Transparent QR"] === true);
+                cl.toggle("qr-background", $SS.conf["Remove Background"] === true);
+                cl.toggle("qr-controls", $SS.conf["Remove Controls"] === true);
+                cl.toggle("force-indent", $SS.conf["Indent OP"] === false);
+                cl.toggle("force-wrapping", $SS.conf["Allow Wrapping Around OP"] === false);
+                cl.toggle("op-background", $SS.conf["OP Background"] === true);
+                cl.toggle("expand-inputs", $SS.conf["Expanding Form Inputs"] === true);
+                cl.toggle("single-captcha", $SS.conf["Single View Captcha"] === true);
+                cl.toggle("qr-transition", $SS.conf["Animated Transition"] === true);
+                cl.toggle("chX-notifs", $SS.conf["Style 4chanX Notifications"] === true);
+                cl.toggle("header-gradient", $SS.conf["Show Header Background Gradient"] === true);
+                cl.toggle("header-shadow", $SS.conf["Show Header Shadow"] === false);
+                cl.toggle("header-highlight", $SS.conf["Highlight Current Board"] === false);
+                cl.toggle("hide-blotter", $SS.conf["Show Blotter"] === false);
+                cl.toggle("show-ads", $SS.conf["Show 4chan Ads"] === true);
+                cl.toggle("hide-board-banners", $SS.conf["Show Board Banners"] === false);
+                cl.toggle("hide-top-ad", $SS.conf["Show Top Ad"] === false);
+                cl.toggle("hide-bottom-ad", $SS.conf["Show Bottom Ad"] === false);
+                cl.toggle("hide-adl", $SS.conf["Show Buy Ad Banner"] === false);
+                cl.toggle("ad-opacity", $SS.conf["Reduce Ad Opacity"] === true);
+                cl.toggle("hide-navlinks", $SS.conf["Show Navigation Links"] === false);
+                cl.toggle("hide-navlinktop", $SS.conf["Show Top Links"] === false);
+                cl.toggle("hide-navlinkbot", $SS.conf["Show Bottom Links"] === false);
+                cl.toggle("thumb-opacity", $SS.conf["Reduce Thumbnail Opacity"] === true);
+                cl.toggle("catalog-justify", $SS.conf["Justified Text"] === true);
+                cl.toggle("catalog-background", $SS.conf["Show Background"] === true);
+                cl.toggle("catalog-thumbsize", $SS.conf["Unified Thumbnail Size"] === true);
             }
         },
 
@@ -3701,7 +3725,7 @@
                     var p = $SS.jscolor.picker;
 
                     // controls interaction
-                    window.addEventListener("resize", removePicker, false);
+                    window.addEventListener("resize", removePicker, { once: true });
                     p.box.onmouseup = p.box.onmouseout = function() {
                         target.focus();
                     };
@@ -3812,7 +3836,29 @@
                     p.padM.style.backgroundRepeat = "no-repeat";
                     p.sldM.style.backgroundImage = "url('data:image/gif;base64,R0lGODlhBwALAKECAAAAAP///6g8eKg8eCH5BAEKAAIALAAAAAAHAAsAAAITTIQYcLnsgGxvijrxqdQq6DRJAQA7')";
                     p.sldM.style.backgroundRepeat = "no-repeat";
-                    p.pad.style.backgroundImage = "url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAyAAD/7gAhQWRvYmUAZMAAAAABAwAQAwMGCQAABTgAAAVfAAAHAv/bAIQACAYGBgYGCAYGCAwIBwgMDgoICAoOEA0NDg0NEBEMDg0NDgwRDxITFBMSDxgYGhoYGCMiIiIjJycnJycnJycnJwEJCAgJCgkLCQkLDgsNCw4RDg4ODhETDQ0ODQ0TGBEPDw8PERgWFxQUFBcWGhoYGBoaISEgISEnJycnJycnJycn/8IAEQgAZQC1AwEiAAIRAQMRAf/EAJgAAAIDAQEAAAAAAAAAAAAAAAQFAAEDAgYBAAIDAQEBAAAAAAAAAAAAAAUGAQMEAgAHEAADAAMBAQADAQEAAAAAAAAAAQIhEgMRBBAwIiAxEQEAAAAAAAAAAAAAAAAAAACAEgEBAQEAAAAAAAAAAAAAAAAwgVBgEwACAgICAgIDAAAAAAAAAAAAARExECEgkTBh8MFBgaH/2gAMAwEAAhEDEQAAAEXp0vo0r6m99Mg9EtKGaxutrS0y5wvKJGRE3bRE4K4d6fJ+Z9h5xpY/FhPgz7f0zzZZHfay7CuCwdrglbVcPi3c69Asej1xt6BM8ArGa9oBWpqQWoRFSy261ZRlcFcNtXmvP+qRMR3yQjsU0z0xo/M3dWXYpnW4NMVPWth0A2uHIbbGvsHK1sHA5hMBOVxaGyG2reOvWp3BzwTyyVoEvpFBsv5gdyOUYMzejKGOrLscwLsmWS5oXQ6CLGrTBjQDJZhsBonMU0fkKAOfhpC4aadlsfHJFGuUyt8uKEfP4N8t5ccrYio1nZd4i6/NjwGuXQ6De2ZsK5D9m4k48HGBWUDxMTM7h2HW3W6jKiKI8qwm4u3Wlza56d4uxOvBDCGXn3gcMOR1i+HTJ0x3276FcbzuqnjPfmKB+Cue8+F7XdxjRFXwFiw4utV8sqsvB0M6i8SGSu8KjqokGHSqS7k7x3ckRKk9zKk9EuSfSSdeqpJ9VSe6uSem5JEySR6pJE//2gAIAQIAAQUB7I7SRJEnzI+c40TX83R3ePpPDqjrJMkScEcDlQqxVHV47nh0R0kmSZOKORzoVYqjo8djwtFyKSZOaOZFCrDotnQ8KRUikUkIkmjYdFMs8GhyamokIVGxsNjPP2//2gAIAQMAAQUB70d2fSfRI5FGeEnznzM51hUbnajszudpHIozxk4HBkVhUbnWjqzsdZHJpnlJyOLIrCo3LotnQ6SamhEnM5smjY3KopllSamhMkkMVGxuOhsY5NTQUiEzY2N/2//aAAgBAQABBQHhJwk4I4/8stFoaykJCR1WO8neTvBEEQRJEjkcjk1zxk4ycUcSy0WhrKQkJHVY7SdpO0EQRBEkSORyOTU4ycZOKORZaLQ1lISEjosdpO0naCIIgiSJHI5HJqcpOUnJHIstFoaykJCR0WOsnWTrBEEQRJMjkcjk1OUnKTkjmUUikNZSEhItY6ydZOsEwTBMkyORyOTU5yc5OaOZRSKQ0JCQkWsdJOknSCYJgmSZHI5HJqRJEkIgopFIaPDw8LRclyXBMEwTIpNTU1NSJIkhEjGho8PDw8KRclyXAoFApFJqampqTJMkokY0NHh4eHhSKkqSoFAoFIpNTU1NSZJklCGNDR4eHh4NFSVJUCgUCkUmpqamopFIkL8eHh4eHh4NDkcjg0NDU1NTU1NTU1PPz4eHh4eHh4ampoaGhqampqampgx/rBgx+MGDB/J/JgwYMGDBg//aAAgBAgIGPwE6lS6P/9oACAEDAgY/AeU//9oACAEBAQY/ARX/AP/aAAgBAgMBPxC0tw7kQQNCRRlMrG0lvn8Fpbj2IigaEijP5xvJb5/BbldyIIHhIoy2cbTxF6CKBo4C50byfbiqQDxgWuGVGx9sqihANGBajMpth0dHR1hHZ2dnef/aAAgBAwMBPxCeSaRJkkbx6JFAkNEEGnj+hLJNIsyTPDokECQ0RQa+VLJJIkyTPCtBBAsQQQaWVPJNIsySMZWyIoEiCKDShYpyYSSYZWxELBAaxYpSQSSTNAJBALO7z0dHR1ns7Oz/2gAIAQEDAT8QrKioX+BbLi/j/v5y4vLioqKzXx/qyoqE1+hbLi/lv3cXlxXoqKzTw/uUlBQLr9CeAcrrC0sPTkdPBW5WVFQmhPAOVVxeXHpPRh18FblJQUC6F8FpTWFpYes9XL1blZUVCaEyO3ipri8u8AKrcrKisXQmR2iKKOkuLy49PAdllm+UoF0Lm3uIoo6/AJ3sss34dILm3uIoo6eF3pPVlWWWb8EFEyL3EUUNfAT0noyrLL46SDQwy/BzIggiuP0UEUhoYfH7LDLC9RBFc/2jRo0a4DXlJ/8A/9k=')";
+                    if (!$SS.jscolor._padDataURL) {
+                        var c = document.createElement("canvas");
+                        c.width = $SS.jscolor.images.pad[0];
+                        c.height = $SS.jscolor.images.pad[1];
+                        var x = c.getContext("2d");
+                        var hueGrad = x.createLinearGradient(0, 0, c.width, 0);
+                        hueGrad.addColorStop(0, "#f00");
+                        hueGrad.addColorStop(1 / 6, "#ff0");
+                        hueGrad.addColorStop(2 / 6, "#0f0");
+                        hueGrad.addColorStop(3 / 6, "#0ff");
+                        hueGrad.addColorStop(4 / 6, "#00f");
+                        hueGrad.addColorStop(5 / 6, "#f0f");
+                        hueGrad.addColorStop(1, "#f00");
+                        x.fillStyle = hueGrad;
+                        x.fillRect(0, 0, c.width, c.height);
+                        var whiteGrad = x.createLinearGradient(0, 0, 0, c.height);
+                        whiteGrad.addColorStop(0, "rgba(255,255,255,0)");
+                        whiteGrad.addColorStop(1, "rgba(255,255,255,1)");
+                        x.fillStyle = whiteGrad;
+                        x.fillRect(0, 0, c.width, c.height);
+                        $SS.jscolor._padDataURL = c.toDataURL();
+                    }
+                    p.pad.style.backgroundImage = "url('" + $SS.jscolor._padDataURL + "')";
                     p.pad.style.backgroundRepeat = "no-repeat";
                     p.pad.style.backgroundPosition = "0 0";
                     /** UNTIL HERE **/
