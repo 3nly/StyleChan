@@ -1698,6 +1698,9 @@
                                 "</span><input name='Custom Decoration Width' type=text value=" + $SS.conf["Custom Decoration Width"] + "px></span>");
                         } else if (val === "header") {
                             optionsHTML.push("<label class='option header'><span class='option-title'>" + key + "</span></label>");
+                            if (key === ":: 4chan") {
+                                optionsHTML.push("<p class='option-actions'><a class='options-button' name=save4chanSettings>Save 4chan settings</a><span class=link-delim> | </span><a class='options-button' name=restore4chanSettings>Restore</a></p>");
+                            }
                         } else if (defaultConfig[key][4] === true) // sub-option
                         {
                             var pVal = $SS.conf[defaultConfig[key][2]];
@@ -1855,47 +1858,37 @@
                     // themes tab
                     $SS.options.createThemesTab(tOptions);
 
-                    // misc tab - 4chan settings buttons
+                    // 4chan button handlers
                     (function () {
-                        var misc = $("#misc-section", tOptions),
-                            p = $("<p>");
                         var chanKeys = ["4chan-settings", "4chan-watch", "4chan-watch-bl", "catalog-settings", "catalog-theme"];
-                        p.append($("<a class='options-button' name=save4chanSettings>Save 4chan settings", tOptions)
-                            .bind("click", function () {
-                                var count = 0;
-                                chanKeys.forEach(function (key) {
-                                    var val = localStorage[key];
-                                    if (val) {
-                                        $SS.Config.set("Saved4chanSettings." + key, val);
-                                        count++;
-                                    }
-                                });
-                                if (count > 0) {
-                                    $SS.notify({ content: '4chan settings saved.', type: 'success', lifetime: 3 });
-                                } else {
-                                    $SS.notify({ content: 'No 4chan settings found.', type: 'info', lifetime: 3 });
+                        $("a[name=save4chanSettings]", tOptions).bind("click", function () {
+                            var count = 0;
+                            chanKeys.forEach(function (key) {
+                                var val = localStorage[key];
+                                if (val) {
+                                    $SS.Config.set("Saved4chanSettings." + key, val);
+                                    count++;
                                 }
-                            })
-                        );
-                        p.append($("<span class=link-delim>").text(" | "));
-                        p.append($("<a class='options-button' name=restore4chanSettings>Restore 4chan settings", tOptions)
-                            .bind("click", function () {
-                                var count = 0;
-                                chanKeys.forEach(function (key) {
-                                    var saved = $SS.Config.get("Saved4chanSettings." + key);
-                                    if (saved) {
-                                        localStorage[key] = saved;
-                                        count++;
-                                    }
-                                });
-                                if (count > 0) {
-                                    $SS.notify({ content: '4chan settings restored.', type: 'success', lifetime: 3 });
-                                } else {
-                                    $SS.notify({ content: 'No saved 4chan settings to restore.', type: 'info', lifetime: 3 });
+                            });
+                            if (count > 0)
+                                $SS.notify({ content: '4chan settings saved.', type: 'success', lifetime: 3 });
+                            else
+                                $SS.notify({ content: 'No 4chan settings found.', type: 'info', lifetime: 3 });
+                        });
+                        $("a[name=restore4chanSettings]", tOptions).bind("click", function () {
+                            var count = 0;
+                            chanKeys.forEach(function (key) {
+                                var saved = $SS.Config.get("Saved4chanSettings." + key);
+                                if (saved) {
+                                    localStorage[key] = saved;
+                                    count++;
                                 }
-                            })
-                        );
-                        misc.append(p);
+                            });
+                            if (count > 0)
+                                $SS.notify({ content: '4chan settings restored.', type: 'success', lifetime: 3 });
+                            else
+                                $SS.notify({ content: 'No saved 4chan settings to restore.', type: 'info', lifetime: 3 });
+                        });
                     })();
 
                     return $(getDocBody()).append(overlay);
