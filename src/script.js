@@ -262,6 +262,10 @@
         "Style 4chanX Notifications": [true, "Show 4chanX notifications in the same style as StyleChan's toasts.", "Toast Notifications", true, true],
         "Center Notifications": [false, "Center notifications at the top below the header bar.", "Toast Notifications", true, true],
         "Full Border": [false, "Use a full border to make notifications more visible. Border style follows the Highlight Style and Width options.", "Toast Notifications", true, true],
+        ":: Theming": ["header", ""],
+        "System Theming": [false, "Use system color scheme detection to automatically select themes. Overrides NSFW/SFW theme selection.", null, true],
+        "Dark Theme": [0, "Theme to use when system is in dark mode.", "System Theming", true, true],
+        "Light Theme": [0, "Theme to use when system is in light mode.", "System Theming", true, true],
         ":: 4chan X": ["header", ""],
         "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
         "Show Header Shadow": [true, "Gives the header a drop shadow."],
@@ -1701,6 +1705,19 @@
                             if (key === ":: 4chan") {
                                 optionsHTML.push("<p class='option-actions'><a class='options-button' name=save4chanSettings>Save 4chan settings</a><span class=link-delim> | </span><a class='options-button' name=restore4chanSettings>Restore</a></p>");
                             }
+                        } else if ((defaultConfig[key][4] === true) && (key === "Dark Theme" || key === "Light Theme"))
+                        {
+                            var pVal = $SS.conf[defaultConfig[key][2]];
+                            id = defaultConfig[key][2].replace(/\s/g, "_") + defaultConfig[key][3];
+                            var html = "<label class='option suboption " + id + "' title=\"" + des + "\"" +
+                                (pVal != defaultConfig[key][3] ? "hidden" : "") + "><span class='option-title'>" + key + "</span>" +
+                                "<select name='" + key + "'>";
+                            for (var i = 0, MAX = $SS.conf["Themes"].length; i < MAX; ++i) {
+                                html += "<option value='" + i + "'" + (i == val ? " selected" : "") + ">" +
+                                    $SS.conf["Themes"][i].name + "</option>";
+                            }
+                            html += "</select></label>";
+                            optionsHTML.push(html);
                         } else if (defaultConfig[key][4] === true) // sub-option
                         {
                             var pVal = $SS.conf[defaultConfig[key][2]];
@@ -1832,6 +1849,16 @@
                             sub.each(function () {
                                 this.removeAttribute("hidden");
                             });
+                        else
+                            $("[class*='" + this.name.replace(/\s/g, "_") + "']").each(function () {
+                                this.setAttribute("hidden", "");
+                            });
+                    });
+                    $("input[name='System Theming']", tOptions).bind("change", function () {
+                        var id = this.name.replace(/\s/g, "_") + this.checked,
+                            sub = $("." + id);
+                        if (sub.exists())
+                            sub.each(function () { this.removeAttribute("hidden"); });
                         else
                             $("[class*='" + this.name.replace(/\s/g, "_") + "']").each(function () {
                                 this.setAttribute("hidden", "");
@@ -2041,6 +2068,8 @@
                     } else if (name === "UI Font Size") {
                         val = parseInt(val);
                     } else if (name === "Backlink Font Size") {
+                        val = parseInt(val);
+                    } else if (name === "Dark Theme" || name === "Light Theme") {
                         val = parseInt(val);
                     }
 
@@ -3318,11 +3347,32 @@
                 $SS.conf["Themes"] = Array.isArray($SS.conf["Themes"]) ?
                     this.defaults.concat($SS.conf["Themes"]) : this.defaults.slice(0);
 
-                var i = $SS.location.nsfw ?
-                    $SS.conf["NSFW Theme"] : $SS.conf["Selected Theme"],
-                    tIndex = $SS.conf["Themes"][i] ? i : 0;
+                var i;
+                if ($SS.conf["System Theming"]) {
+                    i = window.matchMedia('(prefers-color-scheme: dark)').matches ?
+                        parseInt($SS.conf["Dark Theme"], 10) : parseInt($SS.conf["Light Theme"], 10);
+                } else {
+                    i = $SS.location.nsfw ?
+                        $SS.conf["NSFW Theme"] : $SS.conf["Selected Theme"];
+                }
 
+                var tIndex = $SS.conf["Themes"][i] ? i : 0;
                 $SS.theme = new $SS.Theme(tIndex); // Set the active theme.
+
+                // Listen for system color scheme changes
+                if (!this._mqListener) {
+                    var self = this;
+                    this._mqListener = function () {
+                        if ($SS.conf["System Theming"]) {
+                            $SS.init(true);
+                        }
+                    };
+                    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+                    if (mq.addEventListener)
+                        mq.addEventListener('change', this._mqListener);
+                    else if (mq.addListener)
+                        mq.addListener(this._mqListener);
+                }
             }
         },
 
@@ -3340,7 +3390,8 @@
                 cl.toggle("fit-postmenu", $SS.conf["Fit Post Menu"] === true);
                 cl.toggle("hide-banner", $SS.conf["Show Banner"] === false);
                 cl.toggle("banner-opacity", $SS.conf["Reduce Banner Opacity"] === true);
-                cl.toggle("hide-button", $SS.conf["Show Reply to Thread Button"] === false || ($SS.conf["Show Reply to Thread Button"] && $SS.conf["Show Only in Catalog"] && !$SS.location.catalog));
+                cl.toggle("hide-button", $SS.conf["Show Reply to Thread Button"] === false || 
+                    ($SS.conf["Show Reply to Thread Button"] && $SS.conf["Show Only in Catalog"] && !$SS.location.catalog));
                 cl.toggle("post-info", $SS.conf["Show Reply Header"] === true);
                 cl.toggle("show-file-info", $SS.conf["Show File Info"] === false);
                 cl.toggle("borders-all", $SS.conf["Borders"] === 2);
