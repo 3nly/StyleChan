@@ -422,7 +422,7 @@
     $.waitForFn = function (test, cb) {
         var result = test();
         if (result) { cb(result); return; }
-        setTimeout(function () { $.waitForFn(test, cb); }, 50);
+        setTimeout(function () { $.waitForFn(test, cb); }, 25);
     };
 
     $lib.prototype = {
@@ -437,7 +437,7 @@
 
             if (selector.constructor === $lib) return selector;
             else if (typeof selector === "string") {
-                var root = root || document;
+                root = root || document;
                 var tagCheck = /^<(\w+)([^>]*)>(.*)$/.exec(selector); // No closing tag for root node.
 
                 if (root.constructor === $lib)
@@ -670,17 +670,7 @@
                         $this.removeClass(classNamesArray[j]);
             });
         },
-        optionClass: function (optionName, optionValue, className) {
-            if (!className || typeof className !== "string") return this;
-            if (!$SS.conf || $SS.conf[optionName] === undefined) return this;
-            return this.each(function () {
-                var $this = $(this);
-                if ($SS.conf[optionName] === optionValue && !$this.hasClass(className))
-                    $this.addClass(className);
-                else if ($SS.conf[optionName] !== optionValue && $this.hasClass(className))
-                    $this.removeClass(className);
-            });
-        },
+
         remove: function () {
             return this.each(function () {
                 this.parentNode.removeChild(this);
@@ -720,26 +710,7 @@
 
             return new $lib(this.elems[0].nextSibling);
         },
-        previousSibling: function (selector) {
-            if (!this.hasSingleEl() ? true : this.elems[0].previousSibling == null)
-                return new $lib(null);
 
-            if (selector != undefined) {
-                var t, m = new $lib(selector, this.elems[0].parentNode),
-                    s = this.elems[0].parentNode.childNodes;
-
-                for (var i = 0, MAX = s.length; i < MAX; ++i) {
-                    if (s[i] === this.elems[0] && t == undefined)
-                        return new $lib(null);
-                    else if (s[i] === this.elems[0] && t != undefined)
-                        return new $lib(t);
-                    else if (m.elems.indexOf(s[i]) !== -1)
-                        t = s[i];
-                }
-            }
-
-            return new $lib(this.elems[0].previousSibling);
-        },
 
         /* EVENT METHODS */
         bind: function (type, listener) {
@@ -811,7 +782,7 @@
         DOMLoaded: function (reload) {
             $SS.classes.init();
 
-            var div;
+            var div, html, ctxmenu, link;
             if (reload !== true) {
                 $SS.options.init();
 
@@ -1067,7 +1038,7 @@
                     }
 
                     tryQuality(0);
-                }).catch(function () { });
+                }).catch(function (err) { console.warn("Image conversion failed:", err); });
             }
 
             function shouldConvert(file) {
@@ -1088,7 +1059,7 @@
             function clearSelectedFile(input) {
                 try {
                     input.files = new DataTransfer().files;
-                } catch (error) { }
+                } catch (err) { console.warn("Failed to clear file:", err); }
             }
 
             // File picker: intercept change on the QR input
@@ -2699,7 +2670,6 @@
                 bgRPA: "repeat top left fixed",
                 replyOp: "1.0",
                 navOp: "0.9",
-                bgRPA: "repeat top left fixed",
                 bgColor: "1C1D1E",
                 mainColor: "232425",
                 brderColor: "292a2b",
@@ -3489,26 +3459,7 @@
                     y: y
                 };
             },
-            getViewPos: function () {
-                if (typeof window.pageYOffset === "number")
-                    return [window.pageXOffset, window.pageYOffset];
-                else if (document.body && (document.body.scrollLeft || document.body.scrollTop))
-                    return [document.body.scrollLeft, document.body.scrollTop];
-                else if (document.documentElement && (document.documentElement.scrollLeft || document.documentElement.scrollTop))
-                    return [document.documentElement.scrollLeft, document.documentElement.scrollTop];
-                else
-                    return [0, 0];
-            },
-            getViewSize: function () {
-                if (typeof window.innerWidth === "number")
-                    return [window.innerWidth, window.innerHeight];
-                else if (document.body && (document.body.clientWidth || document.body.clientHeight))
-                    return [document.body.clientWidth, document.body.clientHeight];
-                else if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight))
-                    return [document.documentElement.clientWidth, document.documentElement.clientHeight];
-                else
-                    return [0, 0];
-            },
+
 
             // TODO: remove this array.
             images: {
@@ -3549,11 +3500,6 @@
                         var tp = $SS.jscolor.getElementPos(target); // target pos
                         var ts = $SS.jscolor.getElementSize(target); // target size
                         var ps = getPickerDims(this); // picker size
-                        var a = 0,
-                            b = 1,
-                            c = 1;
-                        var l = (ts[1] + ps[1]) / 2;
-
                         var pp = [
                             tp[0],
                             tp[1] + ts[1]
@@ -4117,7 +4063,6 @@
             this.radioCheck = new $SS.Image(inputImages, "no-repeat center " + (this.inputColor.isLight ? -16 : -24) + "px");
             this.codeBackground = (this.bgColor.isLight ? "255, 255, 255, 0.2" : "0, 0, 0, 0.2");
             this.codeBorder = (this.bgColor.isLight ? "204, 204, 204, 1.0" : "204, 204, 204, 0.1");
-            this.dIcons = new $SS.Image(theme.dIcons);
             this.icons = {
                 menuIcon: "<svg viewBox='0 0 512 512' preserveAspectRatio='xMidYMid meet' class='icon' xmlns='http://www.w3.org/2000/svg'>" +
                     "<path fill='currentColor' d='M256 432q-15 1-16 16 1 15 16 16 15-1 16-16-1-15-16-16ZM64 288H448v32q-1 27-19 45t-45 19H320v64q-1 27-19 45t-45 19q-27-1-45-19t-19-45V384H128q-27-1-45-19T64 320V288v32-32ZM226 6l21 52q3 6 9 6t9-6L286 6q2-6 9-6H400q20 1 34 14 13 14 14 34V224v22 10H74 64V246 224 48q1-20 14-34Q92 1 112 0h10q6 0 8 6l21 52q3 6 9 6t9-6L190 6q2-6 9-6h19q6 0 8 6Z'/></svg>",
@@ -4125,8 +4070,6 @@
                     "<path fill='rgb(" + this.textColor.rgb + ")' d='M14.615,4.928c0.487-0.986,1.284-0.986,1.771,0l2.249,4.554c0.486,0.986,1.775,1.923,2.864,2.081l5.024,0.73c1.089,0.158,1.335,0.916,0.547,1.684l-3.636,3.544c-0.788,0.769-1.28,2.283-1.095,3.368l0.859,5.004c0.186,1.085-0.459,1.553-1.433,1.041l-4.495-2.363c-0.974-0.512-2.567-0.512-3.541,0l-4.495,2.363c-0.974,0.512-1.618,0.044-1.432-1.041l0.858-5.004c0.186-1.085-0.307-2.6-1.094-3.368L3.93,13.977c-0.788-0.768-0.542-1.525,0.547-1.684l5.026-0.73c1.088-0.158,2.377-1.095,2.864-2.081L14.615,4.928z'/></svg>",
                 backlink: "<svg viewBox='0 0 30 30' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>" +
                     "<path fill='rgb(" + this.blinkColor.rgb + ")' d='M12.981,9.073V6.817l-12.106,6.99l12.106,6.99v-2.422c3.285-0.002,9.052,0.28,9.052,2.269c0,2.78-6.023,4.263-6.023,4.263v2.132c0,0,13.53,0.463,13.53-9.823C29.54,9.134,17.952,8.831,12.981,9.073z'/></svg>",
-                quickReply: "<svg viewBox='0 0 30 30' preserveAspectRatio='xMidYMid meet' height='16' width='16' xmlns='http://www.w3.org/2000/svg'>" +
-                    "<path fill='rgb(" + this.headerColor.rgb + ")' d='M16,5.333c-7.732,0-14,4.701-14,10.5c0,1.982,0.741,3.833,2.016,5.414L2,25.667l5.613-1.441c2.339,1.317,5.237,2.107,8.387,2.107c7.732,0,14-4.701,14-10.5C30,10.034,23.732,5.333,16,5.333z'/></svg>",
                 threadClosed: "<svg viewBox='0 0 30 30' preserveAspectRatio='xMidYMid meet' height='16' width='16' xmlns='http://www.w3.org/2000/svg'>" +
                     "<path fill='rgb(" + this.headerColor.rgb + ")' d='M22.335,12.833V9.999h-0.001C22.333,6.501,19.498,3.666,16,3.666S9.666,6.502,9.666,10h0v2.833H7.375V25h17.25V12.833H22.335zM11.667,10C11.667,10,11.667,10,11.667,10c0-2.39,1.944-4.334,4.333-4.334c2.391,0,4.335,1.944,4.335,4.333c0,0,0,0,0,0v2.834h-8.668V10z'/></svg>",
                 threadPinned: "<svg viewBox='0 0 30 30' preserveAspectRatio='xMidYMid meet' height='16' width='16' xmlns='http://www.w3.org/2000/svg'>" +
