@@ -277,6 +277,9 @@ input[type="number"] {
   pointer-events: none;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 0 2px rgba(255, 255, 255, 0.18);
 }
+:root.single-captcha #t-desc a {
+  pointer-events: auto;
+}
 :root.single-captcha #t-task.tcaptcha-compact #t-desc {
   position: static;
   flex: 0 0 100%;
