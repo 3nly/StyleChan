@@ -1,3 +1,16 @@
+### v1.2.2
+*2026-05-23*
+
+- New option: System theming
+
+- Improve script responsiveness
+- 4chan: Fix Mobile button in header not being hidden in catalog
+- Remove further dead code
+- Small changes and improvements
+
+**PR by @SystemPatch:**
+- Single view captcha: Fix unclickable link by in #22
+
 ### v1.2.1
 *2026-05-22*
 
