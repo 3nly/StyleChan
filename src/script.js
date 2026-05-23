@@ -1,279 +1,279 @@
-﻿(function() {
+﻿(function () {
     var defaultConfig = {
-            ":: Main Rice": ["header", ""],
-            "Left Margin": [
-                25, "Change the size of the left margin.", [{
-                    name: "Large",
-                    value: 65
-                }, {
-                    name: "Medium",
-                    value: 25
-                }, {
-                    name: "Small",
-                    value: 5
-                }, {
-                    name: "None",
-                    value: 0
-                }, {
-                    name: "Custom",
-                    value: 999
-                }], true
-            ],
-            "Custom Left Margin": [
-                0, "Left margin custom width (pixels).", "Left Margin", 999, true
-            ],
-            "Right Margin": [
-                25, "Change the size of the right margin.", [{
-                    name: "Large",
-                    value: 65
-                }, {
-                    name: "Medium",
-                    value: 25
-                }, {
-                    name: "Small",
-                    value: 5
-                }, {
-                    name: "None",
-                    value: 0
-                }, {
-                    name: "Custom",
-                    value: 999
-                }], true
-            ],
-            "Custom Right Margin": [
-                0, "Right margin custom width (pixels).", "Right Margin", 999, true
-            ],
-            "Rounded Corners": [true, "Styles replies, menus and Quick Reply to have subtly rounded corners."],
-            "Invert Spoiler": [false, "Inverts colors for text spoilers."],
-            "Underline All Links": [false, "Underlines all links in the page."],            
-            "Show 4chan Pass Users": [true, "Show a four leaf clover indicating a pass user."],
-            "Show 4chan Pass Login": [false, "Show a link to login with your 4chan pass. Please reload page."],
-            "Show Banner": [false, "Toggle visibility of the banner.", null, true],
-            "Reduce Banner Opacity": [false, "Reduce opacity of the banner for easier viewing.", "Show Banner", true, true],
-            "Show Board Name": [true, "Toggle visibility of the board name."],
-            "Show Reply to Thread Button": [false, "Toggle visibility of the Start a Thread / Reply to Thread button.", null, true],
-            "Show Only in Catalog": [false, "Show the button only when browsing the catalog.", "Show Reply to Thread Button", true, true],
-            "Show Blotter": [false, "Toggle visibility of the 4chan news blotter."],
-            "Show 4chan Ads": [false, "Opts into 4chan\'s banner ads.", null, true],
-            "Show Board Banners": [false, "Toggle visibility of board banners.", "Show 4chan Ads", true, true],
-            "Show Top Ad": [true, "Show the top 4chan banner ad.", "Show 4chan Ads", true, true],
-            "Show Bottom Ad": [true, "Show the bottom 4chan banner ad.", "Show 4chan Ads", true, true],
-            "Show Buy Ad Banner": [true, "Show the [Advertise on 4chan] banner below ads.", "Show 4chan Ads", true, true],
-            "Reduce Ad Opacity": [false, "Reduce the opacity of ads until hover for easier viewing.", "Show 4chan Ads", true, true],
-            "Show Navigation Links": [true, "Toggle visibility of the navigation links at the top and bottom of the threads.", null, true],
-            "Show Top Links": [true, "Toggle visibility of the top navigation links.", "Show Navigation Links", true, true],
-            "Show Bottom Links": [true, "Toggle visibility of the bottom navigation links.", "Show Navigation Links", true, true],
-            ":: Sidebar": ["header", ""],
-            "Sidebar Position": [
-                1, "Change the position of the sidebar or disable it altogether.", [{
-                    name: "Right",
-                    value: 1
-                }, {
-                    name: "Left",
-                    value: 2
-                }, {
-                    name: "Disabled",
-                    value: 3
-                }], true
-            ],
-            "SS-like Sidebar": [false, "Darkens the sidebar and adds a border like 4chan Style Script."],
-            "Minimal Sidebar": [true, "Shrinks the sidebar and moves the banner."],
-            ":: Quick Reply": ["header", ""],
-            "Autohide Style": [
-                2, "Changes how the quick reply is hidden. Please enable Autohide QR in 4chan X.", [{
-                    name: "Normal",
-                    value: 1
-                }, {
-                    name: "Vertical Tabbed",
-                    value: 2
-                }, {
-                    name: "Fade",
-                    value: 3
-                }]
-            ],
-            "Transparent QR": [false, "Reduces opacity of the QR box."],
-            "Remove Background": [false, "Removes the QR background."],
-            "Remove Controls": [false, "Removes the QR controls and checkbox."],
-            "Animated Transition": [false, "Enables a transition animation for the QR."],
-            "Expanding Form Inputs": [true, "Makes certain form elements expand on focus."],
-            "Remember Comment Draft": [false, "Will save and restore unsubmitted QR comments (5 second delay). Drafts expire after 24h."],
-            "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size limit to JPEG."],
-            "Single View Captcha": [false, "Shows the captcha challenges in a single view."],
-            ":: Replies": ["header", ""],
-            "Fit Width": [true, "Replies stretch to the width of the page.", null, true],
-            "Fit Post Menu": [false, "Sets the post menu to the right.", "Fit Width", true, true],
-            "Fit Expanded Images": [false, "Expanded images will better fit to the viewport. Enable 'Fit height' in 4chan X's header menu to use."],
-            "Show Reply Header": [true, "Shows reply header background and line border."],
-            "Show File Info": [true, "Hides filename, dimensions and size info."],
-            "Underline QuoteLinks": [false, "Underlines quotelinks only."],
-            "Indent OP": [true, "Indents the OP instead of touching the screen."],
-            "Allow Wrapping Around OP": [false, "Allow for replies to wrap around OP instead of being forced onto their own line."],
-            "OP Background": [true, "Give OP a background similar to a reply."],
-            "Recolor Even Replies": [false, "Makes every other post a darker color. If Quote Threading is enabled darkens every root reply."],
-            "Reduce Thumbnail Opacity": [false, "Reduces opacity of thumbnails."],
-            "Backlink Icons": [false, "Use icons for backlinks instead of text."],
-            "Backlink Shadow": [false, "Add a shadow to the backlink text."],
-            "Borders": [
-                2, "Changes which sides of replies have borders.", [{
-                    name: "Normal (4chan default)",
-                    value: 1
-                }, {
-                    name: "On all sides",
-                    value: 2
-                }, {
-                    name: "None",
-                    value: 3
-                }]
-            ],
-            "Margin Between Replies": ['', "Change size of spacing in between replies.", [{
-                name: "Very Large",
-                value: 15
-            }, {
+        ":: Main Rice": ["header", ""],
+        "Left Margin": [
+            25, "Change the size of the left margin.", [{
                 name: "Large",
-                value: 8
+                value: 65
             }, {
-                name: "Normal (4chan default)",
-                value: ''
+                name: "Medium",
+                value: 25
             }, {
-                name: "Minimal",
-                value: -2
+                name: "Small",
+                value: 5
             }, {
                 name: "None",
-                value: -4
+                value: 0
             }, {
-                name: "Overlapping Borders",
-                value: -5
-            }]],
-            "Post Message Margin": [
-                2, "Change size of margin around post message.", [{
-                    name: "Small",
-                    value: 1
-                }, {
-                    name: "Normal",
-                    value: 2
-                }, {
-                    name: "Large",
-                    value: 3
-                }]
-            ],
-            ":: Catalog": ["header", ""],
-            "Justified Text": [false, "Justifies the teaser text of every thread to be more uniform."],
-            "Show Background": [true, "Threads receive a matching background."],
-            "Unified Thumbnail Size": [false, "Makes all thumbnails the same size regardless of aspect ratio."],
-            ":: Post Decoration": ["header", ""],
-            "Decoration Style": [
-                0, "Changes the decoration of all posts.", [{
-                    name: "None",
-                    value: 0
-                }, {
-                    name: "Border",
-                    value: 1
-                }, {
-                    name: "Outline",
-                    value: 2
-                }, {
-                    name: "Separator",
-                    value: 3
-                }]
-            ],
-            "Decoration Width": [
-                3, "Changes decoration width of posts including (You)s.", [{
-                    name: "Large",
-                    value: 6
-                }, {
-                    name: "Medium",
-                    value: 3
-                }, {
-                    name: "Small",
-                    value: 1
-                }, {
-                    name: "Custom",
-                    value: 999
-                }], true
-            ],
-            "Custom Decoration Width": [
-                0, "Enter a custom width for the decoration (pixels).", "Decoration Width", 999, true
-            ],
-            "Highlight Style": [
-                "solid", "Changes style of post highlight.", [{
-                    name: "Dashed",
-                    value: "dashed"
-                }, {
-                    name: "Dotted",
-                    value: "dotted"
-                }, {
-                    name: "Double",
-                    value: "double"
-                }, {
-                    name: "Inset",
-                    value: "inset"
-                }, {
-                    name: "Solid",
-                    value: "solid"
-                }]
-            ],
-            ":: Fonts": ["header", ""],
-            "Font Family": [
-                "sans-serif", "Set the default font family.", [{
-                    name: "Default",
-                    value: "sans-serif"
-                }, {
-                    name: "Monospace",
-                    value: "monospace"
-                }, {
-                    name: "Ubuntu",
-                    value: "Ubuntu"
-                }, {
-                    name: "Consolas",
-                    value: "Consolas"
-                }, {
-                    name: "Open Sans",
-                    value: "Open Sans"
-                }, {
-                    name: "Segoe UI",
-                    value: "Segoe UI"
-                }, {
-                    name: "Calibri",
-                    value: "Calibri"
-                }, {
-                    name: "Arial",
-                    value: "Arial"
-                }, {
-                    name: "Lucida Grande",
-                    value: "Lucida Grande"
-                }, {
-                    name: "Helvetica",
-                    value: "Helvetica"
-                }, {
-                    name: "Verdana",
-                    value: "Verdana"
-                }, {
-                    name: "Garamond",
-                    value:"Garamond"
-                }]
-            ],
-            "Font Size": [13, "Set the font size of text (in pixels). Certain menu elements have a 15px limit to avoid breaking their layouts. Default: 13px."],
-            "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels). Default: 11px."],
-            "Backlink Font Size": [10, "Set the font size of backlinks (in pixels). Default: 10px."],
-            "Bitmap Font": [false, "Check this if you are using a bitmap font."],
-            "Misc": [],
-            ":: Notifications": ["header", ""],
-            "Toast Notifications": [true, "Show toast notification popups for events.", null, true],
-            "Style 4chanX Notifications": [true, "Show 4chanX notifications in the same style as StyleChan's toasts.", "Toast Notifications", true, true],
-            "Center Notifications": [false, "Center notifications at the top below the header bar.", "Toast Notifications", true, true],
-            "Full Border": [false, "Use a full border to make notifications more visible. Border style follows the Highlight Style and Width options.", "Toast Notifications", true, true],
-            ":: 4chan X": ["header", ""],
-            "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
-            "Show Header Shadow": [true, "Gives the header a drop shadow."],
-            "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
-            ":: 4chan": ["header", ""],
-            "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
-            "Catalog Links": [false, "Converts board navigation links to catalog links."],
-            "Themes": [],
-            "Hidden Themes": [],
-            "Selected Theme": 1,
-            "NSFW Theme": 0
-        },
+                name: "Custom",
+                value: 999
+            }], true
+        ],
+        "Custom Left Margin": [
+            0, "Left margin custom width (pixels).", "Left Margin", 999, true
+        ],
+        "Right Margin": [
+            25, "Change the size of the right margin.", [{
+                name: "Large",
+                value: 65
+            }, {
+                name: "Medium",
+                value: 25
+            }, {
+                name: "Small",
+                value: 5
+            }, {
+                name: "None",
+                value: 0
+            }, {
+                name: "Custom",
+                value: 999
+            }], true
+        ],
+        "Custom Right Margin": [
+            0, "Right margin custom width (pixels).", "Right Margin", 999, true
+        ],
+        "Rounded Corners": [true, "Styles replies, menus and Quick Reply to have subtly rounded corners."],
+        "Invert Spoiler": [false, "Inverts colors for text spoilers."],
+        "Underline All Links": [false, "Underlines all links in the page."],
+        "Show 4chan Pass Users": [true, "Show a four leaf clover indicating a pass user."],
+        "Show 4chan Pass Login": [false, "Show a link to login with your 4chan pass. Please reload page."],
+        "Show Banner": [false, "Toggle visibility of the banner.", null, true],
+        "Reduce Banner Opacity": [false, "Reduce opacity of the banner for easier viewing.", "Show Banner", true, true],
+        "Show Board Name": [true, "Toggle visibility of the board name."],
+        "Show Reply to Thread Button": [false, "Toggle visibility of the Start a Thread / Reply to Thread button.", null, true],
+        "Show Only in Catalog": [false, "Show the button only when browsing the catalog.", "Show Reply to Thread Button", true, true],
+        "Show Blotter": [false, "Toggle visibility of the 4chan news blotter."],
+        "Show 4chan Ads": [false, "Opts into 4chan\'s banner ads.", null, true],
+        "Show Board Banners": [false, "Toggle visibility of board banners.", "Show 4chan Ads", true, true],
+        "Show Top Ad": [true, "Show the top 4chan banner ad.", "Show 4chan Ads", true, true],
+        "Show Bottom Ad": [true, "Show the bottom 4chan banner ad.", "Show 4chan Ads", true, true],
+        "Show Buy Ad Banner": [true, "Show the [Advertise on 4chan] banner below ads.", "Show 4chan Ads", true, true],
+        "Reduce Ad Opacity": [false, "Reduce the opacity of ads until hover for easier viewing.", "Show 4chan Ads", true, true],
+        "Show Navigation Links": [true, "Toggle visibility of the navigation links at the top and bottom of the threads.", null, true],
+        "Show Top Links": [true, "Toggle visibility of the top navigation links.", "Show Navigation Links", true, true],
+        "Show Bottom Links": [true, "Toggle visibility of the bottom navigation links.", "Show Navigation Links", true, true],
+        ":: Sidebar": ["header", ""],
+        "Sidebar Position": [
+            1, "Change the position of the sidebar or disable it altogether.", [{
+                name: "Right",
+                value: 1
+            }, {
+                name: "Left",
+                value: 2
+            }, {
+                name: "Disabled",
+                value: 3
+            }], true
+        ],
+        "SS-like Sidebar": [false, "Darkens the sidebar and adds a border like 4chan Style Script."],
+        "Minimal Sidebar": [true, "Shrinks the sidebar and moves the banner."],
+        ":: Quick Reply": ["header", ""],
+        "Autohide Style": [
+            2, "Changes how the quick reply is hidden. Please enable Autohide QR in 4chan X.", [{
+                name: "Normal",
+                value: 1
+            }, {
+                name: "Vertical Tabbed",
+                value: 2
+            }, {
+                name: "Fade",
+                value: 3
+            }]
+        ],
+        "Transparent QR": [false, "Reduces opacity of the QR box."],
+        "Remove Background": [false, "Removes the QR background."],
+        "Remove Controls": [false, "Removes the QR controls and checkbox."],
+        "Animated Transition": [false, "Enables a transition animation for the QR."],
+        "Expanding Form Inputs": [true, "Makes certain form elements expand on focus."],
+        "Remember Comment Draft": [false, "Will save and restore unsubmitted QR comments (5 second delay). Drafts expire after 24h."],
+        "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size limit to JPEG."],
+        "Single View Captcha": [false, "Shows the captcha challenges in a single view."],
+        ":: Replies": ["header", ""],
+        "Fit Width": [true, "Replies stretch to the width of the page.", null, true],
+        "Fit Post Menu": [false, "Sets the post menu to the right.", "Fit Width", true, true],
+        "Fit Expanded Images": [false, "Expanded images will better fit to the viewport. Enable 'Fit height' in 4chan X's header menu to use."],
+        "Show Reply Header": [true, "Shows reply header background and line border."],
+        "Show File Info": [true, "Hides filename, dimensions and size info."],
+        "Underline QuoteLinks": [false, "Underlines quotelinks only."],
+        "Indent OP": [true, "Indents the OP instead of touching the screen."],
+        "Allow Wrapping Around OP": [false, "Allow for replies to wrap around OP instead of being forced onto their own line."],
+        "OP Background": [true, "Give OP a background similar to a reply."],
+        "Recolor Even Replies": [false, "Makes every other post a darker color. If Quote Threading is enabled darkens every root reply."],
+        "Reduce Thumbnail Opacity": [false, "Reduces opacity of thumbnails."],
+        "Backlink Icons": [false, "Use icons for backlinks instead of text."],
+        "Backlink Shadow": [false, "Add a shadow to the backlink text."],
+        "Borders": [
+            2, "Changes which sides of replies have borders.", [{
+                name: "Normal (4chan default)",
+                value: 1
+            }, {
+                name: "On all sides",
+                value: 2
+            }, {
+                name: "None",
+                value: 3
+            }]
+        ],
+        "Margin Between Replies": ['', "Change size of spacing in between replies.", [{
+            name: "Very Large",
+            value: 15
+        }, {
+            name: "Large",
+            value: 8
+        }, {
+            name: "Normal (4chan default)",
+            value: ''
+        }, {
+            name: "Minimal",
+            value: -2
+        }, {
+            name: "None",
+            value: -4
+        }, {
+            name: "Overlapping Borders",
+            value: -5
+        }]],
+        "Post Message Margin": [
+            2, "Change size of margin around post message.", [{
+                name: "Small",
+                value: 1
+            }, {
+                name: "Normal",
+                value: 2
+            }, {
+                name: "Large",
+                value: 3
+            }]
+        ],
+        ":: Catalog": ["header", ""],
+        "Justified Text": [false, "Justifies the teaser text of every thread to be more uniform."],
+        "Show Background": [true, "Threads receive a matching background."],
+        "Unified Thumbnail Size": [false, "Makes all thumbnails the same size regardless of aspect ratio."],
+        ":: Post Decoration": ["header", ""],
+        "Decoration Style": [
+            0, "Changes the decoration of all posts.", [{
+                name: "None",
+                value: 0
+            }, {
+                name: "Border",
+                value: 1
+            }, {
+                name: "Outline",
+                value: 2
+            }, {
+                name: "Separator",
+                value: 3
+            }]
+        ],
+        "Decoration Width": [
+            3, "Changes decoration width of posts including (You)s.", [{
+                name: "Large",
+                value: 6
+            }, {
+                name: "Medium",
+                value: 3
+            }, {
+                name: "Small",
+                value: 1
+            }, {
+                name: "Custom",
+                value: 999
+            }], true
+        ],
+        "Custom Decoration Width": [
+            0, "Enter a custom width for the decoration (pixels).", "Decoration Width", 999, true
+        ],
+        "Highlight Style": [
+            "solid", "Changes style of post highlight.", [{
+                name: "Dashed",
+                value: "dashed"
+            }, {
+                name: "Dotted",
+                value: "dotted"
+            }, {
+                name: "Double",
+                value: "double"
+            }, {
+                name: "Inset",
+                value: "inset"
+            }, {
+                name: "Solid",
+                value: "solid"
+            }]
+        ],
+        ":: Fonts": ["header", ""],
+        "Font Family": [
+            "sans-serif", "Set the default font family.", [{
+                name: "Default",
+                value: "sans-serif"
+            }, {
+                name: "Monospace",
+                value: "monospace"
+            }, {
+                name: "Ubuntu",
+                value: "Ubuntu"
+            }, {
+                name: "Consolas",
+                value: "Consolas"
+            }, {
+                name: "Open Sans",
+                value: "Open Sans"
+            }, {
+                name: "Segoe UI",
+                value: "Segoe UI"
+            }, {
+                name: "Calibri",
+                value: "Calibri"
+            }, {
+                name: "Arial",
+                value: "Arial"
+            }, {
+                name: "Lucida Grande",
+                value: "Lucida Grande"
+            }, {
+                name: "Helvetica",
+                value: "Helvetica"
+            }, {
+                name: "Verdana",
+                value: "Verdana"
+            }, {
+                name: "Garamond",
+                value: "Garamond"
+            }]
+        ],
+        "Font Size": [13, "Set the font size of text (in pixels). Certain menu elements have a 15px limit to avoid breaking their layouts. Default: 13px."],
+        "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels). Default: 11px."],
+        "Backlink Font Size": [10, "Set the font size of backlinks (in pixels). Default: 10px."],
+        "Bitmap Font": [false, "Check this if you are using a bitmap font."],
+        "Misc": [],
+        ":: Notifications": ["header", ""],
+        "Toast Notifications": [true, "Show toast notification popups for events.", null, true],
+        "Style 4chanX Notifications": [true, "Show 4chanX notifications in the same style as StyleChan's toasts.", "Toast Notifications", true, true],
+        "Center Notifications": [false, "Center notifications at the top below the header bar.", "Toast Notifications", true, true],
+        "Full Border": [false, "Use a full border to make notifications more visible. Border style follows the Highlight Style and Width options.", "Toast Notifications", true, true],
+        ":: 4chan X": ["header", ""],
+        "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
+        "Show Header Shadow": [true, "Gives the header a drop shadow."],
+        "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
+        ":: 4chan": ["header", ""],
+        "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
+        "Catalog Links": [false, "Converts board navigation links to catalog links."],
+        "Themes": [],
+        "Hidden Themes": [],
+        "Selected Theme": 1,
+        "NSFW Theme": 0
+    },
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
         VERSION = "<%= version %>",
@@ -387,7 +387,7 @@
         $lib, $SS,
         $docBody = null,
         $docHead = null;
-    
+
     // Cache DOM references for performance
     function getDocBody() {
         return $docBody || ($docBody = document.body);
@@ -395,416 +395,416 @@
     function getDocHead() {
         return $docHead || ($docHead = document.head);
     }
-    
+
     if (!Array.isArray)
-        Array.isArray = function(arg) {
+        Array.isArray = function (arg) {
             return Object.prototype.toString.call(arg) === "[object Array]";
         };
     /* STYLE SCRIPT LIBRARY */
     /* More or less based off jQuery */
-    $lib = window.$ = function(selector, root) {
+    $lib = window.$ = function (selector, root) {
         return this instanceof $lib ?
             this.init(selector, root) : new $lib(selector, root);
     };
-    $.waitFor = function(selector, cb) {
+    $.waitFor = function (selector, cb) {
         var el = document.querySelector(selector);
         if (el) { cb(el); return; }
-        var obs = new MutationObserver(function() {
+        var obs = new MutationObserver(function () {
             var el = document.querySelector(selector);
             if (el) { cb(el); obs.disconnect(); }
         });
         obs.observe(document.documentElement, { childList: true, subtree: true });
     };
-    $.waitForFn = function(test, cb) {
+    $.waitForFn = function (test, cb) {
         var result = test();
         if (result) { cb(result); return; }
-        setTimeout(function() { $.waitForFn(test, cb); }, 50);
+        setTimeout(function () { $.waitForFn(test, cb); }, 50);
     };
 
     $lib.prototype = {
-            constructor: $lib,
-            elems: [],
-            length: function() {
-                return this.elems.length;
-            },
-            /* CONSTRUCTOR */
-            init: function(selector, root) {
-                if (selector == null || selector == undefined) return this;
+        constructor: $lib,
+        elems: [],
+        length: function () {
+            return this.elems.length;
+        },
+        /* CONSTRUCTOR */
+        init: function (selector, root) {
+            if (selector == null || selector == undefined) return this;
 
-                if (selector.constructor === $lib) return selector;
-                else if (typeof selector === "string") {
-                    var root = root || document;
-                    var tagCheck = /^<(\w+)([^>]*)>(.*)$/.exec(selector); // No closing tag for root node.
+            if (selector.constructor === $lib) return selector;
+            else if (typeof selector === "string") {
+                var root = root || document;
+                var tagCheck = /^<(\w+)([^>]*)>(.*)$/.exec(selector); // No closing tag for root node.
 
-                    if (root.constructor === $lib)
-                        root = root.get();
+                if (root.constructor === $lib)
+                    root = root.get();
 
-                    if (tagCheck) {
-                        var tag = document.createElement(tagCheck[1]);
+                if (tagCheck) {
+                    var tag = document.createElement(tagCheck[1]);
 
-                        if (tagCheck[2]) {
-                            var attribs, atRegEx = /(\w+)=((?:"(?:[^"]+)"|'(?:[^']+)'|(?:\w+)))/g;
-                            while ((attribs = atRegEx.exec(tagCheck[2])) != null) {
-                                var val = attribs[2];
-                                if ((val[0] == '"' || val[0] === "'") && val[0] == val[val.length - 1])
-                                    val = val.substr(1, val.length - 2)
+                    if (tagCheck[2]) {
+                        var attribs, atRegEx = /(\w+)=((?:"(?:[^"]+)"|'(?:[^']+)'|(?:\w+)))/g;
+                        while ((attribs = atRegEx.exec(tagCheck[2])) != null) {
+                            var val = attribs[2];
+                            if ((val[0] == '"' || val[0] === "'") && val[0] == val[val.length - 1])
+                                val = val.substr(1, val.length - 2);
 
-                                tag.setAttribute(attribs[1], val);
-                            }
+                            tag.setAttribute(attribs[1], val);
                         }
-
-                        tag.innerHTML = tagCheck[3];
-
-                        this.elems = [tag];
-                    } else if (/^#[\w-]+$/.test(selector) && root == document) {
-                        var el;
-
-                        if ((el = document.getElementById(selector.substr(1))) != null)
-                            this.elems = [el];
-                    } else {
-                        if (!root || typeof root.querySelectorAll !== "function") {
-                            this.elems = [];
-                            return this;
-                        }
-                        var results = root.querySelectorAll(selector);
-                        this.elems = Array.prototype.slice.call(results);
                     }
-                } else if (selector.nodeType)
-                    this.elems = [selector];
-                else if (Array.isArray(selector))
-                    this.elems = Array.prototype.slice.call(selector);
 
-                return this;
-            },
+                    tag.innerHTML = tagCheck[3];
 
-            /* DOM NODE RETRIEVAL */
-            get: function(index) {
-                if (index == undefined && this.elems.length === 1)
-                    return this.elems[0];
-                else if (index == undefined && !this.hasSingleEl())
-                    return this.elems;
+                    this.elems = [tag];
+                } else if (/^#[\w-]+$/.test(selector) && root == document) {
+                    var el;
 
-                return this.elems[index];
-            },
-
-            /* DOM MANIPULATION */
-            append: function(el) {
-                if (el.constructor === $lib)
-                    el = el.get();
-
-                return this.each(function() {
-                    this.appendChild(el);
-                });
-            },
-            before: function(el) {
-                if (el.constructor === $lib)
-                    el = el.get();
-
-                return this.each(function() {
-                    this.parentNode.insertBefore(el, this);
-                });
-            },
-            after: function(el) {
-                if (el.constructor === $lib)
-                    el = el.get();
-
-                return this.each(function() {
-                    if (this.nextSibling != null)
-                        this.parentNode.insertBefore(el, this.nextSibling);
-                    else if (this.parentNode != null)
-                        this.parentNode.appendChild(el);
-                });
-            },
-            replace: function(el) {
-                return this.each(function() {
-                    $(this).before(el).remove();
-                });
-            },
-            html: function(html) {
-                if (html == undefined)
-                    return this.elems[0].innerHTML;
-
-                return this.each(function() {
-                    this.innerHTML = html;
-                });
-            },
-            text: function(text) {
-                if (this.length() === 0)
-                    return;
-
-                if (text == undefined)
-                    return this.elems[0].textContent;
-
-                return this.each(function() {
-                    this.textContent = text;
-                });
-            },
-            attr: function(name, val) {
-                if (val == undefined)
-                    if (!this.hasSingleEl())
+                    if ((el = document.getElementById(selector.substr(1))) != null)
+                        this.elems = [el];
+                } else {
+                    if (!root || typeof root.querySelectorAll !== "function") {
+                        this.elems = [];
                         return this;
-                    else
-                        return this.elems[0].getAttribute(name);
+                    }
+                    var results = root.querySelectorAll(selector);
+                    this.elems = Array.prototype.slice.call(results);
+                }
+            } else if (selector.nodeType)
+                this.elems = [selector];
+            else if (Array.isArray(selector))
+                this.elems = Array.prototype.slice.call(selector);
+
+            return this;
+        },
+
+        /* DOM NODE RETRIEVAL */
+        get: function (index) {
+            if (index == undefined && this.elems.length === 1)
+                return this.elems[0];
+            else if (index == undefined && !this.hasSingleEl())
+                return this.elems;
+
+            return this.elems[index];
+        },
+
+        /* DOM MANIPULATION */
+        append: function (el) {
+            if (el.constructor === $lib)
+                el = el.get();
+
+            return this.each(function () {
+                this.appendChild(el);
+            });
+        },
+        before: function (el) {
+            if (el.constructor === $lib)
+                el = el.get();
+
+            return this.each(function () {
+                this.parentNode.insertBefore(el, this);
+            });
+        },
+        after: function (el) {
+            if (el.constructor === $lib)
+                el = el.get();
+
+            return this.each(function () {
+                if (this.nextSibling != null)
+                    this.parentNode.insertBefore(el, this.nextSibling);
+                else if (this.parentNode != null)
+                    this.parentNode.appendChild(el);
+            });
+        },
+        replace: function (el) {
+            return this.each(function () {
+                $(this).before(el).remove();
+            });
+        },
+        html: function (html) {
+            if (html == undefined)
+                return this.elems[0].innerHTML;
+
+            return this.each(function () {
+                this.innerHTML = html;
+            });
+        },
+        text: function (text) {
+            if (this.length() === 0)
+                return;
+
+            if (text == undefined)
+                return this.elems[0].textContent;
+
+            return this.each(function () {
+                this.textContent = text;
+            });
+        },
+        attr: function (name, val) {
+            if (val == undefined)
+                if (!this.hasSingleEl())
+                    return this;
                 else
+                    return this.elems[0].getAttribute(name);
+            else
                 if (val === "")
-                    return this.each(function() {
+                    return this.each(function () {
                         this.removeAttribute(name);
                     });
 
-                return this.each(function() {
-                    this.setAttribute(name, val);
-                });
-            },
-            toggle: function(bHidden) {
-                return this.each(function() {
-                    var $this = $(this);
+            return this.each(function () {
+                this.setAttribute(name, val);
+            });
+        },
+        toggle: function (bHidden) {
+            return this.each(function () {
+                var $this = $(this);
 
-                    if (bHidden == undefined)
-                        bHidden = !($this.attr("disabled") === "true");
+                if (bHidden == undefined)
+                    bHidden = !($this.attr("disabled") === "true");
 
-                    $this.attr("hidden", bHidden || "");
-                    this.style.display = bHidden ? "none" : "";
-                });
-            },
-            hide: function() {
-                return this.toggle(true);
-            },
-            show: function() {
-                return this.toggle(false);
-            },
-            val: function(val) {
-                if (val == undefined) {
-                    var el = this.elems[0];
+                $this.attr("hidden", bHidden || "");
+                this.style.display = bHidden ? "none" : "";
+            });
+        },
+        hide: function () {
+            return this.toggle(true);
+        },
+        show: function () {
+            return this.toggle(false);
+        },
+        val: function (val) {
+            if (val == undefined) {
+                var el = this.elems[0];
 
-                    if (el == undefined)
-                        return false;
-
-                    switch (el.type) {
-                        case "checkbox":
-                        case "radio":
-                            return el.checked == true;
-                        default:
-                            if (/^\d+$/.test(el.value))
-                                return parseInt(el.value);
-                            return el.value;
-                    }
-                }
-
-                return this.each(function() {
-                    switch (this.type) {
-                        case "checkbox":
-                        case "radio":
-                            this.checked = val;
-                            break;
-                        default:
-                            this.value = val;
-                            break;
-                    }
-                });
-            },
-            addClass: function(classNames) {
-                return this.each(function() {
-                    if (this.classList) {
-                        classNames = classNames.split(" ");
-                        for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
-                            this.classList.add(classNames[j]);
-                    } else {
-                        classNames = classNames.split(" ");
-                        for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
-                            if (!$(this).hasClass(classNames[j]))
-                                this.className += (this.className ? " " : "") + classNames[j];
-                    }
-                });
-            },
-            hasClass: function(className) {
-                if (!this.hasSingleEl() || this.elems[0].className == undefined)
+                if (el == undefined)
                     return false;
 
-                if (this.elems[0].classList) {
-                    return this.elems[0].classList.contains(className);
+                switch (el.type) {
+                    case "checkbox":
+                    case "radio":
+                        return el.checked == true;
+                    default:
+                        if (/^\d+$/.test(el.value))
+                            return parseInt(el.value);
+                        return el.value;
                 }
+            }
 
-                var regx = new RegExp("\\b" + className + "\\b");
-                return regx.test(this.elems[0].className);
-            },
-            removeClass: function(classNames) {
-                if (!classNames || typeof classNames !== "string") return this;
-                return this.each(function() {
-                    if (this.classList) {
-                        classNames = classNames.split(" ");
-                        for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
-                            this.classList.remove(classNames[j]);
-                    } else {
-                        classNames = classNames.split(" ");
-                        var cclassNames = this.className.split(" "),
-                            newClasses = [];
-                        for (var k = 0, kMAX = cclassNames.length; k < kMAX; k++) {
-                            var found = false;
-                            for (var j = 0, jMAX = classNames.length; j < jMAX; j++) {
-                                if (classNames[j] === cclassNames[k]) {
-                                    found = true;
-                                    break;
-                                }
-                            }
-                            if (!found && cclassNames[k]) {
-                                newClasses.push(cclassNames[k]);
+            return this.each(function () {
+                switch (this.type) {
+                    case "checkbox":
+                    case "radio":
+                        this.checked = val;
+                        break;
+                    default:
+                        this.value = val;
+                        break;
+                }
+            });
+        },
+        addClass: function (classNames) {
+            return this.each(function () {
+                if (this.classList) {
+                    classNames = classNames.split(" ");
+                    for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
+                        this.classList.add(classNames[j]);
+                } else {
+                    classNames = classNames.split(" ");
+                    for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
+                        if (!$(this).hasClass(classNames[j]))
+                            this.className += (this.className ? " " : "") + classNames[j];
+                }
+            });
+        },
+        hasClass: function (className) {
+            if (!this.hasSingleEl() || this.elems[0].className == undefined)
+                return false;
+
+            if (this.elems[0].classList) {
+                return this.elems[0].classList.contains(className);
+            }
+
+            var regx = new RegExp("\\b" + className + "\\b");
+            return regx.test(this.elems[0].className);
+        },
+        removeClass: function (classNames) {
+            if (!classNames || typeof classNames !== "string") return this;
+            return this.each(function () {
+                if (this.classList) {
+                    classNames = classNames.split(" ");
+                    for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
+                        this.classList.remove(classNames[j]);
+                } else {
+                    classNames = classNames.split(" ");
+                    var cclassNames = this.className.split(" "),
+                        newClasses = [];
+                    for (var k = 0, kMAX = cclassNames.length; k < kMAX; k++) {
+                        var found = false;
+                        for (var j = 0, jMAX = classNames.length; j < jMAX; j++) {
+                            if (classNames[j] === cclassNames[k]) {
+                                found = true;
+                                break;
                             }
                         }
-                        this.className = newClasses.join(" ");
+                        if (!found && cclassNames[k]) {
+                            newClasses.push(cclassNames[k]);
+                        }
                     }
-                });
-            },
-            toggleClass: function(classNames) {
-                if (!classNames || typeof classNames !== "string") return this;
-                var classNamesArray = classNames.split(" ");
-                return this.each(function() {
-                    var $this = $(this);
-                    for (var j = 0, jMAX = classNamesArray.length; j < jMAX; j++)
-                        if (!$this.hasClass(classNamesArray[j]))
-                            $this.addClass(classNamesArray[j]);
-                        else
-                            $this.removeClass(classNamesArray[j]);
-                });
-            },
-            optionClass: function(optionName, optionValue, className) {
-                if (!className || typeof className !== "string") return this;
-                if (!$SS.conf || $SS.conf[optionName] === undefined) return this;
-                return this.each(function() {
-                    var $this = $(this);
-                    if ($SS.conf[optionName] === optionValue && !$this.hasClass(className))
-                        $this.addClass(className);
-                    else if ($SS.conf[optionName] !== optionValue && $this.hasClass(className))
-                        $this.removeClass(className);
-                });
-            },
-            remove: function() {
-                return this.each(function() {
-                    this.parentNode.removeChild(this);
-                });
-            },
-            /* DOM TRAVERSING */
-            parent: function() {
-                if (!this.hasSingleEl()) return this;
-
-                return new $lib(this.elems[0].parentNode);
-            },
-            children: function(selector) {
-                if (!this.hasSingleEl())
-                    return this;
-                else if (selector == null)
-                    selector = "*";
-
-                return new $lib(selector, this.elems[0]);
-            },
-            nextSibling: function(selector) {
-                if (!this.hasSingleEl() ? true : this.elems[0].nextSibling == null)
-                    return new $lib(null);
-
-                if (selector != undefined) {
-                    var t, m = new $lib(selector, this.elems[0].parentNode),
-                        s = this.elems[0].parentNode.childNodes;
-
-                    for (var i = s.length - 1; i >= 0; --i) {
-                        if (s[i] === this.elems[0] && t == undefined) // end and no matching siblings
-                            return new $lib(null);
-                        else if (s[i] === this.elems[0] && t != undefined) // end and matched sibling
-                            return new $lib(t);
-                        else if (m.elems.indexOf(s[i]) !== -1) // this element matches the selector
-                            t = s[i];
-                    }
+                    this.className = newClasses.join(" ");
                 }
+            });
+        },
+        toggleClass: function (classNames) {
+            if (!classNames || typeof classNames !== "string") return this;
+            var classNamesArray = classNames.split(" ");
+            return this.each(function () {
+                var $this = $(this);
+                for (var j = 0, jMAX = classNamesArray.length; j < jMAX; j++)
+                    if (!$this.hasClass(classNamesArray[j]))
+                        $this.addClass(classNamesArray[j]);
+                    else
+                        $this.removeClass(classNamesArray[j]);
+            });
+        },
+        optionClass: function (optionName, optionValue, className) {
+            if (!className || typeof className !== "string") return this;
+            if (!$SS.conf || $SS.conf[optionName] === undefined) return this;
+            return this.each(function () {
+                var $this = $(this);
+                if ($SS.conf[optionName] === optionValue && !$this.hasClass(className))
+                    $this.addClass(className);
+                else if ($SS.conf[optionName] !== optionValue && $this.hasClass(className))
+                    $this.removeClass(className);
+            });
+        },
+        remove: function () {
+            return this.each(function () {
+                this.parentNode.removeChild(this);
+            });
+        },
+        /* DOM TRAVERSING */
+        parent: function () {
+            if (!this.hasSingleEl()) return this;
 
-                return new $lib(this.elems[0].nextSibling);
-            },
-            previousSibling: function(selector) {
-                if (!this.hasSingleEl() ? true : this.elems[0].previousSibling == null)
-                    return new $lib(null);
-
-                if (selector != undefined) {
-                    var t, m = new $lib(selector, this.elems[0].parentNode),
-                        s = this.elems[0].parentNode.childNodes;
-
-                    for (var i = 0, MAX = s.length; i < MAX; ++i) {
-                        if (s[i] === this.elems[0] && t == undefined)
-                            return new $lib(null);
-                        else if (s[i] === this.elems[0] && t != undefined)
-                            return new $lib(t);
-                        else if (m.elems.indexOf(s[i]) !== -1)
-                            t = s[i];
-                    }
-                }
-
-                return new $lib(this.elems[0].previousSibling);
-            },
-
-            /* EVENT METHODS */
-            bind: function(type, listener) {
-                return this.each(function() {
-                    this.addEventListener(type, listener, false);
-                });
-            },
-            unbind: function(type, listener) {
-                return this.each(function() {
-                    this.removeEventListener(type, listener, false);
-                });
-            },
-            fire: function(evnt) {
-                var ev = document.createEvent("HTMLEvents");
-
-                return this.each(function() {
-                    ev.initEvent(evnt, true, true);
-                    this.dispatchEvent(ev);
-                });
-            },
-            scrollIntoView: function(alignWithTop) {
-                return this.each(function() {
-                    this.scrollIntoView(alignWithTop);
-                });
-            },
-            /* HELPER METHODS */
-            each: function(func, args) {
-                if (args != null && !Array.isArray(args))
-                    args = [args];
-
-                for (var i = 0, MAX = this.elems.length; i < MAX; ++i)
-                    func.apply(this.elems[i], args || [i]);
-
+            return new $lib(this.elems[0].parentNode);
+        },
+        children: function (selector) {
+            if (!this.hasSingleEl())
                 return this;
-            },
-            exists: function() {
-                return this.elems.length > 0;
-            },
-            hasSingleEl: function() {
-                return this.elems.length === 1;
-            },
-            riceCheck: function() {
-                return this.each(function() {
-                    var click = function(e) {
-                        e.preventDefault();
-                        this.previousSibling.click();
-                    };
-                    if (this.isRiced) return;
-                    else if (this.nextSibling != undefined && this.nextSibling.className === "riceCheck")
-                        return $(this.nextSibling).bind("click", click);
+            else if (selector == null)
+                selector = "*";
 
-                    var div = $("<div class=riceCheck>").bind("click", click);
-                    $(this).hide().after(div);
+            return new $lib(selector, this.elems[0]);
+        },
+        nextSibling: function (selector) {
+            if (!this.hasSingleEl() ? true : this.elems[0].nextSibling == null)
+                return new $lib(null);
 
-                    return this.isRiced = true;
-                });
-            },
-            jsColor: function() {
-                return this.each(function() {
-                    this.color = new $SS.jscolor.color(this);
-                });
+            if (selector != undefined) {
+                var t, m = new $lib(selector, this.elems[0].parentNode),
+                    s = this.elems[0].parentNode.childNodes;
+
+                for (var i = s.length - 1; i >= 0; --i) {
+                    if (s[i] === this.elems[0] && t == undefined) // end and no matching siblings
+                        return new $lib(null);
+                    else if (s[i] === this.elems[0] && t != undefined) // end and matched sibling
+                        return new $lib(t);
+                    else if (m.elems.indexOf(s[i]) !== -1) // this element matches the selector
+                        t = s[i];
+                }
             }
-        };
+
+            return new $lib(this.elems[0].nextSibling);
+        },
+        previousSibling: function (selector) {
+            if (!this.hasSingleEl() ? true : this.elems[0].previousSibling == null)
+                return new $lib(null);
+
+            if (selector != undefined) {
+                var t, m = new $lib(selector, this.elems[0].parentNode),
+                    s = this.elems[0].parentNode.childNodes;
+
+                for (var i = 0, MAX = s.length; i < MAX; ++i) {
+                    if (s[i] === this.elems[0] && t == undefined)
+                        return new $lib(null);
+                    else if (s[i] === this.elems[0] && t != undefined)
+                        return new $lib(t);
+                    else if (m.elems.indexOf(s[i]) !== -1)
+                        t = s[i];
+                }
+            }
+
+            return new $lib(this.elems[0].previousSibling);
+        },
+
+        /* EVENT METHODS */
+        bind: function (type, listener) {
+            return this.each(function () {
+                this.addEventListener(type, listener, false);
+            });
+        },
+        unbind: function (type, listener) {
+            return this.each(function () {
+                this.removeEventListener(type, listener, false);
+            });
+        },
+        fire: function (evnt) {
+            var ev = document.createEvent("HTMLEvents");
+
+            return this.each(function () {
+                ev.initEvent(evnt, true, true);
+                this.dispatchEvent(ev);
+            });
+        },
+        scrollIntoView: function (alignWithTop) {
+            return this.each(function () {
+                this.scrollIntoView(alignWithTop);
+            });
+        },
+        /* HELPER METHODS */
+        each: function (func, args) {
+            if (args != null && !Array.isArray(args))
+                args = [args];
+
+            for (var i = 0, MAX = this.elems.length; i < MAX; ++i)
+                func.apply(this.elems[i], args || [i]);
+
+            return this;
+        },
+        exists: function () {
+            return this.elems.length > 0;
+        },
+        hasSingleEl: function () {
+            return this.elems.length === 1;
+        },
+        riceCheck: function () {
+            return this.each(function () {
+                var click = function (e) {
+                    e.preventDefault();
+                    this.previousSibling.click();
+                };
+                if (this.isRiced) return;
+                else if (this.nextSibling != undefined && this.nextSibling.className === "riceCheck")
+                    return $(this.nextSibling).bind("click", click);
+
+                var div = $("<div class=riceCheck>").bind("click", click);
+                $(this).hide().after(div);
+
+                return this.isRiced = true;
+            });
+        },
+        jsColor: function () {
+            return this.each(function () {
+                this.color = new $SS.jscolor.color(this);
+            });
+        }
+    };
     /* END STYLE SCRIPT LIBRARY */
 
     /* STYLE SCRIPT CLASSES & METHODS */
     $SS = {
         browser: {},
-        DOMLoaded: function(reload) {
+        DOMLoaded: function (reload) {
             $SS.classes.init();
 
             var div;
@@ -812,11 +812,11 @@
                 $SS.options.init();
 
                 $(document).bind("QRDialogCreation", $SS.QRDialogCreationHandler)
-                           .bind("OpenSettings", $SS.NodeInsertionHandler)
-                           .bind("ThreadUpdate", $SS.NodeInsertionHandler);
+                    .bind("OpenSettings", $SS.NodeInsertionHandler)
+                    .bind("ThreadUpdate", $SS.NodeInsertionHandler);
 
                 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-                var observer = new MutationObserver(function(mutations) {
+                var observer = new MutationObserver(function (mutations) {
                     var i, j, MAX, _MAX, nodes, node;
 
                     for (i = 0, MAX = mutations.length; i < MAX; ++i) {
@@ -848,13 +848,13 @@
                 if (document.documentElement.classList.contains("fourchan-x"))
                     if ((!(html = $("*[xmlns]")).exists()) && (!(ctxmenu = $("#ctxmenu-main").exists())))
                         if ((link = $("link[title][rel='stylesheet']")).exists())
-                            link.each(function() {
+                            link.each(function () {
                                 if (/4cdn\.org|4chan\.org/.test(this.getAttribute("href") || ""))
                                     $(this).attr("href", "");
                             });
 
                 if ((div = $("#globalMessage *[style]")).exists())
-                    div.each(function() {
+                    div.each(function () {
                         this.removeAttribute("style");
                     });
 
@@ -863,23 +863,23 @@
                 };
 
                 // 4chan ads being added with JS
-                if (!$SS.conf["Show 4chan Ads"]||!$SS.conf["Show Top Ad"]) {
+                if (!$SS.conf["Show 4chan Ads"] || !$SS.conf["Show Top Ad"]) {
                     $(".topad.center").remove();
                     $("#danbo-s-t.danbo-slot").remove();
                 }
-                if (!$SS.conf["Show 4chan Ads"]||!$SS.conf["Show Bottom Ad"]) {
+                if (!$SS.conf["Show 4chan Ads"] || !$SS.conf["Show Bottom Ad"]) {
                     $(".bottomad.center").remove();
                     $("#danbo-s-b.danbo-slot").remove();
                 }
                 // 4chan Pass Link
                 if ($SS.conf["Show 4chan Pass Login"]) {
-                    const link = $("<span class='brackets-wrap pass-link-container pass-login'><a title='4chan Pass login' href='javascript:;'>4chan Pass</a></span>").bind("click", function(e) {
+                    const link = $("<span class='brackets-wrap pass-link-container pass-login'><a title='4chan Pass login' href='javascript:;'>4chan Pass</a></span>").bind("click", function (e) {
                         // Prevent the default link behavior
                         e.preventDefault();
                         // Open the link in a new window with custom size
-                        window.open('https://sys.4chan.org/auth', '_blank', 'width=502,height=346')
+                        window.open('https://sys.4chan.org/auth', '_blank', 'width=502,height=346');
                     });
-                    $(".navLinks.desktop").append(link);                    
+                    $(".navLinks.desktop").append(link);
                 };
 
                 // Auto-convert images on drop
@@ -895,12 +895,12 @@
 
                 // Auto-open native QR on thread pages (non-4chanX only)
                 if ($SS.location.reply && $SS.conf["Pin Quick Reply"] && !document.documentElement.classList.contains("fourchan-x")) {
-                    $.waitFor("a[data-cmd='open-qr']", function(link) { link.click(); });
+                    $.waitFor("a[data-cmd='open-qr']", function (link) { link.click(); });
                 }
 
                 if ($SS.conf["Catalog Links"]) {
                     function fixBoardLinks(nav) {
-                        nav.querySelectorAll("a[href]").forEach(function(a) {
+                        nav.querySelectorAll("a[href]").forEach(function (a) {
                             var href = a.getAttribute("href");
                             if (/^(\/\/|https?:\/\/)?(?:boards\.4chan\.org)?\/(?!search$)[a-z0-9]+\/*$/i.test(href))
                                 a.setAttribute("href", href.replace(/\/?$/, "/catalog"));
@@ -911,10 +911,10 @@
                 }
 
                 // Remove certain links
-                (function() {
+                (function () {
                     function removeLink(container, selector) {
                         if (!container) return;
-                        container.querySelectorAll(selector).forEach(function(a) {
+                        container.querySelectorAll(selector).forEach(function (a) {
                             var prev = a.previousSibling;
                             if (prev && prev.nodeType === 3 && /^\s*\[/.test(prev.textContent))
                                 prev.remove();
@@ -929,7 +929,7 @@
                 })();
 
                 // things that need to change after 4chan X loads.
-                setTimeout(function() {
+                setTimeout(function () {
                     if (!$SS.QRhandled && (div = $("#qr")).exists())
                         $SS.QRDialogCreationHandler({
                             target: div
@@ -938,7 +938,7 @@
 
             }
         },
-        init: function(reload) {
+        init: function (reload) {
             if (!reload) {
                 if (/^about:neterror/.test(document.documentURI)) return;
                 if (document.documentElement.classList.contains("fourchan-x")) {
@@ -951,7 +951,7 @@
                 $SS.location = $SS.getLocation();
 
                 if ((m_VERSION = $SS.Config.get("VERSION")) !== VERSION) {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         var content = document.createElement('span');
                         var changelogLink = document.createElement('a');
 
@@ -989,7 +989,7 @@
             $SS.Themes.init();
 
             /* Set native 4chan theme to mitigate unloaded CSS flashbang #6 */
-            (function() {
+            (function () {
                 var nativeTheme = $SS.theme.bgColor.isLight ? "Yotsuba B New" : "Tomorrow",
                     cookieName = $SS.location.nsfw ? "nws_style" : "ws_style";
                 document.cookie = cookieName + "=" + nativeTheme + ";domain=.4chan.org;samesite=strict;path=/";
@@ -999,7 +999,7 @@
                 $SS.insertCSS();
                 $SS.DOMLoaded(true);
             } else {
-                $.waitFor("link[rel=stylesheet]", function() { $SS.insertCSS(); });
+                $.waitFor("link[rel=stylesheet]", function () { $SS.insertCSS(); });
                 if (/complete|interactive/.test(document.readyState))
                     $SS.DOMLoaded();
                 else
@@ -1009,7 +1009,7 @@
         },
 
         /* STYLING & DOM */
-        insertCSS: function() {
+        insertCSS: function () {
             var css,
                 reload = $("#ch4SS").exists();
 
@@ -1023,7 +1023,7 @@
             else
                 $(getDocHead()).append($("<style type='text/css' id=ch4SS>").text(css));
         },
-        initImageConvertOnDrop: function() {
+        initImageConvertOnDrop: function () {
             var MAX_BYTES = $SS.location.maxFileSize;
 
             function notify(msg) {
@@ -1035,19 +1035,19 @@
             }
 
             function convertToJPEG(file, baseName, qrInput) {
-                createImageBitmap(file).then(function(bitmap) {
+                createImageBitmap(file).then(function (bitmap) {
                     var canvas = document.createElement("canvas");
                     canvas.width = bitmap.width;
                     canvas.height = bitmap.height;
                     canvas.getContext("2d").drawImage(bitmap, 0, 0);
                     bitmap.close();
-                    
+
                     var qualities = [0.99, 0.98, 0.97, 0.96, 0.95, 0.90, 0.85, 0.80, 0.75];
                     var outName = baseName + ".jpg";
 
                     function tryQuality(index) {
                         var q = qualities[index];
-                        canvas.toBlob(function(blob) {
+                        canvas.toBlob(function (blob) {
                             if (blob.size <= MAX_BYTES || index === qualities.length - 1) {
                                 var converted = new File([blob], outName, { type: "image/jpeg" });
                                 var dt = new DataTransfer();
@@ -1063,7 +1063,7 @@
                     }
 
                     tryQuality(0);
-                }).catch(function() {});
+                }).catch(function () { });
             }
 
             function shouldConvert(file) {
@@ -1073,22 +1073,22 @@
 
             function findQRFileInput() {
                 return document.querySelector("#qr input[type=file]") ||
-                       document.querySelector("#quickReply #qrFile") ||
-                       document.querySelector("#quickReply input[type=file]") ||
-                       document.querySelector("form[name='qrPost'] input[type=file]") ||
-                       document.querySelector("form[name='post'] input[type=file]") ||
-                       document.querySelector("#postForm input[type=file]") ||
-                       document.querySelector("#postFile");
+                    document.querySelector("#quickReply #qrFile") ||
+                    document.querySelector("#quickReply input[type=file]") ||
+                    document.querySelector("form[name='qrPost'] input[type=file]") ||
+                    document.querySelector("form[name='post'] input[type=file]") ||
+                    document.querySelector("#postForm input[type=file]") ||
+                    document.querySelector("#postFile");
             }
 
             function clearSelectedFile(input) {
                 try {
                     input.files = new DataTransfer().files;
-                } catch (error) {}
+                } catch (error) { }
             }
 
             // File picker: intercept change on the QR input
-            document.addEventListener("change", function(e) {
+            document.addEventListener("change", function (e) {
                 var input = e.target;
                 if (input.type !== "file") return;
                 if (!input.closest("#qr, #quickReply, #postForm, form[name='qrPost'], form[name='post']")) return;
@@ -1100,7 +1100,7 @@
             }, true);
 
             // Drag and drop
-            document.addEventListener("drop", function(e) {
+            document.addEventListener("drop", function (e) {
                 var files = e.dataTransfer && e.dataTransfer.files;
                 if (!files || !files.length) return;
 
@@ -1119,7 +1119,7 @@
                 convertToJPEG(file, baseName, qrInput);
             }, true);
         },
-        getNotificationRoot: function() {
+        getNotificationRoot: function () {
             var root = document.getElementById('stylechan-notifications');
 
             if (root) return root;
@@ -1133,18 +1133,18 @@
             getDocBody().appendChild(root);
             return root;
         },
-        dismissNotification: function(node) {
+        dismissNotification: function (node) {
             if (!node || node.dataset.closing === 'true') return;
 
             node.dataset.closing = 'true';
             node.classList.add('closing');
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (node.parentNode)
                     node.parentNode.removeChild(node);
             }, 180);
         },
-        notify: function(detail) {
+        notify: function (detail) {
             var root, note, text, lifetime;
 
             if ($SS.conf && !$SS.conf["Toast Notifications"])
@@ -1158,7 +1158,7 @@
 
             root = $SS.getNotificationRoot();
             if (!root) {
-                return setTimeout(function() {
+                return setTimeout(function () {
                     $SS.notify(detail);
                 }, 25);
             }
@@ -1179,12 +1179,12 @@
                 text.appendChild(detail.content);
             note.appendChild(text);
 
-            note.addEventListener('click', function(e) {
+            note.addEventListener('click', function (e) {
                 if (e.target.closest('a'))
                     return;
                 $SS.dismissNotification(note);
             });
-            note.addEventListener('keydown', function(e) {
+            note.addEventListener('keydown', function (e) {
                 if (e.target.closest && e.target.closest('a'))
                     return;
                 if (e.key === "Enter" || e.key === "Escape") {
@@ -1197,33 +1197,33 @@
             if (root.childElementCount > 4)
                 $SS.dismissNotification(root.firstElementChild);
 
-            setTimeout(function() {
+            setTimeout(function () {
                 note.classList.add('visible');
             }, 0);
 
             if (lifetime > 0) {
-                setTimeout(function() {
+                setTimeout(function () {
                     $SS.dismissNotification(note);
                 }, lifetime * 1000);
             }
         },
-        initRememberComment: function() {
+        initRememberComment: function () {
             if (!$SS.conf["Remember Comment Draft"]) return;
 
-            $.waitFor("#qr, #quickReply, form[name='post']", function(node) {
+            $.waitFor("#qr, #quickReply, form[name='post']", function (node) {
                 $SS.bindRememberComment(node);
             });
         },
-        getRememberCommentPrefix: function() {
+        getRememberCommentPrefix: function () {
             return NAMESPACE + "RememberComment:";
         },
-        getRememberCommentKey: function() {
+        getRememberCommentKey: function () {
             return $SS.getRememberCommentPrefix() + location.pathname;
         },
-        getRememberCommentExpiry: function() {
+        getRememberCommentExpiry: function () {
             return 24 * 60 * 60 * 1000;
         },
-        loadRememberedComment: function(storageKey) {
+        loadRememberedComment: function (storageKey) {
             var rawValue = localStorage.getItem(storageKey);
             var parsedValue;
 
@@ -1248,7 +1248,7 @@
 
             return parsedValue;
         },
-        cleanupRememberedComments: function() {
+        cleanupRememberedComments: function () {
             var prefix = $SS.getRememberCommentPrefix();
             var now = Date.now();
             var keptEntries = [];
@@ -1268,25 +1268,25 @@
                 });
             }
 
-            keptEntries.sort(function(a, b) {
+            keptEntries.sort(function (a, b) {
                 return b.savedAt - a.savedAt;
             });
 
-            keptEntries.slice(10).forEach(function(entry) {
+            keptEntries.slice(10).forEach(function (entry) {
                 localStorage.removeItem(entry.key);
             });
         },
-        saveRememberedComment: function(storageKey, text) {
+        saveRememberedComment: function (storageKey, text) {
             localStorage.setItem(storageKey, JSON.stringify({
                 text: text,
                 savedAt: Date.now()
             }));
             $SS.cleanupRememberedComments();
         },
-        clearRememberedComment: function() {
+        clearRememberedComment: function () {
             localStorage.removeItem($SS.getRememberCommentKey());
         },
-        bindRememberComment: function(qrNode) {
+        bindRememberComment: function (qrNode) {
             if (!qrNode || !qrNode.dataset || qrNode.dataset.rememberCommentBound || !$SS.conf["Remember Comment Draft"]) return;
 
             var commentField = qrNode.querySelector("textarea");
@@ -1310,7 +1310,7 @@
                 }
 
                 clearTimeout(saveTimer);
-                saveTimer = setTimeout(function() {
+                saveTimer = setTimeout(function () {
                     if (commentField.value.trim())
                         $SS.saveRememberedComment(storageKey, commentField.value);
                     else
@@ -1327,7 +1327,7 @@
             commentField.addEventListener("input", queueSave);
             if (formNode)
                 formNode.addEventListener("submit", clearSavedComment, true);
-            qrNode.addEventListener("click", function(e) {
+            qrNode.addEventListener("click", function (e) {
                 var submitNode = e.target.closest("input[type=submit], button[type=submit]");
                 if (submitNode)
                     clearSavedComment();
@@ -1335,25 +1335,25 @@
 
             qrNode.dataset.rememberCommentBound = "true";
         },
-        initSingleViewCaptcha: function() {
+        initSingleViewCaptcha: function () {
             if (!$SS.conf["Single View Captcha"]) return;
 
-            $.waitForFn(function() {
+            $.waitForFn(function () {
                 return typeof TCaptcha !== "undefined" && typeof TCaptcha.buildSliderNode === "function";
-            }, function() {
+            }, function () {
                 var picksByTask = [];
 
                 function tidyPrompt(promptText) {
                     return promptText
                         .replace(/Use the scroll bar below to\s*|,\s*then click next\.?/gi, '')
-                        .replace(/(?:^|>)\s*([a-z])/i, function(match) {
+                        .replace(/(?:^|>)\s*([a-z])/i, function (match) {
                             return match.toUpperCase();
                         }) + '.';
                 }
 
                 function syncCaptchaResponse() {
                     if (!TCaptcha.respNode) return;
-                    TCaptcha.respNode.value = picksByTask.map(function(choice) {
+                    TCaptcha.respNode.value = picksByTask.map(function (choice) {
                         return choice === undefined ? "" : choice;
                     }).join("");
                 }
@@ -1369,7 +1369,7 @@
                     backButton.className = "tcaptcha-nav tcaptcha-nav-back" + (TCaptcha.taskId <= 0 ? " is-disabled" : "");
                     backButton.textContent = "‹";
                     backButton.setAttribute("aria-disabled", TCaptcha.taskId <= 0 ? "true" : "false");
-                    backButton.addEventListener("click", function(evt) {
+                    backButton.addEventListener("click", function (evt) {
                         evt.preventDefault();
                         if (TCaptcha.taskId > 0) {
                             TCaptcha.setTaskId(TCaptcha.taskId - 1);
@@ -1385,7 +1385,7 @@
                     forwardButton.className = "tcaptcha-nav tcaptcha-nav-forward" + (TCaptcha.taskId >= TCaptcha.tasks.length - 1 ? " is-disabled" : "");
                     forwardButton.textContent = "›";
                     forwardButton.setAttribute("aria-disabled", TCaptcha.taskId >= TCaptcha.tasks.length - 1 ? "true" : "false");
-                    forwardButton.addEventListener("click", function(evt) {
+                    forwardButton.addEventListener("click", function (evt) {
                         evt.preventDefault();
                         if (TCaptcha.taskId < TCaptcha.tasks.length - 1) {
                             TCaptcha.setTaskId(TCaptcha.taskId + 1);
@@ -1414,7 +1414,7 @@
                 function attachGridHandler(gridNode) {
                     if (!gridNode || gridNode.dataset.singleCaptchaBound) return;
 
-                    gridNode.addEventListener("click", function(evt) {
+                    gridNode.addEventListener("click", function (evt) {
                         var tileNode = evt.target.closest(".tcaptcha-image");
                         var choiceIndex;
 
@@ -1431,7 +1431,7 @@
 
                 function applyCaptchaLayout(gridNode) {
                     var previewNodes = Array.from(gridNode.querySelectorAll(".tcaptcha-image img"));
-                    var isCompactMode = previewNodes.length > 0 && previewNodes.every(function(imageNode) {
+                    var isCompactMode = previewNodes.length > 0 && previewNodes.every(function (imageNode) {
                         if (!imageNode.naturalWidth || !imageNode.naturalHeight) return false;
 
                         return Math.abs(imageNode.naturalWidth - imageNode.naturalHeight) <= 4 &&
@@ -1449,13 +1449,13 @@
                         return;
                     }
 
-                    previewNodes.forEach(function(imageNode) {
+                    previewNodes.forEach(function (imageNode) {
                         if (imageNode.complete && imageNode.naturalWidth) return;
 
-                        imageNode.addEventListener("load", function() {
+                        imageNode.addEventListener("load", function () {
                             applyCaptchaLayout(gridNode);
                         }, { once: true });
-                        imageNode.addEventListener("error", function() {
+                        imageNode.addEventListener("error", function () {
                             applyCaptchaLayout(gridNode);
                         }, { once: true });
                     });
@@ -1483,7 +1483,7 @@
                         promptHTML = '<div id="t-desc"></div>';
                     }
 
-                    tileHTML = activeChallenge.items.map(function(bitmap, tileIndex) {
+                    tileHTML = activeChallenge.items.map(function (bitmap, tileIndex) {
                         var activeClass = currentPick === tileIndex ? " active" : "";
                         return '<button type="button" class="tcaptcha-image' + activeClass + '" data-choice="' + tileIndex + '"><img src="data:image/png;base64,' + bitmap + '"/></button>';
                     }).join("");
@@ -1496,7 +1496,7 @@
                     paintNavigator();
                 }
 
-                TCaptcha.setChallenge = function(challengeData) {
+                TCaptcha.setChallenge = function (challengeData) {
                     this.challengeIdNode.value = challengeData.challenge;
                     this.respNode.value = "";
                     picksByTask = [];
@@ -1507,37 +1507,37 @@
                     renderCaptchaGrid();
                 };
 
-                TCaptcha.setTaskId = function(taskIndex) {
+                TCaptcha.setTaskId = function (taskIndex) {
                     this.taskId = Math.max(0, Math.min(taskIndex, this.tasks.length - 1));
                     paintNavigator();
                 };
 
-                TCaptcha.setTaskNodeContent = function(text) {
+                TCaptcha.setTaskNodeContent = function (text) {
                     this.taskNode.innerHTML = '<div id="t-desc">' + text + '</div>';
                 };
 
-                TCaptcha.buildSliderNode = function() {
+                TCaptcha.buildSliderNode = function () {
                     return Object.assign(document.createElement('span'), { id: 't-slider', hidden: true });
                 };
 
-                TCaptcha.buildNextNode = function() {
+                TCaptcha.buildNextNode = function () {
                     return Object.assign(document.createElement('button'), { id: 't-next', className: 'tcaptcha-stepper', type: 'button', textContent: 'Next' });
                 };
             });
         },
-        initNativeQRAutohide: function() {
+        initNativeQRAutohide: function () {
             if (document.documentElement.classList.contains("fourchan-x")) return;
-            $.waitFor("#quickReply", function(qr) {
-                qr.addEventListener("focusin", function() {
+            $.waitFor("#quickReply", function (qr) {
+                qr.addEventListener("focusin", function () {
                     qr.classList.add("focus");
                 });
-                qr.addEventListener("focusout", function(e) {
+                qr.addEventListener("focusout", function (e) {
                     if (!qr.contains(e.relatedTarget))
                         qr.classList.remove("focus");
                 });
             });
         },
-        QRDialogCreationHandler: function(e) {
+        QRDialogCreationHandler: function (e) {
             var qr = e.target;
 
             $("input[type=checkbox]", qr).riceCheck();
@@ -1545,14 +1545,14 @@
 
             $SS.QRhandled = true;
         },
-        NodeInsertionHandler: function(e) {
+        NodeInsertionHandler: function (e) {
             var settings = e.target;
             $("input[type=checkbox]", settings).riceCheck();
         },
         /* CONFIG */
         Config: {
-            init: function() {
-                var parseVal = function(key, val) {
+            init: function () {
+                var parseVal = function (key, val) {
                     if (/^(Selected|Hidden)+\s(Themes?)+$/.test(key)) {
                         if (key === "Selected Theme")
                             return parseInt(val);
@@ -1585,7 +1585,7 @@
                 $SS.conf["Margin Post Message"] = $SS.conf["Post Message Margin"] === 1 ? "4px 16px" : ($SS.conf["Post Message Margin"] === 3 ? "20px 40px" : "");
                 $SS.conf["Width Decoration"] = $SS.conf["Decoration Width"] !== 999 ? $SS.conf["Decoration Width"] : $SS.conf["Custom Decoration Width"];
             },
-            get: function(name) {
+            get: function (name) {
                 var val = GM_getValue(NAMESPACE + name);
 
                 if (val != undefined)
@@ -1593,7 +1593,7 @@
 
                 return defaultConfig[name];
             },
-            set: function(name, val) {
+            set: function (name, val) {
                 name = NAMESPACE + name;
 
                 if (typeof val !== "number")
@@ -1606,7 +1606,7 @@
         /* OPTIONS */
         options: {
             saveAndClose: false,
-            init: function() {
+            init: function () {
                 $(document).bind("keydown", $SS.options.keydown);
 
                 const a = $("<span class='shortcut brackets-wrap'><a id='StyleChanLink' title='StyleChan Settings' class='fa fa-gears' href='javascript:;'>StyleChan</a></span>").bind("click", $SS.options.show);
@@ -1615,7 +1615,7 @@
                 /* When 4chan XT */
                 const c = $("<span id='shortcut-settings' class='shortcut brackets-wrap' data-index='840'><a class='settings-link' id='StyleChanLink' title='StyleChan Settings' href='javascript:;'><span class='icon--alt-text'>StyleChan</span>" + $SS.theme.icons.menuIcon + "</a></span>").bind("click", $SS.options.show);
 
-                $.waitFor(".fourchan-x #shortcuts", function() {
+                $.waitFor(".fourchan-x #shortcuts", function () {
                     $(".fourchan-x:not(.fourchan-xt)").exists() ? $(".shortcut.brackets-wrap:last-of-type").before(a) : $("#boardNavDesktop").append(b);
                     $(".fourchan-xt").exists() ? $(".shortcut.brackets-wrap:last-of-type").before(c) : $("#boardNavDesktop").append(b);
                 });
@@ -1628,7 +1628,7 @@
                         link.addEventListener("click", $SS.options.show);
                         return link;
                     }
-                    $.waitFor("#boardNavDesktop #navtopright", function(navtopright) {
+                    $.waitFor("#boardNavDesktop #navtopright", function (navtopright) {
                         var span = document.createElement("span");
                         span.appendChild(document.createTextNode(" ["));
                         var link = makeNavLink();
@@ -1637,24 +1637,24 @@
                         span.appendChild(document.createTextNode("]"));
                         navtopright.appendChild(span);
                     });
-                    $.waitFor("#boardNavDesktop .pageJump", function(pageJump) {
+                    $.waitFor("#boardNavDesktop .pageJump", function (pageJump) {
                         var link = makeNavLink();
                         link.textContent = " StyleChan ";
                         pageJump.insertBefore(link, pageJump.lastElementChild);
                     });
-                    $.waitFor("#boardNavMobile .pageJump", function(pageJump) {
+                    $.waitFor("#boardNavMobile .pageJump", function (pageJump) {
                         var link = makeNavLink();
                         link.textContent = " StyleChan ";
                         pageJump.insertBefore(link, pageJump.lastElementChild);
                     });
                 }
             },
-            show: function() {
+            show: function () {
                 if ($("#overlay").exists())
                     $SS.options.close();
                 else {
                     var overlay = $("<div id=overlay>").bind("click", $SS.options.close),
-                        tOptions = $("<div id='oneechan-options' class=dialog>").bind("click", function(e) {
+                        tOptions = $("<div id='oneechan-options' class=dialog>").bind("click", function (e) {
                             return e.stopPropagation();
                         }),
                         optionsHTML = [
@@ -1710,7 +1710,7 @@
                             var opts = defaultConfig[key][2],
                                 cFonts = [],
                                 html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>",
-                                    "<select name='" + key + "'" + (defaultConfig[key][3] === true ? " has-suboption" : "") + ">"];
+                                "<select name='" + key + "'" + (defaultConfig[key][3] === true ? " has-suboption" : "") + ">"];
 
                             for (var i = 0, MAX = opts.length; i < MAX; ++i) {
                                 var name, value;
@@ -1747,14 +1747,14 @@
                             optionsHTML.push("</div><input type=radio class=tab-select name=tab-select class=tab-select  id=themes-select hidden><div id='themes-section' class='options-section'>");
                         } else // checkbox
                             optionsHTML.push("<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span><input" + (val ? " checked" : "") +
-                            " name='" + key + "' " + (defaultConfig[key][3] === true ? " has-suboption" : "") + " type=checkbox></label>");
+                                " name='" + key + "' " + (defaultConfig[key][3] === true ? " has-suboption" : "") + " type=checkbox></label>");
                     }
 
                     optionsHTML.push("</div></div><div class='options-close'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></div>");
                     tOptions.html(optionsHTML.join(""));
                     overlay.append(tOptions);
 
-                    $(".import-input", tOptions).bind("change", function() {
+                    $(".import-input", tOptions).bind("change", function () {
                         var file = this.files[0],
                             reader = new FileReader(),
                             key, imported, val;
@@ -1764,8 +1764,8 @@
                         } else if (!confirm('Your current settings will be entirely overwritten, are you sure?')) {
                             return;
                         }
-                        reader.onload = (function(tFile) {
-                            return function(e) {
+                        reader.onload = (function (tFile) {
+                            return function (e) {
                                 try {
                                     imported = JSON.parse(e.target.result);
                                 } catch (err) {
@@ -1782,19 +1782,19 @@
                                     return window.location.reload();
                                 }
 
-                            }
+                            };
                         })(file);
 
                         reader.readAsText(file);
                     });
-                    $("a[name=Export]", tOptions).bind("click", function() {
+                    $("a[name=Export]", tOptions).bind("click", function () {
                         if ($("a[download]", tOptions).exists())
                             return;
                         var exportalert = $("<a class='options-button'download='StyleChan v" + VERSION + " Settings.json' href='data:application/json," + encodeURIComponent(JSON.stringify($SS.exportOptions, null, 2)) + "'>Save me!").bind("click", $SS.options.close);
                         return $(this).replace(exportalert);
                     });
                     // Reset settings
-                    $("a[name=resetSettings]", tOptions).bind("click", function() {
+                    $("a[name=resetSettings]", tOptions).bind("click", function () {
                         var confirmReset = confirm('Your current StyleChan settings will be wiped, are you sure?');
                         if (confirmReset) {
                             if (typeof GM_deleteValue !== "undefined") {
@@ -1803,38 +1803,38 @@
                                     GM_deleteValue(key);
                                 }
                             } else if ($SS.browser.webkit) {
-                                Object.keys(localStorage).forEach(function(key) {
+                                Object.keys(localStorage).forEach(function (key) {
                                     if (/^(?:StyleChan)/.test(key)) {
                                         localStorage.removeItem(key);
                                     }
-                                })
+                                });
                             }
                             alert('Your StyleChan settings have been reset. Reloading.');
                             return window.location.reload();
                         } else return;
                     });
                     // options window
-                    $(".tab-label", tOptions).bind("click", function(e) {
+                    $(".tab-label", tOptions).bind("click", function (e) {
                         var $this = $(this);
                         if ($this.hasClass("selected")) return;
 
                         $(".tab-label.selected").removeClass("selected");
                         $this.addClass("selected");
                     });
-                    $("[has-suboption]", tOptions).bind("change", function() {
+                    $("[has-suboption]", tOptions).bind("change", function () {
                         var id = this.name.replace(/\s/g, "_") + $(this).val(),
                             sub = $("." + id);
 
                         if (sub.exists())
-                            sub.each(function() {
+                            sub.each(function () {
                                 this.removeAttribute("hidden");
                             });
                         else
-                            $("[class*='" + this.name.replace(/\s/g, "_") + "']").each(function() {
+                            $("[class*='" + this.name.replace(/\s/g, "_") + "']").each(function () {
                                 this.setAttribute("hidden", "");
                             });
                     });
-                    $("a[name=save]", tOptions).bind("click", function() {
+                    $("a[name=save]", tOptions).bind("click", function () {
                         $SS.options.saveAndClose = true;
                         $SS.options.save();
                         $SS.options.saveAndClose = false;
@@ -1842,7 +1842,7 @@
                     $("a[name=cancel]", tOptions).bind("click", $SS.options.close);
 
                     // main tab
-                    $("input[name='Font Size']", tOptions).bind("keydown", function(e) {
+                    $("input[name='Font Size']", tOptions).bind("keydown", function (e) {
                         var val = parseInt($(this).val()),
                             bitmap = $(this).parent().nextSibling().children("input[name='Bitmap Font']").val();
 
@@ -1856,14 +1856,14 @@
                     $SS.options.createThemesTab(tOptions);
 
                     // misc tab - 4chan settings buttons
-                    (function() {
+                    (function () {
                         var misc = $("#misc-section", tOptions),
                             p = $("<p>");
                         var chanKeys = ["4chan-settings", "4chan-watch", "4chan-watch-bl", "catalog-settings", "catalog-theme"];
                         p.append($("<a class='options-button' name=save4chanSettings>Save 4chan settings", tOptions)
-                            .bind("click", function() {
+                            .bind("click", function () {
                                 var count = 0;
-                                chanKeys.forEach(function(key) {
+                                chanKeys.forEach(function (key) {
                                     var val = localStorage[key];
                                     if (val) {
                                         $SS.Config.set("Saved4chanSettings." + key, val);
@@ -1879,9 +1879,9 @@
                         );
                         p.append($("<span class=link-delim>").text(" | "));
                         p.append($("<a class='options-button' name=restore4chanSettings>Restore 4chan settings", tOptions)
-                            .bind("click", function() {
+                            .bind("click", function () {
                                 var count = 0;
-                                chanKeys.forEach(function(key) {
+                                chanKeys.forEach(function (key) {
                                     var saved = $SS.Config.get("Saved4chanSettings." + key);
                                     if (saved) {
                                         localStorage[key] = saved;
@@ -1901,21 +1901,21 @@
                     return $(getDocBody()).append(overlay);
                 }
             },
-            createThemesTab: function(tOptions) {
+            createThemesTab: function (tOptions) {
                 var themes = $("#themes-section", tOptions).html(""),
                     p = $("<p class='buttons-container'>");
 
                 p.append($("<a class='options-button' name=addTheme title='Create a new theme.'>Create", tOptions).bind("click", $SS.options.showTheme));
                 p.append($("<a class='options-button' href='https://github.com/3nly/StyleChan/wiki/Custom-Themes#custom-themes' target='_blank' title='Browse more themes on GitHub.'>More Themes</a>"));
                 p.append($("<div id='import-link' title='Import a new theme file.'>").append($("<input type=file class='import-input' riced=true accept='application/json'>")
-                    .bind("change", function() {
+                    .bind("change", function () {
                         var file = this.files[0],
                             reader = new FileReader(),
                             val, first, valid = true,
                             theme, div, index, imported;
 
-                        reader.onload = (function(tFile) {
-                            return function(e) {
+                        reader.onload = (function (tFile) {
+                            return function (e) {
                                 try {
                                     theme = JSON.parse(e.target.result);
                                 } catch (err) {
@@ -1924,7 +1924,7 @@
                                 }
 
                                 /* Check if this is an StyleChan v5 file, do nothing if so */
-                                if (theme["headerColor"] !== undefined) {}
+                                if (theme["headerColor"] !== undefined) { }
 
                                 /* Old StyleChan */
                                 else if (theme["navOp"] !== undefined) {
@@ -1993,13 +1993,13 @@
                                 div = theme.preview();
                                 $("#overlay #themes-section").append(div);
                                 div.fire("click").scrollIntoView(true);
-                            }
+                            };
                         })(file);
 
                         reader.readAsText(file);
                     })).append($("<span class='options-button'>Import")));
                 p.append($("<a class='options-button' name=restoreThemes title='Restore hidden default themes'>Restore", tOptions)
-                    .bind("click", function() {
+                    .bind("click", function () {
                         $SS.conf["Hidden Themes"] = [];
                         $("#themes-section>div[hidden]").show();
                     })
@@ -2015,24 +2015,24 @@
                     themes.append(tTheme.preview());
                 }
             },
-            close: function() {
+            close: function () {
                 return $("#overlay").remove();
             },
-            keydown: function(e) {
+            keydown: function (e) {
                 if (e.ctrlKey && e.key === "F1") {
                     e.preventDefault();
                     e.stopPropagation();
                     $SS.options.show();
                 }
             },
-            save: function() {
+            save: function () {
                 var div = $("#oneechan-options"),
                     themes = [],
                     nsfwTheme,
                     selectedTheme;
 
                 // Save main
-                $("#oneechan-options input[name]:not(.tab-select), #oneechan-options select").each(function() {
+                $("#oneechan-options input[name]:not(.tab-select), #oneechan-options select").each(function () {
                     var $this = $(this),
                         name = $this.attr("name"),
                         val = $this.val();
@@ -2055,7 +2055,7 @@
                 });
 
                 // Save Themes
-                $("#oneechan-options #themes-section>div").each(function(index) {
+                $("#oneechan-options #themes-section>div").each(function (index) {
                     var oldIndex = parseInt(this.id.substr(5));
                     if ($SS.conf["Themes"][oldIndex] && !$SS.conf["Themes"][oldIndex].default)
                         themes.push($SS.conf["Themes"][oldIndex]);
@@ -2085,8 +2085,8 @@
 
                 return $SS.init(true);
             },
-            showTheme: function(tIndex) {
-                var div, overlay, originalTheme, previewThemeIndex = -1, 
+            showTheme: function (tIndex) {
+                var div, overlay, originalTheme, previewThemeIndex = -1,
                     bEdit = typeof tIndex === "number",
                     tEdit = bEdit ? $SS.conf["Themes"][tIndex] : null,
                     themeIndex = tIndex,
@@ -2102,7 +2102,7 @@
                         themePX = RPA[2];
                         themeA = RPA[3];
                     }
-                    
+
                     // Store original theme for restoration
                     originalTheme = JSON.parse(JSON.stringify($SS.theme));
                 }
@@ -2143,7 +2143,7 @@
 
                 for (var i = 0, MAX = themeInputs.length; i < MAX; ++i)
                     innerHTML += "<label><span class='option-title'>" + themeInputs[i].dName + ":</span>" +
-                    "<input type=text class=jsColor name=" + themeInputs[i].name + " value=" + (bEdit ? tEdit[themeInputs[i].name] : "") + "></label>";
+                        "<input type=text class=jsColor name=" + themeInputs[i].name + " value=" + (bEdit ? tEdit[themeInputs[i].name] : "") + "></label>";
 
                 innerHTML += "<label id=customCSS><span class='option-title'>Custom CSS:</span><textarea name=customCSS class='field'>" + (bEdit ? tEdit.customCSS || "" : "") + "</textarea>" +
                     "</label><div>" +
@@ -2151,12 +2151,12 @@
                     "<a class='options-button' name=" + (bEdit ? "edit" : "add") + ">Save</a><a class='options-button' name=cancel>Cancel</a></div>";
 
                 div.html(innerHTML);
-                
+
                 // Live preview function
-                var updateLivePreview = function() {
+                var updateLivePreview = function () {
                     var overlay = $("#overlay2"),
                         previewTheme = {},
-                        makeRPA = function() {
+                        makeRPA = function () {
                             var RPA = [];
                             RPA.push($("select[name=bgR]", overlay).val() || "repeat");
                             RPA.push($("select[name=bgPY]", overlay).val() || "top");
@@ -2164,9 +2164,9 @@
                             RPA.push($("select[name=bgA]", overlay).val() || "scroll");
                             return RPA.join(" ");
                         };
-                    
+
                     // Collect all form values, but only include non-empty color values
-                    $("input[type=text],textarea,select", overlay).each(function() {
+                    $("input[type=text],textarea,select", overlay).each(function () {
                         var val = this.value;
                         if (this.name) {
                             // For color inputs, only include if they have a valid non-white value
@@ -2185,7 +2185,7 @@
                             }
                         }
                     });
-                    
+
                     // Set defaults for missing values
                     if (bEdit && tEdit) {
                         // When editing, use the original theme as base
@@ -2203,10 +2203,10 @@
                             }
                         }
                     }
-                    
+
                     if (previewTheme.bgImg)
                         previewTheme.bgRPA = makeRPA();
-                    
+
                     // Create temporary theme in themes array
                     // Mark it as preview so we can identify and remove it later
                     previewTheme._isPreview = true;
@@ -2216,31 +2216,31 @@
                     } else {
                         $SS.conf["Themes"][previewThemeIndex] = previewTheme;
                     }
-                    
+
                     // Temporarily switch to preview theme
                     var currentThemeIndex = $SS.conf["Selected Theme"];
                     $SS.conf["Selected Theme"] = previewThemeIndex;
                     $SS.theme = new $SS.Theme(previewThemeIndex);
                     $SS.insertCSS();
                 };
-                
+
                 // Initialize jsColor with live preview callback
-                $(".jsColor", div).each(function() {
+                $(".jsColor", div).each(function () {
                     var colorInput = this;
                     this.color = new $SS.jscolor.color(this);
-                    this.color.onImmediateChange = function() {
+                    this.color.onImmediateChange = function () {
                         updateLivePreview();
                     };
                 });
-                
+
                 // Hook into other input changes for live preview
-                $("input[type=text]:not(.jsColor),textarea,select", div).bind("input change", function() {
+                $("input[type=text]:not(.jsColor),textarea,select", div).bind("input change", function () {
                     updateLivePreview();
                 });
 
                 overlay = $("<div id=overlay2>").append(div);
 
-                $("a[name=export]", div).bind("click", function() {
+                $("a[name=export]", div).bind("click", function () {
                     var theme = $SS.options.addTheme(themeIndex, true);
                     if ($("a[download]", div).exists())
                         return;
@@ -2249,19 +2249,19 @@
                 });
 
                 if (bEdit) {
-                    $("a[name=edit]", div).bind("click", function() {
+                    $("a[name=edit]", div).bind("click", function () {
                         $SS.options.addTheme(themeIndex);
                         $("#overlay").removeClass("previewing");
                     });
                     $("#overlay").addClass("previewing");
                 } else {
-                    $("a[name=add]", div).bind("click", function() {
+                    $("a[name=add]", div).bind("click", function () {
                         $SS.options.addTheme();
                     });
                     $("#overlay").addClass("previewing");
                 }
 
-                $("a[name=cancel]", div).bind("click", function() {
+                $("a[name=cancel]", div).bind("click", function () {
                     // Remove preview theme if it exists
                     if (previewThemeIndex !== -1) {
                         $SS.conf["Themes"].splice(previewThemeIndex, 1);
@@ -2275,16 +2275,16 @@
                 });
 
                 if (bEdit)
-                    $("input,textarea,select", div).bind("change", tEdit.mHandler = function() {
+                    $("input,textarea,select", div).bind("change", tEdit.mHandler = function () {
                         tEdit.modified = true;
                         $("input,textarea,select", $("#addTheme")).unbind("change", tEdit.mHandler);
                     });
 
                 return $(document.body).append(overlay);
             },
-            addTheme: function(tIndex, exp) {
+            addTheme: function (tIndex, exp) {
                 var overlay = $("#overlay2");
-                
+
                 // Remove preview theme if it exists (from live preview)
                 var previewIndex = -1;
                 for (var i = $SS.conf["Themes"].length - 1; i >= 0; i--) {
@@ -2300,9 +2300,9 @@
                         tIndex--;
                     }
                 }
-                
+
                 var tTheme = {},
-                    makeRPA = function() {
+                    makeRPA = function () {
                         var RPA = [];
 
                         RPA.push($("select[name=bgR]", overlay).val());
@@ -2320,7 +2320,7 @@
                 if (!exp && bEdit && !tEdit.modified)
                     return overlay.remove();
 
-                $("input[type=text],textarea", overlay).each(function() {
+                $("input[type=text],textarea", overlay).each(function () {
                     var val;
 
                     if (this.name === "bgImg") {
@@ -2338,7 +2338,7 @@
                         val = this.value;
 
                         if (bEdit && tEdit.default && tEdit.name === val)
-                            val += " [Modded]"
+                            val += " [Modded]";
                     } else
                         val = this.value;
 
@@ -2379,7 +2379,7 @@
                 $("#overlay").removeClass("previewing");
                 return overlay.remove();
             },
-            deleteTheme: function(tIndex) {
+            deleteTheme: function (tIndex) {
                 if ($SS.conf["Themes"][tIndex].default &&
                     $SS.conf["Hidden Themes"].push(tIndex) === 1)
                     $("#themes-section a[name=restoreThemes]").show();
@@ -3321,7 +3321,7 @@
                 replyslctColor: "7c2d2d"
             }],
 
-            init: function() {
+            init: function () {
                 $SS.conf["Themes"] = Array.isArray($SS.conf["Themes"]) ?
                     this.defaults.concat($SS.conf["Themes"]) : this.defaults.slice(0);
 
@@ -3334,7 +3334,7 @@
         },
 
         classes: {
-            init: function() {
+            init: function () {
                 var cl = document.documentElement.classList;
                 cl.add("oneechan");
                 $SS.theme.textColor.isLight && cl.add("isLight");
@@ -3402,7 +3402,7 @@
         },
 
         jscolor: {
-            getElementPos: function(e) {
+            getElementPos: function (e) {
                 var e1 = e,
                     e2 = e;
                 var x = 0,
@@ -3422,10 +3422,10 @@
 
                 return [x, y];
             },
-            getElementSize: function(e) {
+            getElementSize: function (e) {
                 return [e.offsetWidth, e.offsetHeight];
             },
-            getRelMousePos: function(e) {
+            getRelMousePos: function (e) {
                 var x = 0,
                     y = 0;
 
@@ -3445,7 +3445,7 @@
                     y: y
                 };
             },
-            getViewPos: function() {
+            getViewPos: function () {
                 if (typeof window.pageYOffset === "number")
                     return [window.pageXOffset, window.pageYOffset];
                 else if (document.body && (document.body.scrollLeft || document.body.scrollTop))
@@ -3455,7 +3455,7 @@
                 else
                     return [0, 0];
             },
-            getViewSize: function() {
+            getViewSize: function () {
                 if (typeof window.innerWidth === "number")
                     return [window.innerWidth, window.innerHeight];
                 else if (document.body && (document.body.clientWidth || document.body.clientHeight))
@@ -3474,7 +3474,7 @@
                 arrow: [7, 11]
             },
 
-            color: function(target) {
+            color: function (target) {
 
                 this.required = true; // refuse empty values?
                 this.adjust = true; // adjust value to uniform notation?
@@ -3496,11 +3496,11 @@
                 this.pickerInsetColor = "ThreeDShadow ThreeDHighlight ThreeDHighlight ThreeDShadow"; // CSS color
                 this.pickerZIndex = 10000;
 
-                this.hidePicker = function() {
+                this.hidePicker = function () {
                     if (isPickerOwner())
                         removePicker();
                 };
-                this.showPicker = function() {
+                this.showPicker = function () {
                     if (!isPickerOwner()) {
                         var tp = $SS.jscolor.getElementPos(target); // target pos
                         var ts = $SS.jscolor.getElementSize(target); // target size
@@ -3518,7 +3518,7 @@
                         drawPicker(pp[0], pp[1]);
                     }
                 };
-                this.importColor = function() {
+                this.importColor = function () {
                     if (!valueElement) {
                         this.exportColor();
                     } else {
@@ -3538,7 +3538,7 @@
                             this.exportColor();
                     }
                 };
-                this.exportColor = function(flags) {
+                this.exportColor = function (flags) {
                     if (!(flags & leaveValue) && valueElement) {
                         var value = this.toString();
 
@@ -3552,8 +3552,8 @@
                         styleElement.style.backgroundColor = "#" + this.toString();
                         styleElement.style.color =
                             0.213 * this.rgb[0] +
-                            0.715 * this.rgb[1] +
-                            0.072 * this.rgb[2] < 0.5 ? "#FFF" : "#000";
+                                0.715 * this.rgb[1] +
+                                0.072 * this.rgb[2] < 0.5 ? "#FFF" : "#000";
                     }
 
                     if (!(flags & leavePad) && isPickerOwner())
@@ -3562,7 +3562,7 @@
                     if (!(flags & leaveSld) && isPickerOwner())
                         redrawSld();
                 };
-                this.fromHSV = function(h, s, v, flags) {
+                this.fromHSV = function (h, s, v, flags) {
                     h < 0 && (h = 0) || h > 6 && (h = 6);
                     s < 0 && (s = 0) || s > 1 && (s = 1);
                     v < 0 && (v = 0) || v > 1 && (v = 1);
@@ -3575,7 +3575,7 @@
 
                     this.exportColor(flags);
                 };
-                this.fromRGB = function(r, g, b, flags) {
+                this.fromRGB = function (r, g, b, flags) {
                     r < 0 && (r = 0) || r > 1 && (r = 1);
                     g < 0 && (g = 0) || g > 1 && (g = 1);
                     b < 0 && (b = 0) || b > 1 && (b = 1);
@@ -3595,7 +3595,7 @@
                     this.hsv[2] = hsv[2];
                     this.exportColor(flags);
                 };
-                this.fromString = function(hex, flags) {
+                this.fromString = function (hex, flags) {
                     var m = hex.match(/^\W*([0-9A-F]{3}([0-9A-F]{3})?)\W*$/i);
 
                     if (!m) return false;
@@ -3616,7 +3616,7 @@
                         return true;
                     }
                 };
-                this.toString = function() {
+                this.toString = function () {
                     return (
                         (0x100 | Math.round(255 * this.rgb[0])).toString(16).substr(1) +
                         (0x100 | Math.round(255 * this.rgb[1])).toString(16).substr(1) +
@@ -3704,13 +3704,13 @@
 
                     // controls interaction
                     window.addEventListener("resize", removePicker, { once: true });
-                    p.box.onmouseup = p.box.onmouseout = function() {
+                    p.box.onmouseup = p.box.onmouseout = function () {
                         target.focus();
                     };
-                    p.box.onmousedown = function() {
+                    p.box.onmousedown = function () {
                         abortBlur = true;
                     };
-                    p.box.onmousemove = function(e) {
+                    p.box.onmousemove = function (e) {
                         if (holdPad || holdSld) {
                             holdPad && setPad(e);
                             holdSld && setSld(e);
@@ -3724,25 +3724,25 @@
                         }
                     };
                     p.padM.onmouseup =
-                        p.padM.onmouseout = function() {
+                        p.padM.onmouseout = function () {
                             if (holdPad) {
                                 holdPad = false;
                                 $(valueElement).fire("change");
                             }
                         };
-                    p.padM.onmousedown = function(e) {
+                    p.padM.onmousedown = function (e) {
                         holdPad = true;
                         setPad(e);
                         dispatchImmediateChange();
                     };
                     p.sldM.onmouseup =
-                        p.sldM.onmouseout = function() {
+                        p.sldM.onmouseout = function () {
                             if (holdSld) {
                                 holdSld = false;
                                 $(valueElement).fire("change");
                             }
                         };
-                    p.sldM.onmousedown = function(e) {
+                    p.sldM.onmousedown = function (e) {
                         holdSld = true;
                         setSld(e);
                         dispatchImmediateChange();
@@ -3874,9 +3874,9 @@
                     var rgb = HSV_RGB(THIS.hsv[0], THIS.hsv[1], 1);
                     for (var i = 0; i < seg.length; i += 1)
                         seg[i].style.backgroundColor = "rgb(" +
-                        (rgb[0] * (1 - i / seg.length) * 100) + "%," +
-                        (rgb[1] * (1 - i / seg.length) * 100) + "%," +
-                        (rgb[2] * (1 - i / seg.length) * 100) + "%)";
+                            (rgb[0] * (1 - i / seg.length) * 100) + "%," +
+                            (rgb[1] * (1 - i / seg.length) * 100) + "%," +
+                            (rgb[2] * (1 - i / seg.length) * 100) + "%)";
                 }
 
                 function redrawSld() {
@@ -3937,9 +3937,9 @@
 
                 // target
                 $(target).bind("focus", THIS.showPicker)
-                    .bind("blur", function() {
+                    .bind("blur", function () {
                         if (!abortBlur)
-                            window.setTimeout(function() {
+                            window.setTimeout(function () {
                                 abortBlur || blurTarget();
                                 abortBlur = false;
                             });
@@ -3949,7 +3949,7 @@
 
                 // valueElement
                 if (valueElement) {
-                    var updateField = function() {
+                    var updateField = function () {
                         THIS.fromString(valueElement.value, leaveValue);
                         dispatchImmediateChange();
                     };
@@ -3972,12 +3972,12 @@
         },
 
         /* STRUCTS */
-        Color: function(hex, incHover) {
+        Color: function (hex, incHover) {
             this.hex = "#" + hex;
             this.private_rgb = $SS.RGBFromHex(hex);
             this.rgb = this.private_rgb.join(",");
             this.isLight = $SS.isLight(this.private_rgb);
-            this.shiftRGB = function(shift, smart) {
+            this.shiftRGB = function (shift, smart) {
                 var rgb = this.private_rgb.slice(0);
 
                 shift = smart ?
@@ -3993,7 +3993,7 @@
             if (incHover)
                 this.hover = this.shiftRGB(16, true);
         },
-        colorToHex: function(color) {
+        colorToHex: function (color) {
             var digits, hex;
 
             if (color.substr(0, 1) === '#') {
@@ -4009,10 +4009,10 @@
                 return false;
             }
         },
-        Image: function(img, RPA) {
+        Image: function (img, RPA) {
             this.img = img;
             this.RPA = RPA;
-            this.get = function() {
+            this.get = function () {
                 if (!this.img) return "none ";
 
                 var ret = "url('";
@@ -4024,7 +4024,7 @@
                 return (this.RPA !== undefined ? "url('" : "") + ret + (this.RPA !== undefined ? "')" + this.RPA : "");
             };
         },
-        Theme: function(index) {
+        Theme: function (index) {
             var theme;
 
             if ((theme = $SS.conf["Themes"][index]) == undefined) {
@@ -4108,30 +4108,30 @@
             } else
                 this.customCSS = "";
 
-            this.preview = function() {
+            this.preview = function () {
                 var div = $("<div " + (this.hidden ? "hidden=true " : "") +
                     " id=theme" + this.index + " class=\'theme-preview " + (($SS.conf["Selected Theme"] == $SS.conf["NSFW Theme"]) && ($SS.conf["Selected Theme"] == this.index) ? "selected nsfw" : ($SS.conf["Selected Theme"] == this.index ? "selected " : "") + ($SS.conf["NSFW Theme"] == this.index ? "nsfw " : "")) + "\'>").html("<div class=reply " +
-                    "style='background-color:" + this.mainColor.hex + "!important;border:1px solid " + this.brderColor.hex + "!important;color:" + this.textColor.hex + "!important'>" +
-                    "<div class=riceCheck style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;box-shadow:rgba(" + this.mainColor.shiftRGB(64) + ",.3) 0 1px;'></div>" +
-                    "<span style='color:" + this.titleColor.hex + "!important; font-weight: 700 !important'>" + this.name + "</span> " +
-                    "<span style='color:" + this.nameColor.hex + "!important; font-weight: 700 !important'>" + this.authorName + "</span>" +
-                    "<span style='color:" + this.tripColor.hex + "!important'> " + this.authorTrip + "</span>" +
-                    "<time style='color:" + this.textColor.hex + "'> 20XX.01.01 12:00 </time>" +
-                    "<a href='javascript:;' style='color:" + this.linkColor.hex + "!important' " +
-                    "onmouseover='this.setAttribute(\"style\",\"color:" + this.linkHColor.hex + "!important\")' " +
-                    "onmouseout='this.setAttribute(\"style\",\"color:" + this.linkColor.hex + "!important\")'>No.22772469</a>" +
-                    "<br><blockquote><span style='color:" + this.quoteColor.hex + "'>>implying this isn't a post</span><br>Post content is right here.</blockquote>" +
-                    "<p class='theme-buttons-container'>" +
-                    "<a href='javascript:;' title='Sets the SFW theme.' style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;color:" + this.textColor.hex + "!important'>SFW</a>" +
-                    "<a href='javascript:;' title='Sets the NSFW theme.' style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;color:" + this.textColor.hex + "!important'>NSFW</a>" +
-                    "<a href='javascript:;' title=Edit style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;color:" + this.textColor.hex + "!important'>Edit</a>" +
-                    "<a href='javascript:;' title=Delete style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;color:" + this.textColor.hex + "!important'>Delete</a></p>" +
-                    "<h3 class='sfw-label notsafe'>NSFW</h3>" +
-                    "<h3 class='sfw-label safe'>SFW</h3>" +
-                    "<h3 class='sfw-label both'>SFW & NSFW</h3>" +
-                    "</div>");
+                        "style='background-color:" + this.mainColor.hex + "!important;border:1px solid " + this.brderColor.hex + "!important;color:" + this.textColor.hex + "!important'>" +
+                        "<div class=riceCheck style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;box-shadow:rgba(" + this.mainColor.shiftRGB(64) + ",.3) 0 1px;'></div>" +
+                        "<span style='color:" + this.titleColor.hex + "!important; font-weight: 700 !important'>" + this.name + "</span> " +
+                        "<span style='color:" + this.nameColor.hex + "!important; font-weight: 700 !important'>" + this.authorName + "</span>" +
+                        "<span style='color:" + this.tripColor.hex + "!important'> " + this.authorTrip + "</span>" +
+                        "<time style='color:" + this.textColor.hex + "'> 20XX.01.01 12:00 </time>" +
+                        "<a href='javascript:;' style='color:" + this.linkColor.hex + "!important' " +
+                        "onmouseover='this.setAttribute(\"style\",\"color:" + this.linkHColor.hex + "!important\")' " +
+                        "onmouseout='this.setAttribute(\"style\",\"color:" + this.linkColor.hex + "!important\")'>No.22772469</a>" +
+                        "<br><blockquote><span style='color:" + this.quoteColor.hex + "'>>implying this isn't a post</span><br>Post content is right here.</blockquote>" +
+                        "<p class='theme-buttons-container'>" +
+                        "<a href='javascript:;' title='Sets the SFW theme.' style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;color:" + this.textColor.hex + "!important'>SFW</a>" +
+                        "<a href='javascript:;' title='Sets the NSFW theme.' style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;color:" + this.textColor.hex + "!important'>NSFW</a>" +
+                        "<a href='javascript:;' title=Edit style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;color:" + this.textColor.hex + "!important'>Edit</a>" +
+                        "<a href='javascript:;' title=Delete style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;color:" + this.textColor.hex + "!important'>Delete</a></p>" +
+                        "<h3 class='sfw-label notsafe'>NSFW</h3>" +
+                        "<h3 class='sfw-label safe'>SFW</h3>" +
+                        "<h3 class='sfw-label both'>SFW & NSFW</h3>" +
+                        "</div>");
 
-                $(div).bind("click", function() {
+                $(div).bind("click", function () {
                     var $this = $(this);
 
                     if ($this.hasClass("selected nsfw")) return;
@@ -4142,7 +4142,7 @@
                     $SS.options.save();
                 });
 
-                $("a[title='Sets the SFW theme.']", div).bind("click", function(e) {
+                $("a[title='Sets the SFW theme.']", div).bind("click", function (e) {
                     e.stopPropagation();
                     var $this = $(this);
                     if ($this.hasClass("selected")) return;
@@ -4151,7 +4151,7 @@
                     $this.parent().parent().parent().addClass("selected");
                 });
 
-                $("a[title='Sets the NSFW theme.']", div).bind("click", function(e) {
+                $("a[title='Sets the NSFW theme.']", div).bind("click", function (e) {
                     e.stopPropagation();
                     var $this = $(this);
                     if ($this.hasClass("nsfw")) return;
@@ -4159,27 +4159,27 @@
                     $this.parent().parent().parent().parent().children(".nsfw").removeClass("nsfw");
                     $this.parent().parent().parent().addClass("nsfw");
                 });
-                $("a[title=Delete]", div).bind("click", function(e) {
+                $("a[title=Delete]", div).bind("click", function (e) {
                     e.stopPropagation();
                     $SS.options.deleteTheme(index);
                 });
-                $("a[title=Edit]", div).bind("click", function(e) {
+                $("a[title=Edit]", div).bind("click", function (e) {
                     e.stopPropagation();
                     $SS.options.showTheme(index);
                 });
 
                 return div;
-            }
+            };
         },
 
         /* HELPER METHODS */
-        formatFont: function(font) {
+        formatFont: function (font) {
             if (font === "sans-serif" || font === "monospace")
                 return font;
 
             return "'" + font + "'";
         },
-        RGBFromHex: function(hex) {
+        RGBFromHex: function (hex) {
             var rgb = [];
             hex = parseInt(hex, 16);
 
@@ -4189,16 +4189,16 @@
 
             return rgb;
         },
-        isLight: function(rgb) {
+        isLight: function (rgb) {
             return rgb[0] + rgb[1] + rgb[2] >= 400;
         },
-        trimLineBreaks: function(str) {
+        trimLineBreaks: function (str) {
             return str.replace(/(\r\n|\r|\n)/gm, "");
         },
-        cleanBase64: function(b64) {
+        cleanBase64: function (b64) {
             return b64.replace(/^(data:image\/(?:gif|jpe?g|png);base64,)(\r\n|\r|\n)?/gmi, "");
         },
-        typeofBase64: function(b64) {
+        typeofBase64: function (b64) {
             switch (b64.substr(0, 8)) {
                 case "PD94bWwg":
                     return "svg+xml";
@@ -4212,10 +4212,10 @@
                     return "png";
             }
         },
-        validBase64: function(b64) {
+        validBase64: function (b64) {
             return /^(?:data:image\/(?:gif|jpe?g|png);base64,)?(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/i.test(b64);
         },
-        validImageURL: function(img) {
+        validImageURL: function (img) {
             return /^https?:\/\/.+$/i.test(img);
         },
         /* Board max_filesize from https://a.4cdn.org/boards.json */
@@ -4229,7 +4229,7 @@
             /* all others: 4MB (4194304) */
         },
 
-        getLocation: function(url) {
+        getLocation: function (url) {
             var obj;
 
             if (typeof url === "string") {
