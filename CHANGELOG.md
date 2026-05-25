@@ -34,6 +34,7 @@ Misc:
 - 4chanX: The You toggle now has its checkbox back
 - Improve CSS loading
 - Various small code changes and improvements
+- **A minified version of the script is now available (StyleChan.min.user.js)**
 
 ### v1.2.2
 *2026-05-23*
