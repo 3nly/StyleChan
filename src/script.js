@@ -267,6 +267,8 @@
         "System Theming": [false, "Use system color scheme detection to automatically select themes. Overrides NSFW/SFW theme selection.", null, true],
         "Dark Theme": [0, "Theme to use when system is in dark mode.", "System Theming", true, true],
         "Light Theme": [0, "Theme to use when system is in light mode.", "System Theming", true, true],
+        "Enable Mascots": [false, "Display mascot images on the page and adjust their opacity.", null, true],
+        "Mascots": ["[]", "Mascot data (URLs and opacity).", "Enable Mascots", true, true],
         ":: 4chan X": ["header", ""],
         "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
         "Show Header Shadow": [true, "Gives the header a drop shadow."],
@@ -766,6 +768,7 @@
         browser: {},
         DOMLoaded: function (reload) {
             $SS.classes.init();
+            $SS.displayMascots();
 
             var div, html, ctxmenu, link;
             if (reload !== true) {
@@ -1663,6 +1666,27 @@
                 });
             } catch (e) {}
         },
+        displayMascots: function () {
+            try {
+                var existing = document.getElementById("stylechan-mascots");
+                if (existing) existing.remove();
+                if (!$SS.conf["Enable Mascots"]) return;
+                var mascots = [];
+                try { mascots = JSON.parse($SS.conf["Mascots"] || "[]"); } catch (e) {}
+                var available = mascots.filter(function (m) { return m.enabled !== false && m.url; });
+                if (!available.length) return;
+                var m = available.length > 1 ? available[Math.floor(Math.random() * available.length)] : available[0];
+                var container = document.createElement("div");
+                container.id = "stylechan-mascots";
+                container.className = document.documentElement.classList.contains("left-sidebar") ? "mascots-left" : "mascots-right";
+                var img = document.createElement("img");
+                img.src = m.url;
+                img.style.opacity = (m.opacity || 100) / 100;
+                if (m.flip) img.style.transform = "scaleX(-1)";
+                container.appendChild(img);
+                document.body.appendChild(container);
+            } catch (e) {}
+        },
         insertToggleYou: function () {
             if (document.documentElement.classList.contains("fourchan-x")) return;
             var menu = document.getElementById("post-menu");
@@ -1888,6 +1912,19 @@
                             }
                             html += "</select></label>";
                             optionsHTML.push(html);
+                        } else if ((defaultConfig[key][4] === true) && (key === "Mascots")) {
+                            var pVal = $SS.conf["Enable Mascots"];
+                            id = "Enable_Mascots" + true;
+                            var mascots = [];
+                            try { mascots = JSON.parse($SS.conf["Mascots"] || "[]"); } catch (e) {}
+                            var rows = "<div class='option suboption mascot-container " + id + "'" + (!pVal ? "hidden" : "") + ">";
+                            mascots.forEach(function (m, i) {
+                                var url = (m.url || "").replace(/"/g, "&quot;");
+                                rows += "<div class='mascot-row'><input type=checkbox class='mascot-enabled' title='Enable this mascot'" + (m.enabled !== false ? " checked" : "") + "><input type=text class='mascot-url' value=\"" + url + "\" placeholder='URL or base64 image'><input type=range class='mascot-opacity' title='Opacity' min=0 max=100 value='" + (m.opacity || 100) + "'><span class='mascot-opacity-val'>" + (m.opacity || 100) + "%</span><input type=checkbox class='mascot-flip' title='Flip horizontally'" + (m.flip ? " checked" : "") + "><button class='mascot-remove' type=button title='Remove'>&times;</button></div>";
+                            });
+                            rows += "<a class='options-button mascot-add'>+ Add Mascot</a>";
+                            rows += "</div>";
+                            optionsHTML.push(rows);
                         } else if (defaultConfig[key][4] === true) // sub-option
                         {
                             var pVal = $SS.conf[defaultConfig[key][2]];
@@ -2034,6 +2071,42 @@
                                 this.setAttribute("hidden", "");
                             });
                     });
+                    $("input[name='Enable Mascots']", tOptions).bind("change", function () {
+                        var id = this.name.replace(/\s/g, "_") + this.checked,
+                            sub = $("." + id);
+                        if (sub.exists())
+                            sub.each(function () { this.removeAttribute("hidden"); });
+                        else
+                            $("[class*='" + this.name.replace(/\s/g, "_") + "']").each(function () {
+                                this.setAttribute("hidden", "");
+                            });
+                    });
+                    // Mascot handlers
+                    var optsNode = tOptions.elems[0];
+                    if (optsNode) {
+                        optsNode.addEventListener("click", function (e) {
+                            var add = e.target.closest(".mascot-add");
+                            if (add) {
+                                var container = add.closest(".mascot-container");
+                                var row = document.createElement("div");
+                                row.className = "mascot-row";
+                                row.innerHTML = "<input type=checkbox class='mascot-enabled' title='Enable this mascot' checked><input type=text class='mascot-url' value='' placeholder='URL or base64 image'><input type=range class='mascot-opacity' title='Opacity' min=0 max=100 value=100><span class='mascot-opacity-val'>100%</span><input type=checkbox class='mascot-flip' title='Flip horizontally'><button class='mascot-remove' type=button title='Remove'>&times;</button>";
+                                container.insertBefore(row, add);
+                                return;
+                            }
+                            var rem = e.target.closest(".mascot-remove");
+                            if (rem) {
+                                rem.closest(".mascot-row").remove();
+                            }
+                        });
+                        optsNode.addEventListener("input", function (e) {
+                            var range = e.target.closest(".mascot-opacity");
+                            if (range) {
+                                var display = range.parentNode.querySelector(".mascot-opacity-val");
+                                if (display) display.textContent = range.value + "%";
+                            }
+                        });
+                    }
                     $("a[name=save]", tOptions).bind("click", function () {
                         $SS.options.saveAndClose = true;
                         $SS.options.save();
@@ -2245,6 +2318,24 @@
 
                     $SS.Config.set(name, val);
                 });
+
+                // Save Mascots
+                var mascots = [];
+                document.querySelectorAll("#oneechan-options .mascot-row").forEach(function (row) {
+                    var input = row.querySelector(".mascot-url"),
+                        range = row.querySelector(".mascot-opacity"),
+                        enabled = row.querySelector(".mascot-enabled"),
+                        flip = row.querySelector(".mascot-flip");
+                    if (input && input.value.trim()) {
+                        mascots.push({
+                            url: input.value.trim(),
+                            opacity: parseInt(range ? range.value : 100),
+                            enabled: enabled ? enabled.checked : true,
+                            flip: flip ? flip.checked : false
+                        });
+                    }
+                });
+                $SS.Config.set("Mascots", JSON.stringify(mascots));
 
                 // Save Themes
                 $("#oneechan-options #themes-section>div").each(function (index) {
