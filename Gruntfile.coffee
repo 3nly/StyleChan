@@ -25,6 +25,11 @@ module.exports = (grunt) ->
             'src/meta/metadata.js'
             'src/script.js'
           ]
+          'builds/<%= pkg.name %>.min.meta.js': 'src/meta/metadata.min.js'
+          'builds/<%= pkg.name %>.min.user.js': [
+            'src/meta/metadata.min.js'
+            'src/script.js'
+          ]
       crx:
         options: concatOptions
         files:
@@ -39,6 +44,14 @@ module.exports = (grunt) ->
       minify:
         src: 'tmp/style.css'
         dest: 'tmp/style.min.css'
+
+    uglify:
+      minify:
+        options:
+          output:
+            comments: /==\/?UserScript|@/
+        files:
+          'builds/<%= pkg.name %>.min.user.js': 'builds/<%= pkg.name %>.min.user.js'
 
     compress:
       crx:
@@ -62,6 +75,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-shell'
   grunt.loadNpmTasks 'grunt-contrib-cssmin'
+  grunt.loadNpmTasks 'grunt-contrib-uglify'
 
   grunt.registerTask 'default', [
     'build'
@@ -73,6 +87,7 @@ module.exports = (grunt) ->
     'concat:crx'
     'compress:crx'
     'concat:userscript'
+    'uglify:minify'
     'clean:tmp'
   ]
 

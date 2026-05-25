@@ -13,7 +13,7 @@
 
 Main:
 - Single View Captcha > Auto Submit
-  - This options will submit the post automatically after the last challenge is picked
+  - This option will submit the post automatically after the last challenge is picked
 
 Misc:
 - Enable Mascots
