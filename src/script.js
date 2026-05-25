@@ -715,7 +715,10 @@
         /* EVENT METHODS */
         bind: function (type, listener) {
             return this.each(function () {
-                this.addEventListener(type, listener, false);
+                var types = type.split(/\s+/);
+                for (var i = 0; i < types.length; i++) {
+                    this.addEventListener(types[i], listener, false);
+                }
             });
         },
         unbind: function (type, listener) {
@@ -992,6 +995,73 @@
                 $("#ch4SS").text(css);
             else
                 $(getDocHead()).append($("<style type='text/css' id=ch4SS>").text(css));
+        },
+        setThemeVariables: function () {
+            var t = $SS.theme, root = document.documentElement.style;
+            if (!t || t.hidden) return;
+            root.setProperty("--sc-textColor", t.textColor.hex);
+            root.setProperty("--sc-textColor-rgb", t.textColor.rgb);
+            root.setProperty("--sc-nameColor", t.nameColor.hex);
+            root.setProperty("--sc-tripColor", t.tripColor.hex);
+            root.setProperty("--sc-linkColor", t.linkColor.hex);
+            root.setProperty("--sc-linkColor-rgb", t.linkColor.rgb);
+            root.setProperty("--sc-linkHColor", t.linkHColor.hex);
+            root.setProperty("--sc-linkHColor-rgb", t.linkHColor.rgb);
+            root.setProperty("--sc-headerColor", t.headerColor.hex);
+            root.setProperty("--sc-headerLColor", t.headerLColor.hex);
+            root.setProperty("--sc-headerLHColor", t.headerLHColor.hex);
+            root.setProperty("--sc-quoteColor", t.quoteColor.hex);
+            root.setProperty("--sc-quoteColor-rgb", t.quoteColor.rgb);
+            root.setProperty("--sc-titleColor", t.titleColor.hex);
+            root.setProperty("--sc-boardColor", t.boardColor.hex);
+            root.setProperty("--sc-blinkColor", t.blinkColor.hex);
+            root.setProperty("--sc-qlColor", t.qlColor.hex);
+            root.setProperty("--sc-bgColor", t.bgColor.hex);
+            root.setProperty("--sc-bgColor-rgb", t.bgColor.rgb);
+            root.setProperty("--sc-mainColor", t.mainColor.hex);
+            root.setProperty("--sc-mainColor-rgb", t.mainColor.rgb);
+            root.setProperty("--sc-mainColor-shiftM30", t.mainColor.shiftRGB(-30));
+            root.setProperty("--sc-mainColor-shiftM25", t.mainColor.shiftRGB(-25));
+            root.setProperty("--sc-mainColor-shiftM18", t.mainColor.shiftRGB(-18));
+            root.setProperty("--sc-mainColor-shiftM16", t.mainColor.shiftRGB(-16));
+            root.setProperty("--sc-mainColor-shiftM15", t.mainColor.shiftRGB(-15));
+            root.setProperty("--sc-mainColor-shiftM10", t.mainColor.shiftRGB(-10));
+            root.setProperty("--sc-mainColor-shiftM5", t.mainColor.shiftRGB(-5));
+            root.setProperty("--sc-mainColor-shift4", t.mainColor.shiftRGB(4));
+            root.setProperty("--sc-mainColor-shift10", t.mainColor.shiftRGB(10));
+            root.setProperty("--sc-mainColor-shift15", t.mainColor.shiftRGB(15));
+            root.setProperty("--sc-brderColor", t.brderColor.hex);
+            root.setProperty("--sc-brderColor-rgb", t.brderColor.rgb);
+            root.setProperty("--sc-inputColor", t.inputColor.hex);
+            root.setProperty("--sc-inputColor-rgb", t.inputColor.rgb);
+            root.setProperty("--sc-inputColor-shift25", t.inputColor.shiftRGB(25));
+            root.setProperty("--sc-inputColor-hover", t.inputColor.hover);
+            root.setProperty("--sc-inputbColor", t.inputbColor.hex);
+            root.setProperty("--sc-headerBGColor", t.headerBGColor.hex);
+            root.setProperty("--sc-headerBGColor-rgb", t.headerBGColor.rgb);
+            root.setProperty("--sc-headerBGColor-shift15", t.headerBGColor.shiftRGB(15));
+            root.setProperty("--sc-unreadColor-rgb", t.unreadColor.rgb);
+            root.setProperty("--sc-postHLColor-rgb", t.postHLColor.rgb);
+            root.setProperty("--sc-quotesYouHLColor", t.quotesYouHLColor.hex);
+            root.setProperty("--sc-quotesYouHLColor-rgb", t.quotesYouHLColor.rgb);
+            root.setProperty("--sc-ownPostHLColor-rgb", t.ownPostHLColor.rgb);
+            root.setProperty("--sc-replybgHLColor-rgb", t.replybgHLColor.rgb);
+            root.setProperty("--sc-replyslctColor-rgb", t.replyslctColor.rgb);
+            root.setProperty("--sc-codeBackground", t.codeBackground);
+            root.setProperty("--sc-codeBorder", t.codeBorder);
+            root.setProperty("--sc-replyOp", t.replyOp);
+            root.setProperty("--sc-navOp", t.navOp);
+            var sidebarBgOpacity = t.mainColor.isDark ? ".9" : ".2";
+            root.setProperty("--sc-sidebar-bg", 'rgba(' + t.mainColor.shiftRGB(-18) + ',' + sidebarBgOpacity + ')');
+            root.setProperty("--sc-bgImg", t.bgImg.get());
+            root.setProperty("--sc-checkMark", t.checkMark.get());
+            root.setProperty("--sc-headerbColor", t.headerbColor.hex);
+            root.setProperty("--sc-icon-star", 'url("data:image/svg+xml,' + t.icons.star + '")');
+            root.setProperty("--sc-icon-backlink", 'url("data:image/svg+xml,' + t.icons.backlink + '")');
+            root.setProperty("--sc-icon-downArrow", 'url("data:image/svg+xml,' + t.icons.downArrow + '")');
+            root.setProperty("--sc-icon-threadClosed", 'url("data:image/svg+xml,' + t.icons.threadClosed + '")');
+            root.setProperty("--sc-icon-threadPinned", 'url("data:image/svg+xml,' + t.icons.threadPinned + '")');
+            root.setProperty("--sc-icon-threadArchived", 'url("data:image/svg+xml,' + t.icons.threadArchived + '")');
         },
         initImageConvertOnDrop: function () {
             var MAX_BYTES = $SS.location.maxFileSize;
@@ -2246,6 +2316,7 @@
                     // Always restore to the originally selected theme (not the theme being edited)
                     $SS.conf["Selected Theme"] = originalSelectedTheme;
                     $SS.theme = new $SS.Theme(originalSelectedTheme);
+                    $SS.setThemeVariables();
                     $SS.insertCSS();
                     $("#overlay").removeClass("previewing");
                     $("#overlay2").remove();
@@ -3312,6 +3383,7 @@
 
                 var tIndex = $SS.conf["Themes"][i] ? i : 0;
                 $SS.theme = new $SS.Theme(tIndex); // Set the active theme.
+                $SS.setThemeVariables();
 
                 // Listen for system color scheme changes
                 if (!this._mqListener) {
@@ -3344,7 +3416,7 @@
                 cl.toggle("fit-postmenu", $SS.conf["Fit Post Menu"] === true);
                 cl.toggle("hide-banner", $SS.conf["Show Banner"] === false);
                 cl.toggle("banner-opacity", $SS.conf["Reduce Banner Opacity"] === true);
-                cl.toggle("hide-button", $SS.conf["Show Reply to Thread Button"] === false || 
+                cl.toggle("hide-button", $SS.conf["Show Reply to Thread Button"] === false ||
                     ($SS.conf["Show Reply to Thread Button"] && $SS.conf["Show Only in Catalog"] && !$SS.location.catalog));
                 cl.toggle("post-info", $SS.conf["Show Reply Header"] === true);
                 cl.toggle("show-file-info", $SS.conf["Show File Info"] === false);
