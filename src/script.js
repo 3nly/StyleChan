@@ -866,6 +866,18 @@
                 // Native QR autohide (focus/hover behavior for Normal & Vertical Tabbed)
                 $SS.initNativeQRAutohide();
 
+                // Set maxlength on subject inputs (4chan's 100 char limit)
+                $("input[name=sub]", document).each(function () {
+                    this.setAttribute("maxlength", "100");
+                    this.addEventListener("input", function () {
+                        if (this.value.length >= 100) {
+                            this.style.setProperty("border-color", "red", "important");
+                            var el = this;
+                            setTimeout(function () { el.style.removeProperty("border-color"); }, 600);
+                        }
+                    });
+                });
+
                 // Auto-open native QR on thread pages (non-4chanX only)
                 if ($SS.location.reply && $SS.conf["Pin Quick Reply"] && !document.documentElement.classList.contains("fourchan-x")) {
                     $.waitFor("a[data-cmd='open-qr']", function (link) { link.click(); });
@@ -1581,6 +1593,16 @@
             var qr = e.target;
 
             $("input[type=checkbox]", qr).riceCheck();
+            $("input[name=sub]", qr).each(function () {
+                this.setAttribute("maxlength", "100");
+                this.addEventListener("input", function () {
+                    if (this.value.length >= 100) {
+                        this.style.setProperty("border-color", "red", "important");
+                        var el = this;
+                        setTimeout(function () { el.style.removeProperty("border-color"); }, 600);
+                    }
+                });
+            });
             $SS.bindRememberComment(qr);
 
             $SS.QRhandled = true;
