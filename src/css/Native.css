@@ -82,3 +82,10 @@ div#qrError {
 :root.left-sidebar :root:not(#bannerCnt) div.boardBanner > div.boardTitle {
   margin-top: 50px;
 }
+/* Highlights */
+:root:not(.fourchan-x) .postContainer:has(.ql-tracked) > .post {
+  border-left: " + $SS.conf["Width Decoration"] + "px solid rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
+}
+:root:not(.fourchan-x) .postContainer:has(.ql-tracked) > .sideArrows {
+  color: rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
+}

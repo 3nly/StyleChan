@@ -812,6 +812,7 @@
                                     ? [node]
                                     : node.querySelectorAll ? node.querySelectorAll(formSel) : [];
                                 forms.forEach($SS.handleFormNode);
+
                             }
                         }
                     }
@@ -1625,12 +1626,30 @@
                 });
             });
         },
+        getThreadTitle: function () {
+            var el = document.querySelector(".post.op .subject");
+            return (el && el.textContent.trim()) || document.title.replace(/\s*-\s*4chan$/, '') || "Untitled";
+        },
+        localJSON: {
+            get: function (key) {
+                try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; }
+            },
+            set: function (key, data) {
+                try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+            }
+        },
         watchThread: function () {
             if (!$SS.conf["Watch Thread on Reply"] || !$SS.location.reply) return;
-            var btn = document.querySelector("[data-cmd='watch']");
-            if (btn && /add/i.test(btn.title || btn.getAttribute("title") || "")) {
-                btn.click();
-            }
+            try {
+                var pathname = window.location.pathname.slice(1).split("/");
+                var threadId = pathname[2];
+                if (!threadId) return;
+                var board = pathname[0];
+                var key = threadId + "-" + board;
+                var watchData = $SS.localJSON.get("4chan-watch") || {};
+                watchData[key] = [$SS.getThreadTitle(), threadId, 0, null, 0];
+                $SS.localJSON.set("4chan-watch", watchData);
+            } catch (e) {}
         },
         QRDialogCreationHandler: function (e) {
             var qr = e.target;
