@@ -861,8 +861,8 @@
                 // Native QR autohide (focus/hover behavior for Normal & Vertical Tabbed)
                 $SS.initNativeQRAutohide();
 
-                // Set maxlength on subject inputs (4chan's 100 char limit)
-                $("input[name=sub]", document).each(function () {
+                // Set maxlength on subject and name inputs (100 char limit)
+                $("input[name=sub], input[name=name]", document).each(function () {
                     this.setAttribute("maxlength", "100");
                     this.addEventListener("input", function () {
                         if (this.value.length >= 100) {
@@ -1706,7 +1706,7 @@
         QRDialogCreationHandler: function (e) {
             var qr = e.target;
 
-            $("input[name=sub]", qr).each(function () {
+            $("input[name=sub], input[name=name]", qr).each(function () {
                 this.setAttribute("maxlength", "100");
                 this.addEventListener("input", function () {
                     if (this.value.length >= 100) {
