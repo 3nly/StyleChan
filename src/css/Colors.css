@@ -4,7 +4,7 @@ html,
 body,
 div.boardBanner,
 #menu,
-input:not(.jsColor),
+input,
 textarea,
 a.summary,
 .pages.cataloglink a,
@@ -24,13 +24,13 @@ select,
 .boxbar,
 .postblock,
 .globalMessage {
-  color: " + $SS.theme.textColor.hex + " !important;
+  color: var(--sc-textColor) !important;
 }
 /* Names */
 .nameBlock:not(.capcodeMod)>.name,
 .com,
 .post-author {
-  color: " + $SS.theme.nameColor.hex + " !important;
+  color: var(--sc-nameColor) !important;
 }
 .nameBlock.capcodeMod,
 :not(.fourchan-x) span.capcodeMod span.name,
@@ -45,7 +45,7 @@ select,
 .nameBlock>.postertrip,
 .post-tripcode,
 .tag {
-  color: " + $SS.theme.tripColor.hex + " !important;
+  color: var(--sc-tripColor) !important;
 }
 /* Links */
 a:not(s>a),
@@ -59,7 +59,7 @@ body.is_catalog .button,
 :root.catalog-mode .button,
 :root .options-button,
 :root .tegaki-tb-btn {
-  color: " + $SS.theme.linkColor.hex + " !important;
+  color: var(--sc-linkColor) !important;
 }
 :root a:hover,
 :root div.post div.postInfo span.postNum a:hover,
@@ -68,24 +68,24 @@ body.is_catalog .button:hover,
 .lit,
 .tegaki-tb-btn:hover,
 #import-link>.options-button:hover {
-  color: " + $SS.theme.linkHColor.hex + " !important;
+  color: var(--sc-linkHColor) !important;
 }
 /* Header */
 #header-bar,
 a.current {
-  color: " + $SS.theme.headerColor.hex + " !important;
+  color: var(--sc-headerColor) !important;
 }
 #header-bar a:not(.current) {
-  color: " + $SS.theme.headerLColor.hex + " !important;
+  color: var(--sc-headerLColor) !important;
 }
 #header-bar a:hover {
-  color: " + $SS.theme.headerLHColor.hex + " !important;
+  color: var(--sc-headerLHColor) !important;
 }
 #custom-board-list .current {
-  border-bottom: 1px solid rgba(" + $SS.theme.linkColor.rgb + ",1) !important;;
+  border-bottom: 1px solid rgba(var(--sc-linkColor-rgb),1) !important;;
 }
 #custom-board-list .current:hover {
-  border-bottom: 1px solid rgba(" + $SS.theme.linkHColor.rgb + ",1) !important;;
+  border-bottom: 1px solid rgba(var(--sc-linkHColor-rgb),1) !important;;
 }
 /* Greentext */
 .postMessage>.quote,
@@ -94,7 +94,7 @@ s:hover .quote,
 .atv,
 .new,
 .catalog-thread > .comment > .quote {
-  color: " + $SS.theme.quoteColor.hex + " !important;
+  color: var(--sc-quoteColor) !important;
 }
 /* Subject and Option labels */
 .subject,
@@ -104,51 +104,51 @@ s:hover .quote,
 .option.header .option-title,
 .kwd,
 .tab-label {
-  color: " + $SS.theme.titleColor.hex + " !important;
+  color: var(--sc-titleColor) !important;
 }
 .option.header {
   font-size: 140%;
 }
 /* Board Title */
 .boardTitle {
-  color: " + $SS.theme.boardColor.hex + " !important;
+  color: var(--sc-boardColor) !important;
   text-shadow: none !important;
 }
 /* Backlinks */
 :root .backlink, 
 :root .backlink.deadlink {
-  color: " + $SS.theme.blinkColor.hex + " !important;
+  color: var(--sc-blinkColor) !important;
 }
 :root.backlink-shadow .backlink {
   text-shadow: 1px 1px 5px;
 }
 :root .quotelink,
 :root .deadlink {
-  color: " + $SS.theme.qlColor.hex + " !important;
+  color: var(--sc-qlColor) !important;
 }
 /* Code Tags */
 .prettyprint,
 .catalog-code {
-  background: none repeat scroll 0 0 rgba(" + $SS.theme.codeBackground + ") !important;
-  border: 1px solid rgba(" + $SS.theme.codeBorder + ") !important;
+  background: none repeat scroll 0 0 rgba(var(--sc-codeBackground)) !important;
+  border: 1px solid rgba(var(--sc-codeBorder)) !important;
 }
 .pun,
 #qr-no-file,
 #t-load:disabled,
 :root.single-captcha #t-next:not(.is-ready),
 :root:not(.single-captcha) #t-next:disabled {
-  color: rgba(" + $SS.theme.textColor.rgb + ",.4) !important;
+  color: rgba(var(--sc-textColor-rgb),.4) !important;
 }
 ::-webkit-input-placeholder {
-  color: rgba(" + $SS.theme.textColor.rgb + ",.4) !important;
+  color: rgba(var(--sc-textColor-rgb),.4) !important;
 }
 #qr .field::-moz-placeholder,
 ::-moz-placeholder {
-  color: rgba(" + $SS.theme.textColor.rgb + ",.4) !important;
+  color: rgba(var(--sc-textColor-rgb),.4) !important;
 }
 /* Backgrounds */
 body {
-  background: " + $SS.theme.bgImg.get() + $SS.theme.bgColor.hex + " !important;
+  background: var(--sc-bgImg) var(--sc-bgColor) !important;
 }
 .reply,
 body.is_catalog .panel,
@@ -164,23 +164,23 @@ body.is_catalog .panel,
 #threadWatcher,
 #qrHeader,
 #qrCaptchaContainer {
-  background: rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ")!important;
+  background: rgba(var(--sc-mainColor-rgb), var(--sc-replyOp))!important;
 }
 .tab-label,
 #fourchanx-settings,
 #oneechan-options {
-  background: rgb\(" + $SS.theme.mainColor.rgb + ") !important;
+  background: rgb(var(--sc-mainColor-rgb)) !important;
 }
 :root.recolor-even .thread>.replyContainer:nth-of-type(even):not(.hidden) .post:not(.reply:target, .inline>.postContainer>.post),
 .flashListing tr:nth-of-type(2n):not(.highlightPost),
 :not(.fourchan-x) .reply.highlight {
-  background: rgb\(" + $SS.theme.mainColor.shiftRGB(-10) + "," + $SS.theme.replyOp + ") !important;
+  background: rgb(var(--sc-mainColor-shiftM10), var(--sc-replyOp)) !important;
 }
 :root:not(.header-gradient) #header-bar {
-  background: rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ") !important;
+  background: rgba(var(--sc-headerBGColor-rgb), var(--sc-navOp)) !important;
 }
 :root.header-gradient #header-bar {
-  background: linear-gradient(rgb\(" + $SS.theme.headerBGColor.shiftRGB(15) + "),rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ")) !important;
+  background: linear-gradient(rgb(var(--sc-headerBGColor-shift15)),rgba(var(--sc-headerBGColor-rgb), var(--sc-navOp))) !important;
 }
 :root.header-shadow #header-bar,
 .captcha-root div,
@@ -199,7 +199,7 @@ input[value='Next'],
 input[value='Previous'],
 #quickReply input[type="submit"],
 #postForm input[type="submit"] {
-  background: linear-gradient(rgb\(" + $SS.theme.mainColor.shiftRGB(15) + "),rgb(" + $SS.theme.mainColor.rgb + ")) !important;
+  background: linear-gradient(rgb(var(--sc-mainColor-shift15)), rgb(var(--sc-mainColor-rgb))) !important;
 }
 .options-button:hover,
 .import-input:hover + .options-button,
@@ -209,16 +209,16 @@ input[value='Next']:hover,
 input[value='Previous']:hover,
 #quickReply input[type="submit"]:hover,
 #postForm input[type="submit"]:hover {
-  background: rgb\(" + $SS.theme.mainColor.shiftRGB(15) + ");
+  background: rgb(var(--sc-mainColor-shift15));
 }
 .focused.entry {
-  background: rgb\(" + $SS.theme.mainColor.shiftRGB(10) + ") !important;
+  background: rgb(var(--sc-mainColor-shift10)) !important;
 }
 .qr-link:hover,
 :root.vertical-qr #qr .move {
-  background: rgb\(" + $SS.theme.mainColor.rgb + ");
+  background: rgb(var(--sc-mainColor-rgb));
 }
-input[type=text]:not(.jsColor),
+input[type=text],
 input.field,
 #qr input,
 textarea,
@@ -229,14 +229,14 @@ select,
 #t-root,
 #t-load,
 #t-next {
-  background: " + $SS.theme.inputColor.hex + " !important;
+  background: var(--sc-inputColor) !important;
   transition: background .2s, color .2s, border-color .2s, width .2s !important;
 }
 input[type=checkbox],
 .riceCheck {
-  background: rgb\(" + $SS.theme.inputColor.shiftRGB(25) + ") !important;
+  background: rgb(var(--sc-inputColor-shift25)) !important;
 }
-input[type=text]:not(.jsColor):hover,
+input[type=text]:hover,
 input.field:hover,
 #qr input:hover,
 .riceCheck:hover,
@@ -245,26 +245,26 @@ textarea:hover,
 select:hover,
 #t-load:hover,
 #t-next:hover {
-  background: rgb(" + $SS.theme.inputColor.hover + ") !important;
+  background: rgb(var(--sc-inputColor-hover)) !important;
 }
 hr {
-  background-image: linear-gradient(to left, rgba(" + $SS.theme.brderColor.rgb + ",0), rgb(" + $SS.theme.brderColor.rgb + "), rgba(" + $SS.theme.brderColor.rgb + ",0));
+  background-image: linear-gradient(to left, rgba(var(--sc-brderColor-rgb),0), rgb(var(--sc-brderColor-rgb)), rgba(var(--sc-brderColor-rgb),0));
 }
 /* Unread line */
 #unread-line {
-  background-image: linear-gradient(to left, rgba(" + $SS.theme.unreadColor.rgb + ",0), rgb(" + $SS.theme.unreadColor.rgb + "), rgba(" + $SS.theme.unreadColor.rgb + ",0));
+  background-image: linear-gradient(to left, rgba(var(--sc-unreadColor-rgb),0), rgb(var(--sc-unreadColor-rgb)), rgba(var(--sc-unreadColor-rgb),0));
 }
 
 .newPostsMarker,
 .newPostsMarker:not(#quote-preview) {
-  box-shadow: 0 3px rgb(" + $SS.theme.unreadColor.rgb + ") !important;
+  box-shadow: 0 3px rgb(var(--sc-unreadColor-rgb)) !important;
 }
 .inline {
-  background: rgba\(" + $SS.theme.mainColor.shiftRGB(-16) + ",.8)!important;
+  background: rgba(var(--sc-mainColor-shiftM16),.8)!important;
 }
 :root.post-info .reply>.postInfo {
-  background: rgba\(" + $SS.theme.mainColor.shiftRGB(-16) + ",.2);
-  border-bottom: 1px solid rgb\(" + $SS.theme.mainColor.shiftRGB(4) + ");
+  background: rgba(var(--sc-mainColor-shiftM16),.2);
+  border-bottom: 1px solid rgb(var(--sc-mainColor-shift4));
 }
 /* Borders */
 .reply,
@@ -334,10 +334,10 @@ fieldset,
 #qr select,
 select,
 #quickReply {
-  border-color: " + $SS.theme.brderColor.hex + " !important;
+  border-color: var(--sc-brderColor) !important;
 }
 .dd-menu li {
-  border-bottom: " + $SS.theme.brderColor.hex + " !important;
+  border-bottom: var(--sc-brderColor) !important;
 }
 input,
 textarea,
@@ -359,7 +359,7 @@ select,
 :root.werkTyme:not(.catalog-hover-expand) .catalog-thread,
 :root.catalog-hover-expand .catalog-container:hover > .post,
 :root.catalog-hover-expand .catalog-container:hover .catalog-reply {
-  border: 1px solid " + $SS.theme.inputbColor.hex + " !important;
+  border: 1px solid var(--sc-inputbColor) !important;
 }
 .options-button,
 .qr-link,
@@ -369,7 +369,7 @@ input[value='Next'],
 input[value='Previous'] {
   border-style: solid;
   border-width: 1px;
-  border-color: rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-30) + ") !important;
+  border-color: rgb(var(--sc-mainColor-shiftM15)) rgb(var(--sc-mainColor-shiftM15)) rgb(var(--sc-mainColor-shiftM30)) !important;
 }
 a.quotelink.forwardlink, a.backlink.forwardlink {
   border-bottom: 1px dashed;
@@ -383,19 +383,19 @@ textarea:focus,
 select:focus,
 #t-load:focus,
 #t-next:focus {
-  border: 1px solid " + $SS.theme.linkColor.hex + " !important;
+  border: 1px solid var(--sc-linkColor) !important;
 }
 #search-box:hover,
 #index-search:hover,
 .captcha-img:hover {
-  border-color: " + $SS.theme.linkColor.hex + " !important;
+  border-color: var(--sc-linkColor) !important;
 }
 #header-bar {
   border: none !important;
 }
 :root:not(.fourchan-x) div#boardNavMobile {
-  background-color: " + $SS.theme.headerBGColor.hex + ";
-  border-bottom-color: " + $SS.theme.brderColor.hex + ";
+  background-color: var(--sc-headerBGColor);
+  border-bottom-color: var(--sc-brderColor);
 }
 .flashListing td:not(:last-of-type):not(.postblock) {
   border-width: 1px;
@@ -407,23 +407,23 @@ select:focus,
 }
 /* 4chan X Menu */
 .suboption-list > div:last-of-type {
-  background: rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ")!important;
+  background: rgba(var(--sc-mainColor-rgb), var(--sc-replyOp))!important;
 }
 .suboption-list > div::before,
 .suboption-list::before {
-  border-color: " + $SS.theme.brderColor.hex + " !important;
+  border-color: var(--sc-brderColor) !important;
   left: 0.5em !important;
 }
 /* Shadows */
 #navlinks a {
-  text-shadow:" + $SS.theme.mainColor.hex + " -1px -1px,
-  " + $SS.theme.mainColor.hex + " 1px -1px,
-  " + $SS.theme.mainColor.hex + " -1px 1px,
-  " + $SS.theme.mainColor.hex + " 1px 1px,
-  " + $SS.theme.mainColor.hex + " -1px 0,
-  " + $SS.theme.mainColor.hex + " 1px 0,
-  " + $SS.theme.mainColor.hex + " 0 -1px,
-  " + $SS.theme.mainColor.hex + " 0 1px,
+  text-shadow:var(--sc-mainColor) -1px -1px,
+  var(--sc-mainColor) 1px -1px,
+  var(--sc-mainColor) -1px 1px,
+  var(--sc-mainColor) 1px 1px,
+  var(--sc-mainColor) -1px 0,
+  var(--sc-mainColor) 1px 0,
+  var(--sc-mainColor) 0 -1px,
+  var(--sc-mainColor) 0 1px,
   rgba(0,0,0,.6) 0 2px 4px,
   rgba(0,0,0,.6) 0 0 2px;
 }
@@ -442,18 +442,18 @@ select:focus,
 }
 /* /f/ */
 #swf-embed-header.postblock {
-  border: 1px solid " + $SS.theme.brderColor.hex + " !important;
-  background-color: rgba(" + $SS.theme.headerBGColor.rgb + "," + $SS.theme.navOp + ") !important;
-  color: " + $SS.theme.linkColor.hex + " !important;
+  border: 1px solid var(--sc-brderColor) !important;
+  background-color: rgba(var(--sc-headerBGColor-rgb), var(--sc-navOp)) !important;
+  color: var(--sc-linkColor) !important;
 }
 #swf-embed-close {
   right: 1px !important;
 }
 /* 4chan XT: fxtwitter embed card */
 .fxt-card {
-  color: " + $SS.theme.textColor.hex + " !important;
-  background-color: rgba(" + $SS.theme.bgColor.rgb + "," + $SS.theme.replyOp + ") !important;
-  border: 1px solid " + $SS.theme.brderColor.hex + " !important;
+  color: var(--sc-textColor) !important;
+  background-color: rgba(var(--sc-bgColor-rgb), var(--sc-replyOp)) !important;
+  border: 1px solid var(--sc-brderColor) !important;
 }
 /* Alternative Spoiler Color */
 :root.alt-spoiler .span.spoiler,

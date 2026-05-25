@@ -61,17 +61,17 @@ div#qrError {
 /* QR file button */
 #quickReply #qrFile::file-selector-button,
 #quickReply #qrFile::-webkit-file-upload-button {
-  background: rgb(" + $SS.theme.mainColor.rgb + ") !important;
+  background: rgb(var(--sc-mainColor-rgb)) !important;
   border-style: solid;
   border-width: 1px;
-  border-color: rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-15) + ") rgb\(" + $SS.theme.mainColor.shiftRGB(-30) + ") !important;
-  color: " + $SS.theme.textColor.hex + " !important;
+  border-color: rgb(var(--sc-mainColor-shiftM15)) rgb(var(--sc-mainColor-shiftM15)) rgb(var(--sc-mainColor-shiftM30)) !important;
+  color: var(--sc-textColor) !important;
   font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ";
   font-size: " + $SS.conf["UI Font Size"] + "px !important;
 }
 #quickReply #qrFile:hover::file-selector-button,
 #quickReply #qrFile:hover::-webkit-file-upload-button {
-  background: rgb\(" + $SS.theme.mainColor.shiftRGB(10) + ") !important;
+  background: rgb(var(--sc-mainColor-shift10)) !important;
 }
 /* Board banner */
 :root:not(.fourchan-x):not(.right-sidebar):not(.left-sidebar) :root:not(#bannerCnt) div.boardBanner > div.boardTitle {

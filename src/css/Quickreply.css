@@ -318,7 +318,7 @@ input[type="number"] {
   max-height: 80px;
 }
 :root.single-captcha .tcaptcha-image.active {
-  outline: 2px solid " + $SS.theme.linkColor.hex + ";
+  outline: 2px solid var(--sc-linkColor);
   outline-offset: 1px;
 }
 :root.single-captcha #t-load {

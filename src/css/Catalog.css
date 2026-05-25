@@ -21,7 +21,7 @@
 /* Background */
 :root.catalog-background #threads div.thread,
 :root.catalog-background .catalog-thread {
-  background: rgba(" + $SS.theme.mainColor.rgb + "," + $SS.theme.replyOp + ") !important;
+  background: rgba(var(--sc-mainColor-rgb), var(--sc-replyOp)) !important;
 }
 :root.rounded-corners.catalog-background #threads div.thread,
 :root.rounded-corners.catalog-background .catalog-thread {

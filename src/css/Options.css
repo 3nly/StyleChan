@@ -61,7 +61,7 @@
 }
 #main-section>.option:nth-of-type(even),
 #misc-section>.option:nth-of-type(even) {
-  background: rgb\(" + $SS.theme.mainColor.shiftRGB(-5) + ") !important;
+  background: var(--sc-mainColor-shiftM5) !important;
 }
 #main-section .buttons-container+.option {
   border-top: none !important;
@@ -182,7 +182,6 @@ select[name='Font Family']>option {
   max-width: min(800px, 90vw);
   max-height: 80vh;
   text-align:left!important;
-  width: 55vw!important;
 }
 #add-theme .option-title {
   float:left;

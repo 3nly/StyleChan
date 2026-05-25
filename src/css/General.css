@@ -186,7 +186,7 @@ input[type=checkbox]:checked+.riceCheck::before {
 }
 input[type=checkbox]:checked::before,
 input[type=checkbox]:checked+.riceCheck::before {
-  background: " + $SS.theme.checkMark.get() + " !important;
+  background: var(--sc-checkMark) !important;
 }
 /* Header */
 #header-bar {
@@ -363,7 +363,7 @@ table.flashListing {
   margin-bottom: 20px;
 }
 table.flashListing .highlightPost {
-  background: rgb\(" + $SS.theme.mainColor.shiftRGB(-25) + ") !important;
+  background: var(--sc-mainColor-shiftM25) !important;
 }
 .flashListing td {
   padding-left: 4px !important;

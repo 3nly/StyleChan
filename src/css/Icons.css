@@ -19,7 +19,7 @@
   margin-right: 2px;
   top: auto !important;
   bottom: 4px !important;
-  background-image: url(\"data:image/svg+xml," + $SS.theme.icons.star + "\") !important;
+  background-image: var(--sc-icon-star) !important;
 }
 /* Fix for XT not setting position, remove if no longer needed */
 :root.ua-gecko.fourchan-xt .watch-thread-link {
@@ -28,7 +28,7 @@
 }
 /* Backlinks */
 :root.backlink-icon .backlink {
-  background-image: url(\"data:image/svg+xml," + $SS.theme.icons.backlink + "\") !important;
+  background-image: var(--sc-icon-backlink) !important;
   font-size: 0 !important;
   padding: " + (($SS.conf["Font Size"] < 12) ? 5 : 6) + "px !important;
   margin-right: 0 !important;
@@ -39,7 +39,7 @@
 }
 :root.backlink-icon .backlink.inlined,
 :root.backlink-icon .backlink:has(.quotelink.linkfade) {
-  background-image: url(\"data:image/svg+xml," + $SS.theme.icons.downArrow + "\") !important;
+  background-image: var(--sc-icon-downArrow) !important;
   font-size: 0 !important;
   padding: 6px !important;
   margin-right: 0 !important;
@@ -79,13 +79,13 @@ img[title=Archived] {
 }
 /* Thread Closed */
 .closedIcon {
-  background-image:url(\"data:image/svg+xml," + $SS.theme.icons.threadClosed + "\")!important;
+  background-image: var(--sc-icon-threadClosed) !important;
 }
 /* Thread Pinned */
 .stickyIcon {
-  background-image:url(\"data:image/svg+xml," + $SS.theme.icons.threadPinned + "\")!important;
+  background-image: var(--sc-icon-threadPinned) !important;
 }
 /* Thread Archived */
 .archivedIcon {
-  background-image:url(\"data:image/svg+xml," + $SS.theme.icons.threadArchived + "\")!important;
+  background-image: var(--sc-icon-threadArchived) !important;
 }

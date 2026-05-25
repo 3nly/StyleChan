@@ -91,17 +91,17 @@
 }
 #header-bar #notifications a:hover,
 .chX-notifs #header-bar #notifications a:hover {
-  color: " + $SS.theme.linkHColor.hex + " !important;
+  color: var(--sc-linkHColor) !important;
 }
 .chX-notifs #header-bar #notifications a {
-  color: " + $SS.theme.linkColor.hex + " !important;
+  color: var(--sc-linkColor) !important;
 }
 #stylechan-notifications .stylechan-notification,
 .chX-notifs #notifications .notification {
-  color: " + $SS.theme.textColor.hex + " !important;
-  background: rgb\(" + $SS.theme.mainColor.rgb + ") !important;
-  border-color: rgb\(" + $SS.theme.brderColor.rgb + ") !important;
-  border-left-color: " + $SS.theme.linkColor.hex + " !important;
+  color: var(--sc-textColor) !important;
+  background: rgb(var(--sc-mainColor-rgb)) !important;
+  border-color: rgb(var(--sc-brderColor-rgb)) !important;
+  border-left-color: var(--sc-linkColor) !important;
 }
 .chX-notifs #notifications .notification.info,
 #stylechan-notifications .stylechan-notification-info {
@@ -117,11 +117,11 @@
 }
 .chX-notifs #notifications .notification.success,
 #stylechan-notifications .stylechan-notification-success {
-  border-left-color: " + $SS.theme.quoteColor.hex + " !important;
+  border-left-color: var(--sc-quoteColor) !important;
 }
 .chX-notifs #notifications .notification a {
-  color: " + $SS.theme.linkColor.hex + " !important;
+  color: var(--sc-linkColor) !important;
 }
 .chX-notifs #notifications .notification a:hover {
-  color: " + $SS.theme.linkHColor.hex + " !important;
+  color: var(--sc-linkHColor) !important;
 }

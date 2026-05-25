@@ -86,7 +86,6 @@ a.qr-link {
   font-size: " + $SS.conf["Backlink Font Size"] + "px !important;
 }
 /* Limit font-size to not break layout and buttons */
-:root input.jsColor,
 .tab-label,
 .options-button,
 .theme-preview,
