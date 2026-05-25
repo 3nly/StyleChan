@@ -1387,6 +1387,22 @@
             });
 
             qrNode.dataset.rememberCommentBound = "true";
+        handleFormNode: function (form) {
+            if (!form) {
+                document.querySelectorAll("#qr, #quickReply, form[name='post'], form[name='qrPost']").forEach($SS.handleFormNode);
+                return;
+            }
+            if ($SS.conf["Remember Comment Draft"]) {
+                $SS.bindRememberComment(form);
+            }
+            if ($SS.conf["Watch Thread on Reply"]) {
+                form.querySelectorAll("input[type=submit]").forEach(function (btn) {
+                    if (!btn._watchThreadBound) {
+                        btn.addEventListener("click", $SS.watchThread);
+                        btn._watchThreadBound = true;
+                    }
+                });
+            }
         },
         initSingleViewCaptcha: function () {
             if (!$SS.conf["Single View Captcha"]) return;
