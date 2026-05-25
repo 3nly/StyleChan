@@ -98,7 +98,8 @@
         "Expanding Form Inputs": [true, "Makes certain form elements expand on focus."],
         "Remember Comment Draft": [false, "Will save and restore unsubmitted QR comments (5 second delay). Drafts expire after 24h."],
         "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size limit to JPEG."],
-        "Single View Captcha": [false, "Shows the captcha challenges in a single view."],
+        "Single View Captcha": [false, "Shows the captcha challenges in a single view.", null, true],
+        "Auto Submit": [false, "Automatically submit the post after completing the last captcha challenge.", "Single View Captcha", true, true],
         ":: Replies": ["header", ""],
         "Fit Width": [true, "Replies stretch to the width of the page.", null, true],
         "Fit Post Menu": [false, "Sets the post menu to the right.", "Fit Width", true, true],
@@ -1458,6 +1459,14 @@
 
                     if (activeTask < TCaptcha.tasks.length - 1) {
                         TCaptcha.setTaskId(activeTask + 1);
+                    } else if ($SS.conf["Auto Submit"]) {
+                        var form = TCaptcha.node && TCaptcha.node.closest("form");
+                        if (form) {
+                            var submitBtn = form.querySelector("input[type=submit]");
+                            if (submitBtn) {
+                                setTimeout(function () { submitBtn.click(); }, 100);
+                            }
+                        }
                     }
 
                     renderCaptchaGrid();
