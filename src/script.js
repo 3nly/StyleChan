@@ -2198,9 +2198,17 @@
                     "<span class='option-title'>Header Opacity:</span><input type=text name=navOp value='" + (bEdit ? tEdit.navOp : "0.9") + "'>" +
                     "</label>";
 
-                for (var i = 0, MAX = themeInputs.length; i < MAX; ++i)
+                for (var i = 0, MAX = themeInputs.length; i < MAX; ++i) {
+                    var hex = (bEdit ? tEdit[themeInputs[i].name] : "000000") || "000000";
+                    var rgb = $SS.RGBFromHex(hex);
+                    var textColor = $SS.isLight(rgb) ? "#000" : "#fff";
                     innerHTML += "<label><span class='option-title'>" + themeInputs[i].dName + ":</span>" +
-                        "<input type='color' name=" + themeInputs[i].name + " value=\"#" + (bEdit ? tEdit[themeInputs[i].name] : "000000") + "\"></label>";
+                        "<span class=color-picker-wrap>" +
+                        "<input type=text name=" + themeInputs[i].name + " value=\"" + hex + "\" autocomplete=off " +
+                            "class=color-hex style='background:#" + hex + " !important;color:" + textColor + " !important'>" +
+                        "<input type=color value=\"#" + hex + "\" class=color-picker-btn>" +
+                        "</span></label>";
+                }
 
                 innerHTML += "<label id=customCSS><span class='option-title'>Custom CSS:</span><textarea name=customCSS class='field'>" + (bEdit ? tEdit.customCSS || "" : "") + "</textarea>" +
                     "</label><div>" +
@@ -2280,8 +2288,29 @@
                     $SS.setThemeVariables();
                 };
 
-                // Hook into input changes for live preview
-                $("input[type='color'],input[type=text],textarea,select", div).bind("input change", function () {
+                // Sync color swatch to hex text input and trigger preview
+                $("input[type='color']", div).bind("input change", function () {
+                    var textInput = this.parentNode.querySelector(".color-hex");
+                    if (textInput) {
+                        var hex = this.value.replace("#", "");
+                        textInput.value = hex;
+                        textInput.style.setProperty("background-color", "#" + hex, "important");
+                        var rgb = $SS.RGBFromHex(hex);
+                        textInput.style.setProperty("color", $SS.isLight(rgb) ? "#000" : "#fff", "important");
+                    }
+                    updateLivePreview();
+                });
+
+                // Live preview on text input / textarea / select changes
+                $("input[type=text],textarea,select", div).bind("input change", function () {
+                    if (this.classList.contains("color-hex")) {
+                        var hex = this.value.replace("#", "");
+                        if (/^[0-9a-f]{6}$/i.test(hex)) {
+                            this.style.setProperty("background-color", "#" + hex, "important");
+                            var rgb = $SS.RGBFromHex(hex);
+                            this.style.setProperty("color", $SS.isLight(rgb) ? "#000" : "#fff", "important");
+                        }
+                    }
                     updateLivePreview();
                 });
 
