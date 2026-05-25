@@ -274,6 +274,7 @@
         ":: 4chan": ["header", ""],
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
         "Catalog Links": [false, "Converts board navigation links to catalog links."],
+        "Watch Thread on Reply": [false, "Automatically adds the thread to the thread watcher when posting a reply."],
         "Themes": [],
         "Hidden Themes": [],
         "Selected Theme": 1,
@@ -884,6 +885,11 @@
                         }
                     });
                 });
+
+                // Auto-watch thread on post submission
+                if ($SS.conf["Watch Thread on Reply"] && $SS.location.reply) {
+                    $SS.handleFormNode();
+                }
 
                 // Auto-open native QR on thread pages (non-4chanX only)
                 if ($SS.location.reply && $SS.conf["Pin Quick Reply"] && !document.documentElement.classList.contains("fourchan-x")) {
@@ -1619,6 +1625,13 @@
                 });
             });
         },
+        watchThread: function () {
+            if (!$SS.conf["Watch Thread on Reply"] || !$SS.location.reply) return;
+            var btn = document.querySelector("[data-cmd='watch']");
+            if (btn && /add/i.test(btn.title || btn.getAttribute("title") || "")) {
+                btn.click();
+            }
+        },
         QRDialogCreationHandler: function (e) {
             var qr = e.target;
 
@@ -1633,6 +1646,9 @@
                     }
                 });
             });
+            if ($SS.conf["Watch Thread on Reply"] && $SS.location.reply) {
+                $SS.handleFormNode(qr);
+            }
             $SS.bindRememberComment(qr);
 
             $SS.QRhandled = true;
