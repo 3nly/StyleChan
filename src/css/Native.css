@@ -83,9 +83,16 @@ div#qrError {
   margin-top: 50px;
 }
 /* Highlights */
-:root:not(.fourchan-x) .postContainer:has(.ql-tracked) > .post {
+:root.highlight-you:not(.fourchan-x) .postContainer:has(.ql-tracked) > .post {
   border-left: " + $SS.conf["Width Decoration"] + "px solid rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
 }
-:root:not(.fourchan-x) .postContainer:has(.ql-tracked) > .sideArrows {
+:root.highlight-you:not(.fourchan-x) .postContainer:has(.ql-tracked) > .sideArrows {
   color: rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
+}
+:root.highlight-own:not(.fourchan-x) .yourPost.opContainer,
+:root.highlight-own:not(.fourchan-x) .yourPost > .reply {
+  border-left: " + $SS.conf["Width Decoration"] + "px dashed rgba(var(--sc-ownPostHLColor-rgb),1.0) !important;
+}
+:root.highlight-own:not(.fourchan-x) .yourPost > .sideArrows {
+  color: rgba(var(--sc-ownPostHLColor-rgb),1.0) !important;
 }

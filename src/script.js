@@ -275,6 +275,8 @@
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
         "Catalog Links": [false, "Converts board navigation links to catalog links."],
         "Watch Thread on Reply": [false, "Automatically adds the thread to the thread watcher when posting a reply."],
+        "Highlight Posts Quoting You": [false, "Highlights any posts that contain a quote to your post."],
+        "Highlight Own Posts": [false, "Highlights own posts."],
         "Themes": [],
         "Hidden Themes": [],
         "Selected Theme": 1,
@@ -812,6 +814,7 @@
                                     ? [node]
                                     : node.querySelectorAll ? node.querySelectorAll(formSel) : [];
                                 forms.forEach($SS.handleFormNode);
+                                $SS.markOwnPosts(node);
 
                             }
                         }
@@ -1649,6 +1652,21 @@
                 var watchData = $SS.localJSON.get("4chan-watch") || {};
                 watchData[key] = [$SS.getThreadTitle(), threadId, 0, null, 0];
                 $SS.localJSON.set("4chan-watch", watchData);
+            } catch (e) {}
+        },
+        markOwnPosts: function (root) {
+            try {
+                var pathname = window.location.pathname.slice(1).split("/");
+                if (pathname[1] !== "thread") return;
+                var board = pathname[0], threadId = pathname[2];
+                if (!board || !threadId) return;
+                var data = $SS.localJSON.get("4chan-track-" + board + "-" + threadId);
+                if (!data) return;
+                Object.keys(data).forEach(function (key) {
+                    var postId = key.replace(/^>>/, "");
+                    var el = (root || document).getElementById("p" + postId);
+                    if (el) { var c = el.closest(".postContainer"); if (c) c.classList.add("yourPost"); }
+                });
             } catch (e) {}
         },
         QRDialogCreationHandler: function (e) {
@@ -3584,6 +3602,9 @@
                 cl.toggle("catalog-justify", $SS.conf["Justified Text"] === true);
                 cl.toggle("catalog-background", $SS.conf["Show Background"] === true);
                 cl.toggle("catalog-thumbsize", $SS.conf["Unified Thumbnail Size"] === true);
+                cl.toggle("highlight-you", $SS.conf["Highlight Posts Quoting You"] === true);
+                cl.toggle("highlight-own", $SS.conf["Highlight Own Posts"] === true);
+                if ($SS.conf["Highlight Own Posts"]) $SS.markOwnPosts();
             }
         },
 
