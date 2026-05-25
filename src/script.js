@@ -984,7 +984,7 @@
                 $SS.insertCSS();
                 $SS.DOMLoaded(true);
             } else {
-                $.waitFor("link[rel=stylesheet]", function () { $SS.insertCSS(); });
+                $SS.insertCSS();
                 if (/complete|interactive/.test(document.readyState))
                     $SS.DOMLoaded();
                 else
