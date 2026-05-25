@@ -286,7 +286,6 @@
         NAMESPACE = "StyleChan.",
         VERSION = "<%= version %>",
         CHANGELOG = "https://github.com/3nly/StyleChan/blob/<%= meta.mainBranch %>/CHANGELOG.md",
-        inputImages = "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAgCAYAAAAv8DnQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAP9JREFUOMvV0CFLQ2EYxfHfrtdiURgbmCxOmFPBJgZZ0CQD0Q+goFkwabWIyWIWFgwmy7Qp7DPI3GD7ACZlYLNcy31ljG0aDHrSy3N43nOef6ZULBiifczEQ8wV7OAtGmBO4wgfOI2whsXUnMAJ8rhCJ8IxDpHDHpZwixqM5XPZBBtYxioauEgjRLjBI2bRxTneQ6EYCS4xiTu89DbONJrtP88hwnV64hm28YRqyPsFDkmSGKUYFubnsqignM7rqDWa7dcAqoLdnsXwrgZQ5QG/l8MVIxX1ZPar/lUyUOsv+aMzv+0Qw3OrM4VNrKfzB9yXioVu6LDVx+EA4/+Gwycw/Uz36O07WwAAAABJRU5ErkJggg==",
         themeInputs = [{
             dName: "Reply Background",
             name: "mainColor",
@@ -759,22 +758,6 @@
         hasSingleEl: function () {
             return this.elems.length === 1;
         },
-        riceCheck: function () {
-            return this.each(function () {
-                var click = function (e) {
-                    e.preventDefault();
-                    this.previousSibling.click();
-                };
-                if (this.isRiced) return;
-                else if (this.nextSibling != undefined && this.nextSibling.className === "riceCheck")
-                    return $(this.nextSibling).bind("click", click);
-
-                var div = $("<div class=riceCheck>").bind("click", click);
-                $(this).hide().after(div);
-
-                return this.isRiced = true;
-            });
-        }
     };
     /* END STYLE SCRIPT LIBRARY */
 
@@ -802,12 +785,6 @@
                         for (j = 0, _MAX = nodes.length; j < _MAX; ++j) {
                             node = nodes[j];
                             if (node.nodeType !== 3 && node.nodeType === 1) {
-                                // Only process element nodes, check if it's a checkbox or contains checkboxes
-                                if (node.tagName === "INPUT" && node.type === "checkbox") {
-                                    $(node).riceCheck();
-                                } else {
-                                    $("input[type=checkbox]", node).riceCheck();
-                                }
                                 // Handle forms for remember comment draft and watch thread
                                 var formSel = "#qr, #quickReply, form[name='post'], form[name='qrPost']";
                                 var forms = node.matches && node.matches(formSel)
@@ -827,8 +804,6 @@
                     childList: true,
                     subtree: true
                 });
-
-                $("input[type=checkbox]").riceCheck();
 
                 if (document.documentElement.classList.contains("fourchan-x"))
                     if ((!(html = $("*[xmlns]")).exists()) && (!(ctxmenu = $("#ctxmenu-main").exists())))
@@ -1083,7 +1058,6 @@
             var sidebarBgOpacity = t.mainColor.isDark ? ".9" : ".2";
             root.setProperty("--sc-sidebar-bg", 'rgba(' + t.mainColor.shiftRGB(-18) + ',' + sidebarBgOpacity + ')');
             root.setProperty("--sc-bgImg", t.bgImg.get());
-            root.setProperty("--sc-checkMark", t.checkMark.get());
             root.setProperty("--sc-headerbColor", t.headerbColor.hex);
             root.setProperty("--sc-icon-star", 'url("data:image/svg+xml,' + t.icons.star + '")');
             root.setProperty("--sc-icon-backlink", 'url("data:image/svg+xml,' + t.icons.backlink + '")');
@@ -1669,10 +1643,49 @@
                 });
             } catch (e) {}
         },
+        insertToggleYou: function () {
+            if (document.documentElement.classList.contains("fourchan-x")) return;
+            var menu = document.getElementById("post-menu");
+            if (!menu || menu.querySelector("[data-cmd='toggle-you']")) return;
+            var hideItem = menu.querySelector("li[data-cmd='hide-r']");
+            if (!hideItem) return;
+            var postId = hideItem.getAttribute("data-id");
+            var li = document.createElement("li");
+            li.setAttribute("data-cmd", "toggle-you");
+            li.setAttribute("data-id", postId);
+            li.textContent = "Toggle You";
+            hideItem.parentNode.insertBefore(li, hideItem.nextSibling);
+        },
+        toggleYou: function (li) {
+            var postId = li.getAttribute("data-id");
+            if (!postId) return;
+            try {
+                var pathname = window.location.pathname.slice(1).split("/");
+                var board = pathname[0], threadId = pathname[2];
+                if (!board || !threadId) return;
+                var key = "4chan-track-" + board + "-" + threadId;
+                var data = $SS.localJSON.get(key) || {};
+                var ref = ">>" + postId;
+                var el = document.getElementById("p" + postId);
+                if (data[ref]) {
+                    delete data[ref];
+                    li.textContent = "Toggle You";
+                    if (el) { var c = el.closest(".postContainer"); if (c) c.classList.remove("yourPost"); }
+                } else {
+                    data[ref] = 1;
+                    li.textContent = "✓ You";
+                    if (el) { var c = el.closest(".postContainer"); if (c) c.classList.add("yourPost"); }
+                }
+                if (Object.keys(data).length === 0) {
+                    try { localStorage.removeItem(key); } catch (e) {}
+                } else {
+                    $SS.localJSON.set(key, data);
+                }
+            } catch (e) {}
+        },
         QRDialogCreationHandler: function (e) {
             var qr = e.target;
 
-            $("input[type=checkbox]", qr).riceCheck();
             $("input[name=sub]", qr).each(function () {
                 this.setAttribute("maxlength", "100");
                 this.addEventListener("input", function () {
@@ -1690,10 +1703,7 @@
 
             $SS.QRhandled = true;
         },
-        NodeInsertionHandler: function (e) {
-            var settings = e.target;
-            $("input[type=checkbox]", settings).riceCheck();
-        },
+        NodeInsertionHandler: function () {},
         /* CONFIG */
         Config: {
             init: function () {
@@ -3706,8 +3716,6 @@
             this.threadHLColor = new $SS.Color(theme.threadHLColor);
             this.replybgHLColor = new $SS.Color(theme.replybgHLColor);
             this.replyslctColor = new $SS.Color(theme.replyslctColor);
-            this.checkMark = new $SS.Image(inputImages, "no-repeat center " + (this.inputColor.isLight ? 0 : -8) + "px");
-            this.radioCheck = new $SS.Image(inputImages, "no-repeat center " + (this.inputColor.isLight ? -16 : -24) + "px");
             this.codeBackground = (this.bgColor.isLight ? "255, 255, 255, 0.2" : "0, 0, 0, 0.2");
             this.codeBorder = (this.bgColor.isLight ? "204, 204, 204, 1.0" : "204, 204, 204, 0.1");
             this.icons = {
@@ -3746,7 +3754,7 @@
                 var div = $("<div " + (this.hidden ? "hidden=true " : "") +
                     " id=theme" + this.index + " class=\'theme-preview " + (($SS.conf["Selected Theme"] == $SS.conf["NSFW Theme"]) && ($SS.conf["Selected Theme"] == this.index) ? "selected nsfw" : ($SS.conf["Selected Theme"] == this.index ? "selected " : "") + ($SS.conf["NSFW Theme"] == this.index ? "nsfw " : "")) + "\'>").html("<div class=reply " +
                         "style='background-color:" + this.mainColor.hex + "!important;border:1px solid " + this.brderColor.hex + "!important;color:" + this.textColor.hex + "!important'>" +
-                        "<div class=riceCheck style='background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;box-shadow:rgba(" + this.mainColor.shiftRGB(64) + ",.3) 0 1px;'></div>" +
+                        "<span style='display:inline-block;width:10px;height:10px;border-radius:2px;background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;box-shadow:rgba(" + this.mainColor.shiftRGB(64) + ",.3) 0 1px;'></span>" +
                         "<span style='color:" + this.titleColor.hex + "!important; font-weight: 700 !important'>" + this.name + "</span> " +
                         "<span style='color:" + this.nameColor.hex + "!important; font-weight: 700 !important'>" + this.authorName + "</span>" +
                         "<span style='color:" + this.tripColor.hex + "!important'> " + this.authorTrip + "</span>" +

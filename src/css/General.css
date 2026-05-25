@@ -37,7 +37,7 @@ body {
 .thread>.replyContainer:not(.thread>.postContainer:last-of-type),
 .threadContainer>.replyContainer,
 :root.op-background .thread>.opContainer:not(.thread>.postContainer:last-of-type) {
-  margin-bottom: " + $SS.conf["Margin Between Replies"] + "px !important;
+  margin-bottom: " + ($SS.conf["Margin Between Replies"] !== '' ? $SS.conf["Margin Between Replies"] : '0') + "px !important;
 }
 .container~.inline {
   margin: 2px 0 2px 13px !important;
@@ -129,7 +129,6 @@ body {
 :root.reply-fit-width .post .menu-button {
   margin-left: 0;
   position: relative;
-  left: 5px;
 }
 :root.reply-fit-width .post .menu-button {
   opacity: 0;
@@ -154,39 +153,32 @@ body {
 /* Checkboxes */
 input[type=checkbox],
 input[type=button],
-input[type=submit],
-.riceCheck {
+input[type=submit] {
   cursor: pointer;
 }
-.fourchan-x input[type=checkbox],
-.riceCheck {
+input[type=checkbox] {
   display: inline-block;
-  height: 10px !important;
+  height: 12px !important;
   position: relative;
-  width: 10px !important;
+  width: 12px !important;
   border-radius: 2px !important;
   -webkit-appearance: none;
   -moz-appearance: none;
-  margin: 1px;
-}
-.fourchan-x input[type=checkbox],
-:root:not(.fourchan-x) #quote-preview .riceCheck {
-  display: none !important;
-}
-.riceCheck {
   margin: 0 2px -1px 0;
 }
-input[type=checkbox]:checked::before,
-input[type=checkbox]:checked+.riceCheck::before {
-  content: '';
+input[type=checkbox]:checked::before {
+  content: '✓';
   display: block;
-  height: 8px;
-  margin: 1px;
-  width: 8px;
+  height: 12px;
+  width: 11px;
+  font-size: 11px;
+  line-height: 12px;
+  text-align: center;
+  color: var(--sc-textColor);
 }
-input[type=checkbox]:checked::before,
-input[type=checkbox]:checked+.riceCheck::before {
-  background: var(--sc-checkMark) !important;
+/* Override the cleanup but only for the post menu */
+div#menu.dialog label.toggle-you.entry input {
+  display: inline-block;
 }
 /* Header */
 #header-bar {

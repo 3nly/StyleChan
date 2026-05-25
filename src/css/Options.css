@@ -81,10 +81,8 @@
 #misc-section input, #misc-section select {
   float: right !important;
 }
-#main-section input[type=checkbox], 
-#main-section .riceCheck,
-#misc-section input[type=checkbox],
-#misc-section .riceCheck {
+#main-section input[type=checkbox],
+#misc-section input[type=checkbox] {
   float: left !important;
   margin-right: 5px !important;
 }
@@ -363,10 +361,8 @@ select[name='Font Family']>option {
   cursor: pointer;
 }
 /* Inputs */
-label.option>input[type=checkbox],
-label.option>.riceCheck {
+label.option>input[type=checkbox] {
   margin: 4px 2px 0 !important;
-  vertical-align: bottom !important;
 }
 span.option>select,
 .option>input[type=text] {

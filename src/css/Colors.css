@@ -222,7 +222,6 @@ input[type=text],
 input.field,
 #qr input,
 textarea,
-.riceCheck,
 #qr-filename-container,
 select,
 .captcha-root > div,
@@ -232,14 +231,13 @@ select,
   background: var(--sc-inputColor) !important;
   transition: background .2s, color .2s, border-color .2s, width .2s !important;
 }
-input[type=checkbox],
-.riceCheck {
+input[type=checkbox] {
   background: rgb(var(--sc-inputColor-shift25)) !important;
 }
 input[type=text]:hover,
 input.field:hover,
 #qr input:hover,
-.riceCheck:hover,
+input[type=checkbox]:hover,
 #qr-filename-container:hover,
 textarea:hover,
 select:hover,
@@ -341,7 +339,6 @@ select,
 }
 input,
 textarea,
-.riceCheck,
 #qr-filename-container,
 .captcha-img,
 :root.vertical-qr #qr .move,

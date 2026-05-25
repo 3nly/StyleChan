@@ -10,19 +10,16 @@
 #qr .close {
   padding: 2px 3px 2px 4px !important;
 }
-#qr .riceCheck,
 #qr input[type=checkbox] {
   margin: 0 4px 1px;
   vertical-align: baseline;
   position: relative;
   top: 3px;
 }
-:root.fourchan-xt #qr .move .riceCheck,
 :root.fourchan-xt #qr .move input[type=checkbox] {
   margin: 0 4px 2px;
   top: 2px;
 }
-#qr-filename-container .riceCheck,
 #qr-filename-container input[type=checkbox] {
   margin: 0 0 1px;
 }

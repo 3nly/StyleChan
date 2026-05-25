@@ -121,7 +121,7 @@ input,
 #qr label {
   text-transform: uppercase;
 }
-#qr label:not(.riceCheck) {
+#qr label {
   overflow: hidden;
   padding-bottom: 2px;
 }
