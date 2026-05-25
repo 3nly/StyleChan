@@ -1,3 +1,40 @@
+## v1.3.0
+*2026-05-25*
+
+**The 4chanSS renaissance!**
+
+### Refactor
+- Stylechan no longer uses jsColor for color picking
+- Elements like checkboxes, selectors and inputs are now styled using CSS
+- Coloring and live theming now use global CSS variables
+- Despite the many new features added we still lost 200 lines of code over the last version!
+
+### New Options:
+
+Main:
+- Single View Captcha > Auto Submit
+  - This options will submit the post automatically after the last challenge is picked
+
+Misc:
+- Enable Mascots
+  - Mascots are back due to popular demand but in *lite form*, this time we won't bother ourselves with rendering them and slowing down everything on every page load
+  - Mascots can be added as external URLs or as base64
+  
+4chan native:
+- Watch Thread on Reply
+- Highlight Posts Quoting You
+- Highlight Own Posts
+
+### Changes:
+- The theme editor is now more responsive to resizing
+- Caveat with live theming: Older Firefox versions may still use a weird old color picker, not something we can change
+- Select inputs now have an arrow
+- Add maxlength to Name and Subject fields in feature request #23 (@Pentaphon), will also flash red when hitting the limit
+- 4chan: Added a Toggle You option to the post menu
+- 4chanX: The You toggle now has its checkbox back
+- Improve CSS loading
+- Various small code changes and improvements
+
 ### v1.2.2
 *2026-05-23*
 

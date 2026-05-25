@@ -3,14 +3,14 @@
 
 StyleChan is a userscript functioning on top of 4chan X allowing you to customize the site with various themes.
 
-Originally developed by [seaweedchan](https://github.com/seaweedchan/OneeChan), this is a fork of OneeChan without mascots.
+Originally developed by [seaweedchan](https://github.com/seaweedchan/OneeChan), this is a fork of OneeChan.
 
 ## [Click here to Install](https://github.com/3nly/StyleChan/raw/refs/heads/main/builds/StyleChan.user.js)
 
 
 #### Install instructions
 
-Installing [4chan X](https://github.com/ccd0/4chan-x) or [4chan XT](https://github.com/TuxedoTako/4chan-xt)  is **RECOMMENDED** for StyleChan to work.\
+Installing [4chan X](https://github.com/ccd0/4chan-x) or [Allchan XT Plus](https://github.com/figamin/Allchan-XT-Plus)  is **RECOMMENDED** for StyleChan to work.\
 *While StyleChan will function with the native 4chan extension, not all available options may work without 4chan X.*
 
 - In 4chan X **enable**: Quick Reply > Persistent QR > Auto Hide QR.
