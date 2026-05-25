@@ -1637,6 +1637,7 @@
         },
         markOwnPosts: function (root) {
             try {
+                if (document.documentElement.classList.contains("fourchan-x")) return;
                 var pathname = window.location.pathname.slice(1).split("/");
                 if (pathname[1] !== "thread") return;
                 var board = pathname[0], threadId = pathname[2];
