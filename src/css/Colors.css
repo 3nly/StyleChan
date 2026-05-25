@@ -289,7 +289,7 @@ hr {
 :root.rounded-corners.op-background .op,
 :root.rounded-corners .dialog:not(#header-bar),
 :root.rounded-corners .inline,
-:root.rounded-corners #thread-stats
+:root.rounded-corners #thread-stats,
 :root.rounded-corners #updater,
 :root.rounded-corners #menu,
 :root.rounded-corners .thumb,
