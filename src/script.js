@@ -797,6 +797,7 @@
                                     : node.querySelectorAll ? node.querySelectorAll(formSel) : [];
                                 forms.forEach($SS.handleFormNode);
                                 $SS.markOwnPosts(node);
+                                $SS.markQuotingYou(node);
                                 var pm = node.matches("#post-menu") ? node : node.querySelector("#post-menu");
                                 if (pm) $SS.insertToggleYou();
 
@@ -1648,6 +1649,17 @@
                     var postId = key.replace(/^>>/, "");
                     var el = (root || document).getElementById("p" + postId);
                     if (el) { var c = el.closest(".postContainer"); if (c) c.classList.add("yourPost"); }
+                });
+            } catch (e) {}
+        },
+        markQuotingYou: function (root) {
+            try {
+                if (document.documentElement.classList.contains("fourchan-x")) return;
+                (root || document).querySelectorAll(".ql-tracked").forEach(function (el) {
+                    var pc = el.closest(".postContainer");
+                    if (pc && !pc.classList.contains("yourPost")) {
+                        pc.classList.add("hasQuoteYou");
+                    }
                 });
             } catch (e) {}
         },
@@ -3623,6 +3635,7 @@
                 cl.toggle("highlight-you", $SS.conf["Highlight Posts Quoting You"] === true);
                 cl.toggle("highlight-own", $SS.conf["Highlight Own Posts"] === true);
                 if ($SS.conf["Highlight Own Posts"]) $SS.markOwnPosts();
+                if ($SS.conf["Highlight Posts Quoting You"]) $SS.markQuotingYou();
             }
         },
 

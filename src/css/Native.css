@@ -83,10 +83,10 @@ div#qrError {
   margin-top: 50px;
 }
 /* Highlights */
-:root.highlight-you:not(.fourchan-x) .postContainer:has(.ql-tracked) > .post {
+:root.highlight-you:not(.fourchan-x) .postContainer.hasQuoteYou > .post {
   border-left: " + $SS.conf["Width Decoration"] + "px solid rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
 }
-:root.highlight-you:not(.fourchan-x) .postContainer:has(.ql-tracked) > .sideArrows {
+:root.highlight-you:not(.fourchan-x) .postContainer.hasQuoteYou > .sideArrows {
   color: rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
 }
 :root.highlight-own:not(.fourchan-x) .yourPost.opContainer,
