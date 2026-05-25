@@ -775,6 +775,11 @@
                     .bind("OpenSettings", $SS.NodeInsertionHandler)
                     .bind("ThreadUpdate", $SS.NodeInsertionHandler);
 
+                document.addEventListener("click", function (e) {
+                    var li = e.target.closest("[data-cmd='toggle-you']");
+                    if (li && !document.documentElement.classList.contains("fourchan-x")) $SS.toggleYou(li);
+                });
+
                 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
                 var observer = new MutationObserver(function (mutations) {
                     var i, j, MAX, _MAX, nodes, node;
@@ -792,6 +797,8 @@
                                     : node.querySelectorAll ? node.querySelectorAll(formSel) : [];
                                 forms.forEach($SS.handleFormNode);
                                 $SS.markOwnPosts(node);
+                                var pm = node.matches("#post-menu") ? node : node.querySelector("#post-menu");
+                                if (pm) $SS.insertToggleYou();
 
                             }
                         }
