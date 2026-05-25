@@ -805,6 +805,12 @@
                                 } else {
                                     $("input[type=checkbox]", node).riceCheck();
                                 }
+                                // Handle forms for remember comment draft and watch thread
+                                var formSel = "#qr, #quickReply, form[name='post'], form[name='qrPost']";
+                                var forms = node.matches && node.matches(formSel)
+                                    ? [node]
+                                    : node.querySelectorAll ? node.querySelectorAll(formSel) : [];
+                                forms.forEach($SS.handleFormNode);
                             }
                         }
                     }
@@ -1262,10 +1268,7 @@
         },
         initRememberComment: function () {
             if (!$SS.conf["Remember Comment Draft"]) return;
-
-            $.waitFor("#qr, #quickReply, form[name='post']", function (node) {
-                $SS.bindRememberComment(node);
-            });
+            $SS.handleFormNode();
         },
         getRememberCommentPrefix: function () {
             return NAMESPACE + "RememberComment:";
@@ -1276,71 +1279,72 @@
         getRememberCommentExpiry: function () {
             return 24 * 60 * 60 * 1000;
         },
-        loadRememberedComment: function (storageKey) {
-            var rawValue = localStorage.getItem(storageKey);
-            var parsedValue;
-
-            if (!rawValue) return null;
-
-            try {
-                parsedValue = JSON.parse(rawValue);
-            } catch (error) {
-                localStorage.removeItem(storageKey);
-                return null;
-            }
-
-            if (!parsedValue || typeof parsedValue.text !== "string" || typeof parsedValue.savedAt !== "number") {
-                localStorage.removeItem(storageKey);
-                return null;
-            }
-
-            if (Date.now() - parsedValue.savedAt > $SS.getRememberCommentExpiry()) {
-                localStorage.removeItem(storageKey);
-                return null;
-            }
-
-            return parsedValue;
+        saveRememberedComment: function (storageKey, text) {
+            try { localStorage.setItem(storageKey, JSON.stringify({ text: text, savedAt: Date.now() })); } catch (e) {}
+            $SS.cleanupRememberedComments();
+        },
+        clearRememberedComment: function () {
+            try { localStorage.removeItem($SS.getRememberCommentKey()); } catch (e) {}
         },
         cleanupRememberedComments: function () {
-            var prefix = $SS.getRememberCommentPrefix();
+            var prefix;
+            try { prefix = $SS.getRememberCommentPrefix(); } catch (e) { return; }
+            if (!prefix) return;
             var now = Date.now();
             var keptEntries = [];
             var i, key, entry;
 
-            for (i = 0; i < localStorage.length; ++i) {
-                key = localStorage.key(i);
-                if (!key || key.indexOf(prefix) !== 0) continue;
+            try {
+                for (i = 0; i < localStorage.length; ++i) {
+                    key = localStorage.key(i);
+                    if (!key || key.indexOf(prefix) !== 0) continue;
 
-                entry = $SS.loadRememberedComment(key);
-                if (!entry) continue;
+                    entry = $SS.loadRememberedComment(key);
+                    if (!entry) continue;
 
-                keptEntries.push({
-                    key: key,
-                    savedAt: entry.savedAt,
-                    age: now - entry.savedAt
-                });
-            }
+                    keptEntries.push({
+                        key: key,
+                        savedAt: entry.savedAt,
+                        age: now - entry.savedAt
+                    });
+                }
+            } catch (e) { return; }
 
             keptEntries.sort(function (a, b) {
                 return b.savedAt - a.savedAt;
             });
 
             keptEntries.slice(10).forEach(function (entry) {
-                localStorage.removeItem(entry.key);
+                try { localStorage.removeItem(entry.key); } catch (e) {}
             });
         },
-        saveRememberedComment: function (storageKey, text) {
-            localStorage.setItem(storageKey, JSON.stringify({
-                text: text,
-                savedAt: Date.now()
-            }));
-            $SS.cleanupRememberedComments();
-        },
-        clearRememberedComment: function () {
-            localStorage.removeItem($SS.getRememberCommentKey());
+        loadRememberedComment: function (storageKey) {
+            var rawValue, parsedValue;
+            try { rawValue = localStorage.getItem(storageKey); } catch (e) { return null; }
+            if (!rawValue) return null;
+
+            try {
+                parsedValue = JSON.parse(rawValue);
+            } catch (error) {
+                try { localStorage.removeItem(storageKey); } catch (e) {}
+                return null;
+            }
+
+            if (!parsedValue || typeof parsedValue.text !== "string" || typeof parsedValue.savedAt !== "number") {
+                try { localStorage.removeItem(storageKey); } catch (e) {}
+                return null;
+            }
+
+            if (Date.now() - parsedValue.savedAt > $SS.getRememberCommentExpiry()) {
+                try { localStorage.removeItem(storageKey); } catch (e) {}
+                return null;
+            }
+
+            return parsedValue;
         },
         bindRememberComment: function (qrNode) {
-            if (!qrNode || !qrNode.dataset || qrNode.dataset.rememberCommentBound || !$SS.conf["Remember Comment Draft"]) return;
+            if (!qrNode || !$SS.conf["Remember Comment Draft"]) return;
+            if (qrNode._rememberCommentBound) return;
 
             var commentField = qrNode.querySelector("textarea");
             var formNode = qrNode.querySelector("form") || qrNode.closest("form");
@@ -1386,7 +1390,8 @@
                     clearSavedComment();
             });
 
-            qrNode.dataset.rememberCommentBound = "true";
+            qrNode._rememberCommentBound = true;
+        },
         handleFormNode: function (form) {
             if (!form) {
                 document.querySelectorAll("#qr, #quickReply, form[name='post'], form[name='qrPost']").forEach($SS.handleFormNode);
