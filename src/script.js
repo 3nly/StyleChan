@@ -3632,10 +3632,12 @@
                 cl.toggle("catalog-justify", $SS.conf["Justified Text"] === true);
                 cl.toggle("catalog-background", $SS.conf["Show Background"] === true);
                 cl.toggle("catalog-thumbsize", $SS.conf["Unified Thumbnail Size"] === true);
-                cl.toggle("highlight-you", $SS.conf["Highlight Posts Quoting You"] === true);
-                cl.toggle("highlight-own", $SS.conf["Highlight Own Posts"] === true);
-                if ($SS.conf["Highlight Own Posts"]) $SS.markOwnPosts();
-                if ($SS.conf["Highlight Posts Quoting You"]) $SS.markQuotingYou();
+                if (!document.documentElement.classList.contains("fourchan-x")) {
+                    cl.toggle("highlight-you", $SS.conf["Highlight Posts Quoting You"] === true);
+                    cl.toggle("highlight-own", $SS.conf["Highlight Own Posts"] === true);
+                    if ($SS.conf["Highlight Own Posts"]) $SS.markOwnPosts();
+                    if ($SS.conf["Highlight Posts Quoting You"]) $SS.markQuotingYou();
+                }
             }
         },
 
