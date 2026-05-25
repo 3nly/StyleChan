@@ -168,7 +168,9 @@ input[type=checkbox] {
 }
 input[type=checkbox]:checked::before {
   content: '✓';
-  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 12px;
   width: 11px;
   font-size: 11px;
@@ -179,6 +181,7 @@ input[type=checkbox]:checked::before {
 /* Override the cleanup but only for the post menu */
 div#menu.dialog label.toggle-you.entry input {
   display: inline-block;
+  top: 0;
 }
 /* Header */
 #header-bar {
