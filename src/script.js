@@ -1966,7 +1966,7 @@
                         } else if (!confirm('Your current settings will be entirely overwritten, are you sure?')) {
                             return;
                         }
-                        reader.onload = (function (tFile) {
+                        reader.onload = (function () {
                             return function (e) {
                                 try {
                                     imported = JSON.parse(e.target.result);
@@ -2152,7 +2152,7 @@
                             val, first, valid = true,
                             theme, div, index, imported;
 
-                        reader.onload = (function (tFile) {
+                        reader.onload = (function () {
                             return function (e) {
                                 try {
                                     theme = JSON.parse(e.target.result);
