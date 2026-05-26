@@ -54,7 +54,6 @@ body,
 #qr select[data-name="thread"],
 :root #t-desc,
 textarea[name="com"],
-#qr .field::placeholder, 
 ::placeholder,
 #menu .entry,
 #boardList,
@@ -69,16 +68,6 @@ form.pageSwitcherForm > input[type="submit"] {
 #full-board-list a,
 #custom-board-list,
 a.qr-link {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif !important;
-  font-size: " + $SS.conf["Font Size"] + "px !important;
-}
-#qr .field::-moz-placeholder,
-::-moz-placeholder {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif !important;
-  font-size: " + $SS.conf["Font Size"] + "px !important;
-}
-#qr .field::webkit-input-placeholder,
-::webkit-input-placeholder {
   font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif !important;
   font-size: " + $SS.conf["Font Size"] + "px !important;
 }
