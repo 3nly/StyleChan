@@ -747,7 +747,7 @@
             $SS.classes.init();
             $SS.displayMascots();
 
-            var div, html, ctxmenu, link;
+            var div, link;
             if (reload !== true) {
                 $SS.options.init();
 
@@ -792,7 +792,7 @@
                 });
 
                 if (document.documentElement.classList.contains("fourchan-x"))
-                    if ((!(html = $("*[xmlns]")).exists()) && (!(ctxmenu = $("#ctxmenu-main").exists())))
+                    if (!$("*[xmlns]").exists() && !$("#ctxmenu-main").exists())
                         if ((link = $("link[title][rel='stylesheet']")).exists())
                             link.each(function () {
                                 if (/4cdn\.org|4chan\.org/.test(this.getAttribute("href") || ""))
@@ -908,12 +908,11 @@
                     localStorage["4chan-settings"] = "{ \"disableAll\" : true, \"dropDownNav\": false }";
                 }
 
-                var m_VERSION;
                 $SS.browser.webkit = /AppleWebKit/.test(navigator.userAgent);
                 $SS.browser.gecko = /Gecko\//.test(navigator.userAgent);
                 $SS.location = $SS.getLocation();
 
-                if ((m_VERSION = $SS.Config.get("VERSION")) !== VERSION) {
+                if ($SS.Config.get("VERSION") !== VERSION) {
                     setTimeout(function () {
                         var content = document.createElement('span');
                         var changelogLink = document.createElement('a');
@@ -2091,8 +2090,7 @@
 
                     // main tab
                     $("input[name='Font Size']", tOptions).bind("keydown", function (e) {
-                        var val = parseInt($(this).val()),
-                            bitmap = $(this).parent().nextSibling().children("input[name='Bitmap Font']").val();
+                        var val = parseInt($(this).val());
 
                         if (e.key === "ArrowUp" && !isNaN(val))
                             $(this).val(++val + "px");
@@ -2149,8 +2147,7 @@
                     .bind("change", function () {
                         var file = this.files[0],
                             reader = new FileReader(),
-                            val, first, valid = true,
-                            theme, div, index, imported;
+                            theme, div, index;
 
                         reader.onload = (function () {
                             return function (e) {
@@ -2204,8 +2201,7 @@
                 }
             },
             save: function () {
-                var div = $("#oneechan-options"),
-                    themes = [],
+                var themes = [],
                     nsfwTheme,
                     selectedTheme;
 
@@ -2284,7 +2280,7 @@
                 return $SS.init(true);
             },
             showTheme: function (tIndex) {
-                var div, overlay, originalTheme, previewThemeIndex = -1,
+                var div, overlay, previewThemeIndex = -1,
                     bEdit = typeof tIndex === "number",
                     tEdit = bEdit ? $SS.conf["Themes"][tIndex] : null,
                     themeIndex = tIndex,
@@ -2301,8 +2297,6 @@
                         themeA = RPA[3];
                     }
 
-                    // Store original theme for restoration
-                    originalTheme = JSON.parse(JSON.stringify($SS.theme));
                 }
 
                 div = $("<div id='add-theme' class='dialog'>");
