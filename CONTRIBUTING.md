@@ -26,6 +26,33 @@ Open your console with:
 
 - Build with `grunt`.
 
+### Lint
+
+StyleChan uses [ESLint](https://eslint.org/) with the flat config format (`eslint.config.mjs`).
+
+**Command line:**
+
+```
+npm run lint        # check src/ for errors
+npx eslint src/     # same, without the npm script
+```
+
+**VSCode integration:**
+
+Install the [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
+**Config notes:**
+
+- `src/meta/` and `src/style.js` are excluded
+  - These contain grunt template syntax (`<%= %>`) that ESLint cannot parse
+- Custom globals (`$`, `$lib`, `$SS`, `$docBody`, `$docHead`, `TCaptcha`) are declared
+
+**Fix common issues:**
+
+```
+npx eslint src/ --fix    # auto-fix formatting issues only
+```
+
 ### Release
 
 - Update the version with `grunt patch`, `grunt minor` or `grunt major`.
