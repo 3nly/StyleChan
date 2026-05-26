@@ -2161,67 +2161,7 @@
                                     return;
                                 }
 
-                                /* Check if this is an StyleChan v5 file, do nothing if so */
-                                if (theme["headerColor"] !== undefined) { }
-
-                                /* Old StyleChan */
-                                else if (theme["navOp"] !== undefined) {
-                                    theme.unreadColor = theme["jlinkColor"];
-                                    theme.headerColor = theme["textColor"];
-                                    theme.headerBGColor = theme["mainColor"];
-                                    theme.headerLColor = theme["linkColor"];
-                                    theme.headerLHColor = theme["linkHColor"];
-                                    theme.boardColor = theme["textColor"];
-                                }
-
-                                /* 4chan Style Script */
-                                else if (theme["timeColor"] !== undefined) {
-                                    theme.replyOp = "1.0";
-                                    theme.navOp = "0.9";
-                                    theme.unreadColor = theme["jlinkColor"];
-                                    theme.headerColor = theme["textColor"];
-                                    theme.headerBGColor = theme["mainColor"];
-                                    theme.headerLColor = theme["linkColor"];
-                                    theme.headerLHColor = theme["linkHColor"];
-                                    theme.boardColor = theme["textColor"];
-                                    theme.bgImg = $SS.validImageURL(theme["bgImg"]) ? theme["bgImg"] : false;
-                                }
-
-                                /* Appchan X */
-                                else if (theme["Theme"] !== undefined) {
-                                    theme.name = theme["Theme"];
-                                    theme.authorName = theme["Author"];
-                                    theme.authorTrip = theme["Author Tripcode"];
-                                    theme.replyOp = "1.0";
-                                    theme.navOp = "0.9";
-                                    theme.bgImg = theme["Background Image"];
-                                    theme.mainColor = $SS.colorToHex(theme["Reply Background"]);
-                                    theme.textColor = $SS.colorToHex(theme["Text"]);
-                                    theme.linkColor = $SS.colorToHex(theme["Links"]);
-                                    theme.linkHColor = $SS.colorToHex(theme["Hovered Links"]);
-                                    theme.headerColor = $SS.colorToHex(theme["Text"]);
-                                    theme.headerBGColor = $SS.colorToHex(theme["Navigation Background"]);
-                                    theme.headerLColor = $SS.colorToHex(theme["Navigation Links"]);
-                                    theme.headerLHColor = $SS.colorToHex(theme["Hovered Navigation Links"]);
-                                    theme.boardColor = $SS.colorToHex(theme["Board Title"]);
-                                    theme.brderColor = $SS.colorToHex(theme["Reply Border"]);
-                                    theme.inputColor = $SS.colorToHex(theme["Input Background"]);
-                                    theme.inputbColor = $SS.colorToHex(theme["Input Border"]);
-                                    theme.bgColor = $SS.colorToHex(theme["Background Color"]);
-                                    theme.blinkColor = $SS.colorToHex(theme["Backlinks"]);
-                                    theme.unreadColor = $SS.colorToHex(theme["Links"]);
-                                    theme.nameColor = $SS.colorToHex(theme["Names"]);
-                                    theme.tripColor = $SS.colorToHex(theme["Tripcodes"]);
-                                    theme.titleColor = $SS.colorToHex(theme["Subjects"]);
-                                    theme.quoteColor = $SS.colorToHex(theme["Greentext"]);
-                                    theme.qlColor = $SS.colorToHex(theme["Quotelinks"]);
-                                    theme.replybgHLColor = $SS.colorToHex(theme["Highlighted Reply Background"]);
-                                    theme.replyslctColor = $SS.colorToHex(theme["Highlighted Reply Background"]);
-                                    theme.customCSS = theme["Custom CSS"];
-                                }
-
-                                /* Can't be exported from the main scripts, so toss an error */
-                                else {
+                                if (!theme.textColor || !theme.mainColor) {
                                     alert("Invalid theme file!");
                                     return;
                                 }
@@ -3723,22 +3663,6 @@
 
             if (incHover)
                 this.hover = this.shiftRGB(16, true);
-        },
-        colorToHex: function (color) {
-            var digits, hex;
-
-            if (color.substr(0, 1) === '#') {
-                return color.slice(1, color.length);
-            }
-            if (digits = color.match(/(.*?)rgba?\((\d+), ?(\d+), ?(\d+)(.*?)\)/)) {
-                hex = ((parseInt(digits[2], 10) << 16) | (parseInt(digits[3], 10) << 8) | (parseInt(digits[4], 10))).toString(16);
-                while (hex.length < 6) {
-                    hex = "0" + hex;
-                }
-                return hex;
-            } else {
-                return false;
-            }
         },
         Image: function (img, RPA) {
             this.img = img;
