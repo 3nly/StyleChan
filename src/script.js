@@ -3617,17 +3617,12 @@
 
                 // Listen for system color scheme changes
                 if (!this._mqListener) {
-                    var self = this;
                     this._mqListener = function () {
                         if ($SS.conf["System Theming"]) {
                             $SS.init(true);
                         }
                     };
-                    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-                    if (mq.addEventListener)
-                        mq.addEventListener('change', this._mqListener);
-                    else if (mq.addListener)
-                        mq.addListener(this._mqListener);
+                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', this._mqListener);
                 }
             }
         },
