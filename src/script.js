@@ -215,7 +215,7 @@
         ],
         ":: Fonts": ["header", ""],
         "Font Family": [
-            "sans-serif", "Set the default font family.", [{
+            "sans-serif", "Set the default font family. Please make sure the font is installed locally and the font family name is correct when using a custom font.", [{
                 name: "Default",
                 value: "sans-serif"
             }, {
@@ -1934,10 +1934,16 @@
                                 "</span><input" + (val ? " checked" : "") + " name='" + key + "' type=checkbox></label>");
                         } else if (Array.isArray(defaultConfig[key][2])) // select
                         {
-                            var opts = defaultConfig[key][2],
-                                cFonts = [],
-                                html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>",
-                                "<select name='" + key + "'" + (defaultConfig[key][3] === true ? " has-suboption" : "") + ">"];
+                            var opts = defaultConfig[key][2];
+                            if (key === "Font Family") {
+                                html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
+                                    "<input type='text' name='" + key + "' list='" + key + "' value='" + val + "')>" +
+                                    "<datalist id='" + key + "'>"];
+                            }
+                            else {
+                                html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
+                                    "<select name='" + key + "'" + (defaultConfig[key][3] === true ? " has-suboption" : "") + ">"];
+                            }
 
                             for (var i = 0, MAX = opts.length; i < MAX; ++i) {
                                 var name, value;
@@ -1948,16 +1954,10 @@
                                 } else
                                     name = value = opts[i];
 
-                                if (key === "Font Family") cFonts.push(value);
-
-                                html.push("<option" + (key === "Font Family" ? " style=\"font-family:" + $SS.formatFont(value) + "!important\"" : "") +
-                                    " value='" + value + "'" + (value == val ? " selected" : "") + ">" + name + "</option>");
+                                html.push("<option value='" + value + "'" + (value == val ? " selected" : "") + ">" + name + "</option>");
                             }
 
-                            if (key === "Font Family" && cFonts.indexOf($SS.conf["Font Family"]) == -1)
-                                html.push("<option style=\"font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important\" value='" + $SS.conf["Font Family"] + "' selected>" + $SS.conf["Font Family"] + "</option>");
-
-                            html.push("</select></label>");
+                            html.push((key === "Font Family" ? "</datalist>" : "</select>") + "</label>");
                             optionsHTML.push(html.join(""));
                         } else if (key === "Font Size") {
                             optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +

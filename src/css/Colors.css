@@ -134,16 +134,10 @@ s:hover .quote,
 }
 .pun,
 #qr-no-file,
+::placeholder,
 #t-load:disabled,
 :root.single-captcha #t-next:not(.is-ready),
 :root:not(.single-captcha) #t-next:disabled {
-  color: rgba(var(--sc-textColor-rgb),.4) !important;
-}
-::-webkit-input-placeholder {
-  color: rgba(var(--sc-textColor-rgb),.4) !important;
-}
-#qr .field::-moz-placeholder,
-::-moz-placeholder {
   color: rgba(var(--sc-textColor-rgb),.4) !important;
 }
 /* Backgrounds */

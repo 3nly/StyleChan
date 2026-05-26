@@ -86,11 +86,10 @@
   float: left !important;
   margin-right: 5px !important;
 }
-select[name='Font Family']>option {
-  max-width:150px;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
+/*Remove font datalist dropdown arrow in Chrome*/
+input[name='Font Family']::-webkit-calendar-picker-indicator,
+input[name='Font Family']::-webkit-list-button {
+  display: none !important;
 }
 .suboption::before {
   border-bottom:1px solid rgba(0,0,0,.1);

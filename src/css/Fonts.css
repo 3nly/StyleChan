@@ -54,7 +54,6 @@ body,
 #qr select[data-name="thread"],
 :root #t-desc,
 textarea[name="com"],
-#qr .field::placeholder, 
 ::placeholder,
 #menu .entry,
 #boardList,
@@ -63,23 +62,13 @@ textarea[name="com"],
 #tegaki,
 div.next,
 form.pageSwitcherForm > input[type="submit"] {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + " !important;
+  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif !important;
   font-size: " + $SS.conf["Font Size"] + "px !important;
 }
 #full-board-list a,
 #custom-board-list,
 a.qr-link {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + " !important;
-  font-size: " + $SS.conf["Font Size"] + "px !important;
-}
-#qr .field::-moz-placeholder,
-::-moz-placeholder {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + " !important;
-  font-size: " + $SS.conf["Font Size"] + "px !important;
-}
-#qr .field::webkit-input-placeholder,
-::webkit-input-placeholder {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + " !important;
+  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif !important;
   font-size: " + $SS.conf["Font Size"] + "px !important;
 }
 .backlink {
@@ -100,7 +89,7 @@ a.qr-link {
 #fourchanx-settings,
 #fourchanx-settings input,
 #fourchanx-settings select {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ";
+  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif;
   font-size: " + (($SS.conf["Font Size"] >= 15) ? 15 : 13) + "px !important;
 }
 #qr-file-button,
@@ -113,7 +102,7 @@ input,
 :root #t-load,
 :root #t-next,
 :root #t-task {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ";
+  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif;
   font-size: " + $SS.conf["UI Font Size"] + "px !important;
 }
 #qr-file-button,
