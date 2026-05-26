@@ -774,9 +774,7 @@
             if (reload !== true) {
                 $SS.options.init();
 
-                $(document).bind("QRDialogCreation", $SS.QRDialogCreationHandler)
-                    .bind("OpenSettings", $SS.NodeInsertionHandler)
-                    .bind("ThreadUpdate", $SS.NodeInsertionHandler);
+                $(document).bind("QRDialogCreation", $SS.QRDialogCreationHandler);
 
                 document.addEventListener("click", function (e) {
                     var li = e.target.closest("[data-cmd='toggle-you']");
@@ -1747,7 +1745,7 @@
 
             $SS.QRhandled = true;
         },
-        NodeInsertionHandler: function () {},
+
         /* CONFIG */
         Config: {
             init: function () {
