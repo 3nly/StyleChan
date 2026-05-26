@@ -513,17 +513,6 @@
                 this.parentNode.insertBefore(el, this);
             });
         },
-        after: function (el) {
-            if (el.constructor === $lib)
-                el = el.get();
-
-            return this.each(function () {
-                if (this.nextSibling != null)
-                    this.parentNode.insertBefore(el, this.nextSibling);
-                else if (this.parentNode != null)
-                    this.parentNode.appendChild(el);
-            });
-        },
         replace: function (el) {
             return this.each(function () {
                 $(this).before(el).remove();
@@ -661,18 +650,6 @@
                     }
                     this.className = newClasses.join(" ");
                 }
-            });
-        },
-        toggleClass: function (classNames) {
-            if (!classNames || typeof classNames !== "string") return this;
-            var classNamesArray = classNames.split(" ");
-            return this.each(function () {
-                var $this = $(this);
-                for (var j = 0, jMAX = classNamesArray.length; j < jMAX; j++)
-                    if (!$this.hasClass(classNamesArray[j]))
-                        $this.addClass(classNamesArray[j]);
-                    else
-                        $this.removeClass(classNamesArray[j]);
             });
         },
 
@@ -3997,14 +3974,12 @@
             return {
                 sub: obj.hostname.split(".")[0],
                 board: pathname[0],
-                home: location.hostname === "www.4chan.org",
-                report: location.hostname === "sys.4chan.org",
-                dead: document.title === "4chan - 404 Not Found",
                 nsfw: /^(aco|b|bant|d|e|f|gif|h|hr|r|s|t|u|wg|i|ic|r9k|hm|y|hc|pol|soc|s4s|trash)$/.test(pathname[0]),
                 maxFileSize: $SS.boardFileSizes[pathname[0]] || 4194304,
                 reply: pathname[1] === "thread",
                 catalog: pathname[1] === "catalog",
-                archive: pathname[1] === "archive"
+                report: location.hostname === "sys.4chan.org",
+                dead: document.title === "4chan - 404 Not Found"
             };
         }
     };
