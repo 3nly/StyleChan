@@ -3589,8 +3589,8 @@
                 customCSS: ".reply { box-shadow: -2px 2px 2px rgba(0,0,0,.10); }"
             }, {
                 name: "Midnight Caek",
-                authorName: "Zixaphir",
-                authorTrip: "!M.........",
+                authorName: "saxamaphone",
+                authorTrip: "!3.saxN0DHY",
                 "default": true,
                 bgImg: false,
                 replyOp: "1.0",
