@@ -7,17 +7,17 @@
   margin: auto;
 }
 #oneechan-options {
-  width: 610px;
+  width: 47em;
   max-width: 85%;
   text-align:left!important;
   height: 65vh;
-  max-height: 1310px;
+  max-height: 100em;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   box-shadow: rgba(0,0,0,.6) 0 0 10px !important;
-  padding: 5px 5px 35px 5px;
+  padding: 0.4em 0.4em 2.7em 0.4em;
 }
 #options-container:not(.yui-skin-sam) {
   padding: 3px;
@@ -28,9 +28,9 @@
 .options-close {
   text-align: right!important;
   margin-left: auto;
-  width: 150px;
+  width: 11.5em;
   right: 0;
-  padding: 2px 4px;
+  padding: 0.15em 0.3em;
 /* Set z-index higher than other buttons */
   position: absolute;
   z-index: 120;
@@ -51,8 +51,8 @@
 #misc-section .option {
   display:block;
   border-top:1px solid rgba(0,0,0,.1);
-  height:22px;
-  padding:0 6px;
+  height: 1.7em;
+  padding: 0 0.45em;
   vertical-align:middle;
 }
 #main-section .option[hidden],
@@ -67,7 +67,7 @@
   border-top: none !important;
 }
 .option-title {
-  line-height:22px;
+  line-height: 1.7em;
 }
 #main-section .option:first-child,
 #misc-section .option:first-child {
@@ -325,26 +325,26 @@ input[name='Font Family']::-webkit-list-button {
 }
 .options-button {
   display:inline-block;
-  line-height:18px;
-  margin:0 2px;
-  min-width:40px;
-  padding:2px 10px;
+  line-height: 1.4em;
+  margin: 0 0.15em;
+  min-width: 3em;
+  padding: 0.15em 0.75em;
   text-align:center;
   cursor: pointer;
   border-radius:3px;
 }
 .options-button-small {
-  padding:2px 5px;
-  min-width:30px;
+  padding: 0.15em 0.4em;
+  min-width: 2.3em;
 }
 #import-link {
-  line-height:22px;
+  line-height: 1.7em;
   overflow:hidden;
   position:relative;
   float:left;
-  height:24px!important;
-  margin-top:-2px;
-  padding-top:2px;
+  height: 1.85em !important;
+  margin-top: -0.15em;
+  padding-top: 0.15em;
 }
 #import-settings {
   position: relative;
@@ -361,7 +361,7 @@ input[name='Font Family']::-webkit-list-button {
 }
 /* Inputs */
 label.option>input[type=checkbox] {
-  margin: 4px 2px 0 !important;
+  margin: 0.3em 0.15em 0 !important;
 }
 span.option>select,
 .option>input[type=text] {
@@ -369,9 +369,9 @@ span.option>select,
 }
 #oneechan-options input[type=text],
 #oneechan-options select {
-  max-height: 20px;
-  margin-top: 1px !important;
-  padding: 0 3px !important;
+  max-height: 1.55em;
+  margin-top: 0 !important;
+  padding: 0 0.25em !important;
 }
 #oneechan-options textarea {
   background:transparent!important;

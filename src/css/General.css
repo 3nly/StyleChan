@@ -158,9 +158,9 @@ input[type=submit] {
 }
 input[type=checkbox] {
   display: inline-block;
-  height: 12px !important;
+  height: 0.85em !important;
   position: relative;
-  width: 12px !important;
+  width: 0.85em !important;
   border-radius: 2px !important;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -171,10 +171,10 @@ input[type=checkbox]:checked::before {
   position: absolute;
   top: 0;
   left: 0;
-  height: 12px;
-  width: 11px;
-  font-size: 11px;
-  line-height: 12px;
+  height: 0.85em;
+  width: 0.85em;
+  font-size: 0.85em;
+  line-height: 0.90em;
   text-align: center;
   color: var(--sc-textColor);
 }
