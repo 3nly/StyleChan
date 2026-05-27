@@ -58,7 +58,8 @@ a.postMenuBtn,
 body.is_catalog .button,
 :root.catalog-mode .button,
 :root .options-button,
-:root .tegaki-tb-btn {
+:root .tegaki-tb-btn,
+#arc-list .quotelink {
   color: var(--sc-linkColor) !important;
 }
 :root a:hover,
@@ -67,7 +68,8 @@ body.is_catalog .button:hover,
 :root.catalog-mode .button:hover,
 .lit,
 .tegaki-tb-btn:hover,
-#import-link>.options-button:hover {
+#import-link>.options-button:hover,
+#arc-list .quotelink:hover {
   color: var(--sc-linkHColor) !important;
 }
 /* Header */
