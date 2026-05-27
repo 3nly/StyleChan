@@ -82,7 +82,7 @@ div#twHeader {
 #qr label,
 #qr .move,
 #qr-no-file,
-select:not([id^=index-]):not([id$=-ctrl]):not(#boardSelectMobile),
+select:not([id^=index-]):not([id$=-ctrl]):not(#boardSelectMobile):not(#oneechan-options select),
 :root #t-load,
 :root #t-next,
 :root #t-task,

@@ -49,11 +49,10 @@
 }
 #main-section .option,
 #misc-section .option {
-  display:block;
+  display: block;
   border-top:1px solid rgba(0,0,0,.1);
   height: 1.7em;
   padding: 0 0.45em;
-  vertical-align:middle;
 }
 #main-section .option[hidden],
 #misc-section .option[hidden] {
@@ -426,8 +425,7 @@ input[type=range].mascot-opacity {
   margin: 0 !important;
   padding: 0 !important;
   height: 20px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
   background: transparent;
 }
 input[type=range].mascot-opacity::-webkit-slider-runnable-track {
