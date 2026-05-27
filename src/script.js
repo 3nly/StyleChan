@@ -227,6 +227,7 @@
                 value: "cursive"
             }]
         ],
+        "Custom Font": ["", "Enter a custom font family name. Overrides Font Family if set."],
         "Font Size": [13, "Set the font size of text (in pixels). Default: 13px. Menu elements have a 18px (max) and 9px (min) limit to avoid breaking their layouts."],
         "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels). Default: 11px."],
         "Backlink Font Size": [10, "Set the font size of backlinks (in pixels). Default: 10px."],
@@ -1916,8 +1917,24 @@
                                     " value='" + value + "'" + (value == val ? " selected" : "") + ">" + name + "</option>");
                             }
 
-                            html.push((key === "Font Family" ? "</datalist>" : "</select>") + "</label>");
+                            if (key === "Font Family") {
+                                var osFonts = $SS.systemFonts[$SS.getOS()] || [];
+                                osFonts.forEach(function (font) {
+                                    if (cFonts.indexOf(font) === -1) {
+                                        cFonts.push(font);
+                                        html.push("<option style=\"font-family:" + $SS.formatFont(font) + "!important\" value='" + font + "'" + (font == val ? " selected" : "") + ">" + font + "</option>");
+                                    }
+                                });
+                            }
+
+                            if (key === "Font Family" && cFonts.indexOf($SS.conf["Font Family"]) == -1)
+                                html.push("<option style=\"font-family:" + $SS.formatFont($SS.conf["Font Family"]) + "!important\" value='" + $SS.conf["Font Family"] + "' selected>" + $SS.conf["Font Family"] + "</option>");
+
+                            html.push("</select></label>");
                             optionsHTML.push(html.join(""));
+                        } else if (key === "Custom Font") {
+                            optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>Custom Font</span>" +
+                                "<input type=text name='Custom Font' value=\"" + ($SS.conf["Custom Font"] || "") + "\" placeholder='system font name'></label>");
                         } else if (key === "Font Size") {
                             optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
                                 "<input type=text name='Font Size' value=" + $SS.conf["Font Size"] + "px></label>");
