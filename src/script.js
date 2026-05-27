@@ -213,45 +213,21 @@
         ],
         ":: Fonts": ["header", ""],
         "Font Family": [
-            "sans-serif", "Set the default font family. Please make sure the font is installed locally and the font family name is correct when using a custom font.", [{
-                name: "Default",
+            "sans-serif", "Set the default font family.", [{
+                name: "Default (sans-serif)",
                 value: "sans-serif"
             }, {
                 name: "Monospace",
                 value: "monospace"
             }, {
-                name: "Ubuntu",
-                value: "Ubuntu"
+                name: "Serif",
+                value: "serif"
             }, {
-                name: "Consolas",
-                value: "Consolas"
-            }, {
-                name: "Open Sans",
-                value: "Open Sans"
-            }, {
-                name: "Segoe UI",
-                value: "Segoe UI"
-            }, {
-                name: "Calibri",
-                value: "Calibri"
-            }, {
-                name: "Arial",
-                value: "Arial"
-            }, {
-                name: "Lucida Grande",
-                value: "Lucida Grande"
-            }, {
-                name: "Helvetica",
-                value: "Helvetica"
-            }, {
-                name: "Verdana",
-                value: "Verdana"
-            }, {
-                name: "Garamond",
-                value: "Garamond"
+                name: "Cursive",
+                value: "cursive"
             }]
         ],
-        "Font Size": [13, "Set the font size of text (in pixels). Certain menu elements have a 15px limit to avoid breaking their layouts. Default: 13px."],
+        "Font Size": [13, "Set the font size of text (in pixels). Default: 13px. Menu elements have a 18px (max) and 9px (min) limit to avoid breaking their layouts."],
         "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels). Default: 11px."],
         "Backlink Font Size": [10, "Set the font size of backlinks (in pixels). Default: 10px."],
         "Bitmap Font": [false, "Check this if you are using a bitmap font."],
@@ -1920,16 +1896,10 @@
                                 "</span><input" + (val ? " checked" : "") + " name='" + key + "' type=checkbox></label>");
                         } else if (Array.isArray(defaultConfig[key][2])) // select
                         {
-                            var opts = defaultConfig[key][2];
-                            if (key === "Font Family") {
-                                html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
-                                    "<input type='text' name='" + key + "' list='" + key + "' value='" + val + "')>" +
-                                    "<datalist id='" + key + "'>"];
-                            }
-                            else {
-                                html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
+                            var opts = defaultConfig[key][2],
+                                cFonts = [],
+                                html = ["<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span>",
                                     "<select name='" + key + "'" + (defaultConfig[key][3] === true ? " has-suboption" : "") + ">"];
-                            }
 
                             for (var i = 0, MAX = opts.length; i < MAX; ++i) {
                                 var name, value;
@@ -1940,7 +1910,10 @@
                                 } else
                                     name = value = opts[i];
 
-                                html.push("<option value='" + value + "'" + (value == val ? " selected" : "") + ">" + name + "</option>");
+                                if (key === "Font Family") cFonts.push(value);
+
+                                html.push("<option" + (key === "Font Family" ? " style=\"font-family:" + $SS.formatFont(value) + "!important\"" : "") +
+                                    " value='" + value + "'" + (value == val ? " selected" : "") + ">" + name + "</option>");
                             }
 
                             html.push((key === "Font Family" ? "</datalist>" : "</select>") + "</label>");
@@ -2102,7 +2075,8 @@
 
                     // main tab
                     $("input[name='Font Size']", tOptions).bind("keydown", function (e) {
-                        var val = parseInt($(this).val());
+                        var val = parseInt($(this).val()),
+                            bitmap = $(this).parent().nextSibling().children("input[name='Bitmap Font']").val();
 
                         if (e.key === "ArrowUp" && !isNaN(val))
                             $(this).val(++val + "px");
@@ -3831,10 +3805,57 @@
 
         /* HELPER METHODS */
         formatFont: function (font) {
-            if (font === "sans-serif" || font === "monospace")
+            if (/^(serif|sans-serif|monospace|cursive|system-ui)$/.test(font))
                 return font;
 
             return "'" + font + "'";
+        },
+        isFontAvailable: function (fontName) {
+            var canvas = document.createElement("canvas"),
+                ctx = canvas.getContext("2d"),
+                text = "abcdefghijklmnopqrstuvwxyz0123456789",
+                base, test;
+
+            ctx.font = "72px monospace";
+            base = ctx.measureText(text).width;
+
+            ctx.font = "72px '" + fontName + "', monospace";
+            test = ctx.measureText(text).width;
+
+            return test !== base;
+        },
+        systemFonts: {
+            windows: [
+                "Arial", "Arial Black", "Arial Narrow", "Calibri", "Cambria",
+                "Candara", "Century Gothic", "Comic Sans MS", "Consolas",
+                "Constantia", "Corbel", "Courier New", "Franklin Gothic Medium",
+                "Georgia", "Impact", "Lucida Console",
+                "Lucida Sans Unicode", "Palatino Linotype", "Segoe UI",
+                "Tahoma", "Times New Roman", "Trebuchet MS",
+                "Verdana"
+            ],
+            macos: [
+                "Arial", "Arial Black", "Comic Sans MS", "Courier New",
+                "Futura", "Georgia", "Gill Sans", "Helvetica",
+                "Helvetica Neue", "Hoefler Text", "Impact", "Menlo",
+                "Monaco", "Optima", "Palatino", "San Francisco",
+                "SF Mono", "SF Pro", "Tahoma", "Times New Roman",
+                "Trebuchet MS", "Verdana"
+            ],
+            linux: [
+                "Arial", "Cantarell", "Courier New", "DejaVu Sans",
+                "DejaVu Sans Mono", "DejaVu Serif", "Georgia",
+                "Liberation Mono", "Liberation Sans", "Liberation Serif",
+                "Noto Sans", "Noto Sans Mono", "Tahoma",
+                "Times New Roman", "Ubuntu", "Ubuntu Mono", "Verdana"
+            ]
+        },
+        getOS: function () {
+            var ua = navigator.userAgent;
+            if (/Windows/i.test(ua)) return "windows";
+            if (/Mac/i.test(ua)) return "macos";
+            if (/Linux/i.test(ua)) return "linux";
+            return "windows";
         },
         RGBFromHex: function (hex) {
             var rgb = [];
