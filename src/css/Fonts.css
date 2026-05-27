@@ -10,7 +10,6 @@ a.qr-link,
 #qrCaptchaContainer,
 #captchaFormPart,
 tr#captchaFormPart td div#t-root,
-
 input#search-box,
 table.flashListing td,
 .persistentNav, div#boardNavMobile,
@@ -31,6 +30,9 @@ body {
 .fileText,
 .summary {
   font-size: " + (($SS.conf["Font Size"] < 13) ? 10 : ($SS.conf["Font Size"] - 2)) + "px !important;
+}
+#oneechan-version {
+  font-size: " + (($SS.conf["Font Size"] >= 10) ? 10 : ($SS.conf["Font Size"] <= 7 ? 7 : $SS.conf["Font Size"])) + "px !important;
 }
 /* Board title -> larger */
 .boardBanner .boardTitle {
@@ -80,14 +82,13 @@ div#twHeader {
 #qr label,
 #qr .move,
 #qr-no-file,
-:not(option>) select:not([id^=index-]):not([id$=-ctrl]):not(#boardSelectMobile),
+select:not([id^=index-]):not([id$=-ctrl]):not(#boardSelectMobile),
 :root #t-load,
 :root #t-next,
 :root #t-task,
 .hide-reply-button,
 .hide-thread-button,
-span#qr-filename-container,
-#oneechan-options .buttons-container span#oneechan-version {
+span#qr-filename-container {
   font-size: " + $SS.conf["UI Font Size"] + "px !important;
 }
 /* QR extra */
