@@ -96,3 +96,11 @@ div#qrError {
 :root.highlight-own:not(.fourchan-x) .yourPost > .sideArrows {
   color: rgba(var(--sc-ownPostHLColor-rgb),1.0) !important;
 }
+/* Search */
+input#search-box {
+  height: inherit;
+}
+/* Page List */
+.pagelist.desktop {
+  margin-bottom: 10px;
+}
