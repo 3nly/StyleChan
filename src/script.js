@@ -3829,9 +3829,11 @@
         },
         isFontAvailable: function (fontName) {
             var canvas = document.createElement("canvas"),
-                ctx = canvas.getContext("2d"),
+                ctx = canvas.getContext && canvas.getContext("2d"),
                 text = "abcdefghijklmnopqrstuvwxyz0123456789",
                 base, test;
+
+            if (!ctx) return false;
 
             ctx.font = "72px monospace";
             base = ctx.measureText(text).width;
