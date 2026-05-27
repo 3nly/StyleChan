@@ -255,7 +255,7 @@ hr {
 }
 /* Scroll Marker */
 :root:not(.autohide) #scroll-marker {
- pointer-events: none !important;
+  pointer-events: none !important;
 }
 /* Board Title */
 .boardBanner .boardTitle {

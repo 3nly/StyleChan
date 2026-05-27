@@ -25,18 +25,14 @@ iframe[src='about:blank'],
 #qp .post input[type=checkbox],
 #quote-preview input[type=checkbox],
 .deleteform,
-:root.hide-button .qr-link-container-bottom,
-:root.hide-button .qr-link-container,
 :root.reply-fit-width .sideArrows,
 :root.qr-controls #quickReply #qrHeader,
 :root.qr-controls #qr .close,
 :root.qr-controls #qr select[data-name=thread],
 :root.qr-controls.fade-qr #qr .move label,
 :root.qr-controls.vertical-qr #qr .move label input,
-:root:not(.is_catalog) #postForm,
-:root.is_catalog.hide-button #postForm,
-:root.hide-button #togglePostFormLink,
-:root.hide-button a[data-cmd='new-thread'],
+:root.fourchan-x #togglePostFormLink,
+:root.fourchan-x #postForm,
 hr:not(#unread-line),
 :root.hide-navlinkbot .navLinks.navLinksBot.desktop,
 :root.hide-navlinkbot .navLinks.navLinksBottom.mobilebtn,
@@ -52,9 +48,16 @@ hr:not(#unread-line),
 :root.show-ads.hide-bottom-ad #danbo-s-b+.adl,
 hr+.adl,
 .exif:not([style]),
-[hidden] {
+[hidden],
+/* 4chanX QR reply button */
+:root:not(.qr-button).fourchan-x .qr-link-container-bottom,
+:root:not(.qr-button).fourchan-x .qr-link-container,
+:root:not(.qr-button).fourchan-x a[data-cmd='new-thread'],
+/* Native reply form button */
+:root:not(.show-button):not(.fourchan-x) #togglePostFormLink {
   display: none;
 }
+
 /* Get rid of Chrome input outlines, and link outlines */
 input:focus,
 textarea:focus,

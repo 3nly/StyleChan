@@ -51,8 +51,6 @@
         "Show Banner": [false, "Toggle visibility of the banner.", null, true],
         "Reduce Banner Opacity": [false, "Reduce opacity of the banner for easier viewing.", "Show Banner", true, true],
         "Show Board Name": [true, "Toggle visibility of the board name."],
-        "Show Reply to Thread Button": [false, "Toggle visibility of the Start a Thread / Reply to Thread button.", null, true],
-        "Show Only in Catalog": [false, "Show the button only when browsing the catalog.", "Show Reply to Thread Button", true, true],
         "Show Blotter": [false, "Toggle visibility of the 4chan news blotter."],
         "Show 4chan Ads": [false, "Opts into 4chan\'s banner ads.", null, true],
         "Show Board Banners": [false, "Toggle visibility of board banners.", "Show 4chan Ads", true, true],
@@ -270,10 +268,13 @@
         "Enable Mascots": [false, "Display mascot images on the page and adjust their opacity.", null, true],
         "Mascots": ["[]", "Mascot data (URLs and opacity).", "Enable Mascots", true, true],
         ":: 4chan X": ["header", ""],
+        "Show QR Reply Button": [true, "Toggle visibility of the QR reply and new thread buttons."],
         "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
         "Show Header Shadow": [true, "Gives the header a drop shadow."],
         "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
         ":: 4chan": ["header", ""],
+        "Show Reply Form": [true, "Toggle visibility of the reply form button.", null, true],
+        "Show Only in Catalog": [false, "Show the reply form only when browsing the catalog.", "Show Reply Form", true, true],
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
         "Catalog Links": [false, "Converts board navigation links to catalog links."],
         "Watch Thread on Reply": [false, "Automatically adds the thread to the thread watcher when posting a reply."],
@@ -895,7 +896,7 @@
                 setTimeout(function () {
                     if (!$SS.QRhandled && (div = $("#qr")).exists())
                         $SS.QRDialogCreationHandler({
-                            target: div
+                            target: div.elems[0]
                         });
                 });
 
@@ -1842,7 +1843,8 @@
                             "<a href='https://github.com/3nly/StyleChan/blob/<%= meta.mainBranch %>/CHANGELOG.md' id=changelog-link target='_blank' title='Read the changelog.'>Changelog</a><span class=link-delim> | </span>",
                             "<a href='https://github.com/3nly/StyleChan/issues' id=issues-link target='_blank' title='Report an issue.'>Issues</a></p>"
                         ];
-                    var key, val, des, id;
+                    var key, val, des, id, section = "";
+                    var is4chanX = document.documentElement.classList.contains("fourchan-x");
 
                     for (key in defaultConfig) {
                         if (/^(Selected|Hidden)+\s(Themes?)+$/.test(key))
@@ -1850,6 +1852,21 @@
 
                         val = $SS.conf[key];
                         des = defaultConfig[key][1];
+
+                        if (key === "Themes" || key === "Misc") section = "";
+                        if (val === "header") {
+                            section = key === ":: 4chan X" ? "4chanx" : key === ":: 4chan" ? "native" : "";
+                            if ((section === "4chanx" && !is4chanX) || (section === "native" && is4chanX)) continue;
+                            optionsHTML.push("<label class='option header'><span class='option-title'>" + key + "</span></label>");
+                            if (key === ":: 4chan") {
+                                optionsHTML.push("<p class='option-actions'><a class='options-button' name=save4chanSettings>Save 4chan settings</a><span class=link-delim> | </span><a class='options-button' name=restore4chanSettings>Restore</a></p>");
+                            }
+                            continue;
+                        }
+
+                        if (section === "4chanx" && !is4chanX) continue;
+                        if (section === "native" && is4chanX) continue;
+                        if (key === "Style 4chanX Notifications" && !is4chanX) continue;
 
                         if ((defaultConfig[key][4] === true) && (key === "Custom Left Margin")) {
                             var pVal = $SS.conf[defaultConfig[key][2]];
@@ -1869,11 +1886,6 @@
                             optionsHTML.push("<span class='option suboption " + id + "' title=\"" + des + "\"" +
                                 (pVal != defaultConfig[key][3] ? "hidden" : "") + "><span class='option-title'>" + key +
                                 "</span><input name='Custom Decoration Width' type=text value=" + $SS.conf["Custom Decoration Width"] + "px></span>");
-                        } else if (val === "header") {
-                            optionsHTML.push("<label class='option header'><span class='option-title'>" + key + "</span></label>");
-                            if (key === ":: 4chan") {
-                                optionsHTML.push("<p class='option-actions'><a class='options-button' name=save4chanSettings>Save 4chan settings</a><span class=link-delim> | </span><a class='options-button' name=restore4chanSettings>Restore</a></p>");
-                            }
                         } else if ((defaultConfig[key][4] === true) && (key === "Dark Theme" || key === "Light Theme")) {
                             var pVal = $SS.conf[defaultConfig[key][2]];
                             id = defaultConfig[key][2].replace(/\s/g, "_") + defaultConfig[key][3];
@@ -3575,8 +3587,9 @@
                 cl.toggle("fit-postmenu", $SS.conf["Fit Post Menu"] === true);
                 cl.toggle("hide-banner", $SS.conf["Show Banner"] === false);
                 cl.toggle("banner-opacity", $SS.conf["Reduce Banner Opacity"] === true);
-                cl.toggle("hide-button", $SS.conf["Show Reply to Thread Button"] === false ||
-                    ($SS.conf["Show Reply to Thread Button"] && $SS.conf["Show Only in Catalog"] && !$SS.location.catalog));
+                cl.toggle("show-button", $SS.conf["Show Reply Form"] &&
+                    (!$SS.conf["Show Only in Catalog"] || $SS.location.catalog));
+                cl.toggle("qr-button", $SS.conf["Show QR Reply Button"]);
                 cl.toggle("post-info", $SS.conf["Show Reply Header"] === true);
                 cl.toggle("show-file-info", $SS.conf["Show File Info"] === false);
                 cl.toggle("borders-all", $SS.conf["Borders"] === 2);
