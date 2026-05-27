@@ -233,8 +233,8 @@ div#menu.dialog label.toggle-you.entry input {
   position: fixed !important;
 }
 /* QR link */
-.qr-link {
-  border-radius: 3px;
+a.qr-link {
+  border-radius: 0;
   vertical-align: middle;
   padding: 7px 12px 6px;
 }

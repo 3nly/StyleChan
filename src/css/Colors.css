@@ -287,6 +287,7 @@ hr {
 :root.rounded-corners .thumb,
 :root.rounded-corners #t-load,
 :root.rounded-corners #t-next,
+:root.rounded-corners a.qr-link,
 :root.rounded-corners #bannerCnt img,
 :root.rounded-corners .fileThumb img:not(.full-image),
 :root.rounded-corners .catalog-thumb,
