@@ -62,7 +62,6 @@
   flex: 1;
   width: 0;
 }
-:root.expand-inputs .persona .field:hover,
 :root.expand-inputs .persona .field:focus {
   flex: 3;
 }
