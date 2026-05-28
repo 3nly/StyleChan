@@ -181,12 +181,45 @@
 :root.vertical-qr #qr.focus {
   transform: translateX(0%) !important;
 }
-:root.qr-transition.vertical-qr #qr {
+:root.qr-transition.vertical-qr #qr,
+:root.qr-transition.vertical-qr #quickReply {
   transition: transform .3s ease-in-out .1s !important;
 }
 :root.vertical-qr #qr .move {
   transform: rotate(-90deg);
   right: 86%;
+}
+/* Native QR Vertical Tabbed */
+:root.vertical-qr #quickReply {
+  top: auto !important;
+  position: fixed;
+  right: 0 !important;
+  left: auto !important;
+  bottom: 0 !important;
+  transform: translateX(100%);
+  max-width: 300px !important;
+}
+:root.vertical-qr #quickReply:hover,
+:root.vertical-qr #quickReply.focus {
+  transform: translateX(0%) !important;
+}
+:root.vertical-qr #qrHeader {
+  display: block;
+  position: absolute;
+  bottom: 25vh;
+  right: 100%;
+  width: max-content;
+  min-width: 105px;
+  padding: 2px 2px 4px 4px;
+  text-align: center;
+  cursor: default;
+  transform: rotate(-90deg);
+  transform-origin: bottom right;
+  white-space: nowrap;
+}
+:root.vertical-qr #quickReply:hover #qrHeader {
+  opacity: 0 !important;
+  transition: opacity .42s linear;
 }
 #qr > form {
   overflow-y: hidden !important;
@@ -343,4 +376,12 @@ input[type="number"] {
 :root.single-captcha .tcaptcha-nav[aria-disabled="true"] {
   opacity: 0.35;
   cursor: default !important;
+}
+/* QR Header text */
+#qrHeader {
+  font-size: 0;
+}
+#qrHeader::before {
+  content: 'QUICK REPLY';
+  font-size: 11px;
 }
