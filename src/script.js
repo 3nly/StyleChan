@@ -1888,7 +1888,7 @@
                             "<p class='buttons-container'>",
                             "<a class='options-button' title='Export your settings as JSON.' name=Export>Export</a><a class='options-button' id='import-settings'><input type=file class='import-input' riced=true accept='application/json'>Import</a><a class='options-button' title='Reset StyleChan settings.' name=resetSettings>Reset</a>",
                             "<span id=oneechan-version><span>StyleChan</span> v" + VERSION + "<span class=link-delim> | </span>",
-                            "<a href='https://github.com/3nly/StyleChan/blob/<%= meta.mainBranch %>/CHANGELOG.md' id=changelog-link target='_blank' title='Read the changelog.'>Changelog</a><span class=link-delim> | </span>",
+                            "<a href='https://github.com/3nly/StyleChan/releases/latest' id=changelog-link target='_blank' title='Read the changelog.'>Changelog</a><span class=link-delim> | </span>",
                             "<a href='https://github.com/3nly/StyleChan/issues' id=issues-link target='_blank' title='Report an issue.'>Issues</a></p>"
                         ];
                     var key, val, des, id, section = "";
