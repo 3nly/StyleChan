@@ -1012,71 +1012,79 @@
                 $(getDocHead()).append($("<style type='text/css' id=ch4SS>").text(css));
         },
         setThemeVariables: function () {
-            var t = $SS.theme, root = document.documentElement.style;
+            var t = $SS.theme;
             if (!t || t.hidden) return;
-            root.setProperty("--sc-textColor", t.textColor.hex);
-            root.setProperty("--sc-textColor-rgb", t.textColor.rgb);
-            root.setProperty("--sc-nameColor", t.nameColor.hex);
-            root.setProperty("--sc-tripColor", t.tripColor.hex);
-            root.setProperty("--sc-linkColor", t.linkColor.hex);
-            root.setProperty("--sc-linkColor-rgb", t.linkColor.rgb);
-            root.setProperty("--sc-linkHColor", t.linkHColor.hex);
-            root.setProperty("--sc-linkHColor-rgb", t.linkHColor.rgb);
-            root.setProperty("--sc-headerColor", t.headerColor.hex);
-            root.setProperty("--sc-headerLColor", t.headerLColor.hex);
-            root.setProperty("--sc-headerLHColor", t.headerLHColor.hex);
-            root.setProperty("--sc-quoteColor", t.quoteColor.hex);
-            root.setProperty("--sc-quoteColor-rgb", t.quoteColor.rgb);
-            root.setProperty("--sc-titleColor", t.titleColor.hex);
-            root.setProperty("--sc-boardColor", t.boardColor.hex);
-            root.setProperty("--sc-blinkColor", t.blinkColor.hex);
-            root.setProperty("--sc-qlColor", t.qlColor.hex);
-            root.setProperty("--sc-bgColor", t.bgColor.hex);
-            root.setProperty("--sc-bgColor-rgb", t.bgColor.rgb);
-            root.setProperty("--sc-mainColor", t.mainColor.hex);
-            root.setProperty("--sc-mainColor-rgb", t.mainColor.rgb);
-            root.setProperty("--sc-mainColor-shiftM30", t.mainColor.shiftRGB(-30));
-            root.setProperty("--sc-mainColor-shiftM25", t.mainColor.shiftRGB(-25));
-            root.setProperty("--sc-mainColor-shiftM18", t.mainColor.shiftRGB(-18));
-            root.setProperty("--sc-mainColor-shiftM16", t.mainColor.shiftRGB(-16));
-            root.setProperty("--sc-mainColor-shiftM15", t.mainColor.shiftRGB(-15));
-            root.setProperty("--sc-mainColor-shiftM10", t.mainColor.shiftRGB(-10));
-            root.setProperty("--sc-mainColor-shiftM5", t.mainColor.shiftRGB(-5));
-            root.setProperty("--sc-mainColor-shift4", t.mainColor.shiftRGB(4));
-            root.setProperty("--sc-mainColor-shift10", t.mainColor.shiftRGB(10));
-            root.setProperty("--sc-mainColor-shift15", t.mainColor.shiftRGB(15));
-            root.setProperty("--sc-brderColor", t.brderColor.hex);
-            root.setProperty("--sc-brderColor-rgb", t.brderColor.rgb);
-            root.setProperty("--sc-inputColor", t.inputColor.hex);
-            root.setProperty("--sc-inputColor-rgb", t.inputColor.rgb);
-            root.setProperty("--sc-inputColor-shift25", t.inputColor.shiftRGB(25));
-            root.setProperty("--sc-inputColor-hover", t.inputColor.hover);
-            root.setProperty("--sc-inputbColor", t.inputbColor.hex);
-            root.setProperty("--sc-headerBGColor", t.headerBGColor.hex);
-            root.setProperty("--sc-headerBGColor-rgb", t.headerBGColor.rgb);
-            root.setProperty("--sc-headerBGColor-shift15", t.headerBGColor.shiftRGB(15));
-            root.setProperty("--sc-unreadColor-rgb", t.unreadColor.rgb);
-            root.setProperty("--sc-postHLColor-rgb", t.postHLColor.rgb);
-            root.setProperty("--sc-quotesYouHLColor", t.quotesYouHLColor.hex);
-            root.setProperty("--sc-quotesYouHLColor-rgb", t.quotesYouHLColor.rgb);
-            root.setProperty("--sc-ownPostHLColor-rgb", t.ownPostHLColor.rgb);
-            root.setProperty("--sc-replybgHLColor-rgb", t.replybgHLColor.rgb);
-            root.setProperty("--sc-replyslctColor-rgb", t.replyslctColor.rgb);
-            root.setProperty("--sc-codeBackground", t.codeBackground);
-            root.setProperty("--sc-codeBorder", t.codeBorder);
-            root.setProperty("--sc-replyOp", t.replyOp);
-            root.setProperty("--sc-navOp", t.navOp);
-            var sidebarBgOpacity = t.mainColor.isDark ? ".9" : ".2";
-            root.setProperty("--sc-sidebar-bg", 'rgba(' + t.mainColor.shiftRGB(-18) + ',' + sidebarBgOpacity + ')');
-            root.setProperty("--sc-bgImg", t.bgImg.get());
-            root.setProperty("--sc-headerbColor", t.headerbColor.hex);
-            root.setProperty("--sc-icon-star", 'url("data:image/svg+xml,' + t.icons.star + '")');
-            root.setProperty("--sc-icon-backlink", 'url("data:image/svg+xml,' + t.icons.backlink + '")');
-            root.setProperty("--sc-icon-downArrow", 'url("data:image/svg+xml,' + t.icons.downArrow + '")');
-            root.setProperty("--sc-icon-threadClosed", 'url("data:image/svg+xml,' + t.icons.threadClosed + '")');
-            root.setProperty("--sc-icon-threadPinned", 'url("data:image/svg+xml,' + t.icons.threadPinned + '")');
-            root.setProperty("--sc-icon-threadArchived", 'url("data:image/svg+xml,' + t.icons.threadArchived + '")');
-            root.setProperty("--sc-icon-msg", 'url("data:image/svg+xml,' + t.icons.msg + '")');
+            var sidebarBgOpacity = t.mainColor.isDark ? ".9" : ".2",
+                css = ":root{" +
+                "--sc-textColor:" + t.textColor.hex + ";" +
+                "--sc-textColor-rgb:" + t.textColor.rgb + ";" +
+                "--sc-nameColor:" + t.nameColor.hex + ";" +
+                "--sc-tripColor:" + t.tripColor.hex + ";" +
+                "--sc-linkColor:" + t.linkColor.hex + ";" +
+                "--sc-linkColor-rgb:" + t.linkColor.rgb + ";" +
+                "--sc-linkHColor:" + t.linkHColor.hex + ";" +
+                "--sc-linkHColor-rgb:" + t.linkHColor.rgb + ";" +
+                "--sc-headerColor:" + t.headerColor.hex + ";" +
+                "--sc-headerLColor:" + t.headerLColor.hex + ";" +
+                "--sc-headerLHColor:" + t.headerLHColor.hex + ";" +
+                "--sc-quoteColor:" + t.quoteColor.hex + ";" +
+                "--sc-quoteColor-rgb:" + t.quoteColor.rgb + ";" +
+                "--sc-titleColor:" + t.titleColor.hex + ";" +
+                "--sc-boardColor:" + t.boardColor.hex + ";" +
+                "--sc-blinkColor:" + t.blinkColor.hex + ";" +
+                "--sc-qlColor:" + t.qlColor.hex + ";" +
+                "--sc-bgColor:" + t.bgColor.hex + ";" +
+                "--sc-bgColor-rgb:" + t.bgColor.rgb + ";" +
+                "--sc-mainColor:" + t.mainColor.hex + ";" +
+                "--sc-mainColor-rgb:" + t.mainColor.rgb + ";" +
+                "--sc-mainColor-shiftM30:" + t.mainColor.shiftRGB(-30) + ";" +
+                "--sc-mainColor-shiftM25:" + t.mainColor.shiftRGB(-25) + ";" +
+                "--sc-mainColor-shiftM18:" + t.mainColor.shiftRGB(-18) + ";" +
+                "--sc-mainColor-shiftM16:" + t.mainColor.shiftRGB(-16) + ";" +
+                "--sc-mainColor-shiftM15:" + t.mainColor.shiftRGB(-15) + ";" +
+                "--sc-mainColor-shiftM10:" + t.mainColor.shiftRGB(-10) + ";" +
+                "--sc-mainColor-shiftM5:" + t.mainColor.shiftRGB(-5) + ";" +
+                "--sc-mainColor-shift4:" + t.mainColor.shiftRGB(4) + ";" +
+                "--sc-mainColor-shift10:" + t.mainColor.shiftRGB(10) + ";" +
+                "--sc-mainColor-shift15:" + t.mainColor.shiftRGB(15) + ";" +
+                "--sc-brderColor:" + t.brderColor.hex + ";" +
+                "--sc-brderColor-rgb:" + t.brderColor.rgb + ";" +
+                "--sc-inputColor:" + t.inputColor.hex + ";" +
+                "--sc-inputColor-rgb:" + t.inputColor.rgb + ";" +
+                "--sc-inputColor-shift25:" + t.inputColor.shiftRGB(25) + ";" +
+                "--sc-inputColor-hover:" + t.inputColor.hover + ";" +
+                "--sc-inputbColor:" + t.inputbColor.hex + ";" +
+                "--sc-headerBGColor:" + t.headerBGColor.hex + ";" +
+                "--sc-headerBGColor-rgb:" + t.headerBGColor.rgb + ";" +
+                "--sc-headerBGColor-shift15:" + t.headerBGColor.shiftRGB(15) + ";" +
+                "--sc-unreadColor-rgb:" + t.unreadColor.rgb + ";" +
+                "--sc-postHLColor-rgb:" + t.postHLColor.rgb + ";" +
+                "--sc-quotesYouHLColor:" + t.quotesYouHLColor.hex + ";" +
+                "--sc-quotesYouHLColor-rgb:" + t.quotesYouHLColor.rgb + ";" +
+                "--sc-ownPostHLColor-rgb:" + t.ownPostHLColor.rgb + ";" +
+                "--sc-replybgHLColor-rgb:" + t.replybgHLColor.rgb + ";" +
+                "--sc-replyslctColor-rgb:" + t.replyslctColor.rgb + ";" +
+                "--sc-codeBackground:" + t.codeBackground + ";" +
+                "--sc-codeBorder:" + t.codeBorder + ";" +
+                "--sc-replyOp:" + t.replyOp + ";" +
+                "--sc-navOp:" + t.navOp + ";" +
+                "--sc-sidebar-bg:rgba(" + t.mainColor.shiftRGB(-18) + "," + sidebarBgOpacity + ");" +
+                "--sc-bgImg:" + t.bgImg.get() + ";" +
+                "--sc-icon-star:url(\"data:image/svg+xml," + t.icons.star + "\");" +
+                "--sc-icon-backlink:url(\"data:image/svg+xml," + t.icons.backlink + "\");" +
+                "--sc-icon-downArrow:url(\"data:image/svg+xml," + t.icons.downArrow + "\");" +
+                "--sc-icon-threadClosed:url(\"data:image/svg+xml," + t.icons.threadClosed + "\");" +
+                "--sc-icon-threadPinned:url(\"data:image/svg+xml," + t.icons.threadPinned + "\");" +
+                "--sc-icon-threadArchived:url(\"data:image/svg+xml," + t.icons.threadArchived + "\");" +
+                "--sc-icon-msg:url(\"data:image/svg+xml," + t.icons.msg + "\")" +
+                "}";
+            var el = document.getElementById("sc-theme-vars");
+            if (!el) {
+                el = document.createElement("style");
+                el.id = "sc-theme-vars";
+                (document.head || document.documentElement).appendChild(el);
+            }
+            el.textContent = css;
         },
         initImageConvertOnDrop: function () {
             var MAX_BYTES = $SS.location.maxFileSize;
