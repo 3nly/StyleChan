@@ -257,7 +257,7 @@
         "Bitmap Font": [false, "Check this if you are using a bitmap font."],
         "Misc": [],
         ":: Notifications": ["header", ""],
-        "Toast Notifications": [true, "Show toast notification popups for events.", null, true],
+        "Toast Notifications": [true, "Show toast notifications for events.", null, true],
         "Style 4chanX Notifications": [true, "Show 4chanX notifications in the same style as StyleChan's toasts.", "Toast Notifications", true, true],
         "Center Notifications": [false, "Center notifications at the top below the header bar.", "Toast Notifications", true, true],
         "Full Border": [false, "Use a full border to make notifications more visible. Border style follows the Highlight Style and Width options.", "Toast Notifications", true, true],
@@ -1863,10 +1863,10 @@
                             }
                             continue;
                         }
-
+                        /* Hide menu elements depending on script */
                         if (section === "4chanx" && !is4chanX) continue;
                         if (section === "native" && is4chanX) continue;
-                        if (key === "Style 4chanX Notifications" && !is4chanX) continue;
+                        if (!is4chanX && /^(Style 4chanX Notifications|Expanding Form Inputs|Fit Expanded Images)$/.test(key)) continue;
 
                         if ((defaultConfig[key][4] === true) && (key === "Custom Left Margin")) {
                             var pVal = $SS.conf[defaultConfig[key][2]];
