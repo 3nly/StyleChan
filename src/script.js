@@ -782,10 +782,9 @@
                                 forms.forEach($SS.handleFormNode);
                                 $SS.markOwnPosts(node);
                                 $SS.markQuotingYou(node);
-                                var pm = node.matches("#post-menu") ? node : node.querySelector("#post-menu");
-                                if (pm) $SS.insertToggleYou();
-
                             }
+                            var pm = node.matches && node.matches("#post-menu") ? node : node.querySelector ? node.querySelector("#post-menu") : null;
+                            if (pm) $SS.insertToggleYou();
                         }
                     }
                 });
