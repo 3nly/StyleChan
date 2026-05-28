@@ -265,6 +265,8 @@
         "System Theming": [false, "Use system color scheme detection to automatically select themes. Overrides NSFW/SFW theme selection.", null, true],
         "Dark Theme": [0, "Theme to use when system is in dark mode.", "System Theming", true, true],
         "Light Theme": [0, "Theme to use when system is in light mode.", "System Theming", true, true],
+        "Style Scrollbars": [true, "Customize the look of scrollbars to match the theme.", null, true],
+        "Thin Scrollbars": [false, "Use thinner scrollbars.", "Style Scrollbars", true, true],
         "Enable Mascots": [false, "Display mascot images on the page and adjust their opacity.", null, true],
         "Mascots": ["[]", "Mascot data (URLs and opacity).", "Enable Mascots", true, true],
         ":: 4chan X": ["header", ""],
