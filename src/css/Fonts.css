@@ -1,36 +1,49 @@
-/* Anything we need 0px */
-.deleteform,
-.pages,
-.pagelist button,
-#full-board-list {
-  font-size: 0 !important;
+/* Reset 4chan hardcoded fonts */
+input,
+select,
+textarea,
+button,
+::placeholder, 
+form,
+span,
+a.qr-link,
+#qrCaptchaContainer,
+#captchaFormPart,
+tr#captchaFormPart td div#t-root,
+div.captcha-root div,
+input#search-box,
+table.flashListing td,
+.persistentNav, div#boardNavMobile,
+#togglePostFormLink,
+div#topnav.boardnav,
+div#boardNavMobile option {
+  font-family: inherit !important;
+  font-size: inherit !important;
 }
-/* Anything we need small */
+/* Base font */
+body {
+  font-family: " + ($SS.conf["Custom Font"] ? "'" + $SS.conf["Custom Font"] + "'" : $SS.formatFont($SS.conf["Font Family"])) + " !important;
+  font-size: " + $SS.conf["Font Size"] + "px !important;
+}
+/* Slightly smaller */
 .fileText,
 .summary {
   font-size: " + (($SS.conf["Font Size"] < 13) ? 10 : ($SS.conf["Font Size"] - 2)) + "px !important;
 }
-/* Anything we need !important */
-.qr-link {
-  font-size: 14px !important;
+#oneechan-version {
+  font-size: " + (($SS.conf["Font Size"] >= 10) ? 10 : ($SS.conf["Font Size"] <= 7 ? 7 : $SS.conf["Font Size"])) + "px !important;
 }
-/* Options */
-.hide-reply-button,
-.hide-thread-button {
-  font-family: sans-serif !important;
-  font-size: 12px !important;
-}
-/* Board Title */
+/* Board title -> larger */
 .boardBanner .boardTitle {
   font-weight: 400 !important;
   font-size: " + (($SS.conf["Font Size"] < 13) ? 22 : 26) + "px !important;
 }
-/* Code Tags */
+/* Code blocks */
 .prettyprint span {
-  font-family: monospace!important;
-  font-size: medium!important;
+  font-family: monospace !important;
+  font-size: medium !important;
 }
-/* Full board list */
+/* Header bar & board list -> slightly smaller */
 #full-board-list,
 body>#header-bar,
 #full-board-list .fourchanx-link {
@@ -41,70 +54,42 @@ body>#header-bar,
     word-spacing: " + (($SS.conf["Font Size"] < 14) ? -1 : -2) + "px;
   }
 }
-/* Everything else */
-body,
-.prev span::after,
-.prev form::after,
-.next span::after,
-.next form::after,
-.pages a,
-#qr input.field,
-#qr:not(.sjis-preview) textarea.field,
-#qr span.field,
-#qr select[data-name="thread"],
-:root #t-desc,
-textarea[name="com"],
-::placeholder,
-#menu .entry,
-#boardList,
-#shortcuts,
-#index-search,
-#tegaki,
-div.next,
-form.pageSwitcherForm > input[type="submit"] {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif !important;
-  font-size: " + $SS.conf["Font Size"] + "px !important;
-}
-#full-board-list a,
-#custom-board-list,
-a.qr-link {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif !important;
-  font-size: " + $SS.conf["Font Size"] + "px !important;
-}
+/* Backlinks */
 .backlink {
   font-size: " + $SS.conf["Backlink Font Size"] + "px !important;
 }
-/* Limit font-size to not break layout and buttons */
+/* Options panels + others -> capped to not break */
 .tab-label,
 .options-button,
 .theme-preview,
-#oneechan-options input,
-#oneechan-options textarea,
-#oneechan-options select,
-#oneechan-options .option-title,
-#oneechan-options .option,
-#add-theme .option-title,
-#add-theme input,
-#add-theme select,
+#oneechan-options,
 #fourchanx-settings,
-#fourchanx-settings input,
-#fourchanx-settings select {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif;
-  font-size: " + (($SS.conf["Font Size"] >= 15) ? 15 : 13) + "px !important;
+.UIPanel,
+.meta,
+.panel,
+a.options-button,
+.pagelist.desktop,
+div#twHeader,
+a.qr-link {
+  font-size: " + (($SS.conf["Font Size"] >= 18) ? 18 : ($SS.conf["Font Size"] <= 9 ? 9 : $SS.conf["Font Size"])) + "px !important;
 }
+/* UI font size */
 #qr-file-button,
 #qr input[type=submit],
 #qr label,
 #qr .move,
 #qr-no-file,
-select:not([id^=index-]):not([id$=-ctrl]),
-input,
+select:not([id^=index-]):not([id$=-ctrl]):not(#boardSelectMobile, #oneechan-options select, #fourchanx-settings select),
 :root #t-load,
 :root #t-next,
-:root #t-task {
-  font-family: " + $SS.formatFont($SS.conf["Font Family"]) + ", sans-serif;
+:root #t-task,
+.catalog-stats,
+.hide-reply-button,
+.hide-thread-button,
+span#qr-filename-container {
   font-size: " + $SS.conf["UI Font Size"] + "px !important;
 }
+/* QR extra */
 #qr-file-button,
 #qr input[type="submit"],
 #qr label {
@@ -148,7 +133,6 @@ a.current,
 .tab-label.selected {
   font-weight: " + ($SS.conf["Bitmap Font"] ? 4 : 7) + "00 !important;
 }
-.qr-link,
 .tab-label:not(.selected):not(:hover) {
   font-weight: normal;
 }
