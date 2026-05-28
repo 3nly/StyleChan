@@ -275,6 +275,7 @@
         "Show Header Shadow": [true, "Gives the header a drop shadow."],
         "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
         ":: 4chan": ["header", ""],
+        "Relative Post Dates": [false, "Display dates like '3 minutes ago'. Tooltip shows the original timestamp."],
         "Show Reply Form": [true, "Toggle visibility of the reply form button.", null, true],
         "Show Only in Catalog": [false, "Show the reply form only when browsing the catalog.", "Show Reply Form", true, true],
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
@@ -782,6 +783,7 @@
                                 forms.forEach($SS.handleFormNode);
                                 $SS.markOwnPosts(node);
                                 $SS.markQuotingYou(node);
+                                if (!$SS.is4chanX) $SS.relativeDates(node);
                             }
                             var pm = node.matches && node.matches("#post-menu") ? node : node.querySelector ? node.querySelector("#post-menu") : null;
                             if (pm) $SS.insertToggleYou();
@@ -1661,6 +1663,32 @@
                     }
                 });
             } catch (e) {}
+        },
+        relativeDates: function (root) {
+            if ($SS.is4chanX) return;
+            if (!$SS.conf["Relative Post Dates"]) return;
+            var now = Date.now();
+            (root || document).querySelectorAll(".dateTime").forEach(function (dt) {
+                if (!dt._relativeDateSet && dt.dataset.utc) {
+                    dt._relativeDateSet = true;
+                    dt.title = dt.textContent;
+                    var seconds = Math.floor(now / 1000) - parseInt(dt.dataset.utc);
+                    var minutes = Math.floor(seconds / 60);
+                    var hours = Math.floor(minutes / 60);
+                    var days = Math.floor(hours / 24);
+                    var weeks = Math.floor(days / 7);
+                    var months = Math.floor(days / 30);
+                    var text;
+                    if (seconds < 60) text = "just now";
+                    else if (minutes < 60) text = minutes + " min ago";
+                    else if (hours < 24) text = hours + " hr ago";
+                    else if (days < 7) text = days + " day" + (days > 1 ? "s" : "") + " ago";
+                    else if (weeks < 5) text = weeks + " week" + (weeks > 1 ? "s" : "") + " ago";
+                    else if (months < 12) text = months + " month" + (months > 1 ? "s" : "") + " ago";
+                    else text = Math.floor(days / 365) + " year" + (Math.floor(days / 365) > 1 ? "s" : "") + " ago";
+                    dt.textContent = text;
+                }
+            });
         },
         displayMascots: function () {
             try {
@@ -3669,6 +3697,7 @@
                     cl.toggle("highlight-own", $SS.conf["Highlight Own Posts"] === true);
                     if ($SS.conf["Highlight Own Posts"]) $SS.markOwnPosts();
                     if ($SS.conf["Highlight Posts Quoting You"]) $SS.markQuotingYou();
+                    if ($SS.conf["Relative Post Dates"]) $SS.relativeDates();
                 }
             }
         },
