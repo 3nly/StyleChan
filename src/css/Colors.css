@@ -84,10 +84,10 @@ a.current {
   color: var(--sc-headerLHColor) !important;
 }
 #custom-board-list .current {
-  border-bottom: 1px solid rgba(var(--sc-linkColor-rgb),1) !important;;
+  border-bottom: 1px solid rgba(var(--sc-linkColor-rgb),1) !important;
 }
 #custom-board-list .current:hover {
-  border-bottom: 1px solid rgba(var(--sc-linkHColor-rgb),1) !important;;
+  border-bottom: 1px solid rgba(var(--sc-linkHColor-rgb),1) !important;
 }
 /* Greentext */
 .postMessage>.quote,
@@ -193,8 +193,8 @@ body.is_catalog .panel,
 .pages strong>a,
 input[value='Next'],
 input[value='Previous'],
-#quickReply input[type="submit"],
-#postForm input[type="submit"] {
+#quickReply input[type=submit],
+#postForm input[type=submit] {
   background: linear-gradient(rgb(var(--sc-mainColor-shift15)), rgb(var(--sc-mainColor-rgb))) !important;
 }
 .options-button:hover,
@@ -203,8 +203,8 @@ input[value='Previous'],
 .dd-menu li:hover,
 input[value='Next']:hover,
 input[value='Previous']:hover,
-#quickReply input[type="submit"]:hover,
-#postForm input[type="submit"]:hover {
+#quickReply input[type=submit]:hover,
+#postForm input[type=submit]:hover {
   background: rgb(var(--sc-mainColor-shift15));
 }
 .focused.entry {

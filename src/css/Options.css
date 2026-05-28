@@ -202,8 +202,6 @@ input[name='Font Family']::-webkit-list-button {
 #add-theme>label>input[type=text],
 #add-theme>label>select {
   width:100px;
-  -moz-appearance: auto;
-  -webkit-appearance: auto;
   appearance: auto;
 }
 .color-picker-wrap {
@@ -272,9 +270,6 @@ input[name='Font Family']::-webkit-list-button {
   width:75px;
   border-radius:3px 3px 0 0;
   transition: all .1s ease-in-out;
-}
-.tab-label:not(.selected):not(:hover) {
-  opacity: 0.85;
 }
 /* Overlays */
 #overlay {

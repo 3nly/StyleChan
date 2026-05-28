@@ -135,6 +135,7 @@ a.current,
 }
 .tab-label:not(.selected):not(:hover) {
   font-weight: normal;
+  opacity: 0.85;
 }
 /* /f/ */
 .postblock {
