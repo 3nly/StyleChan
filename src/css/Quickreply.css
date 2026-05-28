@@ -24,28 +24,27 @@
   margin: 0 0 1px;
 }
 #qr-file-button,
-#qr input[type='submit'],
-#quickReply input[type='submit'],
-#postForm input[type='submit'] {
+#qr input[type=submit],
+#quickReply input[type=submit] {
   height: 25px !important;
   margin: 0 !important;
 }
-#postForm input[type='submit'] {
-  height: 18px !important;
+#postForm input[type=submit] {
+  height: 22px !important;
   width: 46px;
 }
 #qr-file-button,
 :root:not(.fourchan-xt) #qr-filename-container {
   margin-right: 1px !important;
 }
-#qr-spoiler-label + input[type='submit'] {
+#qr-spoiler-label + input[type=submit] {
   /* ccd0 prior to v1.10.3 */
   margin-top: 1px !important;
 }
 #qr > form > select {
   margin: 1px 0 !important;
 }
-#qr select[data-name="thread"] {
+#qr select[data-name=thread] {
   margin: 1px 0 1px 0;
   max-width: 133px;
   min-width: 80px;
@@ -107,7 +106,7 @@
 }
 .textarea {
   margin-top: 1px;
-  -webkit-margin-after: 1px;
+  margin-bottom: 1px;
   min-height: 9em;
   max-height: 64vh;
 }
@@ -277,7 +276,6 @@ input[type="number"] {
   overflow-x: hidden;
   box-sizing: border-box;
   position: relative;
-  -ms-overflow-style: none;
   scrollbar-width: none;
 }
 :root.single-captcha #t-task::-webkit-scrollbar {

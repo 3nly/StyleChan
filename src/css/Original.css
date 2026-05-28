@@ -225,17 +225,18 @@ div.meta {
   float: right;
 }
 /* Quick Reply */
-#qrFile {
+#qrFile
+input#postFile {
   height: 23px;
 }
 :root.right-sidebar #quickReply,
 :root.left-sidebar #quickReply {
   max-width: 300px !important;
 }
-:root.right-sidebar #quickReply input[type="text"], 
+:root.right-sidebar #quickReply input[type=text], 
 :root.right-sidebar #quickReply textarea, 
 :root.right-sidebar #quickReply #recaptcha_response_field,
-:root.left-sidebar #quickReply input[type="text"], 
+:root.left-sidebar #quickReply input[type=text], 
 :root.left-sidebar #quickReply textarea, 
 :root.left-sidebar #quickReply #recaptcha_response_field {
   max-width: 294px !important;
@@ -244,7 +245,8 @@ div.meta {
 div#qrError {
     width: 290px;
 }
-#quickReply #qrFile {
+#quickReply #qrFile,
+input#postFile {
   cursor: pointer;
   flex: 1;
   min-width: 0;
@@ -255,21 +257,11 @@ div#qrError {
   gap: 4px;
 }
 #quickReply #qrSpoiler,
-#quickReply input[type='submit'],
-#postForm input[type='submit'] {
+#quickReply input[type=submit],
+#postForm input[type=submit] {
   flex-shrink: 0;
 }
-/* QR file button */
-#quickReply #qrFile::file-selector-button,
-#quickReply #qrFile::-webkit-file-upload-button {
-  appearance: none;
   cursor: pointer;
-  border-style: solid;
-  border-width: 1px;
-  height: 23px;
-  padding: 0 6px;
-  text-transform: uppercase;
-  margin-right: 4px;
 }
 /* Normal autohide (collapse to header) */
 :root.normal-qr #quickReply:not(:hover):not(.focus) {
@@ -283,7 +275,15 @@ div#qrError {
 }
 /* QR file button */
 #quickReply #qrFile::file-selector-button,
-#quickReply #qrFile::-webkit-file-upload-button {
+#quickReply #qrFile::-webkit-file-upload-button,
+.postForm #postFile::file-selector-button,
+.postForm #postFile::-webkit-file-upload-button {
+  appearance: none;
+  cursor: pointer;
+  height: 23px;
+  padding: 0 6px;
+  text-transform: uppercase;
+  margin-right: 4px;
   background: rgb(var(--sc-mainColor-rgb)) !important;
   border-style: solid;
   border-width: 1px;
@@ -293,7 +293,9 @@ div#qrError {
   font-size: " + $SS.conf["UI Font Size"] + "px !important;
 }
 #quickReply #qrFile:hover::file-selector-button,
-#quickReply #qrFile:hover::-webkit-file-upload-button {
+#quickReply #qrFile:hover::-webkit-file-upload-button,
+.postForm #postFile:hover::file-selector-button,
+.postForm #postFile:hover::-webkit-file-upload-button {
   background: rgb(var(--sc-mainColor-shift10)) !important;
 }
 /* Board banner */
