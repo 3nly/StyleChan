@@ -119,7 +119,8 @@ body {
 :root.reply-fit-width .reply .container {
   padding-right: 5px;
 }
-:root.reply-fit-width.fit-postmenu .postInfo > .menu-button {
+:root.reply-fit-width.fit-postmenu .postInfo > .menu-button,
+:root.reply-fit-width.fit-postmenu .postInfo > .postMenuBtn {
   float: right !important;
 }
 .menu-button + .container:not(:empty),
@@ -131,10 +132,16 @@ body {
   position: relative;
   opacity: 0;
 }
-:root.reply-fit-width .post:not(:hover) .menu-button {
+:root.reply-fit-width .post .postMenuBtn {
+  position: relative;
+  opacity: 0;
+}
+:root.reply-fit-width .post:not(:hover) .menu-button,
+:root.reply-fit-width .post:not(:hover) .postMenuBtn {
   transition: opacity .3s ease-out 0s !important;
 }
-:root.reply-fit-width .post:hover .menu-button {
+:root.reply-fit-width .post:hover .menu-button,
+:root.reply-fit-width .post:hover .postMenuBtn {
   opacity: 1;
   transition: opacity .3s ease-in .1s !important;
 }
