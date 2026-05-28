@@ -50,6 +50,9 @@ div.op.post div.file .fileThumb {
   margin-bottom: 2px !important;
 }
 /* Padding according to header position */
+body:has(#globalMessage).hasDropDownNav {
+  margin-top: 35px !important;
+}
 .fixed.bottom-header body.is_thread {
   padding-bottom: 0em;
   padding-top: .5em;
@@ -208,6 +211,9 @@ input[value='Previous'] {
 }
 :root.centered-links #custom-board-list {
   left: 12vw !important;
+}
+div.meta {
+  margin-bottom: 5px;
 }
 /* Blotter */
 #blotter {

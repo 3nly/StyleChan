@@ -55,7 +55,8 @@ hr+.adl,
 :root:not(.qr-button).fourchan-x .qr-link-container,
 :root:not(.qr-button).fourchan-x a[data-cmd='new-thread'],
 /* Native reply form button */
-:root:not(.show-button):not(.fourchan-x) #togglePostFormLink {
+:root:not(.show-button):not(.fourchan-x) #togglePostFormLink,
+#toggleMsgBtn {
   display: none;
 }
 
