@@ -82,12 +82,14 @@ select:not([id^=index-]):not([id$=-ctrl]):not(#boardSelectMobile, #oneechan-opti
 :root #t-load,
 :root #t-next,
 :root #t-task,
-.catalog-stats,
-.meta,
 .hide-reply-button,
 .hide-thread-button,
 span#qr-filename-container {
   font-size: " + $SS.conf["UI Font Size"] + "px !important;
+}
+.catalog-stats,
+.meta {
+  font-size: " + (($SS.conf["UI Font Size"] >= 14) ? 13 : ($SS.conf["UI Font Size"] <= 9 ? 9 : $SS.conf["UI Font Size"])) + "px !important;
 }
 /* QR extra */
 #qr-file-button,
