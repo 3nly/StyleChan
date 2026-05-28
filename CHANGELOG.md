@@ -1,3 +1,38 @@
+## v1.4.0
+*2026-05-28*
+
+### Refactor
+- Rewrite how font family is handled by @SystemPatch in #24
+- Remove a lot of dead or useless code, especially for theme conversion from older userscripts
+- StyleChan's menus are now more responsive to size changes
+
+### New Options:
+- Font Family
+  - This option has been expanded with new font options, the script will now detect the user's OS and show common font options for that system
+- Custom Font
+  - This option allows users to type the (exact) name of any font from their system to use within the script, writing anything overrides the "Font Family" option
+- Style Scrollbars
+  - This option will style the scrollbar with the theme's colors
+
+### 4chan
+
+The 4chan inline script is now a first class citizen within StyleChan and every option should work accordingly.
+
+- The global announcement is now styled
+  - Will show a small *! bubble* :speech_balloon: on the left to check the announcement on hover
+- New option: Relative Post Dates
+- The *Vertical Tabbed* quick reply hiding option is now working
+- The *Animated Transition* option is now working
+- Remove the bottom arrow from header navigation
+- Style the post menu when using Fit Width option
+
+### Changes:
+- The script will now automatically adapt the menu options to only show 4chanX or 4chan options depending on usage
+- QR *Expanding Form Inputs* will only expand on focus now
+- Add localStorage fallback for certain userscript managers (@autoclave73 in macOS userscripts extension support #26)
+- Rewrite how the fonts are applied (@saxamaphone69 in #24)
+- Various script linting improvements and small CSS fixes
+
 ## v1.3.0
 *2026-05-25*
 
