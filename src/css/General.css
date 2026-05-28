@@ -162,8 +162,7 @@ input[type=checkbox] {
   position: relative;
   width: 12px !important;
   border-radius: 2px !important;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
   margin: 0 2px -1px 0;
 }
 input[type=checkbox]:checked::before {
@@ -433,8 +432,7 @@ body.is_thread div.navLinks:not(.navLinksBot) {
 }
 /* Selection Lists */
 select {
-  -moz-appearance: none;
-  -webkit-appearance: none;
+  appearance: none;
 }
 /* See issue #90 */
 #delform {

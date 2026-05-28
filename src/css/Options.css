@@ -53,7 +53,6 @@
   border-top:1px solid rgba(0,0,0,.1);
   height:22px;
   padding:0 6px;
-  vertical-align:middle;
 }
 #main-section .option[hidden],
 #misc-section .option[hidden] {
@@ -96,7 +95,6 @@ input[name='Font Family']::-webkit-list-button {
   border-left:1px solid rgba(0,0,0,.1);
   content:'';
   display:inline-block;
-  float:left;
   margin-right:2px;
   height:50%;
   width:6px;
@@ -426,8 +424,7 @@ input[type=range].mascot-opacity {
   margin: 0 !important;
   padding: 0 !important;
   height: 20px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
   background: transparent;
 }
 input[type=range].mascot-opacity::-webkit-slider-runnable-track {
