@@ -1,3 +1,17 @@
+### v1.4.1
+*2026-05-28*
+
+- Remove `:has` selector on backlink icons which was causing slowdowns on entering a thread
+- Separate the catalog stats to stay slightly smaller than the UI Font Size (still follows this option)
+- Fix a few broken or repeated rules
+- Improve GM fallback
+- Changelog link will now direct to the releases page
+
+4chan:
+- Styled the Spoiler checkbox in QR and post form
+- Styled the post form a bit more
+- Fix the Thread Watcher border not being styled
+
 ## v1.4.0
 *2026-05-28*
 
