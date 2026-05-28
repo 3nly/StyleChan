@@ -23,7 +23,8 @@ select,
 .dd-menu ul,
 .boxbar,
 .postblock,
-.globalMessage {
+.globalMessage,
+table.postForm tr td {
   color: var(--sc-textColor) !important;
 }
 /* Names */
@@ -159,7 +160,8 @@ body.is_catalog .panel,
 :root.catalog-hover-expand .catalog-container:hover > .post,
 #threadWatcher,
 #qrHeader,
-#qrCaptchaContainer {
+#qrCaptchaContainer,
+table.postForm tr td {
   background: rgba(var(--sc-mainColor-rgb), var(--sc-replyOp))!important;
 }
 .tab-label,
@@ -279,25 +281,26 @@ hr {
 .catalog-thumb {
   border-radius: 0 !important;
 }
-:root.rounded-corners .reply,
-:root.rounded-corners.op-background .op,
-:root.rounded-corners .dialog:not(#header-bar),
-:root.rounded-corners .inline,
-:root.rounded-corners #thread-stats,
-:root.rounded-corners #updater,
 :root.rounded-corners #menu,
 :root.rounded-corners .thumb,
+:root.rounded-corners .reply,
 :root.rounded-corners #t-load,
 :root.rounded-corners #t-next,
+:root.rounded-corners .inline,
+:root.rounded-corners #updater,
 :root.rounded-corners a.qr-link,
-:root.rounded-corners #bannerCnt img,
-:root.rounded-corners .fileThumb img:not(.full-image),
-:root.rounded-corners .catalog-thumb,
 :root.rounded-corners .dd-menu ul,
-:root.rounded-corners .pages.cataloglink,
+:root.rounded-corners #thread-stats,
+:root.rounded-corners #bannerCnt img,
+:root.rounded-corners .catalog-thumb,
 :root.rounded-corners .pages strong>a,
+:root.rounded-corners #qrSpoiler label,
+:root.rounded-corners.op-background .op,
+:root.rounded-corners .pages.cataloglink,
 :root.rounded-corners input[value='Next'],
 :root.rounded-corners input[value='Previous'],
+:root.rounded-corners .dialog:not(#header-bar),
+:root.rounded-corners .fileThumb img:not(.full-image),
 :root.rounded-corners.werkTyme .catalog-thread:not(:hover),
 :root.rounded-corners.werkTyme:not(.catalog-hover-expand) .catalog-thread,
 :root.rounded-corners.catalog-hover-expand .catalog-container:hover > .post,
@@ -345,6 +348,8 @@ select,
 #post-preview,
 .captcha-root,
 #quickReply,
+#threadWatcher,
+table.postForm tr td,
 #t-root,
 #t-load,
 #t-next,

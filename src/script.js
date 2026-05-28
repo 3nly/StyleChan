@@ -902,6 +902,12 @@
                         });
                 });
 
+                var pfSpoiler = document.querySelector("#postForm input[name=spoiler]");
+                if (pfSpoiler) {
+                    pfSpoiler.parentNode.id = "pf-spoiler";
+                    pfSpoiler.title = "Spoiler image";
+                }
+
                 $SS._initDone = true;
             }
         },
@@ -1389,6 +1395,8 @@
                     }
                 });
             }
+            var spoiler = form.querySelector("#qrSpoiler input[type=checkbox]");
+            if (spoiler && !spoiler.title) spoiler.title = "Spoiler image";
         },
         initSingleViewCaptcha: function () {
             if (!$SS.conf["Single View Captcha"]) return;
@@ -1756,6 +1764,9 @@
                 $SS.handleFormNode(qr);
             }
             $SS.bindRememberComment(qr);
+
+            var spoiler = qr.querySelector("#qrSpoiler input[type=checkbox]");
+            if (spoiler) spoiler.title = "Spoiler image";
 
             $SS.QRhandled = true;
         },
