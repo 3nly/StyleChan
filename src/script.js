@@ -1910,11 +1910,8 @@
                         if (/^(Selected|Hidden)+\s(Themes?)+$/.test(key))
                             continue;
 
-                        val = $SS.conf[key];
-                        des = defaultConfig[key][1];
-
                         if (key === "Themes" || key === "Misc") section = "";
-                        if (val === "header") {
+                        if (defaultConfig[key][0] === "header") {
                             section = key === ":: 4chan X" ? "4chanx" : key === ":: 4chan" ? "native" : "";
                             if ((section === "4chanx" && !is4chanX) || (section === "native" && is4chanX)) continue;
                             optionsHTML.push("<label class='option header'><span class='option-title'>" + key + "</span></label>");
@@ -1927,6 +1924,9 @@
                         if (section === "4chanx" && !is4chanX) continue;
                         if (section === "native" && is4chanX) continue;
                         if (!is4chanX && /^(Style 4chanX Notifications|Expanding Form Inputs|Fit Expanded Images)$/.test(key)) continue;
+
+                        val = $SS.conf[key];
+                        des = defaultConfig[key][1];
 
                         if ((defaultConfig[key][4] === true) && (key === "Custom Left Margin")) {
                             var pVal = $SS.conf[defaultConfig[key][2]];
