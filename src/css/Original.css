@@ -198,7 +198,6 @@ input[value='Previous'] {
 }
 :root.isLight img[src*='//boards.4chan.org/js/jsMath/fonts/'] {
   filter: invert(100%);
-  -webkit-filter: invert(100%);
 }
 :root.reply-fit-width .inline {
   display: flow-root !important;
@@ -254,9 +253,9 @@ div#qrError {
 #postForm input[type='submit'] {
   flex-shrink: 0;
 }
+/* QR file button */
 #quickReply #qrFile::file-selector-button,
 #quickReply #qrFile::-webkit-file-upload-button {
-  -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
   border-style: solid;
@@ -313,4 +312,12 @@ div#qrError {
 }
 :root.highlight-own:not(.fourchan-x) .yourPost > .sideArrows {
   color: rgba(var(--sc-ownPostHLColor-rgb),1.0) !important;
+}
+/* Search */
+input#search-box {
+  height: inherit;
+}
+/* Page List */
+.pagelist.desktop {
+  margin-bottom: 10px;
 }
