@@ -915,6 +915,7 @@
             if (!reload) {
                 if (/^about:neterror/.test(document.documentURI)) return;
                 $SS.is4chanX = document.documentElement.classList.contains("fourchan-x");
+                $SS.hasGM = typeof GM_deleteValue !== "undefined";
                 if ($SS.is4chanX) {
                     localStorage["4chan-settings"] = "{ \"disableAll\" : true, \"dropDownNav\": false }";
                 }
@@ -1810,7 +1811,7 @@
             get: function (name) {
                 var key = NAMESPACE + name, val;
                 try {
-                    val = typeof GM_getValue !== "undefined" ? GM_getValue(key) : localStorage.getItem(key);
+                    val = $SS.hasGM ? GM_getValue(key) : localStorage.getItem(key);
                     if (val != undefined) return JSON.parse(val);
                 } catch (e) {}
                 return defaultConfig[name];
@@ -1819,7 +1820,7 @@
                 var key = NAMESPACE + name;
                 if (typeof val !== "number") val = JSON.stringify(val);
                 try {
-                    if (typeof GM_setValue !== "undefined") GM_setValue(key, val);
+                    if ($SS.hasGM) GM_setValue(key, val);
                     else localStorage.setItem(key, val);
                 } catch (e) {}
             }
@@ -2069,7 +2070,7 @@
                         var confirmReset = confirm('Your current StyleChan settings will be wiped, are you sure?');
                         if (confirmReset) {
                             try {
-                                if (typeof GM_deleteValue !== "undefined" && typeof GM_listValues !== "undefined") {
+                                if ($SS.hasGM) {
                                     var keys = GM_listValues();
                                     for (var i = 0, key = null; key = keys[i]; i++) {
                                         GM_deleteValue(key);
