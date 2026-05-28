@@ -112,15 +112,11 @@
 }
 :root.mini-sidebar:root.right-sidebar .boardTitle {
   right: 32px;
-  -webkit-transform-origin: top right;
   transform-origin: top right;
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
 :root.mini-sidebar:root.left-sidebar .boardTitle {
   left: 32px;
-  -webkit-transform-origin: top left;
   transform-origin: top left;
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
