@@ -268,7 +268,7 @@
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
         VERSION = "<%= version %>",
-        CHANGELOG = "https://github.com/3nly/StyleChan/blob/<%= meta.mainBranch %>/CHANGELOG.md",
+        CHANGELOG = "https://github.com/3nly/StyleChan/releases/latest",
         themeInputs = [{
             dName: "Reply Background",
             name: "mainColor",
