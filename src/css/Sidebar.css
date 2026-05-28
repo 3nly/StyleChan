@@ -80,6 +80,17 @@
   left: 63.5%;
   bottom: 46px;
 }
+:root.vertical-qr:root.left-sidebar #quickReply {
+  transform: translateX(-100%);
+  left: 0 !important;
+  right: auto !important;
+}
+:root.vertical-qr:root.left-sidebar #qrHeader {
+  transform: rotate(90deg);
+  transform-origin: bottom left;
+  right: auto;
+  left: 100%;
+}
 /* Minimal Sidebar */
 :root.mini-sidebar:root.left-sidebar body {
   padding-left: 32px !important;
