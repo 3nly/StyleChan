@@ -909,8 +909,6 @@
                     localStorage["4chan-settings"] = "{ \"disableAll\" : true, \"dropDownNav\": false }";
                 }
 
-                $SS.browser.webkit = /AppleWebKit/.test(navigator.userAgent);
-                $SS.browser.gecko = /Gecko\//.test(navigator.userAgent);
                 $SS.location = $SS.getLocation();
 
                 if ($SS.Config.get("VERSION") !== VERSION) {
@@ -1760,20 +1758,20 @@
                 $SS.conf["Width Decoration"] = $SS.conf["Decoration Width"] !== 999 ? $SS.conf["Decoration Width"] : $SS.conf["Custom Decoration Width"];
             },
             get: function (name) {
-                var val = GM_getValue(NAMESPACE + name);
-
-                if (val != undefined)
-                    return JSON.parse(val);
-
+                var key = NAMESPACE + name, val;
+                try {
+                    val = typeof GM_getValue !== "undefined" ? GM_getValue(key) : localStorage.getItem(key);
+                    if (val != undefined) return JSON.parse(val);
+                } catch (e) {}
                 return defaultConfig[name];
             },
             set: function (name, val) {
-                name = NAMESPACE + name;
-
-                if (typeof val !== "number")
-                    val = JSON.stringify(val);
-
-                return GM_setValue(name, val);
+                var key = NAMESPACE + name;
+                if (typeof val !== "number") val = JSON.stringify(val);
+                try {
+                    if (typeof GM_setValue !== "undefined") GM_setValue(key, val);
+                    else localStorage.setItem(key, val);
+                } catch (e) {}
             }
         },
 
@@ -2010,18 +2008,21 @@
                     $("a[name=resetSettings]", tOptions).bind("click", function () {
                         var confirmReset = confirm('Your current StyleChan settings will be wiped, are you sure?');
                         if (confirmReset) {
-                            if (typeof GM_deleteValue !== "undefined") {
-                                var keys = GM_listValues();
-                                for (var i = 0, key = null; key = keys[i]; i++) {
-                                    GM_deleteValue(key);
+                            try {
+                                if (typeof GM_deleteValue !== "undefined" && typeof GM_listValues !== "undefined") {
+                                    var keys = GM_listValues();
+                                    for (var i = 0, key = null; key = keys[i]; i++) {
+                                        GM_deleteValue(key);
+                                    }
                                 }
-                            } else if ($SS.browser.webkit) {
+                            } catch (e) {}
+                            try {
                                 Object.keys(localStorage).forEach(function (key) {
                                     if (/^(?:StyleChan)/.test(key)) {
                                         localStorage.removeItem(key);
                                     }
                                 });
-                            }
+                            } catch (e) {}
                             alert('Your StyleChan settings have been reset. Reloading.');
                             return window.location.reload();
                         } else return;
