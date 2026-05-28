@@ -781,9 +781,11 @@
                                     ? [node]
                                     : node.querySelectorAll ? node.querySelectorAll(formSel) : [];
                                 forms.forEach($SS.handleFormNode);
-                                $SS.markOwnPosts(node);
-                                $SS.markQuotingYou(node);
-                                if (!$SS.is4chanX) $SS.relativeDates(node);
+                                if ($SS._initDone) {
+                                    $SS.markOwnPosts(node);
+                                    $SS.markQuotingYou(node);
+                                    if (!$SS.is4chanX) $SS.relativeDates(node);
+                                }
                             }
                             var pm = node.matches && node.matches("#post-menu") ? node : node.querySelector ? node.querySelector("#post-menu") : null;
                             if (pm) $SS.insertToggleYou();
@@ -923,6 +925,7 @@
                         });
                 });
 
+                $SS._initDone = true;
             }
         },
         init: function (reload) {
