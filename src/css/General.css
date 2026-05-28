@@ -129,8 +129,6 @@ body {
 :root.reply-fit-width .post .menu-button {
   margin-left: 0;
   position: relative;
-}
-:root.reply-fit-width .post .menu-button {
   opacity: 0;
 }
 :root.reply-fit-width .post:not(:hover) .menu-button {
@@ -420,7 +418,6 @@ body.is_thread div.navLinks:not(.navLinksBot) {
 #search-box:focus,
 #index-search:focus {
   width: 12%;
-  transition: color .25s, border-color .25s, width .25s;
 }
 /* Thumb Opacity */
 :root.thumb-opacity .fileThumb img:not(.full-image) {
