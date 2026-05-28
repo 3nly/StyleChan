@@ -127,8 +127,7 @@ body {
 .container {
   margin-left: 4px !important;
 }
-:root.reply-fit-width .post .menu-button,
-:root.reply-fit-width .post .postMenuBtn {
+:root.reply-fit-width .post .menu-button {
   margin-left: 0;
   position: relative;
   opacity: 0;
