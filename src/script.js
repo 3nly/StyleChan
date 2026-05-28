@@ -227,7 +227,7 @@
                 value: "cursive"
             }]
         ],
-        "Custom Font": ["", "Enter a custom font family name. Overrides Font Family if set."],
+        "Custom Font": ["", "Enter a custom font name. Please make sure the font name is exact. Overrides the Font Family option if set. "],
         "Font Size": [13, "Set the font size of text (in pixels). Default: 13px. Menu elements have a 18px (max) and 9px (min) limit to avoid breaking their layouts."],
         "UI Font Size": [11, "Set the font size of inputs, selects and QR buttons (in pixels). Default: 11px."],
         "Backlink Font Size": [10, "Set the font size of backlinks (in pixels). Default: 10px."],
