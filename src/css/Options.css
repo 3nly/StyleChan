@@ -95,7 +95,6 @@ input[name='Font Family']::-webkit-list-button {
   border-left:1px solid rgba(0,0,0,.1);
   content:'';
   display:inline-block;
-  float:left;
   margin-right:2px;
   height:50%;
   width:6px;
