@@ -17,6 +17,6 @@
 " + ($SS.conf["Style Scrollbars"] ? "*{scrollbar-color:var(--sc-brderColor) var(--sc-mainColor)}" : "") + "
 " + ($SS.conf["Style Scrollbars"] && $SS.conf["Thin Scrollbars"] ? "*{scrollbar-width:thin}" : "") + "
 /* Floating announcement */
-" + (!$SS.is4chanX() ? "#sc-msg-icon{position:relative;display:inline-block;height:16px;width:16px;opacity:.5;cursor:pointer;z-index:14}" + "#sc-msg-icon:hover{opacity:.95}" : "") + "
+" + (!$SS.is4chanX() ? "#sc-msg-icon{display:inline-block;height:16px;width:16px;opacity:.5;cursor:pointer;vertical-align:middle}#sc-msg-icon.active{opacity:1}" : "") + "
 /* Leave one at the bottom otherwise file format breaks */
 <%= grunt.file.read('src/css/Options.css') %>

@@ -806,18 +806,28 @@
 
                 // Style 4chan global announcements
                 var gMsg = document.getElementById("globalMessage");
-                if (gMsg && !$SS.is4chanX()) {
+                if (gMsg && !$SS.is4chanX() && gMsg.textContent.trim()) {
+                    var navLinks = document.querySelector(".navLinks.desktop");
                     var icon = document.createElement("span");
                     icon.id = "sc-msg-icon";
+                    icon.title = "Show announcement";
                     icon.innerHTML = $SS.theme.icons.msg;
+                    var bracket = document.createElement("span");
+                    bracket.className = "sc-msg-bracket";
+                    bracket.appendChild(document.createTextNode("["));
+                    bracket.appendChild(icon);
+                    bracket.appendChild(document.createTextNode("] "));
                     gMsg.style.display = "none";
-                    gMsg.parentNode.insertBefore(icon, gMsg);
-                    icon.addEventListener("mouseenter", function () { gMsg.style.display = ""; });
-                    icon.addEventListener("mouseleave", function () {
-                        setTimeout(function () { if (!gMsg.matches(":hover")) gMsg.style.display = "none"; }, 300);
-                    });
-                    gMsg.addEventListener("mouseleave", function () {
-                        setTimeout(function () { if (!gMsg.matches(":hover")) gMsg.style.display = "none"; }, 300);
+                    if (navLinks) {
+                        navLinks.insertBefore(bracket, navLinks.firstChild);
+                    } else {
+                        gMsg.parentNode.insertBefore(bracket, gMsg);
+                    }
+                    icon.addEventListener("click", function () {
+                        var visible = gMsg.style.display !== "none";
+                        gMsg.style.display = visible ? "none" : "";
+                        icon.classList.toggle("active", !visible);
+                        icon.title = visible ? "Show announcement" : "Hide announcement";
                     });
                 }
 
@@ -2209,9 +2219,10 @@
                                     count++;
                                 }
                             });
-                            if (count > 0)
-                                $SS.notify({ content: '4chan settings restored.', type: 'success', lifetime: 3 });
-                            else
+                            if (count > 0) {
+                                $SS.notify({ content: '4chan settings restored. Reloading...', type: 'success', lifetime: 3 });
+                                setTimeout(function () { location.reload(); }, 3000);
+                            } else
                                 $SS.notify({ content: 'No saved 4chan settings to restore.', type: 'info', lifetime: 3 });
                         });
                     })();
