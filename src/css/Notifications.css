@@ -78,12 +78,11 @@
   width: auto !important;
   font-weight: lighter;
 }
+.chX-notifs #notifications .notification {
+  cursor: pointer !important;
+}
 .chX-notifs #notifications .notification a.close {
-  float: right;
-  margin-left: 8px;
-  text-decoration: none !important;
-  font-size: 14px;
-  line-height: 1;
+  display: none !important;
 }
 /* Colors */
 #header-bar #notifications a {

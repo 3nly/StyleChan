@@ -776,6 +776,17 @@
                     subtree: true
                 });
 
+                if ($SS.is4chanX()) {
+                    document.addEventListener("click", function (e) {
+                        if (!$SS.conf["Style 4chanX Notifications"]) return;
+                        var notif = e.target.closest && e.target.closest("#notifications .notification");
+                        if (!notif) return;
+                        if (e.target.closest("a, button")) return;
+                        var closeBtn = notif.querySelector("a.close");
+                        if (closeBtn) closeBtn.click();
+                    });
+                }
+
                 if ($SS.is4chanX())
                     if (!$("*[xmlns]").exists() && !$("#ctxmenu-main").exists())
                         if ((link = $("link[title][rel='stylesheet']")).exists())
