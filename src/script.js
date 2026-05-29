@@ -3689,8 +3689,8 @@
             init: function () {
                 var cl = document.documentElement.classList;
                 cl.add("oneechan");
-                $SS.theme.textColor.isLight && cl.add("isLight");
-                !$SS.theme.bgColor.isLight && cl.add("dark-captcha");
+                cl.toggle("isLight", $SS.theme.textColor.isLight === true);
+                cl.toggle("dark-captcha", $SS.theme.bgColor.isLight === false);
                 cl.toggle("underline-quotes", $SS.conf["Underline QuoteLinks"] === true);
                 cl.toggle("underline-disabled", $SS.conf["Underline All Links"] === false);
                 cl.toggle("rounded-corners", $SS.conf["Rounded Corners"] === true);
