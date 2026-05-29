@@ -111,7 +111,7 @@
         "Recolor Even Replies": [false, "Makes every other post a darker color. If Quote Threading is enabled darkens every root reply."],
         "Reduce Thumbnail Opacity": [false, "Reduces opacity of thumbnails."],
         "Backlink Icons": [false, "Use icons for backlinks instead of text."],
-        "Backlink Shadow": [true, "Add a shadow to the backlink text."],
+        "Backlink Shadow": [false, "Add a shadow to the backlink text."],
         "Borders": [
             2, "Changes which sides of replies have borders.", [{
                 name: "Normal (4chan default)",
@@ -242,7 +242,7 @@
         "System Theming": [false, "Use system color scheme detection to automatically select themes. Overrides NSFW/SFW theme selection.", null, true],
         "Dark Theme": [0, "Theme to use when system is in dark mode.", "System Theming", true, true],
         "Light Theme": [0, "Theme to use when system is in light mode.", "System Theming", true, true],
-        "Style Scrollbars": [true, "Customize the look of scrollbars to match the theme.", null, true],
+        "Style Scrollbars": [false, "Customize the look of scrollbars to match the theme.", null, true],
         "Thin Scrollbars": [false, "Use thinner scrollbars.", "Style Scrollbars", true, true],
         "Enable Mascots": [false, "Display mascot images on the page and adjust their opacity.", null, true],
         "Mascots": ["[]", "Mascot data (URLs and opacity).", "Enable Mascots", true, true],
@@ -254,7 +254,7 @@
         ":: 4chan": ["header", ""],
         "Relative Post Dates": [false, "Display dates like '3 minutes ago'. Tooltip shows the original timestamp."],
         "Show Reply Form": [true, "Toggle visibility of the reply form button.", null, true],
-        "Show Only in Catalog": [false, "Show the reply form only when browsing the catalog.", "Show Reply Form", true, true],
+        "Show Only in Catalog": [true, "Show the reply form only when browsing the catalog.", "Show Reply Form", true, true],
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
         "Catalog Links": [false, "Converts board navigation links to catalog links."],
         "Watch Thread on Reply": [false, "Automatically adds the thread to the thread watcher when posting a reply."],
