@@ -2,7 +2,7 @@
     var defaultConfig = {
         ":: Main Rice": ["header", ""],
         "Left Margin": [
-            25, "Change the size of the left margin.", [{
+            65, "Change the size of the left margin.", [{
                 name: "Large",
                 value: 65
             }, {
@@ -23,7 +23,7 @@
             0, "Left margin custom width (pixels).", "Left Margin", 999, true
         ],
         "Right Margin": [
-            25, "Change the size of the right margin.", [{
+            65, "Change the size of the right margin.", [{
                 name: "Large",
                 value: 65
             }, {
@@ -3886,9 +3886,9 @@
                 var div = $("<div " + (this.hidden ? "hidden=true " : "") +
                     " id=theme" + this.index + " class=\'theme-preview " + (($SS.conf["Selected Theme"] == $SS.conf["NSFW Theme"]) && ($SS.conf["Selected Theme"] == this.index) ? "selected nsfw" : ($SS.conf["Selected Theme"] == this.index ? "selected " : "") + ($SS.conf["NSFW Theme"] == this.index ? "nsfw " : "")) + "\'>").html("<div class=reply " +
                         "style='background-color:" + this.mainColor.hex + "!important;border:1px solid " + this.brderColor.hex + "!important;color:" + this.textColor.hex + "!important'>" +
-                        "<span style='display:inline-block;width:10px;height:10px;border-radius:2px;background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;box-shadow:rgba(" + this.mainColor.shiftRGB(64) + ",.3) 0 1px;'></span>" +
-                        "<span style='color:" + this.titleColor.hex + "!important; font-weight: 700 !important'>" + this.name + "</span> " +
-                        "<span style='color:" + this.nameColor.hex + "!important; font-weight: 700 !important'>" + this.authorName + "</span>" +
+                        "<span style='display:inline-block;width:10px;height:10px;border-radius:2px;background-color:" + this.inputColor.hex + "!important;border:1px solid " + this.inputbColor.hex + "!important;box-shadow:rgba(" + this.mainColor.shiftRGB(64) + ",.3) 0 1px;'></span>&ensp;" +
+                        "<span style='color:" + this.titleColor.hex + "!important; font-weight: 700 !important'>" + this.name + "</span>&ensp;" +
+                        "<span style='color:" + this.nameColor.hex + "!important; font-weight: 700 !important'>" + this.authorName + "</span>&ensp;" +
                         "<span style='color:" + this.tripColor.hex + "!important'> " + this.authorTrip + "</span>" +
                         "<time style='color:" + this.textColor.hex + "'> 20XX.01.01 12:00 </time>" +
                         "<a href='javascript:;' style='color:" + this.linkColor.hex + "!important' " +
