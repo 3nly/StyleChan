@@ -17,7 +17,6 @@
   }],
   "homepage_url": "<%= meta.page %>",
   "update_url": "<%= meta.downloads %>updates.xml",
-  "minimum_chrome_version": "<%= meta.min.chrome %>",
   "permissions": [
     "storage",
     "*://boards.4chan.org/*",
