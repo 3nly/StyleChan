@@ -214,7 +214,7 @@ input[name='Font Family']::-webkit-list-button {
   width: 100%;
   max-width: 100%;
   min-height: 5em;
-  height: clamp(10em, 30vh, 36vh);
+  height: clamp(10em, 26vh, 36vh);
   max-height: 48vh;
   flex: 0 1 auto;
   box-sizing: border-box;
