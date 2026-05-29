@@ -748,8 +748,11 @@
 
                         for (j = 0, _MAX = nodes.length; j < _MAX; ++j) {
                             node = nodes[j];
-                            if (node.nodeType !== 3 && node.nodeType === 1) {
-                                // Handle forms for remember comment draft and watch thread
+                            if (node.nodeType !== 1) continue;
+                            var canHavePosts = node.nodeName !== "SCRIPT" && node.nodeName !== "STYLE" &&
+                                node.nodeName !== "LINK" && node.nodeName !== "META" && node.nodeName !== "BR";
+
+                            if (canHavePosts) {
                                 var formSel = "#qr, #quickReply, form[name='post'], form[name='qrPost']";
                                 var forms = node.matches && node.matches(formSel)
                                     ? [node]
