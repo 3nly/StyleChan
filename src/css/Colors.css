@@ -34,8 +34,8 @@ table.postForm tr td {
   color: var(--sc-nameColor) !important;
 }
 .nameBlock.capcodeMod,
-:not(.fourchan-x) span.capcodeMod span.name,
-:not(.fourchan-x) span.capcodeMod strong.capcode {
+:root:not(.fourchan-x) span.capcodeMod span.name,
+:root:not(.fourchan-x) span.capcodeMod strong.capcode {
   color: #800080 !important;
 }
 .id_admin,
@@ -171,7 +171,7 @@ table.postForm tr td {
 }
 :root.recolor-even .thread>.replyContainer:nth-of-type(even):not(.hidden) .post:not(.reply:target, .inline>.postContainer>.post),
 .flashListing tr:nth-of-type(2n):not(.highlightPost),
-:not(.fourchan-x) .reply.highlight {
+:root:not(.fourchan-x) .reply.highlight {
   background: rgb(var(--sc-mainColor-shiftM10), var(--sc-replyOp)) !important;
 }
 :root:not(.header-gradient) #header-bar {

@@ -210,7 +210,7 @@ div#menu.dialog label.toggle-you.entry input {
   left: 300px;
 }
 :root:not(.fixed) .boardBanner {
-  top: 0;
+  top: 1px;
 }
 .center,
 .danbo-slot {

@@ -248,6 +248,7 @@
         "Mascots": ["[]", "Mascot data (URLs and opacity).", "Enable Mascots", true, true],
         ":: 4chan X": ["header", ""],
         "Show QR Reply Button": [false, "Toggle visibility of the QR reply and new thread buttons."],
+        "Show Original Form": [false, "Show the original 4chan posting form."],
         "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
         "Show Header Shadow": [true, "Gives the header a drop shadow."],
         "Highlight Current Board": [true, "Gives the current board link a bottom highlight border."],
@@ -3701,6 +3702,7 @@
                 cl.toggle("show-button", $SS.conf["Show Reply Form"] &&
                     (!$SS.conf["Show Only in Catalog"] || $SS.location.catalog));
                 cl.toggle("qr-button", $SS.conf["Show QR Reply Button"]);
+                cl.toggle("show-form", $SS.conf["Show Original Form"] === false);
                 cl.toggle("post-info", $SS.conf["Show Reply Header"] === true);
                 cl.toggle("show-file-info", $SS.conf["Show File Info"] === false);
                 cl.toggle("borders-all", $SS.conf["Borders"] === 2);

@@ -264,6 +264,13 @@ input#postFile {
 #postForm input[type=submit] {
   flex-shrink: 0;
 }
+:root:not(.fourchan-x) #postForm,
+:root:not(.fourchan-x) #togglePostFormLink {
+  margin-top: 1em;
+}
+:root.fourchan-x div#togglePostFormLink.desktop {
+  text-align: center;
+}
 /* Spoiler checkbox */
 #qrSpoiler label,
 #pf-spoiler {
