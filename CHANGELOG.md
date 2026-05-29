@@ -1,3 +1,14 @@
+### v1.4.4
+*2026-05-29*
+
+*Thank you for your patience and using Stylechan!*
+
+**4chan XT**: Fix an issue where the XT script wasn't being correctly targeted, causing all native 4chan options to trigger and some of the CSS rules to fail
+- Rework the Add Theme dialog in issue #27
+- Scrollbars will now correctly be colored when live editing a theme
+- StyleChan links and version will no longer be targeted by the *UI Font Size* option
+- Fix an error when saving a custom theme that prevented the use of the Close button
+
 ### v1.4.3
 *2026-05-29*
 
