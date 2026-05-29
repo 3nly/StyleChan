@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         StyleChan
-// @version      1.4.2
+// @version      1.4.3
 // @namespace    StyleChan
 // @description  Customizable themes for 4chan X.
 // @license      GPL-3.0; https://github.com/3nly/StyleChan/blob/main/LICENSE 
@@ -304,7 +304,7 @@
     },
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
-        VERSION = "1.4.2",
+        VERSION = "1.4.3",
         CHANGELOG = "https://github.com/3nly/StyleChan/releases/latest",
         themeInputs = [{
             dName: "Reply Background",
@@ -1880,7 +1880,7 @@
                     $(".fourchan-xt").exists() ? $(".shortcut.brackets-wrap:last-of-type").before(c) : $("#boardNavDesktop").append(b);
                 });
 
-                if (!$SS.is4chanX) {
+                if (!$SS.is4chanX && !document.documentElement.classList.contains("fourchan-xt")) {
                     function makeNavLink() {
                         var link = document.createElement("a");
                         link.title = "StyleChan Settings";
