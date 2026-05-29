@@ -27,7 +27,7 @@
   outline: 2px solid rgba(var(--sc-linkColor-rgb),0.5) !important;
 }
 /* Posts Quoting You */
-:root.highlight-you .quotesYou.opContainer,
+:root.highlight-you .quotesYou.post.op,
 :root.highlight-you .quotesYou > .reply {
   border-left: " + $SS.conf["Width Decoration"] + "px solid rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
 }
@@ -35,7 +35,7 @@
   color: rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
 }
 /* Your Posts */
-:root.highlight-own .yourPost.opContainer,
+:root.highlight-own .yourPost.post.op,
 :root.highlight-own .yourPost > .reply {
   border-left: " + $SS.conf["Width Decoration"] + "px dashed rgba(var(--sc-ownPostHLColor-rgb),1.0) !important;
 }

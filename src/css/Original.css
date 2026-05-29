@@ -350,7 +350,7 @@ input#postFile {
 :root.highlight-you:not(.fourchan-x) .postContainer.hasQuoteYou > .sideArrows {
   color: rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
 }
-:root.highlight-own:not(.fourchan-x) .yourPost.opContainer,
+:root.highlight-own:not(.fourchan-x) .yourPost > .post.op,
 :root.highlight-own:not(.fourchan-x) .yourPost > .reply {
   border-left: " + $SS.conf["Width Decoration"] + "px dashed rgba(var(--sc-ownPostHLColor-rgb),1.0) !important;
 }

@@ -258,8 +258,8 @@
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
         "Catalog Links": [false, "Converts board navigation links to catalog links."],
         "Watch Thread on Reply": [false, "Automatically adds the thread to the thread watcher when posting a reply."],
-        "Highlight Posts Quoting You": [false, "Highlights any posts that contain a quote to your post."],
-        "Highlight Own Posts": [false, "Highlights own posts."],
+        "Highlight Posts Quoting You": [true, "Highlights any posts that contain a quote to your post."],
+        "Highlight Own Posts": [true, "Highlights own posts."],
         "Themes": [],
         "Hidden Themes": [],
         "Selected Theme": 1,
@@ -1712,7 +1712,7 @@
             if ($SS.is4chanX) return;
             var menu = document.getElementById("post-menu");
             if (!menu || menu.querySelector("[data-cmd='toggle-you']")) return;
-            var hideItem = menu.querySelector("li[data-cmd='hide-r']");
+            var hideItem = menu.querySelector("li[data-cmd='hide-r']") || menu.querySelector("li[data-id]");
             if (!hideItem) return;
             var postId = hideItem.getAttribute("data-id");
             var li = document.createElement("li");
