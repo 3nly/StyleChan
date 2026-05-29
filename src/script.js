@@ -1266,62 +1266,61 @@
             return 24 * 60 * 60 * 1000;
         },
         saveRememberedComment: function (storageKey, text) {
-            try { localStorage.setItem(storageKey, JSON.stringify({ text: text, savedAt: Date.now() })); } catch (e) {}
+            var val = JSON.stringify({ text: text, savedAt: Date.now() });
+            if ($SS.hasGM) { try { GM_setValue(storageKey, val); } catch (e) {} }
+            else { try { localStorage.setItem(storageKey, val); } catch (e) {} }
             $SS.cleanupRememberedComments();
         },
         clearRememberedComment: function () {
-            try { localStorage.removeItem($SS.getRememberCommentKey()); } catch (e) {}
+            var key = $SS.getRememberCommentKey();
+            if ($SS.hasGM) { try { GM_deleteValue(key); } catch (e) {} }
+            try { localStorage.removeItem(key); } catch (e) {}
         },
         cleanupRememberedComments: function () {
             var prefix;
             try { prefix = $SS.getRememberCommentPrefix(); } catch (e) { return; }
             if (!prefix) return;
-            var now = Date.now();
             var keptEntries = [];
-            var i, key, entry;
+            var i, key, entry, keys = {}, allKeys;
 
-            try {
-                for (i = 0; i < localStorage.length; ++i) {
-                    key = localStorage.key(i);
-                    if (!key || key.indexOf(prefix) !== 0) continue;
+            if ($SS.hasGM) {
+                try { allKeys = GM_listValues(); for (i = 0; i < allKeys.length; i++) { if (allKeys[i].indexOf(prefix) === 0) keys[allKeys[i]] = true; } } catch (e) {}
+            }
+            try { for (i = 0; i < localStorage.length; i++) { key = localStorage.key(i); if (key && key.indexOf(prefix) === 0) keys[key] = true; } } catch (e) {}
 
-                    entry = $SS.loadRememberedComment(key);
-                    if (!entry) continue;
+            allKeys = Object.keys(keys);
+            for (i = 0; i < allKeys.length; i++) {
+                entry = $SS.loadRememberedComment(allKeys[i]);
+                if (!entry) continue;
+                keptEntries.push({ key: allKeys[i], savedAt: entry.savedAt });
+            }
 
-                    keptEntries.push({
-                        key: key,
-                        savedAt: entry.savedAt,
-                        age: now - entry.savedAt
-                    });
-                }
-            } catch (e) { return; }
-
-            keptEntries.sort(function (a, b) {
-                return b.savedAt - a.savedAt;
-            });
-
+            keptEntries.sort(function (a, b) { return b.savedAt - a.savedAt; });
             keptEntries.slice(10).forEach(function (entry) {
+                if ($SS.hasGM) { try { GM_deleteValue(entry.key); } catch (e) {} }
                 try { localStorage.removeItem(entry.key); } catch (e) {}
             });
         },
         loadRememberedComment: function (storageKey) {
             var rawValue, parsedValue;
-            try { rawValue = localStorage.getItem(storageKey); } catch (e) { return null; }
+            if ($SS.hasGM) { try { rawValue = GM_getValue(storageKey); } catch (e) {} }
+            if (!rawValue) { try { rawValue = localStorage.getItem(storageKey); } catch (e) { return null; } }
             if (!rawValue) return null;
 
-            try {
-                parsedValue = JSON.parse(rawValue);
-            } catch (error) {
+            try { parsedValue = JSON.parse(rawValue); } catch (error) {
+                if ($SS.hasGM) { try { GM_deleteValue(storageKey); } catch (e) {} }
                 try { localStorage.removeItem(storageKey); } catch (e) {}
                 return null;
             }
 
             if (!parsedValue || typeof parsedValue.text !== "string" || typeof parsedValue.savedAt !== "number") {
+                if ($SS.hasGM) { try { GM_deleteValue(storageKey); } catch (e) {} }
                 try { localStorage.removeItem(storageKey); } catch (e) {}
                 return null;
             }
 
             if (Date.now() - parsedValue.savedAt > $SS.getRememberCommentExpiry()) {
+                if ($SS.hasGM) { try { GM_deleteValue(storageKey); } catch (e) {} }
                 try { localStorage.removeItem(storageKey); } catch (e) {}
                 return null;
             }
