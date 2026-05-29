@@ -484,6 +484,7 @@ input[type=range].mascot-opacity::-moz-range-thumb {
   font-size: 11px;
   text-align: right;
   line-height: 20px;
+  margin-right: .3em;
 }
 .mascot-add {
   margin: 4px 0 0;
