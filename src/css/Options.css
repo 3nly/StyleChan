@@ -208,12 +208,13 @@ input[name='Font Family']::-webkit-list-button {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  text-align: left;
 }
 #add-theme .theme-body > label#customCSS > textarea {
   width: 100%;
   max-width: 100%;
   min-height: 5em;
-  height: clamp(12em, 20vh, 36vh);
+  height: clamp(10em, 30vh, 36vh);
   max-height: 48vh;
   flex: 0 1 auto;
   box-sizing: border-box;
