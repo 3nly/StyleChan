@@ -130,7 +130,7 @@ a.options-button,
 .option.header .option-title,
 a.current,
 .tab-label.selected {
-  font-weight: " + ($SS.conf["Bitmap Font"] ? 4 : 7) + "00 !important;
+  font-weight: " + ($SS.conf["Bitmap Font"] ? "400" : "bold") + " !important;
 }
 .tab-label:not(.selected):not(:hover) {
   font-weight: normal;
