@@ -1843,7 +1843,7 @@
                     $(".fourchan-xt").exists() ? $(".shortcut.brackets-wrap:last-of-type").before(c) : $("#boardNavDesktop").append(b);
                 });
 
-                if (!$SS.is4chanX) {
+                if (!$SS.is4chanX && !document.documentElement.classList.contains("fourchan-xt")) {
                     function makeNavLink() {
                         var link = document.createElement("a");
                         link.title = "StyleChan Settings";
