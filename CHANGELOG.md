@@ -1,3 +1,27 @@
+## v1.5.0
+*2026-05-29*
+
+*We're stable naow!*
+
+### 4chan X / XT
+- Style 4chanX Notifications: removed the **X** button, toasts can now be dismissed by click, same as Stylechan's toasts
+- **New option:** Show Original Form
+
+### 4chan
+- **New option:** Follow Cursor
+  - Allows hover images to follow the cursor
+- Announcement icon:
+  - Will now be part of navigation links, clicking the icon will toggle the 4chan global message
+- Catalog Links: will now work for board dropdown list
+- Restore 4chan settings button: the page will now reload automatically after 2 seconds
+
+### Other Changes
+- Remember Draft Comment: improve the option, will also try to use GM storage and fallback to localStorage if not available
+- Style Scrollbars: Improve the color choice
+- Adjust and fix a few issues with the Add Theme dialog
+- Changed a few option descriptions
+- Small CSS fixes and adjustments here and there
+
 ### v1.4.4
 *2026-05-29*
 
