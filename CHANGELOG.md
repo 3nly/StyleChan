@@ -1,3 +1,12 @@
+### v1.4.2
+*2026-05-29*
+
+- Fix the script not correctly targeting XT
+- Fix for the theme edit dialog being broken in issue #27
+- 4chan: Fix for OP highlighting not working
+- 4chan: Fix for Toggle You missing from OP post
+- Update userscript defaults
+
 ### v1.4.1
 *2026-05-28*
 

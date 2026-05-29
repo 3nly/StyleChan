@@ -1,6 +1,6 @@
 {
   "name": "StyleChan",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "manifest_version": 2,
   "description": "Customizable themes for 4chan X.",
   "icons": {
@@ -17,7 +17,6 @@
   }],
   "homepage_url": "https://github.com/3nly/StyleChan/",
   "update_url": "https://github.com/3nly/StyleChan/releases/latest/download/updates.xml",
-  "minimum_chrome_version": "32",
   "permissions": [
     "storage",
     "*://boards.4chan.org/*",
