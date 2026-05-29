@@ -736,7 +736,7 @@
 
                 document.addEventListener("click", function (e) {
                     var li = e.target.closest("[data-cmd='toggle-you']");
-                    if (li && !$SS.is4chanX) $SS.toggleYou(li);
+                    if (li && !$SS.is4chanX()) $SS.toggleYou(li);
                 });
 
                 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
@@ -759,9 +759,9 @@
                                     : node.querySelectorAll ? node.querySelectorAll(formSel) : [];
                                 forms.forEach($SS.handleFormNode);
                                 if ($SS._initDone) {
-                                    $SS.markOwnPosts(node);
-                                    $SS.markQuotingYou(node);
-                                    if (!$SS.is4chanX) $SS.relativeDates(node);
+                                    if (!$SS.is4chanX()) $SS.markOwnPosts(node);
+                                    if (!$SS.is4chanX()) $SS.markQuotingYou(node);
+                                    if (!$SS.is4chanX()) $SS.relativeDates(node);
                                 }
                             }
                             var pm = node.matches && node.matches("#post-menu") ? node : node.querySelector ? node.querySelector("#post-menu") : null;
@@ -777,7 +777,7 @@
                     subtree: true
                 });
 
-                if ($SS.is4chanX)
+                if ($SS.is4chanX())
                     if (!$("*[xmlns]").exists() && !$("#ctxmenu-main").exists())
                         if ((link = $("link[title][rel='stylesheet']")).exists())
                             link.each(function () {
@@ -796,7 +796,7 @@
 
                 // Style 4chan global announcements
                 var gMsg = document.getElementById("globalMessage");
-                if (gMsg && !$SS.is4chanX && !document.documentElement.classList.contains("fourchan-xt")) {
+                if (gMsg && !$SS.is4chanX()) {
                     var icon = document.createElement("span");
                     icon.id = "sc-msg-icon";
                     icon.innerHTML = $SS.theme.icons.msg;
@@ -860,7 +860,7 @@
                 }
 
                 // Auto-open native QR on thread pages (non-4chanX only)
-                if ($SS.location.reply && $SS.conf["Pin Quick Reply"] && !$SS.is4chanX) {
+                if ($SS.location.reply && $SS.conf["Pin Quick Reply"] && !$SS.is4chanX()) {
                     $.waitFor("a[data-cmd='open-qr']", function (link) { link.click(); });
                 }
 
@@ -914,11 +914,10 @@
         init: function (reload) {
             if (!reload) {
                 if (/^about:neterror/.test(document.documentURI)) return;
-                $SS.is4chanX = document.documentElement.classList.contains("fourchan-x") || document.documentElement.classList.contains("fourchan-xt");
-                $SS.hasGM = typeof GM_deleteValue !== "undefined";
-                if ($SS.is4chanX) {
+                if ($SS.is4chanX()) {
                     localStorage["4chan-settings"] = "{ \"disableAll\" : true, \"dropDownNav\": false }";
                 }
+                $SS.hasGM = typeof GM_deleteValue !== "undefined";
 
                 $SS.location = $SS.getLocation();
 
@@ -1598,7 +1597,7 @@
             });
         },
         initNativeQRAutohide: function () {
-            if ($SS.is4chanX) return;
+            if ($SS.is4chanX()) return;
             $.waitFor("#quickReply", function (qr) {
                 qr.addEventListener("focusin", function () {
                     qr.classList.add("focus");
@@ -1636,7 +1635,7 @@
         },
         markOwnPosts: function (root) {
             try {
-                if ($SS.is4chanX) return;
+                if ($SS.is4chanX()) return;
                 var pathname = window.location.pathname.slice(1).split("/");
                 if (pathname[1] !== "thread") return;
                 var board = pathname[0], threadId = pathname[2];
@@ -1652,7 +1651,7 @@
         },
         markQuotingYou: function (root) {
             try {
-                if ($SS.is4chanX) return;
+                if ($SS.is4chanX()) return;
                 (root || document).querySelectorAll(".ql-tracked").forEach(function (el) {
                     var pc = el.closest(".postContainer");
                     if (pc && !pc.classList.contains("yourPost")) {
@@ -1662,7 +1661,7 @@
             } catch (e) {}
         },
         relativeDates: function (root) {
-            if ($SS.is4chanX) return;
+            if ($SS.is4chanX()) return;
             if (!$SS.conf["Relative Post Dates"]) return;
             var now = Date.now();
             (root || document).querySelectorAll(".dateTime").forEach(function (dt) {
@@ -1709,7 +1708,7 @@
             } catch (e) {}
         },
         insertToggleYou: function () {
-            if ($SS.is4chanX) return;
+            if ($SS.is4chanX()) return;
             var menu = document.getElementById("post-menu");
             if (!menu || menu.querySelector("[data-cmd='toggle-you']")) return;
             var hideItem = menu.querySelector("li[data-cmd='hide-r']") || menu.querySelector("li[data-id]");
@@ -1843,7 +1842,7 @@
                     $(".fourchan-xt").exists() ? $(".shortcut.brackets-wrap:last-of-type").before(c) : $("#boardNavDesktop").append(b);
                 });
 
-                if (!$SS.is4chanX && !document.documentElement.classList.contains("fourchan-xt")) {
+                if (!$SS.is4chanX()) {
                     function makeNavLink() {
                         var link = document.createElement("a");
                         link.title = "StyleChan Settings";
@@ -1893,7 +1892,7 @@
                             "<a href='https://github.com/3nly/StyleChan/issues' id=issues-link target='_blank' title='Report an issue.'>Issues</a></p>"
                         ];
                     var key, val, des, id, section = "";
-                    var is4chanX = document.documentElement.classList.contains("fourchan-x") || document.documentElement.classList.contains("fourchan-xt");
+                    var is4chanX = $SS.is4chanX();
 
                     for (key in defaultConfig) {
                         if (/^(Selected|Hidden)+\s(Themes?)+$/.test(key))
@@ -3702,7 +3701,7 @@
                 cl.toggle("catalog-justify", $SS.conf["Justified Text"] === true);
                 cl.toggle("catalog-background", $SS.conf["Show Background"] === true);
                 cl.toggle("catalog-thumbsize", $SS.conf["Unified Thumbnail Size"] === true);
-                if (!$SS.is4chanX) {
+                if (!$SS.is4chanX()) {
                     cl.toggle("highlight-you", $SS.conf["Highlight Posts Quoting You"] === true);
                     cl.toggle("highlight-own", $SS.conf["Highlight Own Posts"] === true);
                     if ($SS.conf["Highlight Own Posts"]) $SS.markOwnPosts();
@@ -3937,6 +3936,9 @@
                 "Noto Sans", "Noto Sans Mono", "Tahoma",
                 "Times New Roman", "Ubuntu", "Ubuntu Mono", "Verdana"
             ]
+        },
+        is4chanX: function () {
+            return document.documentElement.classList.contains("fourchan-x") || document.documentElement.classList.contains("fourchan-xt");
         },
         getOS: function () {
             var ua = navigator.userAgent;
