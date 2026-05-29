@@ -916,6 +916,14 @@
                     }
                     fixBoardLinks(document.querySelector("#boardNavDesktop"));
                     fixBoardLinks(document.querySelector("#boardNavMobile"));
+
+                    var boardSelect = document.getElementById("boardSelectMobile");
+                    if (boardSelect) {
+                        boardSelect.addEventListener("change", function () {
+                            var val = this.value;
+                            if (val) window.location = "/" + val + "/catalog";
+                        });
+                    }
                 }
 
                 // Remove certain links
