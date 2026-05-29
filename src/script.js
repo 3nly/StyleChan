@@ -2251,8 +2251,8 @@
                                 }
                             });
                             if (count > 0) {
-                                $SS.notify({ content: '4chan settings restored. Reloading...', type: 'success', lifetime: 3 });
-                                setTimeout(function () { location.reload(); }, 3000);
+                                $SS.notify({ content: '4chan settings restored. Reloading...', type: 'success', lifetime: 2 });
+                                setTimeout(function () { location.reload(); }, 2000);
                             } else
                                 $SS.notify({ content: 'No saved 4chan settings to restore.', type: 'info', lifetime: 3 });
                         });
