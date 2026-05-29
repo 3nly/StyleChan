@@ -63,7 +63,7 @@
         "Show Bottom Links": [true, "Toggle visibility of the bottom navigation links.", "Show Navigation Links", true, true],
         ":: Sidebar": ["header", ""],
         "Sidebar Position": [
-            1, "Change the position of the sidebar or disable it altogether.", [{
+            1, "Change the position of the sidebar or disable it. If enabled the QR is locked to the Sidebar.", [{
                 name: "Right",
                 value: 1
             }, {
