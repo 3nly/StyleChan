@@ -17,6 +17,6 @@
 " + ($SS.conf["Style Scrollbars"] ? "*{scrollbar-color:" + $SS.theme.brderColor.hex + " " + $SS.theme.mainColor.hex + "}" : "") + "
 " + ($SS.conf["Style Scrollbars"] && $SS.conf["Thin Scrollbars"] ? "*{scrollbar-width:thin}" : "") + "
 /* Floating announcement */
-" + (!$SS.is4chanX ? "#sc-msg-icon{position:relative;display:inline-block;height:16px;width:16px;opacity:.5;cursor:pointer;z-index:14}" + "#sc-msg-icon:hover{opacity:.95}" : "") + "
+" + (!$SS.is4chanX && !document.documentElement.classList.contains("fourchan-xt") ? "#sc-msg-icon{position:relative;display:inline-block;height:16px;width:16px;opacity:.5;cursor:pointer;z-index:14}" + "#sc-msg-icon:hover{opacity:.95}" : "") + "
 /* Leave one at the bottom otherwise file format breaks */
 <%= grunt.file.read('src/css/Options.css') %>

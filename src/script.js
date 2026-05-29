@@ -796,7 +796,7 @@
 
                 // Style 4chan global announcements
                 var gMsg = document.getElementById("globalMessage");
-                if (gMsg && !$SS.is4chanX) {
+                if (gMsg && !$SS.is4chanX && !document.documentElement.classList.contains("fourchan-xt")) {
                     var icon = document.createElement("span");
                     icon.id = "sc-msg-icon";
                     icon.innerHTML = $SS.theme.icons.msg;
@@ -1893,7 +1893,7 @@
                             "<a href='https://github.com/3nly/StyleChan/issues' id=issues-link target='_blank' title='Report an issue.'>Issues</a></p>"
                         ];
                     var key, val, des, id, section = "";
-                    var is4chanX = $SS.is4chanX || document.documentElement.classList.contains("fourchan-xt");
+                    var is4chanX = document.documentElement.classList.contains("fourchan-x") || document.documentElement.classList.contains("fourchan-xt");
 
                     for (key in defaultConfig) {
                         if (/^(Selected|Hidden)+\s(Themes?)+$/.test(key))
