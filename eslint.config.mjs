@@ -35,7 +35,7 @@ export default defineConfig([
       "no-undef": "error",
       "no-cond-assign": "off",
       "no-constant-binary-expression": "warn",
-      "no-redeclare": "off",
+      "no-redeclare": "on",
       "no-empty": ["error", { allowEmptyCatch: true }],
       "no-useless-escape": "off",
     },

@@ -111,7 +111,7 @@
         "Recolor Even Replies": [false, "Makes every other post a darker color. If Quote Threading is enabled darkens every root reply."],
         "Reduce Thumbnail Opacity": [false, "Reduces opacity of thumbnails."],
         "Backlink Icons": [false, "Use icons for backlinks instead of text."],
-        "Backlink Shadow": [false, "Add a shadow to the backlink text."],
+        "Backlink Shadow": [true, "Add a shadow to the backlink text."],
         "Borders": [
             2, "Changes which sides of replies have borders.", [{
                 name: "Normal (4chan default)",
@@ -247,10 +247,10 @@
         "Enable Mascots": [false, "Display mascot images on the page and adjust their opacity.", null, true],
         "Mascots": ["[]", "Mascot data (URLs and opacity).", "Enable Mascots", true, true],
         ":: 4chan X": ["header", ""],
-        "Show QR Reply Button": [true, "Toggle visibility of the QR reply and new thread buttons."],
+        "Show QR Reply Button": [false, "Toggle visibility of the QR reply and new thread buttons."],
         "Show Header Background Gradient": [false, "Gives the header bar a gradient background."],
         "Show Header Shadow": [true, "Gives the header a drop shadow."],
-        "Highlight Current Board": [false, "Gives the current board link a bottom highlight border."],
+        "Highlight Current Board": [true, "Gives the current board link a bottom highlight border."],
         ":: 4chan": ["header", ""],
         "Relative Post Dates": [false, "Display dates like '3 minutes ago'. Tooltip shows the original timestamp."],
         "Show Reply Form": [true, "Toggle visibility of the reply form button.", null, true],
