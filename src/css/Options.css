@@ -167,40 +167,62 @@ input[name='Font Family']::-webkit-list-button {
 }
 /* Add Theme */
 #add-theme {
-  padding: 20px 20px 20px 20px !important;
+  padding: 20px !important;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  max-height: 80vh;
+  max-height: 85vh;
+  height: auto;
+  max-width: 65vw;
+  width: 65vw;
+  overflow: hidden;
   text-align: left !important;
-  max-width: 60vw !important;
-  height: fit-content;
-  width: fit-content;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#add-theme .theme-body {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: calc(85vh - 90px);
+  overflow: auto;
+}
+#add-theme .theme-fields {
+  display: flex;
+  flex-wrap: wrap;
 }
 #add-theme .option-title {
   float:left;
   padding-left:5px;
 }
-#add-theme>label {
+#add-theme .theme-fields > label {
   line-height:22px;
   display:inline-block;
   text-align:right;
   width:33.3%;
 }
-#add-theme>label#customCSS {
+#add-theme .theme-body > label#customCSS {
   width:100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
-#add-theme>label#customCSS>textarea {
+#add-theme .theme-body > label#customCSS > textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 5em;
+  height: clamp(12em, 20vh, 36vh);
+  max-height: 48vh;
+  flex: 0 1 auto;
+  box-sizing: border-box;
+  resize: vertical;
+  overflow-y: auto;
   font-family: monospace;
-  height: 10.2em;
-  resize: none;
-  width: 99%;
-  max-height: 25em;
-  overflow-y: scroll;
 }
-#add-theme>label>input[type=text],
-#add-theme>label>select {
+#add-theme .theme-fields > label > input[type=text],
+#add-theme .theme-fields > label > select {
   width: auto;
   max-width: 100%;
   appearance: auto;
@@ -247,6 +269,11 @@ input[name='Font Family']::-webkit-list-button {
 #add-theme>div {
   margin-top:.6em;
   text-align:right;
+}
+#add-theme > .theme-buttons {
+  flex: 0 0 auto;
+  margin-top: 0;
+  text-align: right;
 }
 /* Navigation */
 #options-tabs {
@@ -376,10 +403,10 @@ span.option>select,
 }
 /* Links */
 #oneechan-version {
-  opacity: .5;
+  opacity: .7;
   padding-right: 5px;
   padding-left: 40px;
-  font-size: x-small;
+  font-size: x-small !important;
 }
 .link-delim {
   opacity: .4;

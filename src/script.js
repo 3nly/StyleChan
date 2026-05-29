@@ -582,16 +582,16 @@
             });
         },
         addClass: function (classNames) {
+            if (!classNames || typeof classNames !== "string") return this;
+            var classes = classNames.split(" ");
             return this.each(function () {
                 if (this.classList) {
-                    classNames = classNames.split(" ");
-                    for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
-                        this.classList.add(classNames[j]);
+                    for (var j = 0, jMAX = classes.length; j < jMAX; j++)
+                        this.classList.add(classes[j]);
                 } else {
-                    classNames = classNames.split(" ");
-                    for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
-                        if (!$(this).hasClass(classNames[j]))
-                            this.className += (this.className ? " " : "") + classNames[j];
+                    for (var j = 0, jMAX = classes.length; j < jMAX; j++)
+                        if (!$(this).hasClass(classes[j]))
+                            this.className += (this.className ? " " : "") + classes[j];
                 }
             });
         },
@@ -608,19 +608,18 @@
         },
         removeClass: function (classNames) {
             if (!classNames || typeof classNames !== "string") return this;
+            var classes = classNames.split(" ");
             return this.each(function () {
                 if (this.classList) {
-                    classNames = classNames.split(" ");
-                    for (var j = 0, jMAX = classNames.length; j < jMAX; j++)
-                        this.classList.remove(classNames[j]);
+                    for (var j = 0, jMAX = classes.length; j < jMAX; j++)
+                        this.classList.remove(classes[j]);
                 } else {
-                    classNames = classNames.split(" ");
                     var cclassNames = this.className.split(" "),
                         newClasses = [];
                     for (var k = 0, kMAX = cclassNames.length; k < kMAX; k++) {
                         var found = false;
-                        for (var j = 0, jMAX = classNames.length; j < jMAX; j++) {
-                            if (classNames[j] === cclassNames[k]) {
+                        for (var j = 0, jMAX = classes.length; j < jMAX; j++) {
+                            if (classes[j] === cclassNames[k]) {
                                 found = true;
                                 break;
                             }
@@ -2374,7 +2373,7 @@
 
                 div = $("<div id='add-theme' class='dialog'>");
 
-                var innerHTML = "<label>" +
+                var innerHTML = "<div class='theme-body'><div class='theme-fields'><label>" +
                     "<span class='option-title'>Theme Name:</span><input type=text name=name value='" + (bEdit ? tEdit.name : "") + "'>" +
                     "</label><label>" +
                     "<span class='option-title'>Author Name:</span><input type=text name=authorName value='" + (bEdit ? (tEdit.authorName !== undefined ? tEdit.authorName : "") : "") + "'>" +
@@ -2418,8 +2417,8 @@
                         "</span></label>";
                 }
 
-                innerHTML += "<label id=customCSS><span class='option-title'>Custom CSS:</span><textarea name=customCSS class='field'>" + (bEdit ? tEdit.customCSS || "" : "") + "</textarea>" +
-                    "</label><div>" +
+                innerHTML += "</div><label id=customCSS><span class='option-title'>Custom CSS:</span><textarea name=customCSS class='field'>" + (bEdit ? tEdit.customCSS || "" : "") + "</textarea>" +
+                    "</label></div><div class='theme-buttons'>" +
                     "<a class='options-button' name=export>Export</a>" +
                     "<a class='options-button' name=" + (bEdit ? "edit" : "add") + ">Save</a><a class='options-button' name=cancel>Cancel</a></div>";
 
