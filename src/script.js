@@ -914,7 +914,7 @@
         init: function (reload) {
             if (!reload) {
                 if (/^about:neterror/.test(document.documentURI)) return;
-                $SS.is4chanX = document.documentElement.classList.contains("fourchan-x");
+                $SS.is4chanX = document.documentElement.classList.contains("fourchan-x") || document.documentElement.classList.contains("fourchan-xt");
                 $SS.hasGM = typeof GM_deleteValue !== "undefined";
                 if ($SS.is4chanX) {
                     localStorage["4chan-settings"] = "{ \"disableAll\" : true, \"dropDownNav\": false }";
@@ -1893,7 +1893,7 @@
                             "<a href='https://github.com/3nly/StyleChan/issues' id=issues-link target='_blank' title='Report an issue.'>Issues</a></p>"
                         ];
                     var key, val, des, id, section = "";
-                    var is4chanX = $SS.is4chanX;
+                    var is4chanX = $SS.is4chanX || document.documentElement.classList.contains("fourchan-xt");
 
                     for (key in defaultConfig) {
                         if (/^(Selected|Hidden)+\s(Themes?)+$/.test(key))
