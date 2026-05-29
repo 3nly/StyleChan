@@ -253,7 +253,8 @@
         "Highlight Current Board": [true, "Gives the current board link a bottom highlight border."],
         ":: 4chan": ["header", ""],
         "Relative Post Dates": [false, "Display dates like '3 minutes ago'. Tooltip shows the original timestamp."],
-        "Show Reply Form": [true, "Toggle visibility of the reply form button.", null, true],
+        "Show Reply Form": [true, "Toggle visibility of the reply form and Reply to Thread button.", null, true],
+        "Follow Cursor": [false, "Image previews follow the cursor instead of staying in the corner."],
         "Show Only in Catalog": [true, "Show the reply form only when browsing the catalog.", "Show Reply Form", true, true],
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
         "Catalog Links": [false, "Converts board navigation links to catalog links."],
@@ -828,6 +829,27 @@
                         gMsg.style.display = visible ? "none" : "";
                         icon.classList.toggle("active", !visible);
                         icon.title = visible ? "Show announcement" : "Hide announcement";
+                    });
+                }
+
+                if (!$SS.is4chanX() && $SS.conf["Follow Cursor"]) {
+                    document.addEventListener("mousemove", function (e) {
+                        var img = document.getElementById("image-hover");
+                        if (!img) return;
+                        var cw = document.documentElement.clientWidth;
+                        var ch = document.documentElement.clientHeight;
+                        var h = img.offsetHeight, w = img.offsetWidth;
+                        var top = Math.max(0, e.clientY * (ch - h) / ch);
+                        var threshold = cw / 2;
+                        var marginX = Math.min((e.clientX <= threshold ? e.clientX : cw - e.clientX) + 45, cw - w);
+                        img.style.top = top + "px";
+                        if (e.clientX <= threshold) {
+                            img.style.left = marginX + "px";
+                            img.style.right = "";
+                        } else {
+                            img.style.left = "";
+                            img.style.right = marginX + "px";
+                        }
                     });
                 }
 
@@ -3718,6 +3740,7 @@
                 cl.toggle("hide-navlinktop", $SS.conf["Show Top Links"] === false);
                 cl.toggle("hide-navlinkbot", $SS.conf["Show Bottom Links"] === false);
                 cl.toggle("thumb-opacity", $SS.conf["Reduce Thumbnail Opacity"] === true);
+                cl.toggle("follow-cursor", !$SS.is4chanX() && $SS.conf["Follow Cursor"] === true);
                 cl.toggle("catalog-justify", $SS.conf["Justified Text"] === true);
                 cl.toggle("catalog-background", $SS.conf["Show Background"] === true);
                 cl.toggle("catalog-thumbsize", $SS.conf["Unified Thumbnail Size"] === true);

@@ -365,3 +365,8 @@ input#search-box {
 .pagelist.desktop {
   margin-bottom: 10px;
 }
+/* Follow Cursor option */
+:root.follow-cursor #image-hover {
+  max-width: calc(100vw - 100px);
+  max-height: calc(100vh - 60px);
+}
