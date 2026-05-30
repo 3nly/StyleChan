@@ -1659,6 +1659,27 @@
                     if (!qr.contains(e.relatedTarget))
                         qr.classList.remove("focus");
                 });
+                var nameInput = qr.querySelector("input[name=name]");
+                if (nameInput) {
+                    nameInput.addEventListener("input", function () {
+                        if (this.value.length >= 100) {
+                            this.style.setProperty("border-color", "red", "important");
+                            var el = this;
+                            setTimeout(function () { el.style.removeProperty("border-color"); }, 600);
+                        }
+                    });
+                }
+                var comInput = qr.querySelector("textarea[name=com]");
+                if (comInput) {
+                    comInput.setAttribute("maxlength", "2000");
+                    comInput.addEventListener("input", function () {
+                        if (this.value.length >= 2000) {
+                            this.style.setProperty("border-color", "red", "important");
+                            var el = this;
+                            setTimeout(function () { el.style.removeProperty("border-color"); }, 600);
+                        }
+                    });
+                }
             });
         },
         getThreadTitle: function () {
