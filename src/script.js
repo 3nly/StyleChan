@@ -63,7 +63,7 @@
         "Show Bottom Links": [true, "Toggle visibility of the bottom navigation links.", "Show Navigation Links", true, true],
         ":: Sidebar": ["header", ""],
         "Sidebar Position": [
-            3, "Change the position of the sidebar or disable it. If this option isenabled the QR will be locked to the Sidebar.", [{
+            3, "Change the position of the sidebar or disable it. If this option is enabled the QR will be locked to the Sidebar.", [{
                 name: "Right",
                 value: 1
             }, {
@@ -836,6 +836,7 @@
                     });
                 }
 
+                // Image hover
                 if (!$SS.is4chanX() && $SS.conf["Follow Cursor"]) {
                     document.addEventListener("mousemove", function (e) {
                         var img = document.getElementById("image-hover");
@@ -1155,7 +1156,7 @@
                                 qrInput.files = dt.files;
                                 qrInput.dispatchEvent(new Event("input", { bubbles: true }));
                                 qrInput.dispatchEvent(new Event("change", { bubbles: true }));
-                                notify("Converted " + file.name + " to " + outName + " (q" + Math.round(q * 100) + "%)");
+                                notify("Converted " + file.name + " to " + outName + " (q=" + Math.round(q * 100) + "%)");
                             } else {
                                 tryQuality(index + 1);
                             }
@@ -1680,6 +1681,7 @@
                         }
                     });
                 }
+                $SS.bindRememberComment(qr);
             });
         },
         getThreadTitle: function () {
