@@ -223,7 +223,7 @@ div#menu.dialog label.toggle-you.entry input {
 .navSmall>a {
   margin-left: 2px;
 }
-:root.fixed:not(.autohide):not(.bottom) #globalMessage {
+:root.fixed:not(.autohide):not(.bottom) #globalMessage:not([hidden]) {
   margin: 10px 0 20px !important;
 }
 .globalMessage, h2, h3 {
