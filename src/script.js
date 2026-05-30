@@ -78,8 +78,11 @@
         "Minimal Sidebar": [true, "Shrinks the sidebar and moves the banner."],
         ":: Quick Reply": ["header", ""],
         "Autohide Style": [
-            2, "Changes how the quick reply is hidden. Please enable Autohide QR in 4chan X.", [{
-                name: "Normal",
+            0, "Changes how the quick reply is hidden.", [{
+                name: "Disabled",
+                value: 0
+            }, {
+                name: "Collapse",
                 value: 1
             }, {
                 name: "Vertical Tabbed",
