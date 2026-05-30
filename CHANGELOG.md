@@ -1,3 +1,17 @@
+### v1.5.1
+*2026-05-30*
+
+- Adjusted the script's defaults
+- Autohide Style: Add a *Disabled* option to Autohide Style in feature request #29 (@john32b)
+- Single View Captcha: Fix a small issue where the captcha description jumped up when requesting a new captcha after expiration
+- Fix minor position issues with the Announcement and Board Name on XT forks
+
+### 4chan:
+- Remember Comment Draft: Will now work for the Quick Reply
+- Quick Reply: Add maxlength feature to Name and Comment fields
+- Fit Post Menu: Fix position of post menu button when using the option
+- Show Reply Form: Fix a display bug with the option in the menu
+
 ## v1.5.0
 *2026-05-29*
 
