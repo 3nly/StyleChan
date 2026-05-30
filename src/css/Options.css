@@ -165,6 +165,23 @@ input[name='Font Family']::-webkit-list-button {
   right:300px !important;
   z-index:0 !important;
 }
+label.option:hover::after {
+  content: attr(title);
+  position: absolute;
+  text-align: left;
+  right: -52vh;
+  top: 0;
+  max-width: 15em;
+  margin-left: 10px;
+  background: var(--sc-headerBGColor);
+  color: var(--sc-textColor);
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--sc-brderColor);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .25);
+  z-index: 99;
+  font-size: larger;
+}
 /* Add Theme */
 #add-theme {
   padding: 20px !important;
