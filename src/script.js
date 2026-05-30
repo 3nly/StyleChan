@@ -54,16 +54,16 @@
         "Show Blotter": [false, "Toggle visibility of the 4chan news blotter."],
         "Show 4chan Ads": [false, "Opts into 4chan\'s banner ads.", null, true],
         "Show Board Banners": [false, "Toggle visibility of board banners.", "Show 4chan Ads", true, true],
-        "Show Top Ad": [true, "Show the top 4chan banner ad.", "Show 4chan Ads", true, true],
-        "Show Bottom Ad": [true, "Show the bottom 4chan banner ad.", "Show 4chan Ads", true, true],
-        "Show Buy Ad Banner": [true, "Show the [Advertise on 4chan] banner below ads.", "Show 4chan Ads", true, true],
+        "Show Top Ad": [false, "Show the top 4chan banner ad.", "Show 4chan Ads", true, true],
+        "Show Bottom Ad": [false, "Show the bottom 4chan banner ad.", "Show 4chan Ads", true, true],
+        "Show Buy Ad Banner": [false, "Show the [Advertise on 4chan] banner below ads.", "Show 4chan Ads", true, true],
         "Reduce Ad Opacity": [false, "Reduce the opacity of ads until hover for easier viewing.", "Show 4chan Ads", true, true],
         "Show Navigation Links": [true, "Toggle visibility of the navigation links at the top and bottom of the threads.", null, true],
         "Show Top Links": [true, "Toggle visibility of the top navigation links.", "Show Navigation Links", true, true],
         "Show Bottom Links": [true, "Toggle visibility of the bottom navigation links.", "Show Navigation Links", true, true],
         ":: Sidebar": ["header", ""],
         "Sidebar Position": [
-            1, "Change the position of the sidebar or disable it. If enabled the QR is locked to the Sidebar.", [{
+            3, "Change the position of the sidebar or disable it. If this option isenabled the QR will be locked to the Sidebar.", [{
                 name: "Right",
                 value: 1
             }, {
@@ -75,7 +75,7 @@
             }], true
         ],
         "SS-like Sidebar": [false, "Darkens the sidebar and adds a border like 4chan Style Script."],
-        "Minimal Sidebar": [true, "Shrinks the sidebar and moves the banner."],
+        "Minimal Sidebar": [false, "Shrinks the sidebar and moves the banner."],
         ":: Quick Reply": ["header", ""],
         "Autohide Style": [
             0, "Changes how the quick reply is hidden.", [{
@@ -257,7 +257,7 @@
         "Highlight Current Board": [true, "Gives the current board link a bottom highlight border."],
         ":: 4chan": ["header", ""],
         "Relative Post Dates": [false, "Display dates like '3 minutes ago'. Tooltip shows the original timestamp."],
-        "Follow Cursor": [false, "Image previews follow the cursor instead of staying in the corner."],
+        "Follow Cursor": [true, "Image previews follow the cursor instead of staying in the corner."],
         "Show Reply Form": [true, "Toggle visibility of the reply form and Reply to Thread button.", null, true],
         "Show Only in Catalog": [true, "Show the reply form only when browsing the catalog.", "Show Reply Form", true, true],
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
