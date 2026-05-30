@@ -148,6 +148,9 @@ s:focus {
 .boardBanner {
   text-align: center;
 }
+#globalMessage {
+  margin-top: 5px;
+}
 div.sideArrows {
   float: left;
   margin-right: 2px;
