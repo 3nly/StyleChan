@@ -208,6 +208,9 @@ input[value='Previous'] {
 :root.reply-fit-width .inline {
   display: flow-root !important;
 }
+:root:not(.fourchan-x) div#boardNavMobile select {
+  padding: 0 0 2px 2px;
+}
 /* Accommodate StyleChan icon in header */
 :root.centered-links #shortcuts {
   width: 30vw !important;

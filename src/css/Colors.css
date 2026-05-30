@@ -75,13 +75,18 @@ body.is_catalog .button:hover,
 }
 /* Header */
 #header-bar,
-a.current {
+a.current,
+:root:not(.fourchan-x) .boardSelect .customBoardList {
   color: var(--sc-headerColor) !important;
 }
-#header-bar a:not(.current) {
+#header-bar a:not(.current),
+:root:not(.fourchan-x) div#boardNavMobile,
+:root:not(.fourchan-x) .boardSelect .customBoardList a,
+:root:not(.fourchan-x) div.pageJump a {
   color: var(--sc-headerLColor) !important;
 }
-#header-bar a:hover {
+#header-bar a:hover,
+:root:not(.fourchan-x) div#boardNavMobile a:hover {
   color: var(--sc-headerLHColor) !important;
 }
 #custom-board-list .current {
@@ -89,6 +94,10 @@ a.current {
 }
 #custom-board-list .current:hover {
   border-bottom: 1px solid rgba(var(--sc-linkHColor-rgb),1) !important;
+}
+:root:not(.fourchan-x) div#boardNavMobile {
+  background-color: var(--sc-headerBGColor);
+  border-bottom-color: var(--sc-brderColor);
 }
 /* Greentext */
 .postMessage>.quote,
@@ -391,10 +400,6 @@ select:focus,
 }
 #header-bar {
   border: none !important;
-}
-:root:not(.fourchan-x) div#boardNavMobile {
-  background-color: var(--sc-headerBGColor);
-  border-bottom-color: var(--sc-brderColor);
 }
 .flashListing td:not(:last-of-type):not(.postblock) {
   border-width: 1px;
