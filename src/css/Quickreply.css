@@ -253,6 +253,10 @@ input[type="number"] {
 :root.single-captcha #t-slider {
   display: none !important;
 }
+:root.single-captcha iframe#t-frame {
+  height: 0 !important;
+  margin-top: 0 !important;
+}
 :root.single-captcha #quickReply #qrCaptchaContainer,
 :root.single-captcha #qr > form > div.captcha-root > div  {
   min-height: 145px !important;
