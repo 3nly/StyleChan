@@ -76,7 +76,8 @@ body.is_catalog .button:hover,
 /* Header */
 #header-bar,
 a.current,
-:root:not(.fourchan-x) .boardSelect .customBoardList {
+:root:not(.fourchan-x) .boardSelect .customBoardList,
+:root:not(.fourchan-x) .boardSelect {
   color: var(--sc-headerColor) !important;
 }
 #header-bar a:not(.current),
@@ -293,6 +294,7 @@ hr {
 :root.rounded-corners #menu,
 :root.rounded-corners .thumb,
 :root.rounded-corners .reply,
+:root.rounded-corners .panel,
 :root.rounded-corners #t-load,
 :root.rounded-corners #t-next,
 :root.rounded-corners .inline,
@@ -302,6 +304,7 @@ hr {
 :root.rounded-corners #thread-stats,
 :root.rounded-corners #bannerCnt img,
 :root.rounded-corners .catalog-thumb,
+:root.rounded-corners #threadWatcher,
 :root.rounded-corners .pages strong>a,
 :root.rounded-corners #qrSpoiler label,
 :root.rounded-corners.op-background .op,
