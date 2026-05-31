@@ -52,7 +52,8 @@
 }
 /* Highlighted Threads */
 .catalog-thread.watched .catalog-thumb,
-.catalog-thread.watched .werkTyme-filename {
+.catalog-thread.watched .werkTyme-filename,
+.thumb.pinned {
   border: 2px solid rgba(var(--sc-postHLColor-rgb),1.0) !important;
 }
 /* Thread Watcher */
