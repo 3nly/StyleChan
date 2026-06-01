@@ -15,6 +15,11 @@ Originally developed by [seaweedchan](https://github.com/seaweedchan/OneeChan), 
 - Chrome/Edge: requires [Violentmonkey](https://chromewebstore.google.com/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag/)
 
 
+## Supported 4chanX forks
+
+- ccd0 [4chan-X](https://github.com/ccd0/4chan-x)
+- TuxedoTako [4chan-XT](https://github.com/TuxedoTako/4chan-xt)
+
 ## Theming
 
 Get [more themes](https://github.com/3nly/StyleChan/wiki/Custom-Themes#custom-themes).
