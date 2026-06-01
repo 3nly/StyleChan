@@ -16,7 +16,9 @@ table.flashListing td,
 .persistentNav, div#boardNavMobile,
 #togglePostFormLink,
 div#topnav.boardnav,
-div#boardNavMobile option {
+div#boardNavMobile option,
+div.boardBanner div.boardTitle,
+#post-preview {
   font-family: inherit !important;
   font-size: inherit !important;
 }
@@ -31,8 +33,10 @@ body {
   font-size: " + (($SS.conf["Font Size"] < 13) ? 10 : ($SS.conf["Font Size"] - 2)) + "px !important;
 }
 /* Board title -> larger */
-.boardBanner .boardTitle {
-  font-weight: 400 !important;
+div.boardBanner div.boardTitle,
+div.boardBanner div.boardTitle,
+:root.fourchan-x div.boardBanner div.boardTitle {
+  font-weight: bold !important;
   font-size: " + (($SS.conf["Font Size"] < 13) ? 22 : 26) + "px !important;
 }
 /* Code blocks */
