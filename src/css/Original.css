@@ -22,7 +22,7 @@
   clear: left;
 }
 .mu-s {
-  font-weight: 700;
+  font-weight: bold;
 }
 .mu-i {
   font-style: italic;
@@ -294,7 +294,7 @@ input#postFile {
 #qrSpoiler label::before,
 #pf-spoiler::before {
   content: 'S';
-  font-weight: 700;
+  font-weight: bold;
   font-size: 13px;
   color: var(--sc-textColor);
 }

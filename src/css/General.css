@@ -299,7 +299,7 @@ hr {
 .pages.cataloglink a,
 input[value='Next'],
 input[value='Previous'] {
-  font-weight: 700;
+  font-weight: bold;
   transition: opacity .3s ease-in 0s;
 }
 .pages strong>a:hover,

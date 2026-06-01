@@ -36,7 +36,7 @@ body {
 div.boardBanner div.boardTitle,
 div.boardBanner div.boardTitle,
 :root.fourchan-x div.boardBanner div.boardTitle {
-  font-weight: bold !important;
+  font-weight: normal !important;
   font-size: " + (($SS.conf["Font Size"] < 13) ? 22 : 26) + "px !important;
 }
 /* Code blocks */
@@ -134,7 +134,7 @@ a.options-button,
 .option.header .option-title,
 a.current,
 .tab-label.selected {
-  font-weight: " + ($SS.conf["Bitmap Font"] ? "400" : "bold") + " !important;
+  font-weight: " + ($SS.conf["Bitmap Font"] ? "normal" : "bold") + " !important;
 }
 .tab-label:not(.selected):not(:hover) {
   font-weight: normal;
@@ -142,7 +142,7 @@ a.current,
 }
 /* /f/ */
 .postblock {
-  font-weight: 700;
+  font-weight: bold;
 }
 /* Font Style */
 .summary {
