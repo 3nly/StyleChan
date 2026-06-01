@@ -1,3 +1,8 @@
+### v1.5.3
+*2026-06-01*
+
+- Fix an issue with Save and Cancel buttons not working in the Themes tab
+
 ### v1.5.2
 *2026-05-31*
 

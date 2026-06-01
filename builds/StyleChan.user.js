@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         StyleChan
-// @version      1.5.2
+// @version      1.5.3
 // @namespace    StyleChan
 // @description  Customizable themes for 4chan X.
 // @license      GPL-3.0; https://github.com/3nly/StyleChan/blob/main/LICENSE 
@@ -309,7 +309,7 @@
     },
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
-        VERSION = "1.5.2",
+        VERSION = "1.5.3",
         CHANGELOG = "https://github.com/3nly/StyleChan/releases/latest",
         themeInputs = [{
             dName: "Reply Background",
@@ -2369,11 +2369,16 @@
                 );
 
                 p.append(left);
+                p.append($("<span class='btn-right'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></span>"));
+                $("a[name=save]", p).bind("click", function () {
+                    $SS.options.saveAndClose = true;
+                    $SS.options.save();
+                    $SS.options.saveAndClose = false;
+                });
+                $("a[name=cancel]", p).bind("click", $SS.options.close);
 
                 if ($SS.conf["Hidden Themes"].length === 0)
                     $("a[name=restoreThemes]", p).hide();
-
-                p.append($("<span class='btn-right'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></span>"));
 
                 themes.append(p);
 
