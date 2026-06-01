@@ -18,6 +18,7 @@ table.flashListing td,
 div#topnav.boardnav,
 div#boardNavMobile option,
 div.boardBanner div.boardTitle,
+:root.fourchan-x div.boardBanner div.boardTitle,
 #post-preview {
   font-family: inherit !important;
   font-size: inherit !important;
