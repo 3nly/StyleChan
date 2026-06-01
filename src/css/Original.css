@@ -226,6 +226,9 @@ div.meta {
   margin: auto;
   font-size: 11px;
 }
+:root:not(.fourchan-x) #blotter tfoot {
+  text-align: center !important;
+}
 /* 4chan Pass Link */
 .brackets-wrap.pass-link-container.pass-login {
   float: right;

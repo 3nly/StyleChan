@@ -212,7 +212,7 @@ div#menu.dialog label.toggle-you.entry input {
 :root:not(.fixed).left-sidebar #header-bar {
   left: 300px;
 }
-:root:not(.fixed) .boardBanner {
+:root:not(.fixed).fourchan-x .boardBanner {
   top: 1px;
 }
 .center,
