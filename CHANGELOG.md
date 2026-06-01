@@ -1,3 +1,13 @@
+### v1.5.2
+*2026-05-31*
+
+- Further options menu improvements and size responsiveness
+- Board title now correctly gets the custom font and font-weight applied
+
+### 4chan:
+ - Further theming improvements
+ - Navigation bar, board title, pinned threads, post preview, catalog TW, now styled appropriately
+
 ### v1.5.1
 *2026-05-30*
 
