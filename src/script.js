@@ -1962,10 +1962,9 @@
                             "<li class='tab-item'><label class='tab-label' for=themes-select>Themes</label></li>",
                             "</ul><div id=options-container><input type=radio class=tab-select name=tab-select id=main-select hidden checked><div id='main-section' class='options-section'>",
                             "<p class='buttons-container'>",
-                            "<a class='options-button' title='Export your settings as JSON.' name=Export>Export</a><a class='options-button' id='import-settings'><input type=file class='import-input' riced=true accept='application/json'>Import</a><a class='options-button' title='Reset StyleChan settings.' name=resetSettings>Reset</a>",
-                            "<span id=oneechan-version><span>StyleChan</span> v" + VERSION + "<span class=link-delim> | </span>",
-                            "<a href='https://github.com/3nly/StyleChan/releases/latest' id=changelog-link target='_blank' title='Read the changelog.'>Changelog</a><span class=link-delim> | </span>",
-                            "<a href='https://github.com/3nly/StyleChan/issues' id=issues-link target='_blank' title='Report an issue.'>Issues</a></p>"
+                            "<span class='btn-left'><a class='options-button' title='Export your settings as JSON.' name=Export>Export</a><a class='options-button' id='import-settings'><input type=file class='import-input' riced=true accept='application/json'>Import</a><a class='options-button' title='Reset StyleChan settings.' name=resetSettings>Reset</a></span>",
+                            "<span class='btn-center' id=oneechan-version><span>StyleChan</span> v" + VERSION + "<span class=link-delim> | </span><a href='https://github.com/3nly/StyleChan/releases/latest' id=changelog-link target='_blank' title='Read the changelog.'>Changelog</a><span class=link-delim> | </span><a href='https://github.com/3nly/StyleChan/issues' id=issues-link target='_blank' title='Report an issue.'>Issues</a></span>",
+                            "<span class='btn-right'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></span></p>"
                         ];
                     var key, val, des, id, section = "";
                     var is4chanX = $SS.is4chanX();
@@ -2089,7 +2088,8 @@
                             optionsHTML.push("<label class='option visible' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
                                 "<input type=text name='Backlink Font Size' value=" + $SS.conf["Backlink Font Size"] + "px></label>");
                         } else if (key === "Misc") {
-                            optionsHTML.push("</div><input type=radio class=tab-select name=tab-select id=misc-select hidden><div id='misc-section' class='options-section'>");
+                            optionsHTML.push("</div><input type=radio class=tab-select name=tab-select id=misc-select hidden><div id='misc-section' class='options-section'>" +
+                                "<p class='buttons-container'><span class='btn-right'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></span></p>");
                         } else if (key === "Themes") {
                             optionsHTML.push("</div><input type=radio class=tab-select name=tab-select class=tab-select  id=themes-select hidden><div id='themes-section' class='options-section'>");
                         } else // checkbox
@@ -2097,7 +2097,7 @@
                                 " name='" + key + "' " + (defaultConfig[key][3] === true ? " has-suboption" : "") + " type=checkbox></label>");
                     }
 
-                    optionsHTML.push("</div></div><div class='options-close'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></div>");
+                    optionsHTML.push("</div></div>");
                     tOptions.html(optionsHTML.join(""));
                     overlay.append(tOptions);
 
@@ -2289,11 +2289,12 @@
             },
             createThemesTab: function (tOptions) {
                 var themes = $("#themes-section", tOptions).html(""),
-                    p = $("<p class='buttons-container'>");
+                    p = $("<p class='buttons-container'>"),
+                    left = $("<span class='btn-left'>");
 
-                p.append($("<a class='options-button' name=addTheme title='Create a new theme.'>Create", tOptions).bind("click", $SS.options.showTheme));
-                p.append($("<a class='options-button' href='https://github.com/3nly/StyleChan/wiki/Custom-Themes#custom-themes' target='_blank' title='Browse more themes on GitHub.'>More Themes</a>"));
-                p.append($("<div id='import-link' title='Import a new theme file.'>").append($("<input type=file class='import-input' riced=true accept='application/json'>")
+                left.append($("<a class='options-button' name=addTheme title='Create a new theme.'>Create", tOptions).bind("click", $SS.options.showTheme));
+                left.append($("<a class='options-button' href='https://github.com/3nly/StyleChan/wiki/Custom-Themes#custom-themes' target='_blank' title='Browse more themes on GitHub.'>More Themes</a>"));
+                left.append($("<div id='import-link' title='Import a new theme file.'>").append($("<input type=file class='import-input' riced=true accept='application/json'>")
                     .bind("change", function () {
                         var file = this.files[0],
                             reader = new FileReader(),
@@ -2323,15 +2324,19 @@
 
                         reader.readAsText(file);
                     })).append($("<span class='options-button'>Import")));
-                p.append($("<a class='options-button' name=restoreThemes title='Restore hidden default themes'>Restore", tOptions)
+                left.append($("<a class='options-button' name=restoreThemes title='Restore hidden default themes'>Restore", tOptions)
                     .bind("click", function () {
                         $SS.conf["Hidden Themes"] = [];
                         $("#themes-section>div[hidden]").show();
                     })
                 );
 
+                p.append(left);
+
                 if ($SS.conf["Hidden Themes"].length === 0)
                     $("a[name=restoreThemes]", p).hide();
+
+                p.append($("<span class='btn-right'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></span>"));
 
                 themes.append(p);
 

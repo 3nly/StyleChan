@@ -7,8 +7,8 @@
   margin: auto;
 }
 #oneechan-options {
-  width: 47em;
-  max-width: 85%;
+  min-width: 40em;
+  max-width: 45%;
   text-align:left!important;
   height: 65vh;
   max-height: 100em;
@@ -24,16 +24,6 @@
 }
 #options-container:not(.yui-skin-sam) {
   box-shadow: inset rgba(0,0,0,.3) 0 0 5px;
-}
-.options-close {
-  text-align: right!important;
-  margin-left: auto;
-  width: 11.5em;
-  right: 0;
-  padding: 0.15em 0.3em;
-/* Set z-index higher than other buttons */
-  position: absolute;
-  z-index: 120;
 }
 /* Main */
 #options-container:not(.yui-skin-sam) {
@@ -336,14 +326,22 @@ input[name='Font Family']::-webkit-list-button {
 }
 /* Buttons */
 .buttons-container {
-  bottom:3px;
-  left:5px;
-/* Set z-index lower than the save button */
-  position:absolute;
-  z-index:100;
+  bottom: 3px;
+  left: 5px;
+  right: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  z-index: 100;
+  margin: 0;
 }
-.buttons-container {
-  margin:0;
+.btn-center {
+  text-align: center;
+  flex: 1;
+}
+.btn-right {
+  margin-left: auto;
 }
 .options-button {
   display:inline-block;
@@ -405,8 +403,6 @@ span.option>select,
 /* Links */
 #oneechan-version {
   opacity: .7;
-  padding-right: 5px;
-  padding-left: 40px;
   font-size: x-small !important;
 }
 .link-delim {
