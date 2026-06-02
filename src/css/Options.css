@@ -150,43 +150,122 @@ input[name='Font Family']::-webkit-list-button {
   right:300px !important;
   z-index:0 !important;
 }
+/* Theme preview post */
+.theme-preview-post {
+  flex-shrink: 0;
+  margin-bottom: 8px;
+  background: var(--sc-mainColor);
+  font-size: 11px;
+  line-height: 1.4;
+  cursor: default;
+  text-align: left;
+  border-bottom: 1px solid var(--sc-brderColor);
+  padding-bottom: 12px;
+  box-shadow: 0px 9px 15px -12px rgba(0, 0, 0, 0.25);
+}
+.theme-preview-post .preview-border {
+  display: block;
+  border: 1px solid var(--sc-brderColor);
+  padding: 6px;
+  cursor: pointer;
+}
+.theme-preview-post .preview-border:hover {
+  outline: 1px dashed var(--sc-linkColor);
+}
+.theme-preview-post [data-color] {
+  cursor: pointer;
+  transition: outline 0.1s;
+}
+.theme-preview-post [data-color]:hover {
+  outline: 1px dashed var(--sc-linkColor);
+}
+.preview-name { color: var(--sc-nameColor); font-weight: 700; }
+.preview-trip { color: var(--sc-tripColor); }
+.preview-subject { color: var(--sc-titleColor); font-weight: 700; }
+.preview-quote { color: var(--sc-quoteColor); }
+.preview-backlink a { color: var(--sc-blinkColor); }
+.preview-date { color: var(--sc-textColor); font-size: 10px; }
+.preview-postnum a { color: var(--sc-linkColor); }
+.theme-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
 /* Add Theme */
+.side-switch {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.5;
+  z-index: 1;
+}
+.side-switch:hover {
+  opacity: 1;
+}
 #add-theme {
   padding: 20px !important;
+  position: fixed;
   top: 0;
-  left: 0;
   right: 0;
-  bottom: 0;
-  max-height: 85vh;
-  height: auto;
-  max-width: 65vw;
-  width: 65vw;
+  left: auto;
+  max-height: 100vh;
+  height: calc(100vh - 2.2em);
+  max-width: 45vw;
   overflow: hidden;
   text-align: left !important;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin: 2em .2em !important;
+  box-shadow: -2px 0 12px rgba(0,0,0,0.3) !important;
+}
+#add-theme.left {
+  right: auto;
+  left: 0;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.3);
+}
+#add-theme.left .side-switch {
+  right: auto;
+  left: 8px;
+}
+#add-theme .option-title {
+  float: left;
+  padding-left: 5px;
+  min-width: 120px;
+}
+#add-theme .theme-fields > label {
+  line-height: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2px 4px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+}
+#add-theme .theme-fields > label.picked {
+  outline: 1px dashed var(--sc-linkColor);
+  outline-offset: -2px;
+}
+#add-theme .option-title {
+  flex-shrink: 0;
+  padding-right: 8px;
+}
+#add-theme .theme-fields > label > input[type=text],
+#add-theme .theme-fields > label > select {
+  width: auto;
+  max-width: 55%;
+  appearance: auto;
+  text-align: left;
 }
 #add-theme .theme-body {
   flex: 0 1 auto;
   min-height: 0;
   max-height: calc(85vh - 90px);
-  overflow: auto;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
-#add-theme .theme-fields {
-  display: flex;
-  flex-wrap: wrap;
-}
-#add-theme .option-title {
-  float:left;
-  padding-left:5px;
-}
-#add-theme .theme-fields > label {
-  line-height:22px;
-  display:inline-block;
-  text-align:right;
-  width:33.3%;
+#add-theme .theme-body::-webkit-scrollbar {
+  display: none;
 }
 #add-theme .theme-body > label#customCSS {
   width:100%;
@@ -237,7 +316,6 @@ input[name='Font Family']::-webkit-list-button {
   height: 24px;
   padding: 0;
   border: 1px solid var(--sc-inputbColor) !important;
-  border-radius: 2px;
   cursor: pointer;
   box-sizing: border-box;
   background: none;
@@ -254,12 +332,15 @@ input[name='Font Family']::-webkit-list-button {
 }
 #add-theme > div {
   margin-top:.6em;
-  text-align:right;
+  text-align: left;
 }
 #add-theme > .theme-buttons {
   flex: 0 0 auto;
   margin-top: 0;
   text-align: right;
+  border-top: 1px solid var(--sc-brderColor);
+  padding-top: 6px;
+  box-shadow: 0px -10px 12px -12px rgba(0, 0, 0, 0.25);
 }
 /* Navigation */
 #options-tabs {
@@ -316,7 +397,7 @@ input[name='Font Family']::-webkit-list-button {
   display: none;
 }
 #overlay.previewing ~ #overlay2 {
-  background-color: rgba(0, 0, 0, 0.1) !important;
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 /* Buttons */
 .buttons-container {

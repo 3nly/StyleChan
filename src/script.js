@@ -2462,7 +2462,21 @@
 
                 div = $("<div id='add-theme' class='dialog'>");
 
-                var innerHTML = "<div class='theme-body'><div class='theme-fields'><label>" +
+                var switchBtn = "<span class='side-switch' title='Switch side'>&#8646;</span>";
+
+                var previewPost = switchBtn + "<div class='theme-preview-post' data-color='mainColor'>" +
+                    "<div class='preview-border' data-color='mainColor'>" +
+                    "<span class='preview-subject' data-color='titleColor'>Post Subject</span><br>" +
+                    "<span class='preview-name' data-color='nameColor'>Anonymous</span>" +
+                    "<span class='preview-trip' data-color='tripColor'> !tripcode</span>" +
+                    "<span class='preview-date' data-color='textColor'> 10/01/03(Mon)12:00:00</span>" +
+                    "<span class='preview-postnum'> <a href='#' data-color='linkColor'>No.12345678</a></span>" +
+                    "<br><span class='preview-backlink' data-color='blinkColor'><a href='#'>&gt;&gt;12345678</a></span>" +
+                    "<br><span class='preview-quote' data-color='quoteColor'>&gt;be me, clickable</span>" +
+                    "<br><span data-color='textColor'>I'm a dummy post and example text.</span>" +
+                    "</div></div>";
+
+                var innerHTML = previewPost + "<div class='theme-body'><div class='theme-fields'><label>" +
                     "<span class='option-title'>Theme Name:</span><input type=text name=name value='" + (bEdit ? tEdit.name : "") + "'>" +
                     "</label><label>" +
                     "<span class='option-title'>Author Name:</span><input type=text name=authorName value='" + (bEdit ? (tEdit.authorName !== undefined ? tEdit.authorName : "") : "") + "'>" +
@@ -2512,6 +2526,24 @@
                     "<a class='options-button' name=" + (bEdit ? "edit" : "add") + ">Save</a><a class='options-button' name=cancel>Cancel</a></div>";
 
                 div.html(innerHTML);
+
+                $(".side-switch", div).bind("click", function () {
+                    div.elems[0].classList.toggle("left");
+                });
+
+                // Click preview elements to focus color inputs
+                $("[data-color]", div).bind("click", function (e) {
+                    e.stopPropagation();
+                    var name = this.getAttribute("data-color"),
+                        input = div.elems[0].querySelector("input[name='" + name + "']");
+                    if (input) {
+                        input.focus();
+                        input.select();
+                        $("label.picked", div).removeClass("picked");
+                        var label = input.closest("label");
+                        if (label) label.classList.add("picked");
+                    }
+                });
 
                 // Live preview function
                 var updateLivePreview = function () {
