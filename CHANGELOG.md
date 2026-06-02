@@ -1,3 +1,15 @@
+### v1.5.4
+*2026-06-02*
+
+- Auto-Convert Images: will now also resize images if above the dimension limits as in feature request #30 (@john32b @saxamaphone69)
+- Rounded Corners: will now also apply to userscript menus and buttons
+- **Add/Create Theme:** refactored the dialog
+  - Now shows a clickable dummy post
+  - Now shows on the side of the screen
+  - Added ⇆ toggle to switch sides
+  - Scroll up or down to see all the rules
+- Minor code cleanup and CSS adjustments
+
 ### v1.5.3
 *2026-06-01*
 
