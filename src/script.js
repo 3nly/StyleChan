@@ -4002,18 +4002,6 @@
 
             return "'" + font + "'";
         },
-        isFontAvailable: function (fontName) {
-            var canvas = document.createElement("canvas"),
-                ctx = canvas.getContext && canvas.getContext("2d"),
-                text = "abcdefghijklmnopqrstuvwxyz0123456789",
-                base, test;
-            if (!ctx) return false;
-            ctx.font = "72px monospace";
-            base = ctx.measureText(text).width;
-            ctx.font = "72px '" + fontName + "', monospace";
-            test = ctx.measureText(text).width;
-            return test !== base;
-        },
         systemFonts: {
             windows: [
                 "Arial", "Arial Black", "Arial Narrow", "Calibri", "Cambria",
