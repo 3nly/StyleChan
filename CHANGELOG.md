@@ -1,3 +1,10 @@
+### v1.5.5
+*2026-06-02*
+
+- Fix a stupid mistake where I hid the Cloudflare iframe in the captcha
+- Catalog Links: Fix an issue with Catalog Links triggering with 4chanX enabled
+- Custom Themes and saved 4chan settings will now be included in script's backup JSON file
+
 ### v1.5.4
 *2026-06-02*
 
