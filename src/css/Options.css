@@ -300,7 +300,7 @@ input[name='Font Family']::-webkit-list-button {
   margin-top: 3px;
 }
 #add-theme .color-hex {
-  width: 50px;
+  width: 60px;
   height: 20px;
   text-align: center;
   border: 1px solid var(--sc-inputbColor) !important;
