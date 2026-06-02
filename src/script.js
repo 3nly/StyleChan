@@ -98,7 +98,7 @@
         "Animated Transition": [false, "Enables a transition animation for the QR."],
         "Expanding Form Inputs": [true, "Makes certain form elements expand on focus."],
         "Remember Comment Draft": [false, "Will save and restore unsubmitted QR comments (5 second delay). Drafts expire after 24h."],
-        "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size limit to JPEG."],
+        "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size or dimensions limit to JPEG."],
         "Single View Captcha": [false, "Shows the captcha challenges in a single view.", null, true],
         "Auto Submit": [false, "Automatically submit the post after completing the last captcha challenge.", "Single View Captcha", true, true],
         ":: Replies": ["header", ""],
@@ -1140,7 +1140,7 @@
                     var canvas = document.createElement("canvas"),
                         w = bitmap.width, h = bitmap.height,
                         board = $SS.location.board,
-                        maxDim = ($SS.boardMaxDims[board] || 5000),
+                        maxDim = ($SS.boardMaxDims[board] || 10000),
                         wasResized = false;
 
                     if (w > maxDim || h > maxDim) {
@@ -4099,9 +4099,8 @@
             /* all others: 4MB (4194304) */
         },
         boardMaxDims: {
-            /* Board dimensions are unknown, wait until someone complains */
-            hr: 10000, p: 10000
-            /* all others: 5000 */
+            s: 8000, soc: 8000, hm: 8000, out: 8000, hc: 8000
+            /* all others: 10000 */
         },
 
         getLocation: function (url) {
