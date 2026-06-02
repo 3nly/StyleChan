@@ -1137,10 +1137,21 @@
 
             function convertToJPEG(file, baseName, qrInput) {
                 createImageBitmap(file).then(function (bitmap) {
-                    var canvas = document.createElement("canvas");
-                    canvas.width = bitmap.width;
-                    canvas.height = bitmap.height;
-                    canvas.getContext("2d").drawImage(bitmap, 0, 0);
+                    var canvas = document.createElement("canvas"),
+                        w = bitmap.width, h = bitmap.height,
+                        board = $SS.location.board,
+                        maxDim = ($SS.boardMaxDims[board] || 5000),
+                        wasResized = false;
+
+                    if (w > maxDim || h > maxDim) {
+                        var scale = Math.min(maxDim / w, maxDim / h);
+                        w = Math.round(w * scale);
+                        h = Math.round(h * scale);
+                        wasResized = true;
+                    }
+                    canvas.width = w;
+                    canvas.height = h;
+                    canvas.getContext("2d").drawImage(bitmap, 0, 0, w, h);
                     bitmap.close();
 
                     var qualities = [0.99, 0.98, 0.97, 0.96, 0.95, 0.90, 0.85, 0.80, 0.75];
@@ -1156,7 +1167,9 @@
                                 qrInput.files = dt.files;
                                 qrInput.dispatchEvent(new Event("input", { bubbles: true }));
                                 qrInput.dispatchEvent(new Event("change", { bubbles: true }));
-                                notify("Converted " + file.name + " to " + outName + " (q=" + Math.round(q * 100) + "%)");
+                                var msg = "Converted " + file.name + " to " + outName + " (q=" + Math.round(q * 100) + "%)";
+                                if (wasResized) msg += ", resized to " + w + "x" + h;
+                                notify(msg);
                             } else {
                                 tryQuality(index + 1);
                             }
@@ -4084,6 +4097,11 @@
             po: 8388608, qst: 8388608, r: 8388608, s: 8388608,
             tg: 8388608, trv: 8388608, wsr: 8388608
             /* all others: 4MB (4194304) */
+        },
+        boardMaxDims: {
+            /* Board dimensions are unknown, wait until someone complains */
+            hr: 10000, p: 10000
+            /* all others: 5000 */
         },
 
         getLocation: function (url) {
