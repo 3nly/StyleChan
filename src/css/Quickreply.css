@@ -254,7 +254,6 @@ input[type="number"] {
   display: none !important;
 }
 :root.single-captcha iframe#t-frame {
-  height: 0 !important;
   margin-top: 0 !important;
 }
 :root.single-captcha #quickReply #qrCaptchaContainer,
