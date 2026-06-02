@@ -2384,19 +2384,7 @@
                         name = $this.attr("name"),
                         val = $this.val();
 
-                    if (name === "Font Size") {
-                        val = parseInt(val);
-                    } else if (name === "Custom Right Margin") {
-                        val = parseInt(val);
-                    } else if (name === "Custom Left Margin") {
-                        val = parseInt(val);
-                    } else if (name === "Custom Decoration Width") {
-                        val = parseInt(val);
-                    } else if (name === "UI Font Size") {
-                        val = parseInt(val);
-                    } else if (name === "Backlink Font Size") {
-                        val = parseInt(val);
-                    } else if (name === "Dark Theme" || name === "Light Theme") {
+                    if (/^(Font Size|Custom (Right|Left) Margin|Custom Decoration Width|UI Font Size|Backlink Font Size|Dark Theme|Light Theme)$/.test(name)){
                         val = parseInt(val);
                     }
 
