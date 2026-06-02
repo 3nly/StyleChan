@@ -1884,10 +1884,16 @@
 
                 for (var key in defaultConfig) {
                     $SS.conf[key] = parseVal(key, this.get(key));
-                    if (!(/^(Hidden|Themes|::)/.test(key))) {
+                    if (!(/^::/.test(key))) {
                         $SS.exportOptions[key] = $SS.conf[key];
                     };
                 };
+
+                // Include saved 4chan settings in exports
+                var chanKeys = ["4chan-settings", "4chan-watch", "4chan-watch-bl", "catalog-settings", "catalog-theme"];
+                chanKeys.forEach(function (key) {
+                    try { if (localStorage[key]) $SS.exportOptions["Saved4chan." + key] = JSON.parse(localStorage[key]); } catch (e) {}
+                });
 
                 if (!$SS.location.report) {
                     $SS.conf["Margin Left"] = $SS.conf["Left Margin"] !== 999 ? $SS.conf["Left Margin"] : $SS.conf["Custom Left Margin"];
