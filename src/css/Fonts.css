@@ -35,7 +35,6 @@ body {
 }
 /* Board title -> larger */
 div.boardBanner div.boardTitle,
-div.boardBanner div.boardTitle,
 :root.fourchan-x div.boardBanner div.boardTitle {
   font-weight: normal !important;
   font-size: " + (($SS.conf["Font Size"] < 13) ? 22 : 26) + "px !important;

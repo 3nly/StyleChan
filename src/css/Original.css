@@ -247,10 +247,8 @@ input#postFile {
 }
 :root.right-sidebar #quickReply input[type=text], 
 :root.right-sidebar #quickReply textarea, 
-:root.right-sidebar #quickReply #recaptcha_response_field,
 :root.left-sidebar #quickReply input[type=text], 
-:root.left-sidebar #quickReply textarea, 
-:root.left-sidebar #quickReply #recaptcha_response_field {
+:root.left-sidebar #quickReply textarea {
   max-width: 294px !important;
   min-width: 294px !important;
 }

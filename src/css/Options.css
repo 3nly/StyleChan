@@ -19,15 +19,11 @@
   box-shadow: rgba(0,0,0,.6) 0 0 10px !important;
   padding: 0.4em 0.4em 2.7em 0.4em;
 }
-#options-container:not(.yui-skin-sam) {
-  padding: 3px;
-}
-#options-container:not(.yui-skin-sam) {
-  box-shadow: inset rgba(0,0,0,.3) 0 0 5px;
-}
 /* Main */
 #options-container:not(.yui-skin-sam) {
-  border-radius:5px;
+  padding: 3px;
+  box-shadow: inset rgba(0,0,0,.3) 0 0 5px;
+  border-radius: 5px;
 }
 #options-container:not(.yui-skin-sam),
 .options-section {
@@ -257,7 +253,7 @@ input[name='Font Family']::-webkit-list-button {
 :root.rounded-corners .color-picker-btn {
   border-radius: 3px !important;
 }
-#add-theme>div {
+#add-theme > div {
   margin-top:.6em;
   text-align:right;
 }

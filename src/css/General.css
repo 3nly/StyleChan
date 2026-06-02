@@ -131,7 +131,6 @@ body {
   margin-left: 4px !important;
 }
 :root.reply-fit-width .post .menu-button {
-  margin-left: 0;
   position: relative;
   opacity: 0;
 }
