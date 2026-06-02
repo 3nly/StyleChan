@@ -911,8 +911,9 @@
                     $.waitFor("a[data-cmd='open-qr']", function (link) { link.click(); });
                 }
 
-                if ($SS.conf["Catalog Links"]) {
+                if ($SS.conf["Catalog Links"] && !$SS.is4chanX()) {
                     function fixBoardLinks(nav) {
+                        if (!nav) return;
                         nav.querySelectorAll("a[href]").forEach(function (a) {
                             var href = a.getAttribute("href");
                             if (/^(\/\/|https?:\/\/)?(?:boards\.4chan\.org)?\/(?!search$)[a-z0-9]+\/*$/i.test(href))
