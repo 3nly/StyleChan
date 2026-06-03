@@ -48,7 +48,7 @@ div.boardBanner div.boardTitle,
 #full-board-list,
 body>#header-bar,
 #full-board-list .fourchanx-link {
-  font-size: " + (($SS.conf["Font Size"] < 1) ? 12 : ($SS.conf["Font Size"] - 1)) + "px !important;
+  font-size: " + ($SS.conf["Font Size"] - 1) + "px !important;
 }
 @media (min-width: 1280px) and (max-width: 1920px) {
   #board-list {
