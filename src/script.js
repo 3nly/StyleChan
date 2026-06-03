@@ -2528,12 +2528,14 @@
                         "</span></label>";
                 }
 
-                innerHTML += "</div><label id=customCSS><span class='option-title'>Custom CSS:</span><textarea name=customCSS class='field'>" + (bEdit ? tEdit.customCSS || "" : "") + "</textarea>" +
+                innerHTML += "</div><label id=customCSS><span class='option-title'>Custom CSS:</span><textarea name=customCSS class='field'></textarea>" +
                     "</label></div><div class='theme-buttons'>" +
                     "<a class='options-button' name=export>Export</a>" +
                     "<a class='options-button' name=" + (bEdit ? "edit" : "add") + ">Save</a><a class='options-button' name=cancel>Cancel</a></div>";
 
                 div.html(innerHTML);
+                if (bEdit && tEdit.customCSS)
+                    div.elems[0].querySelector("textarea[name=customCSS]").value = tEdit.customCSS;
 
                 $(".side-switch", div).bind("click", function () {
                     div.elems[0].classList.toggle("left");
