@@ -19,11 +19,18 @@
   margin-right: 2px;
   top: auto !important;
   bottom: 4px !important;
+}
+:root.use-sc-icons .watch-thread-link {
   background-image: var(--sc-icon-star) !important;
+}
+:root.use-sc-icons .watch-thread-link > svg {
+  display: none;
+}
+:root:not(.use-sc-icons).oneechan .watch-thread-link > svg {
+  display: inherit !important;
 }
 /* Backlinks */
 :root.backlink-icon .backlink {
-  background-image: var(--sc-icon-backlink) !important;
   font-size: 0 !important;
   padding: " + (($SS.conf["Font Size"] < 12) ? 5 : 6) + "px !important;
   margin-right: 0 !important;
@@ -31,9 +38,9 @@
   position: relative;
   bottom: 5px;
   left: 2px;
+  background-image: var(--sc-icon-backlink) !important;
 }
 :root.backlink-icon .backlink.inlined {
-  background-image: var(--sc-icon-downArrow) !important;
   font-size: 0 !important;
   padding: 6px !important;
   margin-right: 0 !important;
@@ -41,6 +48,7 @@
   position: relative;
   bottom: 5px;
   left: 3px;
+  background-image: var(--sc-icon-downArrow) !important;
 }
 :root.backlink-icon .backlink .quotelink {
   position: absolute;
@@ -55,9 +63,9 @@
   opacity: 1 !important;
 }
 /* From 4chanSS */
-img[title=Closed],
-img[title=Sticky],
-img[title=Archived] {
+:root.use-sc-icons img[title=Closed],
+:root.use-sc-icons img[title=Sticky],
+:root.use-sc-icons img[title=Archived] {
   color: transparent !important;
   font-size: 0 !important;
   background-color: transparent !important;
@@ -71,14 +79,14 @@ img[title=Archived] {
   width: 16px !important;
 }
 /* Thread Closed */
-.closedIcon {
+:root.use-sc-icons .closedIcon {
   background-image: var(--sc-icon-threadClosed) !important;
 }
 /* Thread Pinned */
-.stickyIcon {
+:root.use-sc-icons .stickyIcon {
   background-image: var(--sc-icon-threadPinned) !important;
 }
 /* Thread Archived */
-.archivedIcon {
+:root.use-sc-icons .archivedIcon {
   background-image: var(--sc-icon-threadArchived) !important;
 }

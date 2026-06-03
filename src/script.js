@@ -245,6 +245,7 @@
         "System Theming": [false, "Use system color scheme detection to automatically select themes. Overrides NSFW/SFW theme selection.", null, true],
         "Dark Theme": [0, "Theme to use when system is in dark mode.", "System Theming", true, true],
         "Light Theme": [0, "Theme to use when system is in light mode.", "System Theming", true, true],
+        "Use StyleChan Icons": [true, "Replace 4chan icons with themed SVG icons. Disable to use vanilla 4chan icons.", null, true],
         "Style Scrollbars": [false, "Customize the look of scrollbars to match the theme.", null, true],
         "Thin Scrollbars": [false, "Use thinner scrollbars.", "Style Scrollbars", true, true],
         "Enable Mascots": [false, "Display mascot images on the page and adjust their opacity.", null, true],
@@ -3830,6 +3831,7 @@
                 cl.toggle("catalog-justify", $SS.conf["Justified Text"] === true);
                 cl.toggle("catalog-background", $SS.conf["Show Background"] === true);
                 cl.toggle("catalog-thumbsize", $SS.conf["Unified Thumbnail Size"] === true);
+                cl.toggle("use-sc-icons", $SS.conf["Use StyleChan Icons"]);
                 if (!$SS.is4chanX()) {
                     cl.toggle("highlight-you", $SS.conf["Highlight Posts Quoting You"] === true);
                     cl.toggle("highlight-own", $SS.conf["Highlight Own Posts"] === true);
