@@ -1,3 +1,12 @@
+## v1.6.0
+*2026-06-03*
+
+- New option: Use StyleChan Icons
+- Updated old themes in the Wiki to work with the new StyleChan
+- Removed text shadow on 4chanX notifications when styled
+- XT watch icon will no longer be off-center on Firefox
+- Fix an issue where names were doubling when using 4chanX's Anonymize option
+
 ### v1.5.5
 *2026-06-02*
 

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
   <app appid='peblejlenbfconioafjbmipeogjdhcff'>
-    <updatecheck codebase='https://github.com/3nly/StyleChan/releases/latest/download/StyleChan.crx' version='1.5.5' prodversionmin='31' />
+    <updatecheck codebase='https://github.com/3nly/StyleChan/releases/latest/download/StyleChan.crx' version='1.6.0' prodversionmin='31' />
   </app>
 </gupdate>
