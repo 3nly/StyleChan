@@ -21,11 +21,6 @@
   bottom: 4px !important;
   background-image: var(--sc-icon-star) !important;
 }
-/* Fix for XT not setting position, remove if no longer needed */
-:root.ua-gecko.fourchan-xt .watch-thread-link {
-  display: inline-block;
-  position: relative;
-}
 /* Backlinks */
 :root.backlink-icon .backlink {
   background-image: var(--sc-icon-backlink) !important;
