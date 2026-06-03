@@ -55,6 +55,11 @@ body>#header-bar,
     word-spacing: " + (($SS.conf["Font Size"] < 14) ? -1 : -2) + "px;
   }
 }
+/* 4chanX anonymize override */
+:root.anonymize .name,
+:root.sw-yotsuba.anonymize .post-author:not([class*=capcode]) {
+  font-size: 0 !important;
+}
 /* Backlinks */
 .backlink {
   font-size: " + $SS.conf["Backlink Font Size"] + "px !important;
