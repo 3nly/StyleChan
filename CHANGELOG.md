@@ -1,3 +1,9 @@
+### v1.6.1
+*2026-06-06*
+
+- Fix an issue with (you) highlights when using 4chanX and XT
+- Improve how Custom CSS is added so it doesn't break with certain symbols
+
 ## v1.6.0
 *2026-06-03*
 
