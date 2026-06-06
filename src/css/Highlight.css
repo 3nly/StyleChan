@@ -28,6 +28,7 @@
 }
 /* Posts Quoting You */
 :root.highlight-you .quotesYou.post.op,
+:root.highlight-you.fourchan-x .quotesYou.opContainer,
 :root.highlight-you .quotesYou > .reply {
   border-left: " + $SS.conf["Width Decoration"] + "px solid rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
 }
@@ -36,6 +37,7 @@
 }
 /* Your Posts */
 :root.highlight-own .yourPost.post.op,
+:root.highlight-own.fourchan-x .yourPost.opContainer,
 :root.highlight-own .yourPost > .reply {
   border-left: " + $SS.conf["Width Decoration"] + "px dashed rgba(var(--sc-ownPostHLColor-rgb),1.0) !important;
 }
