@@ -1,3 +1,10 @@
+### v1.6.2
+*2026-06-07*
+
+Try new online Stylechan theme creator: https://3nly.github.io/StyleChan/
+
+- Revert a change that caused (You)s to not work on 4chanX and XT if they weren't enabled for vanilla 4chan
+
 ### v1.6.1
 *2026-06-06*
 
