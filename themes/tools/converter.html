@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StyleChan Theme Converter</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; height: 100vh; display: flex; justify-content: center; align-items: center; background: #1a1a1a; color: #bbb; padding: 1em; }
+.card { background: #252525; border: 1px solid #333; border-radius: 6px; padding: 2em; max-width: 600px; width: 100%; box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+h1 { font-size: 1.25em; font-weight: 600; color: #ddd; margin-bottom: .25em; }
+.sub { font-size: .82em; color: #888; margin-bottom: 1.5em; line-height: 1.5; }
+.dropzone { display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed #444; border-radius: 6px; padding: 2.5em 1em; cursor: pointer; transition: border-color .2s, background .2s; margin-bottom: 1em; text-align: center; }
+.dropzone:hover, .dropzone.dragover { border-color: #8ab4f8; background: #2a2a2a; }
+.dropzone-icon { font-size: 2em; margin-bottom: .5em; }
+.dropzone p { color: #888; font-size: .85em; }
+.dropzone .browse-text { color: #8ab4f8; text-decoration: underline; cursor: pointer; }
+input[type=file] { display: none; }
+.output-area { display: none; margin-top: 1em; }
+.output-area .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5em; }
+.output-area textarea { width: 100%; height: 250px; background: #1a1a1a; color: #bbb; border: 1px solid #333; border-radius: 4px; padding: .6em; font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; font-size: 11px; resize: vertical; }
+.btn { display: inline-block; background: #333; color: #ccc; border: 1px solid #444; padding: .45em 1em; border-radius: 3px; cursor: pointer; font-size: .82em; text-decoration: none; }
+.btn:hover { background: #3a3a3a; }
+.btn-row { display: flex; gap: .5em; align-items: center; }
+.status { font-size: .8em; margin-left: auto; }
+.status.error { color: #f66; }
+.status.success { color: #8f8; }
+.footer { margin-top: 1.5em; font-size: .75em; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1><a href="index.html" style="color:#888;text-decoration:none" title="Back to tools">&#8592;</a> StyleChan Theme Converter</h1>
+  <p class="sub">Convert AppchanX, Old StyleChan, or 4chan Style Script themes to StyleChan format.<br>Drop a <code>.json</code> file anywhere or click to browse.</p>
+  <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+    <div class="dropzone-icon">&equiv;</div>
+    <p>Drop <code>.json</code> theme file here<br>or <span class="browse-text">click to browse</span></p>
+  </div>
+  <input type="file" id="fileInput" accept=".json" onchange="loadFile(this.files[0])">
+
+  <div class="output-area" id="outputArea">
+    <div class="header">
+      <div class="btn-row">
+        <button class="btn" onclick="download()">Download</button>
+        <button class="btn" onclick="copy()">Copy</button>
+      </div>
+      <span class="status" id="status"></span>
+    </div>
+    <textarea id="output" readonly></textarea>
+  </div>
+  <div class="footer">Output .JSON imports directly into StyleChan via the Themes tab.</div>
+</div>
+<textarea id="input" hidden></textarea>
+<script>
+(function () {
+  var dz = document.getElementById('dropzone');
+  dz.addEventListener('dragover', function (e) { e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', function () { dz.classList.remove('dragover'); });
+  dz.addEventListener('drop', function (e) { e.preventDefault(); dz.classList.remove('dragover'); if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]); });
+})();
+
+function loadFile(file) {
+  if (!file || !file.name.endsWith('.json')) return;
+  document.getElementById('dropzone').querySelector('p').textContent = 'Loading ' + file.name + '...';
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    document.getElementById('input').value = e.target.result;
+    convert(file.name);
+  };
+  reader.readAsText(file);
+}
+
+function colorToHex(color) {
+  var d, h;
+  if (!color) return false;
+  if (color.substr(0,1)==='#') {
+    h = color.slice(1);
+    return h.length===3 ? h.split('').map(function(c){return c+c}).join('') : h;
+  }
+  if (d = color.match(/(.*?)rgba?\((\d+), ?(\d+), ?(\d+)(.*?)\)/)) {
+    h = ((parseInt(d[2],10)<<16)|(parseInt(d[3],10)<<8)|parseInt(d[4],10)).toString(16);
+    while (h.length<6) h='0'+h;
+    return h;
+  }
+  return false;
+}
+function validImageURL(img) {
+  return img && typeof img==='string' && !/^url\(\)$/.test(img) && /^(https?:\/\/|url\().+$/i.test(img);
+}
+function convert(fileName) {
+  var el = document.getElementById('output');
+  var st = document.getElementById('status');
+  st.className = 'status';
+  st.textContent = '';
+  try {
+    var data = JSON.parse(document.getElementById('input').value);
+    var t = {};
+    if (data["Theme"] !== undefined) {
+      t.name = data["Theme"];
+      t.authorName = data["Author"]||'';
+      t.authorTrip = data["Author Tripcode"]||'';
+      t.replyOp = "1.0"; t.navOp = "0.9";
+      t.bgImg = data["Background Image"]||false;
+      t.mainColor = colorToHex(data["Reply Background"]);
+      t.textColor = colorToHex(data["Text"]);
+      t.linkColor = colorToHex(data["Links"]);
+      t.linkHColor = colorToHex(data["Hovered Links"]);
+      t.headerColor = colorToHex(data["Text"]);
+      t.headerBGColor = colorToHex(data["Navigation Background"]);
+      t.headerLColor = colorToHex(data["Navigation Links"]);
+      t.headerLHColor = colorToHex(data["Hovered Navigation Links"]);
+      t.boardColor = colorToHex(data["Board Title"]);
+      t.brderColor = colorToHex(data["Reply Border"]);
+      t.inputColor = colorToHex(data["Input Background"]);
+      t.inputbColor = colorToHex(data["Input Border"]);
+      t.bgColor = colorToHex(data["Background Color"]);
+      t.blinkColor = colorToHex(data["Backlinks"]);
+      t.unreadColor = colorToHex(data["Links"]);
+      t.nameColor = colorToHex(data["Names"]);
+      t.tripColor = colorToHex(data["Tripcodes"]);
+      t.titleColor = colorToHex(data["Subjects"]);
+      t.quoteColor = colorToHex(data["Greentext"]);
+      t.qlColor = colorToHex(data["Quotelinks"]);
+      t.replybgHLColor = colorToHex(data["Highlighted Reply Background"]);
+      t.replyslctColor = colorToHex(data["Highlighted Reply Background"]);
+      t.customCSS = data["Custom CSS"]||'';
+    } else if (data["timeColor"] !== undefined) {
+      t.name = data.name||data.themeName||'Imported';
+      t.authorName = data.author||'';
+      t.authorTrip = '';
+      t.replyOp = "1.0"; t.navOp = "0.9";
+      t.bgImg = validImageURL(data["bgImg"]) ? data["bgImg"] : false;
+      t.unreadColor = data["jlinkColor"];
+      t.headerColor = data["textColor"];
+      t.headerBGColor = data["mainColor"];
+      t.headerLColor = data["linkColor"];
+      t.headerLHColor = data["linkHColor"];
+      t.boardColor = data["textColor"];
+      ["mainColor","textColor","linkColor","linkHColor","nameColor","tripColor","titleColor","quoteColor","qlColor","blinkColor","brderColor","inputColor","inputbColor","bgColor","postHLColor","quotesYouHLColor","ownPostHLColor","threadHLColor","replybgHLColor","replyslctColor","headerColor","headerBGColor","headerLColor","headerLHColor","boardColor","unreadColor","replyOp","navOp","bgImg"].forEach(function(k){
+        if (data[k] !== undefined && t[k] === undefined) t[k] = data[k];
+      });
+      t.customCSS = data.customCSS||'';
+    } else if (data["navOp"] !== undefined) {
+      t.name = data.name||'Imported';
+      t.authorName = data.authorName||data.author||'';
+      t.authorTrip = data.authorTrip||'';
+      t.unreadColor = data["jlinkColor"];
+      t.headerColor = data["textColor"];
+      t.headerBGColor = data["mainColor"];
+      t.headerLColor = data["linkColor"];
+      t.headerLHColor = data["linkHColor"];
+      t.boardColor = data["textColor"];
+      ["mainColor","textColor","linkColor","linkHColor","nameColor","tripColor","titleColor","quoteColor","qlColor","blinkColor","brderColor","inputColor","inputbColor","bgColor","postHLColor","quotesYouHLColor","ownPostHLColor","threadHLColor","replybgHLColor","replyslctColor","replyOp","navOp","bgImg"].forEach(function(k){
+        if (data[k] !== undefined && t[k] === undefined) t[k] = data[k];
+      });
+      t.customCSS = data.customCSS||'';
+    } else {
+      st.textContent = 'Unknown format. Needs "Theme", "timeColor", or "navOp" key.';
+      st.className = 'status error';
+      return;
+    }
+    var out = JSON.stringify(t, null, 2);
+    el.value = out;
+    document.getElementById('outputArea').style.display = 'block';
+    document.getElementById('outputArea').dataset.name = t.name || 'theme';
+    st.textContent = 'Converted: ' + (t.name || 'theme');
+    st.className = 'status success';
+  } catch(e) {
+    st.textContent = 'Error: ' + e.message;
+    st.className = 'status error';
+  }
+}
+function download() {
+  var a = document.createElement('a'),
+    name = (document.getElementById('outputArea').dataset.name || 'theme').replace(/[^a-z0-9_-]/gi, '_');
+  a.download = name + '.stylechan.json';
+  a.href = 'data:application/json,' + encodeURIComponent(document.getElementById('output').value);
+  a.click();
+}
+function copy() {
+  document.getElementById('output').select();
+  document.execCommand('copy');
+  document.getElementById('status').textContent = 'Copied!';
+  document.getElementById('status').className = 'status success';
+}
+</script>
+</body>
+</html>

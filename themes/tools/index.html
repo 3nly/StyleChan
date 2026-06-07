@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StyleChan Tools</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; display: flex; justify-content: center; align-items: center; background: #1a1a1a; color: #bbb; padding: 1em; }
+.card { background: #252525; border: 1px solid #333; border-radius: 6px; padding: 2em; max-width: 500px; width: 100%; box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+h1 { font-size: 1.25em; font-weight: 600; color: #ddd; margin-bottom: 1em; }
+.tools { display: flex; flex-direction: column; gap: .6em; }
+.tool { display: flex; align-items: center; gap: .75em; padding: .8em 1em; background: #2a2a2a; border: 1px solid #333; border-radius: 4px; text-decoration: none; color: #bbb; transition: background .15s, border-color .15s; }
+.tool:hover { background: #333; border-color: #8ab4f8; }
+.tool-icon { font-size: 1.4em; font-weight: 700; width: 1.5em; text-align: center; }
+.tool-name { font-weight: 600; color: #ddd; }
+.tool-desc { font-size: .78em; color: #888; margin-top: .15em; }
+.tool-arrow { margin-left: auto; color: #555; font-size: .9em; }
+.footer { margin-top: 1.5em; font-size: .75em; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>StyleChan Tools</h1>
+  <div class="tools">
+    <a class="tool" href="creator.html">
+      <span class="tool-icon">&#127912;</span>
+      <div>
+        <div class="tool-name">Theme Creator</div>
+        <div class="tool-desc">Create a theme from any color palette format</div>
+      </div>
+      <span class="tool-arrow">&#8594;</span>
+    </a>
+    <a class="tool" href="converter.html">
+      <span class="tool-icon">&equiv;</span>
+      <div>
+        <div class="tool-name">Theme Converter</div>
+        <div class="tool-desc">Convert AppchanX and old theme formats to StyleChan</div>
+      </div>
+      <span class="tool-arrow">&#8594;</span>
+    </a>
+  </div>
+  <div class="footer"></div>
+</div>
+</body>
+</html>

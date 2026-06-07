@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Theme Creator — StyleChan</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #1a1a1a; color: #bbb; padding: 1em; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; }
+.page { display: flex; gap: 1em;   max-width: 72%; width: 100%; align-items: flex-start; }
+.col { display: flex; flex-direction: column; gap: .6em; }
+.col-input { flex: 0 0 350px; }
+.col-assigns { flex: 0 0 250px; }
+.col-preview { flex: 1; min-width: 320px; }
+.col-options { flex: 0 0 250px; }
+.card { background: #252525; border: 1px solid #333; border-radius: 6px; padding: 1em; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+h1 { font-size: 1.15em; color: #ddd; margin-bottom: .2em; }
+.sub { font-size: .8em; color: #888; margin-bottom: .7em; line-height: 1.4; }
+textarea, input[type=text] { width: 100%; background: #1a1a1a; color: #bbb; border: 1px solid #333; border-radius: 4px; padding: .5em; font-family: monospace; font-size: 12px; resize: vertical; }
+textarea#input { min-height: 20em;}
+textarea { height: 150px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 4px; margin-top: .5em; }
+.swatch { width: 26px; height: 26px; border-radius: 3px; border: 1px solid #444; cursor: pointer; transition: transform .1s; }
+.swatch:hover { transform: scale(1.2); z-index: 1; }
+.swatch.selected { outline: 2px solid #fff; outline-offset: 1px; }
+.label-row { display: flex; align-items: center; gap: .4em; margin-bottom: .15em; font-size: .78em; }
+.label-row .name { flex: 1; color: #999; }
+.label-row .hex { width: 64px; font-family: monospace; font-size: 1em; color: #8ab4f8; text-align: right; }
+.picker-hint { font-size: .72em; color: #666; margin-top: .3em; }
+.preview { flex: 1; overflow: hidden; border-radius: 6px; background-position: center; }
+.preview-header { padding: .5em .75em; font-size: .82em; font-weight: 600; border-bottom: 1px solid; display: flex; gap: .75em; align-items: center; }
+.preview-header .board-list { font-size: .78em; opacity: .7; white-space: nowrap; }
+.preview-header .shortcuts { margin-left: auto; display: flex; gap: .75em; }
+.preview-header a { text-decoration: none; }
+.preview-post { padding: .75em; margin: .5em; border: 1px solid; border-radius: 4px; }
+.preview-post .post-subject { font-weight: 700; font-size: .95em; }
+.preview-post .post-info { font-size: .78em; margin-bottom: .2em; }
+.preview-post blockquote { margin: .4em 0; font-size: .9em; line-height: 1.4; }
+.preview-post .greentext { display: block; }
+.preview-post .ql { font-size: .9em; }
+.preview-post .ql a { text-decoration: none; }
+.preview-post .backlink a { font-size: .85em; text-decoration: none; }
+.current { border-bottom: 1px solid; }
+.board-title { font-size: 26px; font-weight: 700; padding: .15em .75em; }
+.preview-inputs { display: flex; gap: .5em; margin: .5em; }
+.preview-inputs input, .preview-inputs select { padding: .3em .5em; border: 1px solid; border-radius: 3px; font-size: .8em; }
+.btn { display: inline-block; background: #333; color: #ccc; border: 1px solid #444; padding: .35em .8em; border-radius: 3px; cursor: pointer; font-size: .78em; text-decoration: none; }
+.btn:hover { background: #3a3a3a; }
+.btn-row { display: flex; gap: .4em; align-items: center; margin-top: .4em; }
+.result-text { display: none; margin-top: .4em; font-size: .78em; padding: .4em; border-radius: 3px; }
+.result-text.success { display: block; background: #1a2a1a; color: #8f8; border: 1px solid #2a4a2a; }
+.result-text.error { display: block; background: #2a1a1a; color: #f88; border: 1px solid #4a2a2a; }
+select { background: #1a1a1a; color: #bbb; border: 1px solid #333; border-radius: 4px; padding: .3em; font-size: .78em; width: 100%; }
+.opt-row { display: flex; gap: .4em; margin-bottom: .4em; }
+.opt-row > * { flex: 1; }
+.opt-label { font-size: .75em; color: #999; margin-bottom: .2em; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="col col-input">
+    <div class="card">
+      <h1><a href="index.html" style="color:#888;text-decoration:none" title="Back to tools">&#8592;</a> Theme Creator</h1>
+      <p class="sub">Paste a color palette (CSS, SCSS, CSV, JSON, XML — any format).<br>Click a swatch, then click a property to assign it.</p>
+      <textarea id="input" placeholder="Paste palette here...&#10;e.g. #e63946, #f1faee, #a8dadc, #457b9d, #1d3557"></textarea>
+      <div class="btn-row">
+        <button class="btn" onclick="extract()">Extract Colors</button>
+        <button class="btn" onclick="autoAssign()">Auto-Assign</button>
+        <button class="btn" onclick="randomize()">Randomize</button>
+      </div>
+      <div class="swatches" id="swatches"></div>
+      <div class="picker-hint" id="hint">Click swatch → click property →</div>
+    </div>
+  </div>
+
+  <div class="col col-assigns">
+    <div class="card" id="assigns"></div>
+  </div>
+
+  <div class="col col-preview">
+    <div class="card preview" id="preview">
+      <div class="preview-header" id="preview-header">
+        <span class="board-list">[ <a href="#">a</a> / <a href="#">b</a> / <a href="#" class="current">g - Technology</a> / <a href="#">jp</a> / <a href="#">v</a> / <a href="#">wsg</a> ]</span>
+        <span class="shortcuts"><a href="#">[Index]</a><a href="#">[Catalog]</a><a href="#">[Search]</a></span>
+      </div>
+      <div class="board-title">/g/ - Technology</div>
+      <div class="preview-post">
+        <div class="post-subject">Post Subject</div>
+        <div class="post-info"><span class="name">Anonymous</span> <span class="trip">!tRiPcOde</span> 10/01/03 12:00:00 <a href="#">No.12345678</a> <span class="backlink"><a href="#">&nbsp;&#9654;&gt;&gt;98765432</a></span></div>
+        <blockquote>
+          <span class="ql"><a href="#">&gt;&gt;12345670</a></span><br>
+          <span class="greentext">&gt;who are you greening?</span><br>
+          This is a preview post showing how the theme colors will look.
+        </blockquote>
+      </div>
+      <div class="preview-post">
+        <div class="post-info"><span class="name">Anonymous</span> 10/01/03 12:01:00 <a href="#">No.12345679</a></div>
+        <blockquote>
+          <span class="ql"><a href="#">&gt;&gt;12345678</a></span><br>
+          I agree, check out <a class="url" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">https://www.4chan.org</a>
+        </blockquote>
+      </div>
+      <div class="preview-post own-post">
+        <div class="post-info"><span class="name">Anonymous</span> 10/01/03 12:02:00 <a href="#">No.12345680</a><span class="backlink"><a href="#">&nbsp;&#9654;&gt;&gt;12345681</a></span></div>
+        <blockquote>This is my post, this one has no quotelinks.</blockquote>
+      </div>
+      <div class="preview-post quote-you">
+        <div class="post-info"><span class="name">Anonymous</span> 10/01/03 12:03:00 <a href="#">No.12345681</a></div>
+        <blockquote>This post is quoting you.</blockquote>
+      </div>
+      <div class="preview-inputs">
+        <input type="text" value="Name" style="flex:1">
+        <select style="flex:1"><option>Options</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="col col-options">
+    <div class="card">
+      <div class="opt-label">BG Image URL</div>
+      <input type="text" id="bgImg" placeholder="URL or Base64" style="margin-bottom:.5em">
+      <div class="opt-label">Repeat</div>
+      <div class="opt-row"><select id="bgR"><option value="repeat">repeat</option><option value="no-repeat">no-repeat</option><option value="repeat-x">repeat-x</option><option value="repeat-y">repeat-y</option></select></div>
+      <div class="opt-label">Position X / Y</div>
+      <div class="opt-row"><select id="bgPX"><option value="left">left</option><option value="center">center</option><option value="right">right</option></select><select id="bgPY"><option value="top">top</option><option value="center">center</option><option value="bottom">bottom</option></select></div>
+      <div class="opt-label">Attachment</div>
+      <div class="opt-row"><select id="bgA"><option value="scroll">scroll</option><option value="fixed">fixed</option></select></div>
+      <div class="opt-label">Reply / Header Opacity</div>
+      <div class="opt-row"><input type="text" id="replyOp" value="1.0"><input type="text" id="navOp" value="0.9"></div>
+    </div>
+    <div class="card">
+      <input type="text" id="themeName" placeholder="Theme name" style="margin-bottom:.4em">
+      <input type="text" id="themeAuthor" placeholder="Author" style="margin-bottom:.4em">
+      <input type="text" id="themeTrip" placeholder="Author Tripcode" style="margin-bottom:.5em">
+      <div class="btn-row">
+        <button class="btn" onclick="download()">Download</button>
+        <button class="btn" onclick="copy()">Copy</button>
+      </div>
+      <div class="result-text" id="status"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var colors = [], selectedIdx = -1;
+var assigns = {
+  textColor:'', nameColor:'', tripColor:'', linkColor:'', linkHColor:'',
+  quoteColor:'', titleColor:'', blinkColor:'', qlColor:'',
+  mainColor:'', brderColor:'', bgColor:'', headerColor:'', headerBGColor:'',
+  headerLColor:'', headerLHColor:'', boardColor:'', inputColor:'', inputbColor:'',
+  postHLColor:'', quotesYouHLColor:'', ownPostHLColor:'',
+  replybgHLColor:'', replyslctColor:''
+};
+var labels = {
+  textColor:'Text', nameColor:'Name', tripColor:'Tripcode', linkColor:'Link', linkHColor:'Link Hover',
+  quoteColor:'Greentext', titleColor:'Subject', blinkColor:'Backlinks', qlColor:'Quotelinks',
+  mainColor:'Reply BG', brderColor:'Reply Border', bgColor:'Body BG', headerColor:'Header Text',
+  headerBGColor:'Header BG', headerLColor:'Header Link', headerLHColor:'Header Link Hover',
+  boardColor:'Board Title', inputColor:'Input BG', inputbColor:'Input Border',
+  postHLColor:'Post HL', quotesYouHLColor:'Quotes You HL', ownPostHLColor:'Own Post HL',
+  replybgHLColor:'Reply BG HL', replyslctColor:'Reply Select HL'
+};
+var defaults = { textColor:'ccc', nameColor:'117743', tripColor:'228854', linkColor:'8ab4f8',
+  linkHColor:'aac4f8', quoteColor:'789922', titleColor:'cc1105', blinkColor:'886644',
+  qlColor:'8ab4f8', mainColor:'2a2a2a', brderColor:'444', bgColor:'1a1a1a',
+  headerColor:'ddd', headerBGColor:'252525', headerLColor:'8ab4f8',
+  headerLHColor:'aac4f8', boardColor:'ddd', inputColor:'1a1a1a', inputbColor:'333',
+  postHLColor:'8ab4f8', quotesYouHLColor:'dd0000', ownPostHLColor:'8ab4f8',
+  replybgHLColor:'1a1a1a', replyslctColor:'8ab4f8' };
+
+function parseHex(s) {
+  s = s.replace(/^#/, '').toLowerCase();
+  if (/^[0-9a-f]{3}$/.test(s)) return s.split('').map(function(c){return c+c}).join('');
+  if (/^[0-9a-f]{6}$/.test(s)) return s;
+  if (/^[0-9a-f]{8}$/.test(s)) return s.slice(0,6);
+  return null;
+}
+function parseHSL(h,s,l) { h/=360; l/=100; s/=100; var r,g,b; if(s===0) r=g=b=l; else { var q=l<.5?l*(1+s):l+s-l*s, p=2*l-q; r=hue(p,q,h+1/3); g=hue(p,q,h); b=hue(p,q,h-1/3); } return Math.round(r*255).toString(16).padStart(2,'0')+Math.round(g*255).toString(16).padStart(2,'0')+Math.round(b*255).toString(16).padStart(2,'0'); }
+function hue(p,q,t){ if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p; }
+
+function extract() {
+  var raw = document.getElementById('input').value, found = [];
+  (raw.match(/#[0-9a-fA-F]{3,8}\b/g)||[]).forEach(function(h){ var c=parseHex(h); if(c) found.push(c); });
+  (raw.match(/hsla?\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%/g)||[]).forEach(function(m){
+    var d = m.match(/(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%/); if(d) found.push(parseHSL(+d[1],+d[2],+d[3]));
+  });
+  (raw.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/g)||[]).forEach(function(m){
+    var d = m.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/); if(d) found.push(parseInt(d[1]).toString(16).padStart(2,'0')+parseInt(d[2]).toString(16).padStart(2,'0')+parseInt(d[3]).toString(16).padStart(2,'0'));
+  });
+  (raw.match(/\b[0-9a-fA-F]{6}\b/g)||[]).forEach(function(c){ if(found.indexOf(c)===-1) found.push(c); });
+  colors = found.filter(function(v,i,a){ return a.indexOf(v)===i; });
+  selectedIdx = -1;
+  renderSwatches(); renderAssigns();
+}
+function renderSwatches() {
+  var el = document.getElementById('swatches');
+  el.innerHTML = colors.map(function(c,i){
+    return '<div class="swatch'+(i===selectedIdx?' selected':'')+'" style="background:#'+c+'" title="#'+c+'" onclick="selectSwatch('+i+')"></div>';
+  }).join('');
+  document.getElementById('hint').textContent = colors.length ? 'Click swatch → click property →' : 'No colors extracted.';
+}
+function selectSwatch(i) { selectedIdx = i; document.querySelectorAll('.swatch').forEach(function(el,j){ el.classList.toggle('selected', j===i); }); }
+function renderAssigns() {
+  var el = document.getElementById('assigns'), html = '';
+  for (var k in assigns) {
+    var v = assigns[k] || defaults[k];
+    html += '<div class="label-row" data-key="'+k+'">'+
+      '<span class="swatch" style="background:#'+v+';width:20px;height:20px;flex:0 0 20px;border-radius:2px;border:1px solid #444;position:relative">'+
+        '<input type="color" value="#'+v+'" onchange="pickColor(\''+k+'\',this.value)" style="position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;inset:0">'+
+      '</span>'+
+      '<span class="name" onclick="assignColor(\''+k+'\')" style="cursor:pointer">'+labels[k]+'</span>'+
+      '<span class="hex">#'+v+'</span></div>';
+  }
+  el.innerHTML = html; updatePreview();
+}
+function pickColor(key, val) {
+  assigns[key] = val.replace('#','');
+  renderAssigns();
+}
+function assignColor(key) { if (selectedIdx === -1 || !colors[selectedIdx]) return; assigns[key] = colors[selectedIdx]; renderAssigns(); }
+function randomize() {
+  if (!colors.length) return extract();
+  var keys = Object.keys(assigns), shuffled = colors.slice().sort(function(){ return Math.random()-0.5; });
+  for (var i = 0; i < keys.length; i++) assigns[keys[i]] = shuffled[i % shuffled.length];
+  if (assigns.textColor === assigns.mainColor && colors.length > 1) {
+    for (var j = 0; j < colors.length; j++) {
+      if (colors[j] !== assigns.mainColor) { assigns.textColor = colors[j]; break; }
+    }
+  }
+  renderAssigns();
+}
+function autoAssign() {
+  if (!colors.length) return extract();
+  var order = ['bgColor','mainColor','brderColor','headerBGColor','inputColor','inputbColor',
+    'textColor','headerColor','boardColor','nameColor','linkColor','headerLColor',
+    'quoteColor','linkHColor','headerLHColor','titleColor','blinkColor','qlColor',
+    'tripColor','postHLColor','quotesYouHLColor','ownPostHLColor','replybgHLColor','replyslctColor'];
+  for (var i = 0; i < order.length && i < colors.length; i++) assigns[order[i]] = colors[i];
+  if (assigns.textColor === assigns.mainColor && colors.length > 1) assigns.textColor = colors[1] || colors[0];
+  renderAssigns();
+}
+function getVal(key) { return assigns[key] || defaults[key]; }
+function updatePreview() {
+  var p = document.getElementById('preview');
+  p.style.backgroundColor = '#' + getVal('bgColor');
+  var bg = document.getElementById('bgImg').value.trim();
+  p.style.backgroundImage = bg ? 'url(' + (bg.match(/^url\(/) ? bg.slice(4,-1) : bg) + ')' : 'none';
+  p.style.backgroundRepeat = document.getElementById('bgR').value;
+  p.style.backgroundPosition = document.getElementById('bgPX').value + ' ' + document.getElementById('bgPY').value;
+  p.style.backgroundAttachment = document.getElementById('bgA').value;
+
+  var h = document.getElementById('preview-header');
+  h.style.background = '#' + getVal('headerBGColor');
+  h.style.color = '#' + getVal('headerColor');
+  h.style.borderColor = '#' + getVal('brderColor');
+  h.style.opacity = document.getElementById('navOp').value;
+
+  document.querySelectorAll('.preview-post').forEach(function(pp){
+    pp.style.background = '#' + getVal('mainColor');
+    pp.style.borderColor = '#' + getVal('brderColor');
+    pp.style.color = '#' + getVal('textColor');
+    pp.style.opacity = document.getElementById('replyOp').value;
+  });
+  var subj = document.querySelector('.post-subject');
+  if (subj) subj.style.color = '#' + getVal('titleColor');
+
+  // Dynamic hover styles
+  var css = '.preview-header a { color: #' + getVal('headerLColor') + '; }' +
+    '.preview-header a:hover { color: #' + getVal('headerLHColor') + '; }' +
+    '.preview-post .name { color: #' + getVal('nameColor') + '; }' +
+    '.preview-post .trip { color: #' + getVal('tripColor') + '; }' +
+    '.preview-post .post-info a { color: #' + getVal('linkColor') + '; }' +
+    '.preview-post .post-info a:hover { color: #' + getVal('linkHColor') + '; }' +
+    '.preview-post .greentext { color: #' + getVal('quoteColor') + '; }' +
+    '.preview-post .backlink a { color: #' + getVal('blinkColor') + '; }' +
+    '.preview-post .ql a { color: #' + getVal('qlColor') + '; }' +
+    '.preview-post .ql a:hover { color: #' + getVal('linkHColor') + '; }' +
+    '.preview-post .url { color: #' + getVal('linkColor') + '; }' +
+    '.preview-post .url:hover { color: #' + getVal('linkHColor') + '; }' +
+    '.own-post { border-left: 3px dashed #' + getVal('ownPostHLColor') + '; }' +
+    '.quote-you { border-left: 3px solid #' + getVal('quotesYouHLColor') + '; }' +
+    '.preview-inputs input, .preview-inputs select { background: #' + getVal('inputColor') + '; border-color: #' + getVal('inputbColor') + '; color: #' + getVal('textColor') + '; }' +
+    '.board-title { color: #' + getVal('boardColor') + '; }' +
+    '.board-list .current { border-bottom: 1px solid #' + getVal('linkHColor') + '; }';
+  var styleEl = document.getElementById('preview-style');
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'preview-style';
+    document.head.appendChild(styleEl);
+  }
+  styleEl.textContent = css;
+
+  // Override border for HL posts
+  document.querySelectorAll('.own-post, .quote-you').forEach(function(pp){
+    pp.style.borderLeft = '';
+  });
+}
+function buildTheme() {
+  var t = { name: document.getElementById('themeName').value || 'New Theme',
+    authorName: document.getElementById('themeAuthor').value || 'You',
+    authorTrip: document.getElementById('themeTrip').value || '', replyOp: document.getElementById('replyOp').value || '1.0',
+    navOp: document.getElementById('navOp').value || '0.9', customCSS: '' };
+  t.bgImg = document.getElementById('bgImg').value || false;
+  if (t.bgImg) t.bgRPA = (document.getElementById('bgR').value||'repeat')+' '+(document.getElementById('bgPY').value||'top')+' '+(document.getElementById('bgPX').value||'left')+' '+(document.getElementById('bgA').value||'scroll');
+  for (var k in assigns) t[k] = assigns[k] || defaults[k];
+  return t;
+}
+function download() {
+  var t = buildTheme(), a = document.createElement('a');
+  a.download = (t.name||'theme').replace(/[^a-z0-9_-]/gi,'_') + '.json';
+  a.href = 'data:application/json,' + encodeURIComponent(JSON.stringify(t,null,2));
+  a.click();
+  var s = document.getElementById('status'); s.textContent = 'Downloaded: ' + a.download; s.className = 'result-text success';
+}
+function copy() {
+  var ta = document.createElement('textarea');
+  ta.value = JSON.stringify(buildTheme(), null, 2);
+  document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  var s = document.getElementById('status'); s.textContent = 'Copied!'; s.className = 'result-text success';
+}
+renderAssigns();
+updatePreview();
+document.getElementById('bgImg').addEventListener('input', updatePreview);
+document.getElementById('bgR').addEventListener('change', updatePreview);
+document.getElementById('bgPX').addEventListener('change', updatePreview);
+document.getElementById('bgPY').addEventListener('change', updatePreview);
+document.getElementById('bgA').addEventListener('change', updatePreview);
+document.getElementById('replyOp').addEventListener('input', updatePreview);
+document.getElementById('navOp').addEventListener('input', updatePreview);
+</script>
+</body>
+</html>
