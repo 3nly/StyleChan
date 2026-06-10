@@ -1,25 +1,18 @@
 // ==UserScript==
 // @name         StyleChan
-// @version      1.6.3
+// @version      1.6.4
 // @namespace    StyleChan
 // @description  Customizable themes for 4chan X.
 // @license      GPL-3.0; https://github.com/3nly/StyleChan/blob/main/LICENSE 
-// @match        http://boards.4chan.org/*
 // @match        https://boards.4chan.org/*
-// @match        http://sys.4chan.org/*
 // @match        https://sys.4chan.org/*
-// @exclude      http://www.4chan.org/
 // @exclude      https://www.4chan.org/
-// @exclude      http://www.4chan.org/*
 // @exclude      https://www.4chan.org/*
-// @exclude      http://www.4chan.org/advertise
-// @exclude      https://www.4chan.org/advertise
-// @exclude      http://www.4chan.org/advertise?*
-// @exclude      https://www.4chan.org/advertise?*
-// @exclude      http://www.4chan.org/donate
-// @exclude      https://www.4chan.org/donate
-// @exclude      http://www.4chan.org/donate?*
-// @exclude      https://www.4chan.org/donate?*
+// @exclude      https://www.4chan.org/advertise*
+// @exclude      https://www.4chan.org/donate*
+// @exclude      https://www.4chan.org/pass*
+// @exclude      https://sys.4chan.org/signin*
+// @exclude      https://sys.4chan.org/auth*
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_deleteValue

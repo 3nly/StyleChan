@@ -1,3 +1,10 @@
+### v1.6.4
+*2026-06-10*
+
+Updated userscript meta:
+- StyleChan will no longer apply to Email Verification, Pass and Auth pages
+- Removed HTTP entries
+
 ### v1.6.3
 *2026-06-10*
 

@@ -273,7 +273,7 @@
     },
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
-        VERSION = "1.6.3",
+        VERSION = "1.6.4",
         CHANGELOG = "https://github.com/3nly/StyleChan/releases/latest",
         themeInputs = [{
             dName: "Reply Background",

@@ -1,6 +1,6 @@
 {
   "name": "StyleChan",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "manifest_version": 2,
   "description": "Customizable themes for 4chan X.",
   "icons": {
@@ -11,7 +11,7 @@
   "content_scripts": [{
     "js": ["script.js"],
     "matches": ["*://boards.4chan.org/*","*://sys.4chan.org/*"],
-    "exclude_matches": ["*://www.4chan.org/","*://www.4chan.org/*","*://www.4chan.org/advertise","*://www.4chan.org/advertise?*","*://www.4chan.org/donate","*://www.4chan.org/donate?*"],
+    "exclude_matches": ["*://www.4chan.org/","*://www.4chan.org/*","*://www.4chan.org/advertise*","*://www.4chan.org/donate*","*://www.4chan.org/pass*","*://sys.4chan.org/signin*","*://sys.4chan.org/auth*"],
     "all_frames": true,
     "run_at": "document_start"
   }],
