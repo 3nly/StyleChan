@@ -6,16 +6,8 @@
 // @license      <%= license %>; <%= meta.repo %>blob/<%= meta.mainBranch %>/LICENSE 
 <%=
   (function() {
-    function expand(items, regex, substitutions) {
-      return items.flatMap(item => 
-        regex.test(item) 
-          ? substitutions.map(s => item.replace(regex, s)) 
-          : item
-      );
-    }
-
     function expandMatches(matches) {
-      return expand(matches, /^\*/, ['http', 'https']);
+      return matches.map(m => m.replace(/^\*:/, 'https:'));
     }
 
     return [
