@@ -236,7 +236,7 @@ select,
 #t-load,
 #t-next {
   background: var(--sc-inputColor) !important;
-  transition: background .2s, color .2s, border-color .2s, width .2s !important;
+  transition: background .2s, color .2s, border-color .2s !important;
 }
 input[type=checkbox] {
   background: rgb(var(--sc-inputColor-shift25)) !important;
