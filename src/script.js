@@ -214,6 +214,7 @@
                 value: "solid"
             }]
         ],
+        "Opacity": [100, "Adjusts the opacity of post highlighting."],
         ":: Fonts": ["header", ""],
         "Font Family": [
             "sans-serif", "Set the default font family.", [{
@@ -2113,6 +2114,9 @@
                                 "<p class='buttons-container'><span class='btn-right'><a class='options-button' name=save>Save</a><a class='options-button' name=cancel>Cancel</a></span></p>");
                         } else if (key === "Themes") {
                             optionsHTML.push("</div><input type=radio class=tab-select name=tab-select class=tab-select  id=themes-select hidden><div id='themes-section' class='options-section'>");
+                        } else if (key === "Opacity") {
+                            optionsHTML.push("<label class='option' title=\"" + des + "\"><span class='option-title'>" + key + "</span>" +
+                                "<input type=range name=Opacity min=0 max=100 value=" + val + " class='mascot-opacity'><span class='mascot-opacity-val'>" + val + "%</span></label>");
                         } else // checkbox
                             optionsHTML.push("<label class=option title=\"" + des + "\"><span class='option-title'>" + key + "</span><input" + (val ? " checked" : "") +
                                 " name='" + key + "' " + (defaultConfig[key][3] === true ? " has-suboption" : "") + " type=checkbox></label>");
@@ -2267,6 +2271,9 @@
                         else if (e.key === "ArrowDown" && !isNaN(val))
                             $(this).val(--val + "px");
                     });
+                    $("input[name='Opacity']", tOptions).bind("input", function () {
+                        $(this).next(".opacity-val").text($(this).val() + "%");
+                    });
 
                     // themes tab
                     $SS.options.createThemesTab(tOptions);
@@ -2392,7 +2399,7 @@
                         name = $this.attr("name"),
                         val = $this.val();
 
-                    if (/^(Font Size|Custom (Right|Left) Margin|Custom Decoration Width|UI Font Size|Backlink Font Size|Dark Theme|Light Theme)$/.test(name)){
+                    if (/^(Font Size|Custom (Right|Left) Margin|Custom Decoration Width|UI Font Size|Backlink Font Size|Dark Theme|Light Theme|Opacity)$/.test(name)){
                         val = parseInt(val);
                     }
 

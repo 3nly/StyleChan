@@ -577,18 +577,19 @@ input[type=range].mascot-opacity::-moz-range-thumb {
 :root.rounded-corners .mascot-opacity-val {
   border-radius: 3px !important;
 }
-:root.rounded-corners input[type=range].mascot-opacity {
+:root.rounded-corners input[type=range],
+:root.rounded-corners input[type=range]::-webkit-slider-runnable-track,
+:root.rounded-corners input[type=range]::-moz-range-track {
   border-radius: 3px !important;
 }
-:root.rounded-corners input[type=range].mascot-opacity::-webkit-slider-runnable-track {
-  border-radius: 3px !important;
-}
-:root.rounded-corners input[type=range].mascot-opacity::-moz-range-track {
-  border-radius: 3px !important;
-}
-:root.rounded-corners input[type=range].mascot-opacity::-webkit-slider-thumb {
+:root.rounded-corners input[type=range]::-webkit-slider-thumb,
+:root.rounded-corners input[type=range]::-moz-range-thumb {
   border-radius: 50% !important;
 }
-:root.rounded-corners input[type=range].mascot-opacity::-moz-range-thumb {
-  border-radius: 50% !important;
+#oneechan-options input[type=range].mascot-opacity {
+  float: right !important;
+}
+#oneechan-options .mascot-opacity-val {
+  float: right;
+  margin-right: 0.8em;
 }

@@ -1,15 +1,15 @@
 /* Highlight all posts */
 :root.hl-border .post.reply,
 :root.op-background.hl-border .postContainer.opContainer {
-  border-left: " + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(var(--sc-postHLColor-rgb),1.0) !important;
+  border-left: " + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(var(--sc-postHLColor-rgb)," + (($SS.conf["Opacity"] || 100) / 100) + ") !important;
 }
 :root.hl-border-down .post.reply,
 :root.op-background.hl-border-down .postContainer.opContainer {
-  border-bottom: " + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(var(--sc-postHLColor-rgb),1.0) !important;
+  border-bottom: " + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(var(--sc-postHLColor-rgb)," + (($SS.conf["Opacity"] || 100) / 100) + ") !important;
 }
 :root.hl-outline .post.reply,
 :root.op-background.hl-outline .postContainer.opContainer {
-  outline: " + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(var(--sc-postHLColor-rgb),1.0);
+  outline: " + $SS.conf["Width Decoration"] + "px " + $SS.conf["Highlight Style"] + " rgba(var(--sc-postHLColor-rgb)," + (($SS.conf["Opacity"] || 100) / 100) + ");
 }
 /* Filter Highlighting */
 .filter-highlight .catalog-thumb {
@@ -30,19 +30,19 @@
 :root.highlight-you .quotesYou.post.op,
 :root.highlight-you.fourchan-x .quotesYou.opContainer,
 :root.highlight-you .quotesYou > .reply {
-  border-left: " + $SS.conf["Width Decoration"] + "px solid rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
+  border-left: " + $SS.conf["Width Decoration"] + "px solid rgba(var(--sc-quotesYouHLColor-rgb)," + (($SS.conf["Opacity"] || 100) / 100) + ") !important;
 }
 :root.highlight-you .quotesYou > .sideArrows {
-  color: rgba(var(--sc-quotesYouHLColor-rgb),1.0) !important;
+  color: rgba(var(--sc-quotesYouHLColor-rgb)," + (($SS.conf["Opacity"] || 100) / 100) + ") !important;
 }
 /* Your Posts */
 :root.highlight-own .yourPost.post.op,
 :root.highlight-own.fourchan-x .yourPost.opContainer,
 :root.highlight-own .yourPost > .reply {
-  border-left: " + $SS.conf["Width Decoration"] + "px dashed rgba(var(--sc-ownPostHLColor-rgb),1.0) !important;
+  border-left: " + $SS.conf["Width Decoration"] + "px dashed rgba(var(--sc-ownPostHLColor-rgb)," + (($SS.conf["Opacity"] || 100) / 100) + ") !important;
 }
 :root.highlight-own .yourPost > .sideArrows {
-  color: rgba(var(--sc-ownPostHLColor-rgb),1.0) !important;
+  color: rgba(var(--sc-ownPostHLColor-rgb)," + (($SS.conf["Opacity"] || 100) / 100) + ") !important;
 }
 /* Highlighted Reply BG */
 .reply:target {
@@ -77,11 +77,11 @@
 }
 /* Highlight (OP) and (You) */
 :root.highlight-opQuotes .qmark-op {
-  color: rgba(var(--sc-postHLColor-rgb),1.0);
+  color: rgba(var(--sc-postHLColor-rgb)," + (($SS.conf["Opacity"] || 100) / 100) + ");
   font-weight: bold;
 }
 :root.highlight-youQuotes .qmark-you {
-  color: rgba(var(--sc-quotesYouHLColor-rgb),1.0);
+  color: rgba(var(--sc-quotesYouHLColor-rgb)," + (($SS.conf["Opacity"] || 100) / 100) + ");
   font-weight: bold;
 }
 /* Scroll Markers (XT) */
