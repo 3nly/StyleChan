@@ -1,3 +1,8 @@
+## v1.7.0
+*2026-06-11*
+
+- New option: Highlight Opacity slider
+
 ### v1.6.4
 *2026-06-10*
 
