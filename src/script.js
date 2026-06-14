@@ -2162,7 +2162,7 @@
                     $("a[name=Export]", tOptions).bind("click", function () {
                         if ($("a[download]", tOptions).exists())
                             return;
-                        var exportalert = $("<a class='options-button'download='StyleChan v" + VERSION + " Settings.json' href='data:application/json," + encodeURIComponent(JSON.stringify($SS.exportOptions, null, 2)) + "'>Save me!").bind("click", $SS.options.close);
+                        var exportalert = $("<a class='options-button' download='StyleChan v" + VERSION + " Settings.json' href='data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify($SS.exportOptions, null, 2)))) + "'>Save me!").bind("click", $SS.options.close);
                         return $(this).replace(exportalert);
                     });
                     // Reset settings
@@ -2665,7 +2665,7 @@
                     var theme = $SS.options.addTheme(themeIndex, true);
                     if ($("a[download]", div).exists())
                         return;
-                    var exportalert = $("<a class='options-button'download='" + theme.name + ".json' href='data:application/json," + encodeURIComponent(JSON.stringify(theme)) + "'>Save me!");
+                    var exportalert = $("<a class='options-button' download='" + theme.name + ".json' href='data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(theme)))) + "'>Save me!");
                     return $(this).replace(exportalert);
                 });
 
