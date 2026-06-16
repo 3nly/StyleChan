@@ -1,3 +1,8 @@
+### v1.7.1
+*2026-06-14*
+
+- Fix a formatting issue where certain 4chan posts were breaking the export of the StyleChan's JSON settings
+
 ## v1.7.0
 *2026-06-11*
 
