@@ -61,7 +61,7 @@ body>#header-bar,
   font-size: 0 !important;
 }
 /* Backlinks */
-.backlink {
+:root:not(.backlink-icon) .container :is(.backlink, .hashlink) {
   font-size: " + $SS.conf["Backlink Font Size"] + "px !important;
 }
 /* Options panels + others -> capped to not break */
