@@ -128,8 +128,15 @@ s:hover .quote,
 }
 /* Backlinks */
 :root .backlink, 
-:root .backlink.deadlink {
+:root .backlink.deadlink,
+:root .hashlink {
   color: var(--sc-blinkColor) !important;
+}
+:root .hashlink {
+  opacity: .8;
+}
+:root .hashlink:hover {
+  opacity: 1;
 }
 :root.backlink-shadow .backlink {
   text-shadow: 1px 1px 5px;
