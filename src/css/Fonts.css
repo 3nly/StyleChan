@@ -24,7 +24,8 @@ div.boardBanner div.boardTitle,
   font-size: inherit !important;
 }
 /* Base font */
-body {
+body,
+:root.anonymize .name::before {
   font-family: " + ($SS.conf["Custom Font"] ? "'" + $SS.conf["Custom Font"] + "'" : $SS.formatFont($SS.conf["Font Family"])) + " !important;
   font-size: " + $SS.conf["Font Size"] + "px !important;
 }
