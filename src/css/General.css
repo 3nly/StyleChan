@@ -126,10 +126,6 @@ body {
 :root.reply-fit-width.fit-postmenu .postInfo > .postMenuBtn {
   margin: 2px 20px 0 0;
 }
-.menu-button + .container:not(:empty),
-.container {
-  margin-left: 4px !important;
-}
 :root.reply-fit-width .post .menu-button {
   position: relative;
   opacity: 0;
