@@ -38,7 +38,8 @@ body,
 /* Slightly smaller */
 .fileText,
 .meta,
-.summary {
+.summary,
+.catalog-stats {
   font-size: 82% !important;
 }
 /* Board title -> larger */
