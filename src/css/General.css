@@ -48,6 +48,9 @@ body {
 :root.bottom-backlinks .container~.inline:last-of-type:not(.inline .hasInline .inline) {
   margin-bottom: 3px !important;
 }
+.hashlink {
+  padding-left: 2px;
+}
 #qp .op>.postInfo {
   min-width: 600px;
 }

@@ -134,6 +134,7 @@ s:hover .quote,
 }
 :root .hashlink {
   opacity: .8;
+  vertical-align: middle;
 }
 :root .hashlink:hover {
   opacity: 1;
