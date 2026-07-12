@@ -25,11 +25,11 @@ div.boardBanner div.boardTitle,
   font-size: inherit !important;
 }
 /* Base font */
-body,
-:root.anonymize .name::before {
+body {
   font-family: " + ($SS.conf["Custom Font"] ? "'" + $SS.conf["Custom Font"] + "'" : $SS.formatFont($SS.conf["Font Family"])) + " !important;
   font-size: " + $SS.conf["Font Size"] + "px !important;
 }
+:root.anonymize .name::before,
 :root.shortcut-icons #shortcuts .fa::before,
 .entry,
 .dd-menu {
