@@ -7,6 +7,7 @@ button,
 form,
 span,
 a.qr-link,
+.entry,
 #qrCaptchaContainer,
 #captchaFormPart,
 tr#captchaFormPart td div#t-root,
@@ -27,6 +28,11 @@ div.boardBanner div.boardTitle,
 body,
 :root.anonymize .name::before {
   font-family: " + ($SS.conf["Custom Font"] ? "'" + $SS.conf["Custom Font"] + "'" : $SS.formatFont($SS.conf["Font Family"])) + " !important;
+  font-size: " + $SS.conf["Font Size"] + "px !important;
+}
+:root.shortcut-icons #shortcuts .fa::before,
+.entry,
+.dd-menu {
   font-size: " + $SS.conf["Font Size"] + "px !important;
 }
 /* Slightly smaller */
