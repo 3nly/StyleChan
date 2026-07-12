@@ -51,6 +51,9 @@ body {
 .hashlink {
   padding-left: 2px;
 }
+:root.backlink-icon .post.op a.hashlink {
+  vertical-align: middle;
+}
 #qp .op>.postInfo {
   min-width: 600px;
 }
