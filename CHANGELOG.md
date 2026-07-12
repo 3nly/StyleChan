@@ -1,3 +1,11 @@
+### v1.7.2
+*2026-07-12*
+
+- Hashlinks will now follow the Backlink Color and Backlink Font Size (issue #31)
+- The Anonymous name when using 4chanX's Anonymize option will now also follow Font Size
+- 4chanX icons in the header can now follow Font Size more closely and grow/shrink in size
+- Menu entries, Catalog Stats and File Info will now correctly follow Font Size, but reduced at 82%
+
 ### v1.7.1
 *2026-06-14*
 
