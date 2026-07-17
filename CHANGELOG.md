@@ -1,3 +1,10 @@
+### v1.7.3
+*2026-07-17*
+
+**Auto-convert images**: Refactor
+  - Will now also convert other image formats such as JXL or AVIF
+  - Should now correctly check and convert images above the dimension limits (issue #30)
+
 ### v1.7.2
 *2026-07-12*
 

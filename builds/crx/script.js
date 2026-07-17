@@ -274,7 +274,7 @@
     },
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
-        VERSION = "1.7.2",
+        VERSION = "1.7.3",
         CHANGELOG = "https://github.com/3nly/StyleChan/releases/latest",
         themeInputs = [{
             dName: "Reply Background",
@@ -1144,7 +1144,9 @@
                         w = bitmap.width, h = bitmap.height,
                         board = $SS.location.board,
                         maxDim = ($SS.boardMaxDims[board] || 10000),
-                        wasResized = false;
+                        outName = baseName + ".jpg",
+                        wasResized = false,
+                        qualities = [0.99, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.05, 0.01];
 
                     if (w > maxDim || h > maxDim) {
                         var scale = Math.min(maxDim / w, maxDim / h);
@@ -1157,22 +1159,24 @@
                     canvas.getContext("2d").drawImage(bitmap, 0, 0, w, h);
                     bitmap.close();
 
-                    var qualities = [0.99, 0.98, 0.97, 0.96, 0.95, 0.90, 0.85, 0.80, 0.75];
-                    var outName = baseName + ".jpg";
+                    function emitFile(blob, q) {
+                        var converted = new File([blob], outName, { type: "image/jpeg" });
+                        var dt = new DataTransfer();
+                        dt.items.add(converted);
+                        qrInput.files = dt.files;
+                        qrInput.dispatchEvent(new Event("input", { bubbles: true }));
+                        qrInput.dispatchEvent(new Event("change", { bubbles: true }));
+                        var msg = "Converted " + file.name + " to " + outName + " (q=" + Math.round(q * 100) + "%)";
+                        if (wasResized) msg += ", resized to " + w + "x" + h;
+                        notify(msg);
+                        qrInput._scConverting = false;
+                    }
 
                     function tryQuality(index) {
                         var q = qualities[index];
                         canvas.toBlob(function (blob) {
                             if (blob.size <= MAX_BYTES || index === qualities.length - 1) {
-                                var converted = new File([blob], outName, { type: "image/jpeg" });
-                                var dt = new DataTransfer();
-                                dt.items.add(converted);
-                                qrInput.files = dt.files;
-                                qrInput.dispatchEvent(new Event("input", { bubbles: true }));
-                                qrInput.dispatchEvent(new Event("change", { bubbles: true }));
-                                var msg = "Converted " + file.name + " to " + outName + " (q=" + Math.round(q * 100) + "%)";
-                                if (wasResized) msg += ", resized to " + w + "x" + h;
-                                notify(msg);
+                                emitFile(blob, q);
                             } else {
                                 tryQuality(index + 1);
                             }
@@ -1185,7 +1189,8 @@
 
             function shouldConvert(file) {
                 if (file.type === "image/gif") return false;
-                return file.type === "image/webp" || (/^image\//.test(file.type) && file.size > MAX_BYTES);
+                if (file.type === "image/jpeg" || file.type === "image/png") return file.size > MAX_BYTES;
+                return true;
             }
 
             function findQRFileInput() {
@@ -1204,16 +1209,55 @@
                 } catch (err) { console.warn("Failed to clear file:", err); }
             }
 
+            function checkAndConvert(file, input) {
+                var baseName = file.name.replace(/\.[^.]+$/, "");
+
+                if (shouldConvert(file)) {
+                    clearSelectedFile(input);
+                    convertToJPEG(file, baseName, input);
+                    return;
+                }
+
+                var board = $SS.location.board;
+                var maxDim = ($SS.boardMaxDims[board] || 10000);
+
+                createImageBitmap(file).then(function (bitmap) {
+                    if (bitmap.width > maxDim || bitmap.height > maxDim) {
+                        bitmap.close();
+                        clearSelectedFile(input);
+                        convertToJPEG(file, baseName, input);
+                    } else {
+                        bitmap.close();
+                        var dt = new DataTransfer();
+                        dt.items.add(file);
+                        input.files = dt.files;
+                        input.dispatchEvent(new Event("input", { bubbles: true }));
+                        input.dispatchEvent(new Event("change", { bubbles: true }));
+                        input._scConverting = false;
+                    }
+                }).catch(function (err) {
+                    console.warn("Image dimension check failed:", err);
+                    var dt = new DataTransfer();
+                    dt.items.add(file);
+                    input.files = dt.files;
+                    input.dispatchEvent(new Event("input", { bubbles: true }));
+                    input.dispatchEvent(new Event("change", { bubbles: true }));
+                    input._scConverting = false;
+                });
+            }
+
             // File picker: intercept change on the QR input
             document.addEventListener("change", function (e) {
                 var input = e.target;
+                if (input._scConverting) return;
                 if (input.type !== "file") return;
                 if (!input.closest("#qr, #quickReply, #postForm, form[name='qrPost'], form[name='post']")) return;
                 var file = input.files && input.files[0];
-                if (!file || !shouldConvert(file)) return;
+                if (!file || file.type === "image/gif") return;
+
                 e.stopImmediatePropagation();
-                clearSelectedFile(input);
-                convertToJPEG(file, file.name.replace(/\.[^.]+$/, ""), input);
+                input._scConverting = true;
+                checkAndConvert(file, input);
             }, true);
 
             // Drag and drop
@@ -1222,7 +1266,7 @@
                 if (!files || !files.length) return;
 
                 var file = files[0];
-                if (!shouldConvert(file)) return;
+                if (file.type === "image/gif") return;
 
                 // Find the QR file input (4chanX or native)
                 var qrInput = findQRFileInput();
@@ -1231,9 +1275,8 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                var baseName = file.name.replace(/\.[^.]+$/, "");
-                clearSelectedFile(qrInput);
-                convertToJPEG(file, baseName, qrInput);
+                qrInput._scConverting = true;
+                checkAndConvert(file, qrInput);
             }, true);
         },
         getNotificationRoot: function () {
