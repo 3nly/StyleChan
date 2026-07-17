@@ -30,7 +30,7 @@
   display: inherit !important;
 }
 /* Backlinks */
-:root.backlink-icon .backlink {
+:root.backlink-icon .backlink .quotelink {
   font-size: 0 !important;
   padding: " + (($SS.conf["Font Size"] < 12) ? 5 : 6) + "px !important;
   margin-right: 0 !important;
@@ -40,7 +40,7 @@
   left: 2px;
   background-image: var(--sc-icon-backlink) !important;
 }
-:root.backlink-icon .backlink.inlined {
+:root.backlink-icon .backlink .quotelink.linkfade {
   font-size: 0 !important;
   padding: 6px !important;
   margin-right: 0 !important;
@@ -50,17 +50,47 @@
   left: 3px;
   background-image: var(--sc-icon-downArrow) !important;
 }
-:root.backlink-icon .backlink .quotelink {
+:root.backlink-icon .backlink .quotelink:hover {
+  opacity: 1 !important;
+}
+:root.fourchan-x.backlink-icon .backlink,
+:root.fourchan-xt.backlink-icon .backlink {
+  font-size: 0 !important;
+  padding: " + (($SS.conf["Font Size"] < 12) ? 5 : 6) + "px !important;
+  margin-right: 0 !important;
+  opacity: 0.6 !important;
+  position: relative;
+  bottom: 5px;
+  left: 2px;
+  background-image: var(--sc-icon-backlink) !important;
+}
+:root.fourchan-x.backlink-icon .backlink.inlined,
+:root.fourchan-xt.backlink-icon .backlink.inlined {
+  font-size: 0 !important;
+  padding: 6px !important;
+  margin-right: 0 !important;
+  opacity: 0.6 !important;
+  position: relative;
+  bottom: 5px;
+  left: 3px;
+  background-image: var(--sc-icon-downArrow) !important;
+}
+:root.fourchan-x.backlink-icon .backlink .quotelink,
+:root.fourchan-xt.backlink-icon .backlink .quotelink {
   position: absolute;
   inset: 0;
   font-size: 0 !important;
 }
-:root.backlink-icon .reply .backlink {
-  bottom: " + (($SS.conf["Font Size"] < 12) ? 4 : 6) + "px !important;
+:root.fourchan-x.backlink-icon .backlink.inlined .quotelink,
+:root.fourchan-xt.backlink-icon .backlink.inlined .quotelink {
+  position: absolute;
+  left: 3px !important;
+  inset: 0;
+  font-size: 0 !important;
 }
-:root.backlink-icon .backlink:hover,
-:root.backlink-icon .backlink.inlined:hover {
-  opacity: 1 !important;
+:root.fourchan-x.backlink-icon .reply .backlink,
+:root.fourchan-xt.backlink-icon .reply .backlink {
+  bottom: " + (($SS.conf["Font Size"] < 12) ? 4 : 6) + "px !important;
 }
 /* From 4chanSS */
 :root.use-sc-icons img[title=Closed],
