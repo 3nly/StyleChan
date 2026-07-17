@@ -1145,6 +1145,7 @@
                         board = $SS.location.board,
                         maxDim = ($SS.boardMaxDims[board] || 10000),
                         wasResized = false;
+                        qualities = [0.99, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.05],
 
                     if (w > maxDim || h > maxDim) {
                         var scale = Math.min(maxDim / w, maxDim / h);
@@ -1157,7 +1158,6 @@
                     canvas.getContext("2d").drawImage(bitmap, 0, 0, w, h);
                     bitmap.close();
 
-                    var qualities = [0.99, 0.98, 0.97, 0.96, 0.95, 0.90, 0.85, 0.80, 0.75];
                     var outName = baseName + ".jpg";
 
                     function tryQuality(index) {
