@@ -54,7 +54,6 @@ a:visited,
 s:hover>a:not(:hover),
 :root .typ,
 :root .atn,
-a.postMenuBtn,
 body.is_catalog .button,
 :root.catalog-mode .button,
 :root .options-button,
@@ -129,7 +128,8 @@ s:hover .quote,
 /* Backlinks */
 :root .backlink, 
 :root .backlink.deadlink,
-:root .hashlink {
+:root .hashlink,
+a.postMenuBtn {
   color: var(--sc-blinkColor) !important;
 }
 :root .hashlink {
