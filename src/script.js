@@ -1247,7 +1247,7 @@
             }
 
             // File picker: intercept change on the QR input
-            document.addEventListener("change", function (e) {
+            window.addEventListener("change", function (e) {
                 var input = e.target;
                 if (input._scConverting) return;
                 if (input.type !== "file") return;
@@ -1261,7 +1261,7 @@
             }, true);
 
             // Drag and drop
-            document.addEventListener("drop", function (e) {
+            window.addEventListener("drop", function (e) {
                 var files = e.dataTransfer && e.dataTransfer.files;
                 if (!files || !files.length) return;
 
