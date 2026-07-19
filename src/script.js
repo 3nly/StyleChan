@@ -743,6 +743,10 @@
                 document.addEventListener("click", function (e) {
                     var li = e.target.closest("[data-cmd='toggle-you']");
                     if (li && !$SS.is4chanX()) $SS.toggleYou(li);
+                    li = e.target.closest("[data-cmd='delete-post']");
+                    if (li && !$SS.is4chanX()) $SS.deletePost(li, false);
+                    li = e.target.closest("[data-cmd='delete-file']");
+                    if (li && !$SS.is4chanX()) $SS.deletePost(li, true);
                 });
 
                 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
@@ -771,7 +775,10 @@
                                 }
                             }
                             var pm = node.matches && node.matches("#post-menu") ? node : node.querySelector ? node.querySelector("#post-menu") : null;
-                            if (pm) $SS.insertToggleYou();
+                            if (pm) {
+                                $SS.insertToggleYou();
+                                $SS.insertDeletePost();
+                            }
                         }
                     }
                 });
@@ -1366,6 +1373,7 @@
                     $SS.dismissNotification(note);
                 }, lifetime * 1000);
             }
+            return note;
         },
         initRememberComment: function () {
             if (!$SS.conf["Remember Comment Draft"]) return;
@@ -1881,6 +1889,70 @@
                     $SS.localJSON.set(key, data);
                 }
             } catch (e) {}
+        },
+        // Taken from ccd0 4chanX
+        // MIT License https://github.com/ccd0/4chan-x?tab=License-1-ov-file
+        insertDeletePost: function () {
+            if ($SS.is4chanX()) return;
+            var menu = document.getElementById("post-menu");
+            if (!menu || menu.querySelector("[data-cmd='delete-post']")) return;
+            var refItem = menu.querySelector("[data-cmd='toggle-you']") || menu.querySelector("li[data-cmd='hide-r']") || menu.querySelector("li[data-id]");
+            if (!refItem) return;
+            var postId = refItem.getAttribute("data-id");
+            var subUl = document.createElement("ul");
+            var postLi = document.createElement("li");
+            postLi.setAttribute("data-cmd", "delete-post");
+            postLi.setAttribute("data-id", postId);
+            postLi.textContent = "Post";
+            subUl.appendChild(postLi);
+            var fileLi = document.createElement("li");
+            fileLi.setAttribute("data-cmd", "delete-file");
+            fileLi.setAttribute("data-id", postId);
+            fileLi.textContent = "File only";
+            subUl.appendChild(fileLi);
+            var li = document.createElement("li");
+            li.appendChild(subUl);
+            li.appendChild(document.createTextNode("Delete \u00BB"));
+            refItem.parentNode.insertBefore(li, refItem.nextSibling);
+        },
+        deletePost: function (li, fileOnly) {
+            var postId = li.getAttribute("data-id");
+            if (!postId) return;
+            var delForm = document.getElementById("delform");
+            if (!delForm) return;
+            var url = delForm.action;
+            var formData = new FormData();
+            formData.append("mode", "usrdel");
+            formData.append("onlyimgdel", fileOnly ? "1" : "0");
+            formData.append(postId, "delete");
+            var pwdInput = delForm.querySelector('input[name="pwd"]');
+            if (pwdInput) formData.append("pwd", pwdInput.value);
+            var delNote = $SS.notify({ type: 'success', content: "Deleting...", lifetime: 0 });
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.withCredentials = true;
+            xhr.responseType = "document";
+            xhr.onloadend = function () {
+                $SS.dismissNotification(delNote);
+                var msg, type = 'success';
+                if (!xhr.responseXML) {
+                    msg = "Connection error, please retry.";
+                    type = 'warning';
+                } else if (xhr.responseXML.title === "4chan - Banned") {
+                    msg = "You cannot delete posts because you are banned.";
+                    type = 'warning';
+                } else {
+                    var errmsg = xhr.responseXML.getElementById("errmsg");
+                    if (errmsg) {
+                        msg = errmsg.textContent;
+                        type = 'warning';
+                    } else {
+                        msg = fileOnly ? "File deleted." : "Post deleted.";
+                    }
+                }
+                $SS.notify({ type: type, content: msg, lifetime: 5 });
+            };
+            xhr.send(formData);
         },
         QRDialogCreationHandler: function (e) {
             var qr = e.target;
