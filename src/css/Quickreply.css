@@ -4,6 +4,10 @@
   box-shadow: none !important;
   border-radius: 0 !important;
 }
+#qrCaptchaContainer,
+.captcha-root > div:first-of-type {
+  width: auto !important;
+}
 :root:not(.vertical-qr) #qr .move {
   min-width: 302px;
 }
