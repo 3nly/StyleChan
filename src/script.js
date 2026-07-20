@@ -773,6 +773,7 @@
                                     if (!$SS.is4chanX()) $SS.markOwnPosts(node);
                                     if (!$SS.is4chanX()) $SS.markQuotingYou(node);
                                     if (!$SS.is4chanX()) $SS.relativeDates(node);
+                                    if (!$SS.is4chanX()) $SS.replacePostMenuBtn(node);
                                 }
                             }
                             var pm = node.matches && node.matches("#post-menu") ? node : node.querySelector ? node.querySelector("#post-menu") : null;
@@ -2097,6 +2098,14 @@
                     else text = Math.floor(days / 365) + " year" + (Math.floor(days / 365) > 1 ? "s" : "") + " ago";
                     dt.textContent = text;
                 }
+            });
+        },
+        replacePostMenuBtn: function (root) {
+            if ($SS.is4chanX()) return;
+            root = root || document;
+            var btns = root.querySelectorAll ? root.querySelectorAll(".postMenuBtn") : [];
+            [].forEach.call(btns, function (btn) {
+                if (btn.textContent === "▶" || btn.textContent === "\u25B6") btn.textContent = "\u2771";
             });
         },
         displayMascots: function () {
@@ -4233,6 +4242,7 @@
                     if ($SS.conf["Highlight Own Posts"]) $SS.markOwnPosts();
                     if ($SS.conf["Highlight Posts Quoting You"]) $SS.markQuotingYou();
                     if ($SS.conf["Relative Post Dates"]) $SS.relativeDates();
+                    $SS.replacePostMenuBtn();
                 }
             }
         },
