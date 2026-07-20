@@ -421,3 +421,31 @@ input[type="number"] {
   cursor: text;
   user-select: text;
 }
+:root:not(.fourchan-x) #qr-filename-container .sc-url-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+:root:not(.fourchan-x) #sc-url-link {
+  color: var(--sc-linkColor);
+  cursor: pointer;
+  float: right;
+}
+:root:not(.fourchan-x) #sc-url-link:hover {
+  color: var(--sc-linkHColor);
+}
+:root:not(.fourchan-x) #sc-clear-btn {
+  color: var(--sc-linkColor);
+  cursor: pointer;
+  user-select: none;
+}
+:root:not(.fourchan-x) #sc-clear-btn:hover {
+  color: var(--sc-quoteColor);
+}
