@@ -101,7 +101,7 @@
         "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size or dimensions limit to JPEG."],
         "Single View Captcha": [false, "Shows the captcha challenges in a single view.", null, true],
         "Auto Submit": [false, "Automatically submit the post after completing the last captcha challenge.", "Single View Captcha", true, true],
-        "Big Tasks": [false, "Captcha challenges will expand to fill the QR.", "Single View Captcha", true, true],
+        "Large Captcha Tasks": [false, "Captcha challenges will expand to fill the QR.", "Single View Captcha", true, true],
         ":: Replies": ["header", ""],
         "Fit Width": [true, "Replies stretch to the width of the page.", null, true],
         "Fit Post Menu": [false, "Sets the post menu to the right.", "Fit Width", true, true],
@@ -4214,7 +4214,7 @@
                 cl.toggle("op-background", $SS.conf["OP Background"] === true);
                 cl.toggle("expand-inputs", $SS.conf["Expanding Form Inputs"] === true);
                 cl.toggle("single-captcha", $SS.conf["Single View Captcha"] === true);
-                cl.toggle("big-tasks", $SS.conf["Big Tasks"] === false);
+                cl.toggle("big-tasks", $SS.conf["Large Captcha Tasks"] === false);
                 cl.toggle("qr-transition", $SS.conf["Animated Transition"] === true);
                 cl.toggle("chX-notifs", $SS.conf["Style 4chanX Notifications"] === true);
                 cl.toggle("header-gradient", $SS.conf["Show Header Background Gradient"] === true);
