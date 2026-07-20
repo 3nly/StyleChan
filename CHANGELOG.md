@@ -1,3 +1,28 @@
+## v1.8.0
+*2026-07-20*
+
+- New option: Larger Captcha Tasks (issue #33 by @Pentaphon)
+  - Increase the size of the captcha challenges
+- New theme added to Wiki: Kuma by @Jamayyy
+- Some changes to how StyleChan listens for image picking for Auto-Convert (issue #30 by @Pentaphon)
+- Small CSS changes
+  - Removed some of the height limitations on the QR textarea
+  - Small NeXT adjustments
+
+**4chanX:**
+- Bottom board list will now be shown if the *Hide bottom board list* option in the header is disabled
+
+**4chan:**
+- Replace the native 4chan QR file input
+  - Upload files by URL (or paste an URL link anywhere on the page)
+  - Edit file name
+  - Drag and drop files now works anywhere on the page
+  - `Shift` + `Click` or *X* to remove a file
+- Fix for backlink icons
+- Replace native menu button with a nicer symbol
+- Menu button will now follow backlink color
+- New: Add a Delete Post menu entry to the post menu
+
 ### v1.7.3
 *2026-07-17*
 

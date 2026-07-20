@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         StyleChan
-// @version      1.7.3
+// @version      1.8.0
 // @namespace    StyleChan
 // @description  Customizable themes for 4chan X.
 // @license      GPL-3.0; https://github.com/3nly/StyleChan/blob/main/LICENSE 
@@ -18,11 +18,13 @@
 // @grant        GM_deleteValue
 // @grant        GM_listValues
 // @grant        GM_openInTab
+// @grant        GM_xmlhttpRequest
 // @grant        GM.getValue
 // @grant        GM.setValue
 // @grant        GM.deleteValue
 // @grant        GM.listValues
 // @grant        GM.openInTab
+// @grant        GM.xmlHttpRequest
 // @run-at       document-body
 // @updateURL    https://github.com/3nly/StyleChan/releases/latest/download/StyleChan.meta.js
 // @downloadURL  https://github.com/3nly/StyleChan/releases/latest/download/StyleChan.user.js
