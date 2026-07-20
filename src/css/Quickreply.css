@@ -68,6 +68,9 @@
   min-height: 25px !important;
   min-width: 302px;
 }
+input#file-upload-button {
+  width: 15px !important;
+}
 #quickReply textarea {
   min-height: 25px !important;
   min-width: 296px;
@@ -367,6 +370,13 @@ input[type="number"] {
   opacity: 0.35;
   cursor: default !important;
 }
+:root.single-captcha.big-tasks .tcaptcha-image {
+  max-width: 172px;
+}
+:root.single-captcha.big-tasks #t-task {
+  max-height: 38vh;
+  gap: 2px;
+}
 /* QR Header text */
 #qrHeader {
   font-size: 0;
@@ -374,4 +384,40 @@ input[type="number"] {
 #qrHeader::before {
   content: 'QUICK REPLY';
   font-size: 11px;
+}
+/* Custom file input (native 4chan) */
+:root:not(.fourchan-x) #qr-filename-container {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  min-height: 23px;
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+  user-select: none;
+}
+:root:not(.fourchan-x) #qr-filename-container #qr-no-file {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+:root:not(.fourchan-x) #qr-filename-container.drag-over {
+  border-color: var(--sc-linkColor) !important;
+  background: rgb(var(--sc-inputColor-hover)) !important;
+  outline: 1px dashed var(--sc-linkColor);
+  outline-offset: -2px;
+}
+:root:not(.fourchan-x) #qr-filename-container .sc-rename-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: text;
+  user-select: text;
 }

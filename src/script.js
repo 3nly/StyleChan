@@ -101,6 +101,7 @@
         "Auto-Convert Images": [false, "Auto-convert WebP images to JPEG, and convert any image exceeding the board's file size or dimensions limit to JPEG."],
         "Single View Captcha": [false, "Shows the captcha challenges in a single view.", null, true],
         "Auto Submit": [false, "Automatically submit the post after completing the last captcha challenge.", "Single View Captcha", true, true],
+        "Big Tasks": [false, "Captcha challenges will expand to fill the QR.", "Single View Captcha", true, true],
         ":: Replies": ["header", ""],
         "Fit Width": [true, "Replies stretch to the width of the page.", null, true],
         "Fit Post Menu": [false, "Sets the post menu to the right.", "Fit Width", true, true],
@@ -891,6 +892,8 @@
                 if ($SS.conf["Auto-Convert Images"]) {
                     $SS.initImageConvertOnDrop();
                 }
+                // Custom file input (native 4chan only)
+                $SS.initCustomFileInput();
                 // Remember QR comments
                 $SS.initRememberComment();
                 // Single view captcha grid
@@ -1133,6 +1136,145 @@
                 (document.head || document.documentElement).appendChild(el);
             }
             el.textContent = css;
+        },
+        initCustomFileInput: function () {
+            if ($SS.is4chanX()) return;
+
+            window.addEventListener("dragover", function (e) {
+                if (e.dataTransfer && e.dataTransfer.types && e.dataTransfer.types.includes("Files"))
+                    e.preventDefault();
+            });
+            window.addEventListener("drop", function (e) {
+                var files = e.dataTransfer && e.dataTransfer.files;
+                if (!files || !files.length) return;
+                e.preventDefault();
+                e.stopPropagation();
+                var input = document.querySelector("#qrFile, #qr input[type=file]");
+                if (!input) return;
+                var dt = new DataTransfer();
+                dt.items.add(files[0]);
+                input.files = dt.files;
+                input.dispatchEvent(new Event("input", { bubbles: true }));
+                input.dispatchEvent(new Event("change", { bubbles: true }));
+            });
+
+            $.waitFor("#qrFile, #qr input[type=file]", function (qrFile) {
+                qrFile.style.display = "none";
+
+                var container = document.createElement("span");
+                container.id = "qr-filename-container";
+                container.tabIndex = 0;
+                container.setAttribute("role", "button");
+
+                var display = document.createElement("span");
+                display.id = "qr-no-file";
+                display.textContent = "Drop file or click to select";
+                container.appendChild(display);
+                qrFile.parentNode.insertBefore(container, qrFile.nextSibling);
+
+                function truncateName(name) {
+                    if (name.length <= 28) return name;
+                    var dot = name.lastIndexOf(".");
+                    var ext = dot !== -1 ? name.slice(dot) : "";
+                    var base = dot !== -1 ? name.slice(0, dot) : name;
+                    var remain = 28 - ext.length - 1;
+                    if (remain < 3) return name.slice(0, 27) + "\u2026";
+                    return base.slice(0, remain) + "\u2026" + ext;
+                }
+                function getFile() { return qrFile.files && qrFile.files[0]; }
+                function updateDisplay() {
+                    var file = getFile();
+                    display.textContent = file ? truncateName(file.name) : "Drop file or click to select";
+                    display.title = file ? file.name : "";
+                }
+                function clearFile() {
+                    try { qrFile.files = new DataTransfer().files; } catch (e) {}
+                    updateDisplay();
+                }
+                function renameFile(newBase) {
+                    var file = getFile();
+                    if (!file) return;
+                    var dot = file.name.lastIndexOf(".");
+                    var ext = dot !== -1 ? file.name.slice(dot) : "";
+                    try {
+                        var renamed = new File([file], newBase + ext, { type: file.type });
+                        var dt = new DataTransfer();
+                        dt.items.add(renamed);
+                        qrFile.files = dt.files;
+                        qrFile.dispatchEvent(new Event("input", { bubbles: true }));
+                    } catch (e) {}
+                }
+
+                container.addEventListener("click", function (e) {
+                    if (e.shiftKey) { e.preventDefault(); clearFile(); return; }
+                    qrFile.click();
+                });
+                container.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); qrFile.click(); }
+                });
+
+                container.addEventListener("dragover", function (e) {
+                    e.preventDefault(); e.stopPropagation();
+                    container.classList.add("drag-over");
+                });
+                container.addEventListener("dragenter", function (e) {
+                    e.preventDefault(); e.stopPropagation();
+                    container.classList.add("drag-over");
+                });
+                container.addEventListener("dragleave", function (e) {
+                    e.preventDefault(); e.stopPropagation();
+                    container.classList.remove("drag-over");
+                });
+                container.addEventListener("drop", function (e) {
+                    e.preventDefault(); e.stopPropagation();
+                    container.classList.remove("drag-over");
+                    var files = e.dataTransfer && e.dataTransfer.files;
+                    if (!files || !files.length) return;
+                    var dt = new DataTransfer();
+                    dt.items.add(files[0]);
+                    qrFile.files = dt.files;
+                    qrFile.dispatchEvent(new Event("input", { bubbles: true }));
+                    qrFile.dispatchEvent(new Event("change", { bubbles: true }));
+                });
+
+                qrFile.addEventListener("focus", function () { container.classList.add("focus"); });
+                qrFile.addEventListener("blur", function () { container.classList.remove("focus"); });
+                qrFile.addEventListener("input", updateDisplay);
+
+                var editing = false;
+                display.addEventListener("click", function (e) {
+                    if (e.shiftKey || !getFile()) return;
+                    if (editing) { e.stopPropagation(); return; }
+                    e.stopPropagation();
+
+                    var file = getFile();
+                    var dot = file.name.lastIndexOf(".");
+                    var baseName = dot !== -1 ? file.name.slice(0, dot) : file.name;
+
+                    editing = true;
+                    var inp = document.createElement("input");
+                    inp.type = "text";
+                    inp.value = baseName;
+                    inp.className = "sc-rename-input";
+                    display.textContent = "";
+                    display.appendChild(inp);
+                    inp.focus();
+                    inp.select();
+
+                    function finish() {
+                        if (!editing) return;
+                        editing = false;
+                        var val = inp.value.trim();
+                        if (val && val !== baseName) renameFile(val);
+                        updateDisplay();
+                    }
+                    inp.addEventListener("blur", finish);
+                    inp.addEventListener("keydown", function (ev) {
+                        if (ev.key === "Enter") { ev.preventDefault(); inp.blur(); }
+                        if (ev.key === "Escape") { ev.preventDefault(); editing = false; updateDisplay(); }
+                    });
+                });
+            });
         },
         initImageConvertOnDrop: function () {
             var MAX_BYTES = $SS.location.maxFileSize;
@@ -3935,6 +4077,7 @@
                 cl.toggle("op-background", $SS.conf["OP Background"] === true);
                 cl.toggle("expand-inputs", $SS.conf["Expanding Form Inputs"] === true);
                 cl.toggle("single-captcha", $SS.conf["Single View Captcha"] === true);
+                cl.toggle("big-tasks", $SS.conf["Big Tasks"] === false);
                 cl.toggle("qr-transition", $SS.conf["Animated Transition"] === true);
                 cl.toggle("chX-notifs", $SS.conf["Style 4chanX Notifications"] === true);
                 cl.toggle("header-gradient", $SS.conf["Show Header Background Gradient"] === true);
