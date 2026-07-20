@@ -4,6 +4,10 @@
   box-shadow: none !important;
   border-radius: 0 !important;
 }
+#qr > form {
+  overflow-y: hidden !important;
+  max-height: none !important;
+}
 :root:not(.vertical-qr) #qr .move {
   min-width: 302px;
 }
@@ -218,9 +222,6 @@ input#file-upload-button {
   opacity: 0 !important;
   transition: opacity .42s linear;
 }
-#qr > form {
-  overflow-y: hidden !important;
-}
 /* Fade QR */
 :root.fade-qr #qr form,
 :root.fade-qr #quickReply form {
@@ -258,7 +259,6 @@ input[type="number"] {
 :root.single-captcha #qr > form > div.captcha-root > div  {
   min-height: 145px !important;
 }
-
 :root.single-captcha #t-next.tcaptcha-stepper.is-ready {
   display: inline-flex;
   align-items: center;
