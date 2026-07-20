@@ -99,6 +99,7 @@ select:not([id^=index-]):not([id$=-ctrl]):not(#boardSelectMobile, #oneechan-opti
 :root #t-task,
 .hide-reply-button,
 .hide-thread-button,
+#qrHeader::before,
 span#qr-filename-container {
   font-size: " + $SS.conf["UI Font Size"] + "px !important;
 }
