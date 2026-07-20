@@ -1168,9 +1168,23 @@
 
                 var display = document.createElement("span");
                 display.id = "qr-no-file";
-                display.textContent = "Drop file or click to select";
                 container.appendChild(display);
+
+                var clearBtn = document.createElement("span");
+                clearBtn.id = "sc-clear-btn";
+                clearBtn.textContent = "\u00D7";
+                clearBtn.title = "Remove file";
+                clearBtn.style.display = "none";
+                container.appendChild(clearBtn);
+
+                var urlLink = document.createElement("span");
+                urlLink.id = "sc-url-link";
+                urlLink.textContent = "URL";
+                urlLink.title = "Upload from URL";
+
                 qrFile.parentNode.insertBefore(container, qrFile.nextSibling);
+
+                var urlEditing = false, renaming = false;
 
                 function truncateName(name) {
                     if (name.length <= 28) return name;
@@ -1183,9 +1197,12 @@
                 }
                 function getFile() { return qrFile.files && qrFile.files[0]; }
                 function updateDisplay() {
+                    if (urlEditing) return;
                     var file = getFile();
-                    display.textContent = file ? truncateName(file.name) : "Drop file or click to select";
+                    display.textContent = file ? truncateName(file.name) : "Drop file or click to select ";
+                    if (!file) display.appendChild(urlLink);
                     display.title = file ? file.name : "";
+                    clearBtn.style.display = file ? "" : "none";
                 }
                 function clearFile() {
                     try { qrFile.files = new DataTransfer().files; } catch (e) {}
@@ -1204,6 +1221,115 @@
                         qrFile.dispatchEvent(new Event("input", { bubbles: true }));
                     } catch (e) {}
                 }
+                function fetchAndSetURL(url) {
+                    var note = $SS.notify({ type: 'info', content: "Fetching URL...", lifetime: 0 });
+
+                    function done(err, blob, name) {
+                        $SS.dismissNotification(note);
+                        if (err) {
+                            $SS.notify({ type: 'error', content: "URL fetch failed: " + err.message, lifetime: 5 });
+                            urlEditing = false;
+                            updateDisplay();
+                            return;
+                        }
+                        var file = new File([blob], name, { type: blob.type || "application/octet-stream" });
+                        var dt = new DataTransfer();
+                        dt.items.add(file);
+                        qrFile.files = dt.files;
+                        urlEditing = false;
+                        qrFile.dispatchEvent(new Event("input", { bubbles: true }));
+                        qrFile.dispatchEvent(new Event("change", { bubbles: true }));
+                    }
+
+                    function pickName(url, headersStr) {
+                        var name = url.split("/").pop().split("?")[0] || "download";
+                        if (headersStr) {
+                            var cd = headersStr.match(/content-disposition[^:\n]*:\s*(.*)/i);
+                            if (cd) {
+                                var m = cd[1].match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/i);
+                                if (m) name = m[1].replace(/['"]/g, "");
+                            }
+                        }
+                        return name;
+                    }
+
+                    if (typeof GM_xmlhttpRequest !== "undefined") {
+                        GM_xmlhttpRequest({
+                            method: "GET",
+                            url: url,
+                            responseType: "blob",
+                            onload: function (res) {
+                                if (res.status >= 400) { done(new Error("HTTP " + res.status)); return; }
+                                done(null, res.response, pickName(url, res.responseHeaders));
+                            },
+                            onerror: function () { done(new Error("Request failed")); }
+                        });
+                    } else {
+                        fetch(url).then(function (res) {
+                            if (!res.ok) throw new Error("HTTP " + res.status);
+                            var name = pickName(url, null);
+                            var cd = res.headers.get("content-disposition");
+                            if (cd) {
+                                var m = cd.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+                                if (m) name = m[1].replace(/['"]/g, "");
+                            }
+                            return res.blob().then(function (blob) {
+                                done(null, blob, name);
+                            });
+                        }).catch(function (err) {
+                            done(err);
+                        });
+                    }
+                }
+
+                // Paste URL anywhere on the page
+                document.addEventListener("paste", function (e) {
+                    var t = e.target;
+                    if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+                    var text = e.clipboardData && e.clipboardData.getData("text/plain");
+                    if (!text || !text.trim()) return;
+                    var url = text.trim();
+                    if (!/^https?:\/\/\S+$/i.test(url)) return;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    fetchAndSetURL(url);
+                }, true);
+
+                // URL link to inline input
+                urlLink.addEventListener("click", function (e) {
+                    e.stopPropagation();
+                    if (urlEditing || renaming) return;
+
+                    urlEditing = true;
+                    var inp = document.createElement("input");
+                    inp.type = "text";
+                    inp.placeholder = "Paste image URL...";
+                    inp.className = "sc-url-input";
+                    display.textContent = "";
+                    display.appendChild(inp);
+                    inp.focus();
+
+                    inp.addEventListener("keydown", function (ev) {
+                        if (ev.key === "Enter") {
+                            ev.preventDefault();
+                            ev.stopPropagation();
+                            var url = inp.value.trim();
+                            if (url) { fetchAndSetURL(url); }
+                            else { urlEditing = false; updateDisplay(); }
+                        }
+                        if (ev.key === "Escape") { ev.preventDefault(); urlEditing = false; updateDisplay(); }
+                    });
+                    inp.addEventListener("blur", function () {
+                        if (!urlEditing) return;
+                        urlEditing = false;
+                        if (!getFile()) updateDisplay();
+                    });
+                });
+
+                clearBtn.addEventListener("click", function (e) {
+                    e.stopPropagation();
+                    clearFile();
+                });
 
                 container.addEventListener("click", function (e) {
                     if (e.shiftKey) { e.preventDefault(); clearFile(); return; }
@@ -1241,17 +1367,17 @@
                 qrFile.addEventListener("blur", function () { container.classList.remove("focus"); });
                 qrFile.addEventListener("input", updateDisplay);
 
-                var editing = false;
+                // Inline rename
                 display.addEventListener("click", function (e) {
                     if (e.shiftKey || !getFile()) return;
-                    if (editing) { e.stopPropagation(); return; }
+                    if (renaming) { e.stopPropagation(); return; }
                     e.stopPropagation();
 
                     var file = getFile();
                     var dot = file.name.lastIndexOf(".");
                     var baseName = dot !== -1 ? file.name.slice(0, dot) : file.name;
 
-                    editing = true;
+                    renaming = true;
                     var inp = document.createElement("input");
                     inp.type = "text";
                     inp.value = baseName;
@@ -1262,18 +1388,20 @@
                     inp.select();
 
                     function finish() {
-                        if (!editing) return;
-                        editing = false;
+                        if (!renaming) return;
+                        renaming = false;
                         var val = inp.value.trim();
                         if (val && val !== baseName) renameFile(val);
                         updateDisplay();
                     }
                     inp.addEventListener("blur", finish);
                     inp.addEventListener("keydown", function (ev) {
-                        if (ev.key === "Enter") { ev.preventDefault(); inp.blur(); }
-                        if (ev.key === "Escape") { ev.preventDefault(); editing = false; updateDisplay(); }
+                        if (ev.key === "Enter") { ev.preventDefault(); ev.stopPropagation(); inp.blur(); }
+                        if (ev.key === "Escape") { ev.preventDefault(); renaming = false; updateDisplay(); }
                     });
                 });
+
+                updateDisplay();
             });
         },
         initImageConvertOnDrop: function () {
