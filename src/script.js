@@ -1525,7 +1525,7 @@
             }
 
             // File picker: intercept change on the QR input
-            window.addEventListener("change", function (e) {
+            function changeHandler(e) {
                 var input = e.target;
                 if (input._scConverting) return;
                 if (input.type !== "file") return;
@@ -1536,10 +1536,12 @@
                 e.stopImmediatePropagation();
                 input._scConverting = true;
                 checkAndConvert(file, input);
-            }, true);
+            }
+            window.addEventListener("change", changeHandler, true);
+            $SS._scChangeHandler = changeHandler;
 
             // Drag and drop
-            window.addEventListener("drop", function (e) {
+            function dropHandler(e) {
                 var files = e.dataTransfer && e.dataTransfer.files;
                 if (!files || !files.length) return;
 
@@ -1555,7 +1557,9 @@
 
                 qrInput._scConverting = true;
                 checkAndConvert(file, qrInput);
-            }, true);
+            }
+            window.addEventListener("drop", dropHandler, true);
+            $SS._scDropHandler = dropHandler;
         },
         getNotificationRoot: function () {
             var root = document.getElementById('stylechan-notifications');
@@ -1789,6 +1793,17 @@
             }
             var spoiler = form.querySelector("#qrSpoiler input[type=checkbox]");
             if (spoiler && !spoiler.title) spoiler.title = "Spoiler image";
+            if ($SS.conf["Auto-Convert Images"] && $SS._scChangeHandler) {
+                var fi = form.querySelector("input[type=file]");
+                if (fi && !fi._scHooked) {
+                    fi._scHooked = true;
+                    fi.addEventListener("change", $SS._scChangeHandler, true);
+                }
+                if (!form._scDropHooked) {
+                    form._scDropHooked = true;
+                    form.addEventListener("drop", $SS._scDropHandler, true);
+                }
+            }
         },
         initSingleViewCaptcha: function () {
             if (!$SS.conf["Single View Captcha"]) return;
