@@ -1,3 +1,10 @@
+### v1.8.1
+*2026-07-20*
+
+- Set a max height on captcha images
+- Increased z-index of QR textarea so it doesn't show behind captcha
+- Fix an issue where 4chanX was preventing the QR form from expanding towards the top
+
 ## v1.8.0
 *2026-07-20*
 
@@ -21,7 +28,7 @@
 - Fix for backlink icons
 - Replace native menu button with a nicer symbol
 - Menu button will now follow backlink color
-- New: Add a Delete Post menu entry to the post menu
+- New: Add a Delete Post entry to the post menu
 
 ### v1.7.3
 *2026-07-17*

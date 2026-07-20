@@ -1,6 +1,6 @@
 {
   "name": "StyleChan",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Customizable themes for 4chan X.",
   "scripts": {
     "lint": "eslint src/",
