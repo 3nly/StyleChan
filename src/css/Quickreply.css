@@ -456,3 +456,7 @@ input[type="number"] {
 :root:not(.fourchan-x) #sc-clear-btn:hover {
   color: var(--sc-quoteColor);
 }
+/* NeXT-specific rules */
+:root.fourchan-next #qr textarea {
+  min-width: 306px !important;
+}

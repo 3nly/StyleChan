@@ -313,6 +313,7 @@ hr {
 :root.rounded-corners #bannerCnt img,
 :root.rounded-corners .catalog-thumb,
 :root.rounded-corners #threadWatcher,
+:root.rounded-corners .watcher-thumb,
 :root.rounded-corners .preview-border,
 :root.rounded-corners .options-button,
 :root.rounded-corners label.tab-label,
