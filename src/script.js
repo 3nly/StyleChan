@@ -1187,20 +1187,12 @@
 
                 var urlEditing = false, renaming = false;
 
-                function truncateName(name) {
-                    if (name.length <= 28) return name;
-                    var dot = name.lastIndexOf(".");
-                    var ext = dot !== -1 ? name.slice(dot) : "";
-                    var base = dot !== -1 ? name.slice(0, dot) : name;
-                    var remain = 28 - ext.length - 1;
-                    if (remain < 3) return name.slice(0, 27) + "\u2026";
-                    return base.slice(0, remain) + "\u2026" + ext;
-                }
                 function getFile() { return qrFile.files && qrFile.files[0]; }
                 function updateDisplay() {
                     if (urlEditing) return;
                     var file = getFile();
-                    display.textContent = file ? truncateName(file.name) : "Drop file or click to select ";
+                    display.textContent = file ? file.name : "Drop file or click to select ";
+                    display.classList.toggle("has-file", !!file);
                     if (!file) display.appendChild(urlLink);
                     display.title = file ? file.name : "";
                     clearBtn.style.display = file ? "" : "none";

@@ -409,10 +409,15 @@ input[type="number"] {
   min-width: 0;
   cursor: pointer;
 }
+:root:not(.fourchan-x) #qr-filename-container #qr-no-file.has-file {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 :root:not(.fourchan-x) #qr-filename-container.drag-over {
   border-color: var(--sc-linkColor) !important;
   background: rgb(var(--sc-inputColor-hover)) !important;
-  outline: 1px dashed var(--sc-linkColor);
+  outline: 1px var(--sc-linkColor);
   outline-offset: -2px;
 }
 :root:not(.fourchan-x) #qr-filename-container .sc-rename-input {
