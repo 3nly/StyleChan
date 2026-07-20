@@ -131,6 +131,7 @@ input#file-upload-button {
 }
 :root.vertical-qr #qr textarea {
   resize: vertical !important;
+  z-index: 1;
 }
 :root.vertical-qr #qr {
   top: auto !important;
