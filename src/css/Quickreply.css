@@ -336,6 +336,7 @@ input[type="number"] {
   display: block;
   width: 100%;
   height: auto;
+  max-height: 6em;
 }
 :root.single-captcha #t-task.tcaptcha-compact .tcaptcha-image img {
   width: auto;
