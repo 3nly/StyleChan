@@ -4,10 +4,6 @@
   box-shadow: none !important;
   border-radius: 0 !important;
 }
-#qrCaptchaContainer,
-.captcha-root > div:first-of-type {
-  width: auto !important;
-}
 :root:not(.vertical-qr) #qr .move {
   min-width: 302px;
 }
@@ -68,20 +64,13 @@
 :root.expand-inputs .persona .field:focus {
   flex: 3;
 }
-#qr textarea,
+#qr textarea {
+  min-height: 25px !important;
+  min-width: 302px;
+}
 #quickReply textarea {
-  min-height: 190px !important;
-}
-:root.ua-blink #qr textarea,
-:root.ua-blink #quickReply textarea {
-  min-height: 185px !important;
-}
-:root.ua-blink #qr textarea.field,
-:root.ua-gecko #qr textarea.field,
-:root.ua-blink #quickReply textarea,
-:root.ua-gecko #quickReply textarea {
-  min-height: 9em !important;
-  min-width: 302px !important;
+  min-height: 25px !important;
+  min-width: 296px;
 }
 :root.fourchan-x:not(.fourchan-xt).ua-blink #qr textarea.field,
 :root.fourchan-x:not(.fourchan-xt).ua-gecko #qr textarea.field {
@@ -111,7 +100,6 @@
 .textarea {
   margin-top: 1px;
   margin-bottom: 1px;
-  min-height: 9em;
   max-height: 64vh;
 }
 :root.ua-gecko .textarea {
@@ -272,10 +260,8 @@ input[type="number"] {
 :root.single-captcha #t-task {
   display: flex;
   flex-direction: column;
-  gap: 2px;
   margin: 0 auto;
   overflow-y: auto;
-  max-height: 38vh;
   padding: 2px 0 !important;
   height: auto !important;
   white-space: normal !important;
@@ -332,7 +318,6 @@ input[type="number"] {
   background: none;
   cursor: pointer !important;
   width: calc(100% - 4px);
-  max-width: 172px;
   height: auto;
   flex: none;
   display: block;
