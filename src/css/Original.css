@@ -91,6 +91,9 @@ body:has(#globalMessage).hasDropDownNav {
 .fixed.top-header body {
   padding-top: 2.4em !important;
 }
+#boardNavDesktopFoot {
+  margin-bottom: 15px;
+}
 div.post {
   margin: 4px 0;
   overflow: hidden;
