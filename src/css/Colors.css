@@ -306,6 +306,7 @@ hr {
 :root.rounded-corners .inline,
 :root.rounded-corners #updater,
 :root.rounded-corners a.qr-link,
+:root.rounded-corners #qrHeader,
 :root.rounded-corners #add-theme,
 :root.rounded-corners .dd-menu ul,
 :root.rounded-corners #thread-stats,
