@@ -1,3 +1,8 @@
+### v1.8.2
+*2026-07-22*
+
+- Remove some accidental rules causing the QR to be fixed at the bottom
+
 ### v1.8.1
 *2026-07-20*
 
