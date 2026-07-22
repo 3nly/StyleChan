@@ -381,13 +381,6 @@ input[type="number"] {
   max-height: 38vh;
   gap: 2px;
 }
-:root.single-captcha.big-tasks #quickReply,
-:root.single-captcha.big-tasks #qr {
-  position: fixed !important;
-  top: auto !important;
-  bottom: 0 !important;
-  max-height: 100vh;
-}
 :root.single-captcha.big-tasks #qr > form,
 :root.single-captcha.big-tasks #quickReply form {
   overflow-y: visible !important;
