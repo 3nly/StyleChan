@@ -249,7 +249,6 @@ a.qr-link {
 /* HRs */
 hr {
   height: 2px;
-  width: 600px;
   border: none !important;
 }
 :root.reply-fit-width #unread-line {
