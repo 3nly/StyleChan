@@ -72,3 +72,9 @@ a {
   border-image-source: none !important;
   border-style: none !important;
 }
+/* Hide desktop when mobile */
+@media only screen and (max-width: 480px) {
+  .postInfo.desktop {
+    display: none !important;
+  }
+}

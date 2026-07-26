@@ -75,7 +75,8 @@ body.is_catalog .button:hover,
 #header-bar,
 a.current,
 :root:not(.fourchan-x) .boardSelect .customBoardList,
-:root:not(.fourchan-x) .boardSelect {
+:root:not(.fourchan-x) .boardSelect,
+:root:not(.fourchan-x) .persistentNav {
   color: var(--sc-headerColor) !important;
 }
 #header-bar a:not(.current),
@@ -94,7 +95,8 @@ a.current,
 #custom-board-list .current:hover {
   border-bottom: 1px solid rgba(var(--sc-linkHColor-rgb),1) !important;
 }
-:root:not(.fourchan-x) div#boardNavMobile {
+:root:not(.fourchan-x) div#boardNavMobile,
+:root:not(.fourchan-x) .persistentNav {
   background-color: var(--sc-headerBGColor);
   border-bottom-color: var(--sc-brderColor);
 }
@@ -489,4 +491,38 @@ select:focus,
 :root.alt-spoiler span.spoiler:focus,
 :root.alt-spoiler s:focus {
   color: #000;
+}
+/* Mobile */
+@media only screen and (max-width: 480px) {
+  .backlink.mobile,
+  div.post div.postInfoM {
+    background: rgba(var(--sc-mainColor-shiftM16),.2);
+    border-bottom: 1px solid rgb(var(--sc-mainColor-shift4));
+    border-top: none !important;
+  }
+  div.opContainer,
+  div.replyContainer {
+    background-color: unset !important;
+  }
+  div.post div.postInfoM span.dateTime {
+    color: var(--sc-textColor) !important;
+  }
+  div.post div.postInfoM span.postNum a, 
+  div.postInfo span.postNum a,
+  a.quoteLink {
+    color: var(--sc-linkColor) !important;
+  }
+  div.post div.postInfoM span.postNum a:hover, 
+  div.postInfo span.postNum a:hover,
+  a.quoteLink:hover {
+    color: var(--sc-linkHColor) !important;
+  }
+  .button {
+    border-color: rgb(var(--sc-mainColor-shiftM15)) rgb(var(--sc-mainColor-shiftM15)) rgb(var(--sc-mainColor-shiftM30)) !important;
+    background: linear-gradient(rgb(var(--sc-mainColor-shift15)),rgb(var(--sc-mainColor-rgb))) !important;
+    color: var(--sc-linkColor) !important;
+  }
+  .button:hover {
+    color: var(--sc-linkHColor) !important;
+  }
 }
