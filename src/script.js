@@ -224,7 +224,7 @@
             }, {
                 name: "Monospace",
                 value: "monospace"
-            }, {	
+            }, {
                 name: "Serif",
                 value: "serif"
             }, {
@@ -394,10 +394,11 @@
         return $docHead || ($docHead = document.head);
     }
 
-    if (!Array.isArray)
+    if (!Array.isArray) {
         Array.isArray = function (arg) {
             return Object.prototype.toString.call(arg) === "[object Array]";
         };
+    }
     /* STYLE SCRIPT LIBRARY */
     /* More or less based off jQuery */
     $lib = window.$ = function (selector, root) {

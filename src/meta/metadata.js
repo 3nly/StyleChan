@@ -3,7 +3,7 @@
 // @version      <%= version %>
 // @namespace    <%= name %>
 // @description  <%= description %>
-// @license      <%= license %>; <%= meta.repo %>blob/<%= meta.mainBranch %>/LICENSE 
+// @license      <%= license %>; <%= meta.repo %>blob/<%= meta.mainBranch %>/LICENSE
 <%=
   (function() {
     function expandMatches(matches) {
