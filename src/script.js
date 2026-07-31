@@ -960,8 +960,13 @@
                                 next.remove();
                         });
                     }
-                    removeLink(document.querySelector("#navtopright"), "a[href='/search'], a[href='//p.4chan.org/']");
-                    removeLink(document.querySelector("#boardNavMobile .pageJump"), "a[href='//p.4chan.org/']");
+                    [
+                        ["#navtopright", "a[href='/search'], a[href='//p.4chan.org/']"],
+                        ["#navbotright", "a[href='/search'], a[href='//p.4chan.org/']"],
+                        ["#boardNavMobile .pageJump", "a[href='//p.4chan.org/']"]
+                    ].forEach(function (cfg) {
+                        removeLink(document.querySelector(cfg[0]), cfg[1]);
+                    });
                 })();
 
                 // things that need to change after 4chan X loads.
@@ -2350,24 +2355,26 @@
                         link.addEventListener("click", $SS.options.show);
                         return link;
                     }
-                    $.waitFor("#boardNavDesktop #navtopright", function (navtopright) {
+                    function makeNavSpan() {
                         var span = document.createElement("span");
                         span.appendChild(document.createTextNode(" ["));
                         var link = makeNavLink();
                         link.textContent = "StyleChan";
                         span.appendChild(link);
                         span.appendChild(document.createTextNode("]"));
-                        navtopright.appendChild(span);
+                        return span;
+                    }
+                    ["#boardNavDesktop #navtopright", "#navbotright"].forEach(function (selector) {
+                        $.waitFor(selector, function (container) {
+                            container.appendChild(makeNavSpan());
+                        });
                     });
-                    $.waitFor("#boardNavDesktop .pageJump", function (pageJump) {
-                        var link = makeNavLink();
-                        link.textContent = " StyleChan ";
-                        pageJump.insertBefore(link, pageJump.lastElementChild);
-                    });
-                    $.waitFor("#boardNavMobile .pageJump", function (pageJump) {
-                        var link = makeNavLink();
-                        link.textContent = " StyleChan ";
-                        pageJump.insertBefore(link, pageJump.lastElementChild);
+                    ["#boardNavDesktop .pageJump", "#boardNavMobile .pageJump"].forEach(function (selector) {
+                        $.waitFor(selector, function (pageJump) {
+                            var link = makeNavLink();
+                            link.textContent = " StyleChan ";
+                            pageJump.insertBefore(link, pageJump.lastElementChild);
+                        });
                     });
                 }
             },

@@ -94,6 +94,9 @@ body:has(#globalMessage).hasDropDownNav {
 #boardNavDesktopFoot {
   margin-bottom: 15px;
 }
+#boardNavDesktop:not(.desktop.persistentNav) {
+  margin-top: 15px;
+}
 div.post {
   margin: 4px 0;
   overflow: hidden;
