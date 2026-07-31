@@ -265,6 +265,7 @@
         "Show Only in Catalog": [true, "Show the reply form only when browsing the catalog.", "Show Reply Form", true, true],
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
         "Catalog Links": [false, "Converts board navigation links to catalog links."],
+        "Randomize filename": [false, "Set the filename to a random timestamp within the past year."],
         "Watch Thread on Reply": [false, "Automatically adds the thread to the thread watcher when posting a reply."],
         "Highlight Posts Quoting You": [true, "Highlights any posts that contain a quote to your post."],
         "Highlight Own Posts": [true, "Highlights own posts."],
@@ -1365,6 +1366,25 @@
                 qrFile.addEventListener("focus", function () { container.classList.add("focus"); });
                 qrFile.addEventListener("blur", function () { container.classList.remove("focus"); });
                 qrFile.addEventListener("input", updateDisplay);
+
+                function randomizeFile() {
+                    if ($SS.is4chanX() || !$SS.conf["Randomize filename"]) return;
+                    var file = getFile();
+                    if (!file) return;
+                    var dot = file.name.lastIndexOf(".");
+                    var ext = dot !== -1 ? file.name.slice(dot) : "";
+                    var now = Date.now(),
+                        min = now - 31536000000,
+                        ts = String(Math.floor(min + Math.random() * (now - min)) * 1000);
+                    try {
+                        var renamed = new File([file], ts + ext, { type: file.type });
+                        var dt = new DataTransfer();
+                        dt.items.add(renamed);
+                        qrFile.files = dt.files;
+                        qrFile.dispatchEvent(new Event("input", { bubbles: true }));
+                    } catch (e) {}
+                }
+                qrFile.addEventListener("change", randomizeFile);
 
                 // Inline rename
                 display.addEventListener("click", function (e) {
