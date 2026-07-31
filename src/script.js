@@ -259,16 +259,18 @@
         "Show Header Shadow": [true, "Gives the header a drop shadow."],
         "Highlight Current Board": [true, "Gives the current board link a bottom highlight border."],
         ":: 4chan": ["header", ""],
+        ":: General": ["header", ""],
         "Relative Post Dates": [false, "Display dates like '3 minutes ago'. Tooltip shows the original timestamp."],
         "Follow Cursor": [true, "Image previews follow the cursor instead of staying in the corner."],
+        "Catalog Links": [false, "Converts board navigation links to catalog links."],
+        "Highlight Posts Quoting You": [true, "Highlights any posts that contain a quote to your post."],
+        "Highlight Own Posts": [true, "Highlights own posts."],
+        ":: Posting": ["header", ""],
         "Show Reply Form": [true, "Toggle visibility of the reply form and Reply to Thread button.", null, true],
         "Show Only in Catalog": [true, "Show the reply form only when browsing the catalog.", "Show Reply Form", true, true],
         "Pin Quick Reply": [false, "Open the quick reply automatically when entering a thread."],
-        "Catalog Links": [false, "Converts board navigation links to catalog links."],
         "Randomize filename": [false, "Set the filename to a random timestamp within the past year."],
         "Watch Thread on Reply": [false, "Automatically adds the thread to the thread watcher when posting a reply."],
-        "Highlight Posts Quoting You": [true, "Highlights any posts that contain a quote to your post."],
-        "Highlight Own Posts": [true, "Highlights own posts."],
         "Themes": [],
         "Hidden Themes": [],
         "Selected Theme": 1,
@@ -2426,9 +2428,9 @@
 
                         if (key === "Themes" || key === "Misc") section = "";
                         if (defaultConfig[key][0] === "header") {
-                            section = key === ":: 4chan X" ? "4chanx" : key === ":: 4chan" ? "native" : "";
+                            section = key === ":: 4chan X" ? "4chanx" : key === ":: 4chan" || key === ":: General" || key === ":: Posting" ? "native" : "";
                             if ((section === "4chanx" && !is4chanX) || (section === "native" && is4chanX)) continue;
-                            optionsHTML.push("<label class='option header'><span class='option-title'>" + key + "</span></label>");
+                            optionsHTML.push("<label class='option header" + (key === ":: 4chan" || key === ":: 4chan X" ? " has-subsections" : "") + "'><span class='option-title'>" + key + "</span></label>");
                             if (key === ":: 4chan") {
                                 optionsHTML.push("<p class='option-actions'><a class='options-button' name=save4chanSettings>Save 4chan settings</a><span class=link-delim> | </span><a class='options-button' name=restore4chanSettings>Restore</a></p>");
                             }

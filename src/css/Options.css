@@ -90,6 +90,10 @@ input[name='Font Family']::-webkit-list-button {
 .option.header {
   cursor: auto !important;
 }
+.option.header.has-subsections .option-title::after {
+  content: ' ▾';
+  font-size: 0.7em;
+}
 /* Themes */
 .theme-preview {
   cursor: default;
