@@ -209,6 +209,7 @@ table.postForm tr td {
 }
 .options-button,
 .qr-link,
+#qrSpoiler label,
 .pages.cataloglink,
 .pages strong>a,
 input[value='Next'],
@@ -300,12 +301,15 @@ hr {
   border-radius: 0 !important;
 }
 :root.rounded-corners #menu,
+:root.rounded-corners input,
 :root.rounded-corners .thumb,
 :root.rounded-corners .reply,
 :root.rounded-corners .panel,
+:root.rounded-corners select,
 :root.rounded-corners #t-load,
 :root.rounded-corners #t-next,
 :root.rounded-corners .inline,
+:root.rounded-corners textarea,
 :root.rounded-corners #updater,
 :root.rounded-corners a.qr-link,
 :root.rounded-corners #qrHeader,
@@ -324,10 +328,14 @@ hr {
 :root.rounded-corners #oneechan-options,
 :root.rounded-corners .color-picker-btn,
 :root.rounded-corners.op-background .op,
+:root.rounded-corners .captcha-root div,
+:root.rounded-corners #qr .captcha-root,
 :root.rounded-corners .pages.cataloglink,
 :root.rounded-corners input[value='Next'],
+:root.rounded-corners #qr-filename-container,
 :root.rounded-corners input[value='Previous'],
 :root.rounded-corners .dialog:not(#header-bar),
+:root.rounded-corners #quickReply input[type=submit],
 :root.rounded-corners .fileThumb img:not(.full-image),
 :root.rounded-corners.werkTyme .catalog-thread:not(:hover),
 :root.rounded-corners.werkTyme:not(.catalog-hover-expand) .catalog-thread,
@@ -341,11 +349,8 @@ hr {
 :root.rounded-corners:root.vertical-qr #qr > .move {
   border-radius: 3px 3px 0 0 !important;
 }
-:root:not(.rounded-corners) #post-preview {
-  border-radius: 0 !important;
-}
-#qr-file-button,
-#file-n-submit > input {
+:root:not(.rounded-corners) #post-preview,
+:root:not(.rounded-corners) #file-n-submit > input {
   border-radius: 0 !important;
 }
 .reply,
@@ -371,6 +376,7 @@ textarea,
 .captcha-img,
 :root.vertical-qr #qr .move,
 #qr select,
+#qrSpoiler label,
 select,
 .postblock,
 #post-preview,
