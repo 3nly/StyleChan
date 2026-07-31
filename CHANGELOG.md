@@ -1,3 +1,14 @@
+## v1.9.0
+*2026-07-31*
+
+- Style some elements that were previously unaffacted by Rounded Corners
+- Stylechan can now more correctly adapt to the mobile version of 4chan
+- Small fixes and menu adjustments
+
+**4chan:**
+- New option: Randomize filenames
+- Stylechan menu will also appear in the bottom navigation (issue #37)
+
 ### v1.8.2
 *2026-07-22*
 

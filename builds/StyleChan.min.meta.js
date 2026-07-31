@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         StyleChan [min]
-// @version      1.8.2
+// @version      1.9.0
 // @namespace    StyleChan
 // @description  Customizable themes for 4chan X. (minified)
-// @license      GPL-3.0; https://github.com/3nly/StyleChan/blob/main/LICENSE 
+// @license      GPL-3.0; https://github.com/3nly/StyleChan/blob/main/LICENSE
 // @match        https://boards.4chan.org/*
 // @match        https://sys.4chan.org/*
 // @exclude      https://www.4chan.org/
