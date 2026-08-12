@@ -1,3 +1,12 @@
+### v1.9.1
+*2026-08-12*
+
+- Fix an issue where files other than images were being intercepted which prevented drag&drop on the page
+
+**4chan:**
+- Add shadows to quote hover and post menus
+- Add a minimum width to OP hover preview
+
 ## v1.9.0
 *2026-07-31*
 
