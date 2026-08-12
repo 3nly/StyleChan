@@ -20,6 +20,7 @@ Originally developed by [seaweedchan](https://github.com/seaweedchan/OneeChan), 
 - ccd0 [4chan-X](https://github.com/ccd0/4chan-x)
 - TuxedoTako [4chan-XT](https://github.com/TuxedoTako/4chan-xt)
 - cercos [4chan-neXT](https://github.com/cercos/4chan-neXT)
+- burningwiththefiresoforc [4chan-XT](https://github.com/burningwiththefiresoforc/4chan-xt)
 
 ## Theming
 
