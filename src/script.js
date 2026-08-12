@@ -1488,6 +1488,7 @@
             function shouldConvert(file) {
                 if (file.type === "image/gif") return false;
                 if (file.type === "image/jpeg" || file.type === "image/png") return file.size > MAX_BYTES;
+                if (!file.type.startsWith("image/")) return false;
                 return true;
             }
 
@@ -1507,12 +1508,26 @@
                 } catch (err) { console.warn("Failed to clear file:", err); }
             }
 
+            function reAddFile(file, input) {
+                var dt = new DataTransfer();
+                dt.items.add(file);
+                input.files = dt.files;
+                input.dispatchEvent(new Event("input", { bubbles: true }));
+                input.dispatchEvent(new Event("change", { bubbles: true }));
+                input._scConverting = false;
+            }
+
             function checkAndConvert(file, input) {
                 var baseName = file.name.replace(/\.[^.]+$/, "");
 
                 if (shouldConvert(file)) {
                     clearSelectedFile(input);
                     convertToJPEG(file, baseName, input);
+                    return;
+                }
+
+                if (!file.type.startsWith("image/")) {
+                    reAddFile(file, input);
                     return;
                 }
 
@@ -1526,21 +1541,11 @@
                         convertToJPEG(file, baseName, input);
                     } else {
                         bitmap.close();
-                        var dt = new DataTransfer();
-                        dt.items.add(file);
-                        input.files = dt.files;
-                        input.dispatchEvent(new Event("input", { bubbles: true }));
-                        input.dispatchEvent(new Event("change", { bubbles: true }));
-                        input._scConverting = false;
+                        reAddFile(file, input);
                     }
                 }).catch(function (err) {
                     console.warn("Image dimension check failed:", err);
-                    var dt = new DataTransfer();
-                    dt.items.add(file);
-                    input.files = dt.files;
-                    input.dispatchEvent(new Event("input", { bubbles: true }));
-                    input.dispatchEvent(new Event("change", { bubbles: true }));
-                    input._scConverting = false;
+                    reAddFile(file, input);
                 });
             }
 
@@ -1551,7 +1556,7 @@
                 if (input.type !== "file") return;
                 if (!input.closest("#qr, #quickReply, #postForm, form[name='qrPost'], form[name='post']")) return;
                 var file = input.files && input.files[0];
-                if (!file || file.type === "image/gif") return;
+                if (!file || !file.type.startsWith("image/") || file.type === "image/gif") return;
 
                 e.stopImmediatePropagation();
                 input._scConverting = true;
@@ -1566,7 +1571,7 @@
                 if (!files || !files.length) return;
 
                 var file = files[0];
-                if (file.type === "image/gif") return;
+                if (!file.type.startsWith("image/") || file.type === "image/gif") return;
 
                 // Find the QR file input (4chanX or native)
                 var qrInput = findQRFileInput();
