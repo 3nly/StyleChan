@@ -66,6 +66,9 @@ body {
 :root.bottom-backlinks .post:not(:root.op-background .op) .container:not(:empty) {
   padding-bottom: 4px;
 }
+#quote-preview.op {
+  min-width: 50vw;
+}
 /* Fit Expanded Images option */
 :root.fit-eximg.fit-height .full-image {
   max-height: calc(100vh - 8rem) !important;
