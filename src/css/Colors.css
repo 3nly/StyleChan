@@ -464,6 +464,11 @@ select:focus,
 #threadWatcher {
   box-shadow: 1px 1px 3px rgba(0,0,0,.1) !important;
 }
+#quote-preview,
+#post-menu,
+#post-menu li ul {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+}
 /* Closed Threads */
 .closed {
   margin-top: 10px;
