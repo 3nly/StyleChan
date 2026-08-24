@@ -26,10 +26,10 @@
   "quoteColor": "859900",
   "qlColor": "6c71c4",
   "replybgHLColor": "f9f2df",
-  "replyslctColor": "f9f2df",
-  "postHLColor": "000000",
-  "quotesYouHLColor": "000000",
-  "ownPostHLColor": "000000",
-  "threadHLColor": "000000",
+  "replyslctColor": "6c71c4",
+  "postHLColor": "6c71c4",
+  "quotesYouHLColor": "d33682",
+  "ownPostHLColor": "2aa198",
+  "threadHLColor": "b58900",
   "customCSS": ".rice {\n  box-shadow:rgba(255,255,255,.3) 0 1px;\n}\ninput[type=password]:hover,\ninput[type=text]:not([disabled]):hover,\ninput#fs_search:hover,\ninput.field:hover,\n.webkit select:hover,\ntextarea:hover,\n#appchanx-settings input:not([type=checkbox]):hover {\n  box-shadow:inset rgba(0,0,0,.2) 0 1px 2px;\n}\ninput[type=password]:focus,\ninput[type=text]:focus,\ninput#fs_search:focus,\ninput.field:focus,\n.webkit select:focus,\ntextarea:focus,\n#appchanx-settings input:focus {\n  box-shadow:inset rgba(0,0,0,.2) 0 1px 2px;\n}\nbutton,\ninput,\ntextarea,\n.rice {\n  transition:background .2s,box-shadow .2s;\n}\n.boardTitle {\n  color: #b58900 !important;\n  text-shadow: 1px 1px 1px #999 !important;\n}\n.boardSubtitle,\n.boardBanner .boardSubtitle > a {\n  text-shadow: none !important;\n}\n.postNum a {\n  color: #657b83 !important;\n}"
 }

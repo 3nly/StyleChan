@@ -26,10 +26,10 @@
   "quoteColor": "819941",
   "qlColor": "925c8d",
   "replybgHLColor": "eeddff",
-  "replyslctColor": "eeddff",
-  "postHLColor": "000000",
-  "quotesYouHLColor": "000000",
-  "ownPostHLColor": "000000",
-  "threadHLColor": "000000",
+  "replyslctColor": "854c9e",
+  "postHLColor": "854c9e",
+  "quotesYouHLColor": "c617e6",
+  "ownPostHLColor": "925c8d",
+  "threadHLColor": "819941",
   "customCSS": ".board {\n  box-shadow: 0px 10px 10px 2px rgba(128,128,128,0.5);\n  border-radius: 3px;\n}\n.board .thread {\n  padding:10px;\n}\n#appchanx-settings.reply.dialog,\n#appchanx-settings .dialog {\n  background-color:#FFF;\n  color:#000;\n  border:2px solid #CCC;\n}\n#appchanx-settings ul {\n  border-bottom:1px solid #DBD8D2;\n}\n#appchanx-settings ul:last-of-type{\n  border:none;\n}\n#qp div.post{\n  background-color:rgba(255,255,255,0.9);\n  border:1px solid #D1A2FF;\n  color:#000;\n}"
 }
