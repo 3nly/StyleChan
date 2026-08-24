@@ -1,3 +1,12 @@
+### v1.9.2
+*2026-08-24*
+
+- Fix issues with user imported custom themes (issue #39 by @tetra65)
+  - Importing a custom theme will no longer set it as the default automatically
+  - Editing an imported custom theme will no longer set it to NSFW
+
+Updated themes for missing colors: RedUX, Penumbra, ピンク
+
 ### v1.9.1
 *2026-08-12*
 

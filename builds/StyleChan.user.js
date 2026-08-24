@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         StyleChan
-// @version      1.9.1
+// @version      1.9.2
 // @namespace    StyleChan
 // @description  Customizable themes for 4chan X.
 // @license      GPL-3.0; https://github.com/3nly/StyleChan/blob/main/LICENSE
@@ -310,7 +310,7 @@
     },
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
-        VERSION = "1.9.1",
+        VERSION = "1.9.2",
         CHANGELOG = "https://github.com/3nly/StyleChan/releases/latest",
         themeInputs = [{
             dName: "Reply Background",
@@ -2814,7 +2814,7 @@
                                 theme = new $SS.Theme(--index);
                                 div = theme.preview();
                                 $("#overlay #themes-section").append(div);
-                                div.fire("click").scrollIntoView(true);
+                                div.elems[0].scrollIntoView(true);
                             };
                         })(file);
 
@@ -3189,6 +3189,8 @@
                     if (typeof tIndex === "number" && tIndex > previewIndex) {
                         tIndex--;
                     }
+                    var selDiv = $("#oneechan-options #themes-section>div.selected");
+                    $SS.conf["Selected Theme"] = selDiv.exists() ? parseInt(selDiv.attr("id").substr(5)) : 0;
                 }
 
                 var tTheme = {},
@@ -3262,9 +3264,8 @@
                     $("#overlay #themes-section").append(div);
                 }
 
-                if (div && div.exists()) {
+                if (!bEdit && div && div.exists())
                     div.fire("click").scrollIntoView(true);
-                }
 
                 $("#overlay").removeClass("previewing");
                 return overlay.remove();
