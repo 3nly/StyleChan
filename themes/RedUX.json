@@ -26,10 +26,10 @@
   "quoteColor": "228522",
   "qlColor": "993333",
   "replybgHLColor": "dbdbdb",
-  "replyslctColor": "dbdbdb",
-  "postHLColor": "000000",
-  "quotesYouHLColor": "000000",
-  "ownPostHLColor": "000000",
-  "threadHLColor": "000000",
+  "replyslctColor": "57577b",
+  "postHLColor": "57577b",
+  "quotesYouHLColor": "dd0000",
+  "ownPostHLColor": "993333",
+  "threadHLColor": "228522",
   "customCSS": ".board .reply {\n  background-color: transparent;\n  border-color: #ccc transparent transparent transparent;\n  border-style: solid;\n  border-radius: 0 !important;\n  margin-bottom: 0;\n}\n#themes {\n  text-shadow: none;\n}\n#qp {\n  text-shadow: 1px 0 0 rgb(0,0,0),\n    1px 1px 0 rgb(0,0,0),\n    0 1px 0 rgb(0,0,0),\n    1px 1px 2px rgb(0,0,0);\n}\n#qp .op.post,\n#qp .reply.post {\n  border: 1px rgba(0,0,0,0.7) solid;\n  background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.5)), transparent;\n}\n#qp div.post,\n#qp .pln,\n#qp .postNum a {\n  color: #fcd;\n}\n#qp .dateTime {\n  color: #fcd !important;\n}\n#qp .subject,\n#qp .nameBlock > .useremail > .name,\n#qp .nameBlock > .useremail > .postertrip,\n#qp .name,\n#qp .postertrip,\n#qp .trip {\n  color: #ffaac0 !important;\n}\n#qp a {\n  color: #aaaac8;\n}\n.boardBanner a,\n#qp a.backlink,\n#qp span.quote > a.quotelink {\n  color: rgb(255,255,255);\n}\n#qp span.quote {\n  color: rgb(130,163,100);\n}\n.board {\n  box-shadow: 0 20px 40px 10px rgba(0,0,0,0.1);\n  border-radius: 4px;\n}\n:not(#themes) .rice {\n  box-shadow:rgba(170, 170, 170,0.3) 0 1px;\n}\n#qp .prettyprint {\n  background-color: rgba(0,0,0,0.3);\n  border: 1px solid rgba(0,0,0,0.5);\n}\n#qp span.tag {\n  color: #96562c;\n}\n#qp span.pun {\n  color: #5b6f2a;\n}\n#qp span.com {\n  color: #a34443;\n}\n#qp span.str,\n#qp span.atv {\n  color: #8ba446;\n}\n#qp span.kwd {\n  color: #987d3e;\n}\n#qp span.typ,\n#qp span.atn {\n  color: #897399;\n}\n#qp span.lit {\n  color: #558773;\n}"
 }
