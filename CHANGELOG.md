@@ -5,7 +5,7 @@
   - Importing a custom theme will no longer set it as the default automatically
   - Editing an imported custom theme will no longer set it to NSFW
 
-Updated themes for missing colors: RedUX, Penumbra, ピンク
+- Updated themes for missing colors: RedUX, Penumbra, ピンク, BakaBT, Genergray, Solarized Light
 
 ### v1.9.1
 *2026-08-12*
