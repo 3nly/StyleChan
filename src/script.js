@@ -385,7 +385,7 @@
             name: "replyslctColor",
             property: "outline"
         }],
-        $lib, $SS,
+        $lib, $SS, $,
         $docBody = null,
         $docHead = null;
 
@@ -404,7 +404,7 @@
     }
     /* STYLE SCRIPT LIBRARY */
     /* More or less based off jQuery */
-    $lib = window.$ = function (selector, root) {
+    $lib = $ = function (selector, root) {
         return this instanceof $lib ?
             this.init(selector, root) : new $lib(selector, root);
     };
