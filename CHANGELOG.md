@@ -1,3 +1,9 @@
+### v1.9.3
+*2026-10-07*
+
+- Possible fix for user-reported issues where styles were not being applied, or webp conversion woult not be working when used alongside 4chanX (the script no longer overwrites the page's global `$`)
+- QR Options field is now treated as plain text instead of email, so browsers no longer suggest email addresses there
+
 ### v1.9.2
 *2026-08-24*
 

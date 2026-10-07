@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         StyleChan
-// @version      1.9.2
+// @version      1.9.3
 // @namespace    StyleChan
 // @description  Customizable themes for 4chan X.
 // @license      GPL-3.0; https://github.com/3nly/StyleChan/blob/main/LICENSE
@@ -310,7 +310,7 @@
     },
         NAME = "StyleChan",
         NAMESPACE = "StyleChan.",
-        VERSION = "1.9.2",
+        VERSION = "1.9.3",
         CHANGELOG = "https://github.com/3nly/StyleChan/releases/latest",
         themeInputs = [{
             dName: "Reply Background",
@@ -417,7 +417,7 @@
             name: "replyslctColor",
             property: "outline"
         }],
-        $lib, $SS,
+        $lib, $SS, $,
         $docBody = null,
         $docHead = null;
 
@@ -436,7 +436,7 @@
     }
     /* STYLE SCRIPT LIBRARY */
     /* More or less based off jQuery */
-    $lib = window.$ = function (selector, root) {
+    $lib = $ = function (selector, root) {
         return this instanceof $lib ?
             this.init(selector, root) : new $lib(selector, root);
     };
@@ -2318,6 +2318,12 @@
                     }
                 });
             });
+            // QR Options: turn email autocomplete history off
+            var options = qr.querySelector("input[name='email']");
+            if (options) {
+                options.setAttribute("type", "text");
+            }
+            
             if ($SS.conf["Watch Thread on Reply"] && $SS.location.reply) {
                 $SS.handleFormNode(qr);
             }
