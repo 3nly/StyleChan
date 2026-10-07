@@ -2286,6 +2286,12 @@
                     }
                 });
             });
+            // QR Options: turn email autocomplete history off
+            var options = qr.querySelector("input[name='email']");
+            if (options) {
+                options.setAttribute("type", "text");
+            }
+            
             if ($SS.conf["Watch Thread on Reply"] && $SS.location.reply) {
                 $SS.handleFormNode(qr);
             }
